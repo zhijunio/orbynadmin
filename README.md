@@ -26,6 +26,7 @@ Everything is MIT licensed. No pro tier, no locked components.
 - Light and dark mode
 - A blue default theme and theme customizer for accent color, radius, font and sidebar layout; preferences persist across reloads
 - Responsive down to mobile
+- Compact card headers without repeated description copy; page-level guidance and action confirmations remain where they help users
 - Command palette (⌘K), collapsible sidebar with nested menus, workspace switcher and account menu
 - Interactive charts with [ApexCharts](https://apexcharts.com) and reusable tables built on [TanStack Table](https://tanstack.com/table)
 - Conversation transitions use [Motion](https://motion.dev) and respect the system reduced-motion preference

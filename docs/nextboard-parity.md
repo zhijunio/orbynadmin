@@ -58,6 +58,8 @@ OrbynAdmin additionally has dedicated Calendar, Tasks and Pricing pages. The gen
 
 Both projects use the same core stack for the migrated dashboard surfaces: Next.js App Router, React 19, TypeScript, Tailwind CSS 4, ApexCharts, dnd-kit, MapLibre, next-intl and Zustand. OrbynAdmin also uses Motion for focused transitions. It keeps its existing Radix-based UI components and does not add Nextboard-only packages unless an OrbynAdmin feature needs them.
 
+Card headers stay title-led and omit repeated description copy across the app and example pages. Page-level guidance, field hints and action confirmations remain where they provide useful context or enable a task.
+
 English and Simplified Chinese locales are available. Translation covers navigation, shared controls, page titles, the Overview, AI and SaaS dashboards, FAQ and loading/layout examples, Tasks and Calendar, system settings, and the notification center including its sample entries and actions. Many other page bodies remain English, so full interface localization is still outstanding.
 
 All listed page data and actions are demonstrations. A production deployment still needs application APIs, persistence, authentication and authorization wired to the host system; the UI parity does not imply those services exist.
