@@ -96,12 +96,13 @@ export function ThemeConfigProvider({
 /** Colorful color-wheel button for the header, next to the theme toggle. */
 export function CustomizerButton() {
   const { setOpen } = useThemeConfig();
+  const t = useTranslations("ThemeCustomizer");
   return (
     <Button
       variant="ghost"
       size="icon"
       className="rounded-full"
-      aria-label="Customize theme"
+      aria-label={t("customize")}
       onClick={() => setOpen(true)}
     >
       <IconPalette className="size-5" />
@@ -240,7 +241,7 @@ export function ThemeCustomizer() {
                     active={config.font === f.key}
                     onClick={() => setConfig((c) => ({ ...c, font: f.key }))}
                   >
-                    {f.label}
+                    {t.has(f.label) ? t(f.label) : f.label}
                   </OptionButton>
                 ))}
               </div>

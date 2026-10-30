@@ -100,7 +100,7 @@ function NavEntry({ item, pathname, translate }: { item: NavItem; pathname: stri
                     badgeClass(item.badge)
                   )}
                 >
-                  {item.badge}
+                  {translate(item.badge)}
                 </SidebarMenuBadge>
               )}
               <IconChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -113,7 +113,7 @@ function NavEntry({ item, pathname, translate }: { item: NavItem; pathname: stri
                   <SidebarMenuSubButton asChild isActive={pathname === sub.url}>
                     <Link href={sub.url} onClick={closeMobile} className="flex items-center justify-between gap-2">
                       <span>{translate(sub.title)}</span>
-                      {sub.badge && <span className="rounded bg-primary px-1.5 py-0.5 text-[9px] leading-none font-semibold text-primary-foreground">{sub.badge}</span>}
+                      {sub.badge && <span className="rounded bg-primary px-1.5 py-0.5 text-[9px] leading-none font-semibold text-primary-foreground">{translate(sub.badge)}</span>}
                     </Link>
                   </SidebarMenuSubButton>
                 </SidebarMenuSubItem>
@@ -139,7 +139,7 @@ function NavEntry({ item, pathname, translate }: { item: NavItem; pathname: stri
       </SidebarMenuButton>
       {item.badge && (
         <SidebarMenuBadge className={badgeClass(item.badge)}>
-          {item.badge}
+          {translate(item.badge)}
         </SidebarMenuBadge>
       )}
     </SidebarMenuItem>

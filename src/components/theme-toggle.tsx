@@ -3,10 +3,12 @@
 import * as React from "react";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
+  const t = useTranslations("ThemeCustomizer");
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -19,7 +21,7 @@ export function ThemeToggle() {
       size="icon"
       className="rounded-full"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      aria-label="Toggle theme"
+      aria-label={t("toggleTheme")}
     >
       {mounted && resolvedTheme === "dark" ? (
         <IconSun className="size-5" />

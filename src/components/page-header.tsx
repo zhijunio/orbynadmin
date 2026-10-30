@@ -14,9 +14,13 @@ export function PageHeader({
   children?: React.ReactNode;
   className?: string;
 }) {
-  const t = useTranslations("PageTitles");
-  const localizedTitle = t.has(title) ? t(title) : title;
-  const localizedDescription = description && t.has(description) ? t(description) : description;
+  const titles = useTranslations("PageTitles");
+  const descriptions = useTranslations("PageDescriptions");
+  const descriptionKey = description?.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
+  const localizedTitle = titles.has(title) ? titles(title) : title;
+  const localizedDescription = descriptionKey && descriptions.has(descriptionKey)
+    ? descriptions(descriptionKey)
+    : description;
 
   return (
     <div

@@ -32,6 +32,17 @@ export const useThemeConfigStore = create<ThemeConfigStore>()(
       name: "orbynadmin-theme-config",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ config: state.config }),
+      version: 1,
+      migrate: (persistedState, version) => {
+        const persisted = persistedState as Partial<ThemeConfigStore> | undefined;
+        if (version === 0 && persisted?.config?.accent === "blue-violet") {
+          return {
+            ...persisted,
+            config: { ...defaultConfig, ...persisted.config, accent: "blue" },
+          };
+        }
+        return persisted ?? { config: defaultConfig };
+      },
       skipHydration: true,
       onRehydrateStorage: () => () => useThemeConfigStore.getState().markHydrated(),
     },

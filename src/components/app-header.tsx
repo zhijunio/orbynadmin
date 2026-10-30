@@ -57,6 +57,19 @@ const CRUMB_LABELS: Record<string, string> = {
   api: "API",
   otp: "OTP",
   faq: "FAQ",
+  "loading-state": "Loading States",
+  layouts: "Layouts",
+  one: "Layout One",
+  two: "Layout Two",
+  three: "Layout Three",
+  four: "Layout Four",
+  five: "Layout Five",
+  six: "Layout Six",
+  saas: "SaaS",
+  ai: "AI",
+  stocks: "Stocks",
+  "real-estate": "Real Estate",
+  ecommerce: "E-Commerce",
 };
 
 function useBreadcrumb() {
@@ -72,6 +85,7 @@ function useBreadcrumb() {
 export function AppHeader() {
   const crumbs = useBreadcrumb();
   const navTranslations = useTranslations("Navigation");
+  const t = useTranslations("Header");
   const router = useRouter();
   const isMac = useIsMac();
   const [open, setOpen] = React.useState(false);
@@ -125,7 +139,7 @@ export function AppHeader() {
           onClick={() => setOpen(true)}
         >
           <IconSearch className="size-4" />
-          <span className="text-sm">Search…</span>
+          <span className="text-sm">{t("search")}</span>
           <KbdGroup className="ml-auto">
             <Kbd>{isMac ? "⌘" : "Ctrl"}</Kbd>
             <span className="text-[11px] font-medium text-muted-foreground">+</span>
@@ -150,11 +164,11 @@ export function AppHeader() {
       </div>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search…" />
+        <CommandInput placeholder={t("commandPlaceholder")} />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandEmpty>{t("noResults")}</CommandEmpty>
           {navGroups.map((group) => (
-            <CommandGroup key={group.label} heading={group.label}>
+            <CommandGroup key={group.label} heading={navTranslations.has(group.label) ? navTranslations(group.label) : group.label}>
               {group.items.flatMap((item) => {
                 if (item.items?.length) {
                   return item.items.map((sub) => (
@@ -164,7 +178,7 @@ export function AppHeader() {
                       onSelect={() => go(sub.url)}
                     >
                       {item.icon && <item.icon className="size-4" />}
-                      <span className="min-w-0 flex-1 truncate">{sub.title}</span>
+                      <span className="min-w-0 flex-1 truncate">{navTranslations.has(sub.title) ? navTranslations(sub.title) : sub.title}</span>
                     </CommandItem>
                   ));
                 }
@@ -175,7 +189,7 @@ export function AppHeader() {
                     onSelect={() => go(item.url ?? "#")}
                   >
                     {item.icon && <item.icon className="size-4" />}
-                    <span className="min-w-0 flex-1 truncate">{item.title}</span>
+                    <span className="min-w-0 flex-1 truncate">{navTranslations.has(item.title) ? navTranslations(item.title) : item.title}</span>
                   </CommandItem>
                 );
               })}
@@ -216,6 +230,7 @@ function LanguageMenu() {
 }
 
 function NotificationsMenu() {
+  const t = useTranslations("Notifications");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -223,7 +238,7 @@ function NotificationsMenu() {
           variant="ghost"
           size="icon"
           className="relative rounded-full"
-          aria-label="Notifications"
+          aria-label={t("title")}
         >
           <IconBell className="size-5" />
           <span className="absolute right-1.5 top-1.5 size-1.5 rounded-full bg-destructive ring-2 ring-background" />
@@ -231,8 +246,8 @@ function NotificationsMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[calc(100vw-1rem)] sm:w-80">
         <div className="flex items-center justify-between px-2 py-1.5">
-          <DropdownMenuLabel className="p-0">Notifications</DropdownMenuLabel>
-          <Badge variant="secondary">3 new</Badge>
+          <DropdownMenuLabel className="p-0">{t("title")}</DropdownMenuLabel>
+          <Badge variant="secondary">{t("newCount", { count: 3 })}</Badge>
         </div>
         <DropdownMenuSeparator />
         {recentActivity.slice(0, 4).map((a) => (
@@ -252,7 +267,7 @@ function NotificationsMenu() {
         ))}
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="justify-center text-sm font-medium">
-          <Link href="/notifications">View all notifications</Link>
+          <Link href="/notifications">{t("viewAll")}</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -260,6 +275,7 @@ function NotificationsMenu() {
 }
 
 function UserMenu() {
+  const t = useTranslations("UserMenu");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -290,24 +306,24 @@ function UserMenu() {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href="/profile">
-              <IconUserCircle className="size-4" /> Profile
+              <IconUserCircle className="size-4" /> {t("account")}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/settings">
-              <IconSettings className="size-4" /> Settings
+              <IconSettings className="size-4" /> {t("settings")}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/settings">
-              <IconCreditCard className="size-4" /> Billing
+              <IconCreditCard className="size-4" /> {t("billing")}
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href="/login">
-            <IconLogout className="size-4" /> Log out
+            <IconLogout className="size-4" /> {t("logout")}
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

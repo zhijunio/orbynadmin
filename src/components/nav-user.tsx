@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import {
   IconDotsVertical,
@@ -37,6 +38,7 @@ import {
 export function NavUser() {
   const { isMobile } = useSidebar();
   const { resolvedTheme, setTheme } = useTheme();
+  const t = useTranslations("UserMenu");
 
   return (
     <SidebarMenu>
@@ -86,7 +88,7 @@ export function NavUser() {
                   variant="secondary"
                   className="bg-emerald-500/10 text-[10px] text-emerald-600 dark:text-emerald-400"
                 >
-                  Free
+                  {t("planFree")}
                 </Badge>
               </div>
             </DropdownMenuLabel>
@@ -94,22 +96,22 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <Link href="/profile">
-                  <IconUserCircle className="size-4" /> Account
+                  <IconUserCircle className="size-4" /> {t("account")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/settings">
-                  <IconCreditCard className="size-4" /> Billing
+                  <IconCreditCard className="size-4" /> {t("billing")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/notifications">
-                  <IconBell className="size-4" /> Notifications
+                  <IconBell className="size-4" /> {t("notifications")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/settings">
-                  <IconSettings className="size-4" /> Settings
+                  <IconSettings className="size-4" /> {t("settings")}
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -124,20 +126,20 @@ export function NavUser() {
               ) : (
                 <IconMoon className="size-4" />
               )}
-              Toggle theme
+              {t("toggleTheme")}
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <a href="https://github.com" target="_blank" rel="noreferrer">
-                <IconBrandGithub className="size-4" /> Star on GitHub
+                <IconBrandGithub className="size-4" /> {t("starGithub")}
               </a>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => toast.success("Signed out", { description: "See you soon!" })}
+              onClick={() => toast.success(t("signedOut"), { description: t("seeYouSoon") })}
               asChild
             >
               <Link href="/login">
-                <IconLogout className="size-4" /> Log out
+                <IconLogout className="size-4" /> {t("logout")}
               </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
