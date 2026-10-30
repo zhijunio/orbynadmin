@@ -22,7 +22,7 @@ Everything is MIT licensed. No pro tier, no locked components.
 
 - 100+ pages and views, including 15 dashboards: Overview, Analytics, E-Commerce, CRM, Crypto, Healthcare, Logistics, HR, Real Estate, Finance, Marketing, SaaS, Sales, Stocks and AI
 - Light and dark mode
-- A blue-violet default theme and theme customizer for accent color, radius, font and sidebar layout; preferences persist across reloads
+- A blue default theme and theme customizer for accent color, radius, font and sidebar layout; preferences persist across reloads
 - Responsive down to mobile
 - Command palette (⌘K), collapsible sidebar with nested menus, workspace switcher and account menu
 - Interactive charts with [ApexCharts](https://apexcharts.com) and reusable tables built on [TanStack Table](https://tanstack.com/table)
