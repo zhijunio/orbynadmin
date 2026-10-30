@@ -3,6 +3,8 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname as useLocalizedPathname, useRouter as useLocalizedRouter } from "@/i18n/navigation";
 import {
   IconBell,
   IconSearch,
@@ -10,6 +12,7 @@ import {
   IconUserCircle,
   IconSettings,
   IconCreditCard,
+  IconWorld,
 } from "@tabler/icons-react";
 
 import { navGroups } from "@/config/nav";
@@ -68,6 +71,7 @@ function useBreadcrumb() {
 
 export function AppHeader() {
   const crumbs = useBreadcrumb();
+  const navTranslations = useTranslations("Navigation");
   const router = useRouter();
   const isMac = useIsMac();
   const [open, setOpen] = React.useState(false);
@@ -105,7 +109,7 @@ export function AppHeader() {
                     i < crumbs.length - 1 ? "text-muted-foreground" : ""
                   }
                 >
-                  {c}
+                  {navTranslations.has(c) ? navTranslations(c) : c}
                 </BreadcrumbPage>
               </BreadcrumbItem>
               {i < crumbs.length - 1 && <BreadcrumbSeparator />}
@@ -117,7 +121,7 @@ export function AppHeader() {
       <div className="ml-auto flex items-center gap-1.5">
         <Button
           variant="outline"
-          className="hidden h-9 w-56 justify-start gap-2 px-3 text-muted-foreground md:flex"
+          className="hidden h-9 w-56 justify-start gap-2 px-3 text-muted-foreground lg:flex"
           onClick={() => setOpen(true)}
         >
           <IconSearch className="size-4" />
@@ -131,13 +135,14 @@ export function AppHeader() {
         <Button
           variant="ghost"
           size="icon"
-          className="rounded-full md:hidden"
+          className="rounded-full lg:hidden"
           onClick={() => setOpen(true)}
         >
           <IconSearch className="size-5" />
         </Button>
 
         <NotificationsMenu />
+        <LanguageMenu />
         <ThemeToggle />
         <CustomizerButton />
         <div className="mx-1 h-6 w-px shrink-0 self-center bg-border" />
@@ -179,6 +184,34 @@ export function AppHeader() {
         </CommandList>
       </CommandDialog>
     </header>
+  );
+}
+
+function LanguageMenu() {
+  const locale = useLocale();
+  const t = useTranslations("Language");
+  const pathname = useLocalizedPathname();
+  const router = useLocalizedRouter();
+  const [isPending, startTransition] = React.useTransition();
+
+  function changeLocale(nextLocale: "en" | "zh") {
+    startTransition(() => router.replace(pathname, { locale: nextLocale }));
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="rounded-full" aria-label={t("label")} disabled={isPending}>
+          <IconWorld className="size-5" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-40">
+        <DropdownMenuLabel>{t("label")}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => changeLocale("en")} aria-current={locale === "en" ? "true" : undefined}>{t("english")}</DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => changeLocale("zh")} aria-current={locale === "zh" ? "true" : undefined}>{t("chinese")}</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 

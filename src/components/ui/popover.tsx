@@ -11,6 +11,10 @@ function Popover({
   return <PopoverPrimitive.Root data-slot="popover" {...props} />
 }
 
+function PopoverClose({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Close>) {
+  return <PopoverPrimitive.Close data-slot="popover-close" {...props} />
+}
+
 function PopoverTrigger({
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
@@ -21,8 +25,10 @@ function PopoverContent({
   className,
   align = "center",
   sideOffset = 4,
+  showArrow = false,
+  children,
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Content>) {
+}: React.ComponentProps<typeof PopoverPrimitive.Content> & { showArrow?: boolean }) {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
@@ -34,7 +40,10 @@ function PopoverContent({
           className
         )}
         {...props}
-      />
+      >
+        {children}
+        {showArrow && <PopoverPrimitive.Arrow className="fill-popover" />}
+      </PopoverPrimitive.Content>
     </PopoverPrimitive.Portal>
   )
 }
@@ -80,6 +89,7 @@ function PopoverDescription({
 
 export {
   Popover,
+  PopoverClose,
   PopoverAnchor,
   PopoverContent,
   PopoverDescription,

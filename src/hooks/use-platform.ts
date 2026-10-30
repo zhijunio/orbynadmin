@@ -14,6 +14,7 @@ export function useIsMac() {
     };
     const platform =
       nav.userAgentData?.platform || nav.platform || nav.userAgent || "";
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMac(/mac|iphone|ipad|ipod/i.test(platform));
   }, []);
   return isMac;

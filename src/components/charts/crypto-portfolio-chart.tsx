@@ -1,65 +1,22 @@
 "use client";
 
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { useMemo } from "react";
+import type { ApexOptions } from "apexcharts";
+import { ApexChart } from "@/components/charts/apex-chart";
 
-const config = {
-  value: { label: "Portfolio", color: "var(--chart-1)" },
-} satisfies ChartConfig;
+export function CryptoPortfolioChart({ data }: { data: { t: string; value: number }[] }) {
+  const options = useMemo<ApexOptions>(() => ({
+    chart: { type: "area", toolbar: { show: false }, fontFamily: "inherit", background: "transparent" },
+    colors: ["var(--chart-1)"],
+    dataLabels: { enabled: false },
+    stroke: { curve: "smooth", width: 2 },
+    fill: { type: "gradient", gradient: { opacityFrom: 0.35, opacityTo: 0.02 } },
+    grid: { borderColor: "var(--border)", strokeDashArray: 3 },
+    xaxis: { categories: data.map(({ t }) => t), tickAmount: 6, axisBorder: { show: false }, axisTicks: { show: false }, labels: { style: { colors: "var(--muted-foreground)" } } },
+    yaxis: { min: Math.min(...data.map(({ value }) => value)) - 4000, max: Math.max(...data.map(({ value }) => value)) + 2000, labels: { formatter: (value) => `$${(value / 1000).toFixed(0)}k`, style: { colors: "var(--muted-foreground)" } } },
+    tooltip: { y: { formatter: (value) => `$${Number(value ?? 0).toLocaleString()}` } },
+    legend: { show: false },
+  }), [data]);
 
-export function CryptoPortfolioChart({
-  data,
-}: {
-  data: { t: string; value: number }[];
-}) {
-  return (
-    <ChartContainer config={config} className="aspect-auto h-[280px] w-full">
-      <AreaChart data={data} margin={{ left: 4, right: 8, top: 8 }}>
-        <defs>
-          <linearGradient id="fillPortfolio" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--chart-1)" stopOpacity={0.35} />
-            <stop offset="100%" stopColor="var(--chart-1)" stopOpacity={0.02} />
-          </linearGradient>
-        </defs>
-        <CartesianGrid vertical={false} strokeDasharray="3 3" />
-        <XAxis
-          dataKey="t"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={10}
-          minTickGap={28}
-          interval="preserveStartEnd"
-        />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          width={48}
-          domain={["dataMin - 4000", "dataMax + 2000"]}
-          tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
-        />
-        <ChartTooltip
-          cursor={false}
-          content={
-            <ChartTooltipContent
-              indicator="dot"
-              formatter={(v) => `$${Number(v).toLocaleString()}`}
-            />
-          }
-        />
-        <Area
-          dataKey="value"
-          type="monotone"
-          fill="url(#fillPortfolio)"
-          stroke="var(--chart-1)"
-          strokeWidth={2}
-        />
-      </AreaChart>
-    </ChartContainer>
-  );
+  return <ApexChart options={options} series={[{ name: "Portfolio", data: data.map(({ value }) => value) }]} type="area" height={280} />;
 }

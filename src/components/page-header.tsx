@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 export function PageHeader({
@@ -11,6 +14,10 @@ export function PageHeader({
   children?: React.ReactNode;
   className?: string;
 }) {
+  const t = useTranslations("PageTitles");
+  const localizedTitle = t.has(title) ? t(title) : title;
+  const localizedDescription = description && t.has(description) ? t(description) : description;
+
   return (
     <div
       className={cn(
@@ -19,9 +26,9 @@ export function PageHeader({
       )}
     >
       <div className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-        {description && (
-          <p className="text-sm text-muted-foreground">{description}</p>
+        <h1 className="text-2xl font-semibold tracking-tight">{localizedTitle}</h1>
+        {localizedDescription && (
+          <p className="text-sm text-muted-foreground">{localizedDescription}</p>
         )}
       </div>
       {children && (

@@ -1,29 +1,24 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { useMemo } from "react";
+import type { ApexOptions } from "apexcharts";
+import { ApexChart } from "@/components/charts/apex-chart";
 import { visitorsByDay } from "@/data";
 
-const config = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-  mobile: { label: "Mobile", color: "var(--chart-3)" },
-} satisfies ChartConfig;
-
 export function VisitorsBarChart() {
-  return (
-    <ChartContainer config={config} className="aspect-auto h-[280px] w-full">
-      <BarChart data={visitorsByDay} margin={{ top: 8 }}>
-        <CartesianGrid vertical={false} strokeDasharray="3 3" />
-        <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={10} />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-        <Bar dataKey="desktop" fill="var(--chart-1)" radius={[4, 4, 0, 0]} />
-        <Bar dataKey="mobile" fill="var(--chart-3)" radius={[4, 4, 0, 0]} />
-      </BarChart>
-    </ChartContainer>
-  );
+  const options = useMemo<ApexOptions>(() => ({
+    chart: { type: "bar", toolbar: { show: false }, fontFamily: "inherit", background: "transparent" },
+    colors: ["var(--chart-1)", "var(--chart-3)"],
+    plotOptions: { bar: { borderRadius: 4, columnWidth: "48%" } },
+    dataLabels: { enabled: false },
+    grid: { borderColor: "var(--border)", strokeDashArray: 3 },
+    xaxis: { categories: visitorsByDay.map(({ date }) => date), axisBorder: { show: false }, axisTicks: { show: false }, labels: { style: { colors: "var(--muted-foreground)" } } },
+    yaxis: { labels: { style: { colors: "var(--muted-foreground)" } } },
+    legend: { position: "top", horizontalAlign: "left" },
+  }), []);
+
+  return <ApexChart options={options} series={[
+    { name: "Desktop", data: visitorsByDay.map(({ desktop }) => desktop) },
+    { name: "Mobile", data: visitorsByDay.map(({ mobile }) => mobile) },
+  ]} type="bar" height={280} />;
 }

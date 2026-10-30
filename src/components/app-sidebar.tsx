@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { IconChevronRight } from "@tabler/icons-react";
 
 import { cn } from "@/lib/utils";
@@ -34,7 +35,9 @@ import {
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const t = useTranslations("Navigation");
   const { config } = useThemeConfig();
+  const translate = (value: string) => t.has(value) ? t(value) : value;
 
   return (
     <Sidebar
@@ -48,10 +51,10 @@ export function AppSidebar() {
       <SidebarContent className="overscroll-contain">
         {navGroups.map((group) => (
           <SidebarGroup key={group.label}>
-            <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+            <SidebarGroupLabel>{translate(group.label)}</SidebarGroupLabel>
             <SidebarMenu>
               {group.items.map((item) => (
-                <NavEntry key={item.title} item={item} pathname={pathname} />
+                <NavEntry key={item.title} item={item} pathname={pathname} translate={translate} />
               ))}
             </SidebarMenu>
           </SidebarGroup>
@@ -72,7 +75,7 @@ function badgeClass(badge: string) {
     : "bg-primary px-1.5 text-[10px] font-semibold text-primary-foreground peer-hover/menu-button:text-primary-foreground peer-data-active/menu-button:text-primary-foreground";
 }
 
-function NavEntry({ item, pathname }: { item: NavItem; pathname: string }) {
+function NavEntry({ item, pathname, translate }: { item: NavItem; pathname: string; translate: (value: string) => string }) {
   const { setOpenMobile } = useSidebar();
   const closeMobile = () => setOpenMobile(false);
 
@@ -87,9 +90,9 @@ function NavEntry({ item, pathname }: { item: NavItem; pathname: string }) {
       >
         <SidebarMenuItem>
           <CollapsibleTrigger asChild>
-            <SidebarMenuButton tooltip={item.title} isActive={childActive}>
+            <SidebarMenuButton tooltip={translate(item.title)} isActive={childActive}>
               {item.icon && <item.icon className="size-4" />}
-              <span>{item.title}</span>
+              <span>{translate(item.title)}</span>
               {item.badge && (
                 <SidebarMenuBadge
                   className={cn(
@@ -108,8 +111,9 @@ function NavEntry({ item, pathname }: { item: NavItem; pathname: string }) {
               {item.items.map((sub) => (
                 <SidebarMenuSubItem key={sub.title}>
                   <SidebarMenuSubButton asChild isActive={pathname === sub.url}>
-                    <Link href={sub.url} onClick={closeMobile}>
-                      {sub.title}
+                    <Link href={sub.url} onClick={closeMobile} className="flex items-center justify-between gap-2">
+                      <span>{translate(sub.title)}</span>
+                      {sub.badge && <span className="rounded bg-primary px-1.5 py-0.5 text-[9px] leading-none font-semibold text-primary-foreground">{sub.badge}</span>}
                     </Link>
                   </SidebarMenuSubButton>
                 </SidebarMenuSubItem>
@@ -127,10 +131,10 @@ function NavEntry({ item, pathname }: { item: NavItem; pathname: string }) {
     (item.url !== "/dashboard" && !!item.url && pathname.startsWith(item.url));
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild isActive={active} tooltip={item.title}>
+      <SidebarMenuButton asChild isActive={active} tooltip={translate(item.title)}>
         <Link href={item.url ?? "#"} onClick={closeMobile}>
           {item.icon && <item.icon className="size-4" />}
-          <span>{item.title}</span>
+          <span>{translate(item.title)}</span>
         </Link>
       </SidebarMenuButton>
       {item.badge && (

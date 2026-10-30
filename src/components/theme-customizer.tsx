@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import {
   IconCopy,
@@ -12,8 +13,6 @@ import {
 } from "@tabler/icons-react";
 
 import {
-  type ThemeConfig,
-  defaultConfig,
   accents,
   radii,
   fonts,
@@ -22,6 +21,7 @@ import {
   contentLayouts,
   buildThemeCss,
 } from "@/lib/theme-config";
+import { useThemeConfigStore } from "@/stores/theme-config-store";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -34,57 +34,32 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
-// ---------------------------------------------------------------------------
-// Context
-// ---------------------------------------------------------------------------
-
-type Ctx = {
-  config: ThemeConfig;
-  setConfig: React.Dispatch<React.SetStateAction<ThemeConfig>>;
-  reset: () => void;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const ThemeConfigContext = React.createContext<Ctx | null>(null);
-
 export function useThemeConfig() {
-  const ctx = React.useContext(ThemeConfigContext);
-  if (!ctx) {
-    // Safe fallback so components work outside the provider (e.g. tests).
-    return {
-      config: defaultConfig,
-      setConfig: () => {},
-      reset: () => {},
-      open: false,
-      setOpen: () => {},
-    } as Ctx;
-  }
-  return ctx;
+  return {
+    config: useThemeConfigStore((state) => state.config),
+    setConfig: useThemeConfigStore((state) => state.setConfig),
+    reset: useThemeConfigStore((state) => state.reset),
+    open: useThemeConfigStore((state) => state.open),
+    setOpen: useThemeConfigStore((state) => state.setOpen),
+  };
 }
-
-const STORAGE_KEY = "orbynadmin-theme-config";
 
 export function ThemeConfigProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [config, setConfig] = React.useState<ThemeConfig>(defaultConfig);
-  const [open, setOpen] = React.useState(false);
+  const config = useThemeConfigStore((state) => state.config);
+  const configLoaded = useThemeConfigStore((state) => state.hydrated);
 
-  // Load persisted config once on mount.
   React.useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setConfig({ ...defaultConfig, ...JSON.parse(raw) });
-    } catch {
-      // ignore
-    }
+    void useThemeConfigStore.persist.rehydrate();
   }, []);
 
   // Apply config to the document + persist.
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
+    if (!configLoaded) return;
+
     const root = document.documentElement;
     const accent = accents.find((a) => a.key === config.accent);
     const props = [
@@ -93,6 +68,7 @@ export function ThemeConfigProvider({
       "--ring",
       "--sidebar-primary",
       "--sidebar-ring",
+      "--chart-1",
     ];
     if (accent?.primary) {
       root.style.setProperty("--primary", accent.primary);
@@ -100,6 +76,7 @@ export function ThemeConfigProvider({
       root.style.setProperty("--ring", accent.primary);
       root.style.setProperty("--sidebar-primary", accent.primary);
       root.style.setProperty("--sidebar-ring", accent.primary);
+      root.style.setProperty("--chart-1", accent.primary);
     } else {
       props.forEach((p) => root.style.removeProperty(p));
     }
@@ -112,22 +89,8 @@ export function ThemeConfigProvider({
 
     root.dataset.content = config.contentLayout;
 
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
-    } catch {
-      // ignore
-    }
-  }, [config]);
-
-  const reset = React.useCallback(() => setConfig(defaultConfig), []);
-
-  return (
-    <ThemeConfigContext.Provider
-      value={{ config, setConfig, reset, open, setOpen }}
-    >
-      {children}
-    </ThemeConfigContext.Provider>
-  );
+  }, [config, configLoaded]);
+  return children;
 }
 
 /** Colorful color-wheel button for the header, next to the theme toggle. */
@@ -195,12 +158,13 @@ function OptionButton({
 export function ThemeCustomizer() {
   const { config, setConfig, reset, open, setOpen } = useThemeConfig();
   const { theme, setTheme } = useTheme();
+  const t = useTranslations("ThemeCustomizer");
 
   function copyConfig() {
     const css = buildThemeCss(config);
     navigator.clipboard.writeText(css).then(
-      () => toast.success("Theme copied", { description: "Paste it into your globals.css" }),
-      () => toast.error("Could not copy to clipboard")
+      () => toast.success(t("copied"), { description: t("copyHint") }),
+      () => toast.error(t("copyFailed"))
     );
   }
 
@@ -208,29 +172,29 @@ export function ThemeCustomizer() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-sm">
         <SheetHeader className="shrink-0 border-b">
-          <SheetTitle>Customize</SheetTitle>
+          <SheetTitle>{t("title")}</SheetTitle>
           <SheetDescription>
-            Tune the theme and copy the config into your project.
+            {t("description")}
           </SheetDescription>
         </SheetHeader>
 
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
           <div className="space-y-6 p-4">
-            <Section label="Mode">
+            <Section label={t("mode")}>
               <div className="grid grid-cols-3 gap-2">
                 <OptionButton active={theme === "light"} onClick={() => setTheme("light")}>
-                  <IconSun className="size-4" /> Light
+                  <IconSun className="size-4" /> {t("light")}
                 </OptionButton>
                 <OptionButton active={theme === "dark"} onClick={() => setTheme("dark")}>
-                  <IconMoon className="size-4" /> Dark
+                  <IconMoon className="size-4" /> {t("dark")}
                 </OptionButton>
                 <OptionButton active={theme === "system"} onClick={() => setTheme("system")}>
-                  <IconDeviceDesktop className="size-4" /> Auto
+                  <IconDeviceDesktop className="size-4" /> {t("auto")}
                 </OptionButton>
               </div>
             </Section>
 
-            <Section label="Accent color">
+            <Section label={t("accentColor")}>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-2">
                 {accents.map((a) => (
                   <button
@@ -248,13 +212,13 @@ export function ThemeCustomizer() {
                       className="size-4 shrink-0 rounded-full"
                       style={{ background: a.swatch }}
                     />
-                    <span className="truncate">{a.label}</span>
+                    <span className="truncate">{t.has(a.label) ? t(a.label) : a.label}</span>
                   </button>
                 ))}
               </div>
             </Section>
 
-            <Section label="Radius">
+            <Section label={t("radius")}>
               <div className="grid grid-cols-6 gap-2">
                 {radii.map((r) => (
                   <OptionButton
@@ -268,7 +232,7 @@ export function ThemeCustomizer() {
               </div>
             </Section>
 
-            <Section label="Font">
+            <Section label={t("font")}>
               <div className="grid grid-cols-2 gap-2">
                 {fonts.map((f) => (
                   <OptionButton
@@ -284,7 +248,7 @@ export function ThemeCustomizer() {
 
             <Separator />
 
-            <Section label="Sidebar style">
+            <Section label={t("sidebarStyle")}>
               <div className="grid grid-cols-3 gap-2">
                 {sidebarVariants.map((v) => (
                   <OptionButton
@@ -294,13 +258,13 @@ export function ThemeCustomizer() {
                       setConfig((c) => ({ ...c, sidebarVariant: v.key }))
                     }
                   >
-                    {v.label}
+                    {t.has(v.label) ? t(v.label) : v.label}
                   </OptionButton>
                 ))}
               </div>
             </Section>
 
-            <Section label="Sidebar collapse">
+            <Section label={t("sidebarCollapse")}>
               <div className="grid grid-cols-2 gap-2">
                 {collapsibleModes.map((m) => (
                   <OptionButton
@@ -310,13 +274,13 @@ export function ThemeCustomizer() {
                       setConfig((c) => ({ ...c, sidebarCollapsible: m.key }))
                     }
                   >
-                    {m.label}
+                    {m.key === "icon" ? t("icon") : t("offCanvas")}
                   </OptionButton>
                 ))}
               </div>
             </Section>
 
-            <Section label="Content layout">
+            <Section label={t("contentLayout")}>
               <div className="grid grid-cols-2 gap-2">
                 {contentLayouts.map((l) => (
                   <OptionButton
@@ -326,7 +290,7 @@ export function ThemeCustomizer() {
                       setConfig((c) => ({ ...c, contentLayout: l.key }))
                     }
                   >
-                    {l.label}
+                    {l.key === "full" ? t("fullWidth") : t("centered")}
                   </OptionButton>
                 ))}
               </div>
@@ -336,10 +300,10 @@ export function ThemeCustomizer() {
 
         <div className="flex shrink-0 gap-2 border-t p-4">
           <Button variant="outline" className="flex-1" onClick={reset}>
-            Reset
+            {t("reset")}
           </Button>
           <Button className="flex-1" onClick={copyConfig}>
-            <IconCopy className="size-4" /> Copy config
+            <IconCopy className="size-4" /> {t("copyConfig")}
           </Button>
         </div>
       </SheetContent>

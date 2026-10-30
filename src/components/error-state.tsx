@@ -73,7 +73,7 @@ export function ErrorState({
             </div>
           ) : null}
 
-          <p className="mt-8 select-none bg-gradient-to-b from-foreground to-muted-foreground/25 bg-clip-text text-[6.5rem] leading-none font-bold tracking-tighter text-transparent tabular-nums sm:text-[9rem]">
+          <p className="mt-8 select-none text-[6.5rem] leading-none font-bold tracking-tighter text-foreground tabular-nums sm:text-[9rem]">
             {code}
           </p>
 

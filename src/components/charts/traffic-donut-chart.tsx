@@ -1,67 +1,29 @@
 "use client";
 
-import * as React from "react";
-import { Label, Pie, PieChart } from "recharts";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { useMemo } from "react";
+import type { ApexOptions } from "apexcharts";
+import { ApexChart } from "@/components/charts/apex-chart";
 import { trafficSources } from "@/data";
 
-const config = {
-  value: { label: "Visitors" },
-  Organic: { label: "Organic", color: "var(--chart-1)" },
-  Direct: { label: "Direct", color: "var(--chart-2)" },
-  Referral: { label: "Referral", color: "var(--chart-3)" },
-  Social: { label: "Social", color: "var(--chart-4)" },
-  Email: { label: "Email", color: "var(--chart-5)" },
-} satisfies ChartConfig;
-
 export function TrafficDonutChart() {
-  const total = React.useMemo(
-    () => trafficSources.reduce((a, b) => a + b.value, 0),
-    []
-  );
+  const total = trafficSources.reduce((sum, item) => sum + item.value, 0);
+  const options = useMemo<ApexOptions>(() => ({
+    chart: { type: "donut", fontFamily: "inherit", background: "transparent", toolbar: { show: false } },
+    colors: ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"],
+    labels: trafficSources.map(({ source }) => source),
+    dataLabels: { enabled: false },
+    stroke: { width: 3, colors: ["var(--card)"] },
+    legend: { show: false },
+    plotOptions: { pie: { donut: { size: "68%", labels: { show: true, name: { show: false }, value: { show: false }, total: { show: true, label: "Visitors", formatter: () => `${(total / 1000).toFixed(1)}k`, color: "var(--foreground)" } } } } },
+    tooltip: { y: { formatter: (value) => Number(value ?? 0).toLocaleString() } },
+  }), [total]);
 
   return (
-    <ChartContainer config={config} className="mx-auto aspect-square h-[240px]">
-      <PieChart>
-        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-        <Pie
-          data={trafficSources}
-          dataKey="value"
-          nameKey="source"
-          innerRadius={60}
-          strokeWidth={4}
-        >
-          <Label
-            content={({ viewBox }) => {
-              if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                return (
-                  <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
-                    <tspan
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      className="fill-foreground text-2xl font-semibold"
-                    >
-                      {(total / 1000).toFixed(1)}k
-                    </tspan>
-                    <tspan
-                      x={viewBox.cx}
-                      y={(viewBox.cy || 0) + 20}
-                      className="fill-muted-foreground text-xs"
-                    >
-                      Visitors
-                    </tspan>
-                  </text>
-                );
-              }
-            }}
-          />
-        </Pie>
-      </PieChart>
-    </ChartContainer>
+    <ApexChart
+      options={options}
+      series={trafficSources.map(({ value }) => value)}
+      type="donut"
+      height={240}
+    />
   );
 }

@@ -1,70 +1,20 @@
 "use client";
 
-import { Label, Pie, PieChart } from "recharts";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { useMemo } from "react";
+import type { ApexOptions } from "apexcharts";
+import { ApexChart } from "@/components/charts/apex-chart";
 
-const config = {
-  value: { label: "Value" },
-} satisfies ChartConfig;
+export function CryptoAllocationChart({ data, total }: { data: { name: string; value: number; fill: string }[]; total: number }) {
+  const options = useMemo<ApexOptions>(() => ({
+    chart: { type: "donut", fontFamily: "inherit", background: "transparent", toolbar: { show: false } },
+    colors: data.map(({ fill }) => fill),
+    labels: data.map(({ name }) => name),
+    dataLabels: { enabled: false },
+    stroke: { width: 3, colors: ["var(--card)"] },
+    legend: { show: false },
+    plotOptions: { pie: { donut: { size: "68%", labels: { show: true, name: { show: false }, value: { show: false }, total: { show: true, label: "Total value", formatter: () => `$${(total / 1000).toFixed(1)}k`, color: "var(--foreground)" } } } } },
+    tooltip: { y: { formatter: (value) => `$${Number(value ?? 0).toLocaleString()}` } },
+  }), [data, total]);
 
-export function CryptoAllocationChart({
-  data,
-  total,
-}: {
-  data: { name: string; value: number; fill: string }[];
-  total: number;
-}) {
-  return (
-    <ChartContainer config={config} className="mx-auto aspect-square h-[220px]">
-      <PieChart>
-        <ChartTooltip
-          cursor={false}
-          content={
-            <ChartTooltipContent
-              hideLabel
-              formatter={(v, name) => `${name}  $${Number(v).toLocaleString()}`}
-            />
-          }
-        />
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="name"
-          innerRadius={62}
-          strokeWidth={4}
-          paddingAngle={2}
-        >
-          <Label
-            content={({ viewBox }) => {
-              if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                return (
-                  <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
-                    <tspan
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      className="fill-foreground text-xl font-semibold"
-                    >
-                      ${(total / 1000).toFixed(1)}k
-                    </tspan>
-                    <tspan
-                      x={viewBox.cx}
-                      y={(viewBox.cy || 0) + 20}
-                      className="fill-muted-foreground text-xs"
-                    >
-                      Total value
-                    </tspan>
-                  </text>
-                );
-              }
-            }}
-          />
-        </Pie>
-      </PieChart>
-    </ChartContainer>
-  );
+  return <ApexChart options={options} series={data.map(({ value }) => value)} type="donut" height={220} />;
 }
