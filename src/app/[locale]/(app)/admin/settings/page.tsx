@@ -6,7 +6,7 @@ import { IconBuilding, IconShieldLock } from "@tabler/icons-react";
 
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -54,7 +54,6 @@ export default function AdminSettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>{t("general.title")}</CardTitle>
-              <CardDescription>{t("general.description")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="space-y-2">
@@ -77,7 +76,6 @@ export default function AdminSettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>{t("security.mfaTitle")}</CardTitle>
-              <CardDescription>{t("security.mfaDescription")}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between gap-4">
@@ -96,7 +94,6 @@ export default function AdminSettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>{t("security.passwordTitle")}</CardTitle>
-              <CardDescription>{t("security.passwordDescription")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="max-w-xs space-y-2">

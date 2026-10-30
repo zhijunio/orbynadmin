@@ -409,7 +409,6 @@
         "teamActivityAnswer": "Open the project activity view to see recent changes, comments, and status updates."
       },
       "helpTitle": "How can we help?",
-      "searchHint": "Search common questions or browse a topic below.",
       "searchLabel": "Search FAQ",
       "searchPlaceholder": "Search frequently asked questions...",
       "noResults": "No questions match your search."
@@ -471,7 +470,6 @@
     "general": {
       "tab": "General",
       "title": "Installation identity",
-      "description": "Set the name and public address used by this installation.",
       "applicationName": "Application name",
       "baseUrl": "Base URL",
       "baseUrlHint": "Used when generating sign-in, email, and callback links."
@@ -479,11 +477,9 @@
     "security": {
       "tab": "Security",
       "mfaTitle": "Multi-factor authentication",
-      "mfaDescription": "Set the sign-in verification policy for administrator accounts.",
       "mfaLabel": "Require multi-factor authentication",
       "mfaHint": "Administrators must complete an additional verification step when this is enabled.",
       "passwordTitle": "Password policy",
-      "passwordDescription": "Set the minimum password requirements for accounts.",
       "minimumLength": "Minimum password length",
       "rules": { "uppercase": "Require an uppercase letter", "lowercase": "Require a lowercase letter", "number": "Require a number", "symbol": "Require a symbol" }
     }

@@ -1,7 +1,7 @@
 import { PageHeader } from "@/components/feature/layout/PageHeader";
 import { WashingtonMap } from "./_components/WashingtonMap";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin as IconMapPin } from "lucide-react";
 
 export const metadata = { title: "Maps" };
@@ -14,14 +14,12 @@ export default function MapViewPage() {
         <Card className="min-w-0">
           <CardHeader>
             <CardTitle className="text-sm">Map View</CardTitle>
-            <CardDescription>Interactive map showing the Washington D.C. metro area. Use arrow keys to pan and plus/minus keys to zoom.</CardDescription>
           </CardHeader>
           <CardContent><WashingtonMap /></CardContent>
         </Card>
         <Card className="min-w-0">
           <CardHeader>
             <CardTitle className="text-sm">Map 2</CardTitle>
-            <CardDescription>Clear view of locations at a glance.</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-[320px] overflow-hidden rounded-lg border bg-muted/30 sm:h-[380px]">
@@ -42,7 +40,6 @@ export default function MapViewPage() {
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-1">
               <CardTitle className="text-sm">Washington D.C. Region</CardTitle>
-              <CardDescription>Interactive map with Home and Office pinned.</CardDescription>
             </div>
             <Badge variant="secondary" className="gap-1.5"><IconMapPin className="size-3.5" /> 2 pinned locations</Badge>
           </div>

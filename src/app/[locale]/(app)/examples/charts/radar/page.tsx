@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/feature/layout/PageHeader";
 import dynamic from "next/dynamic";
 import type { ApexOptions } from "apexcharts";
@@ -30,12 +30,11 @@ function RadarChart({ series, categories, height = 300 }: { series: { name: stri
 const qualityCategories = ["Performance", "Reliability", "Security", "Usability", "Scalability", "Support"];
 const teamCategories = ["Delivery", "Quality", "Communication", "Ownership", "Planning"];
 
-function RadarCard({ title, description, categories, series }: { title: string; description: string; categories: string[]; series: { name: string; data: number[] }[] }) {
+function RadarCard({ title, categories, series }: { title: string; categories: string[]; series: { name: string; data: number[] }[] }) {
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-sm">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent><RadarChart categories={categories} series={series} /></CardContent>
     </Card>
@@ -49,7 +48,6 @@ export default function RadarChartPage() {
       <div className="grid gap-5 xl:grid-cols-2">
         <RadarCard
           title="Product Quality"
-          description="Current score compared with the target across six dimensions."
           categories={qualityCategories}
           series={[
             { name: "Current", data: [88, 74, 92, 81, 69, 85] },
@@ -58,7 +56,6 @@ export default function RadarChartPage() {
         />
         <RadarCard
           title="Team Performance"
-          description="Compare the delivery profile of two product teams."
           categories={teamCategories}
           series={[
             { name: "Platform", data: [86, 91, 78, 88, 80] },
@@ -68,7 +65,6 @@ export default function RadarChartPage() {
         <Card className="xl:col-span-2">
           <CardHeader>
             <CardTitle className="text-sm">Quarterly Skill Assessment</CardTitle>
-            <CardDescription>Three teams across product, engineering, and customer experience.</CardDescription>
           </CardHeader>
           <CardContent>
             <RadarChart

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PageHeader } from "@/components/feature/layout/PageHeader";
 import { VisitorsWorldMap } from "@/components/feature/maps/VisitorsWorldMap";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin as IconMapPin, Globe2 as IconWorld } from "lucide-react";
 
 const regions = [
@@ -28,7 +28,6 @@ export default function VectorMapPage() {
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <CardTitle className="text-sm">Region Labels</CardTitle>
-                <CardDescription className="mt-1">Select a country to view its customer distribution.</CardDescription>
               </div>
               <Badge variant="secondary" className="gap-1.5"><IconMapPin className="size-3.5" />{selectedRegion?.country ?? selectedRegions[0] ?? "Select a region"}</Badge>
             </div>
@@ -41,7 +40,6 @@ export default function VectorMapPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-sm"><IconWorld className="size-4 text-primary" />Customers by Region</CardTitle>
-            <CardDescription>{selectedRegion ? `${selectedRegion.country} is selected · ${selectedRegion.share} of active customers` : "Active customer distribution by country"}</CardDescription>
           </CardHeader>
           <CardContent className="divide-y">
             {regions.map((region, index) => {

@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -307,7 +306,6 @@ export default function ActivityPage() {
               <CardTitle className="flex items-center gap-2 text-sm">
                 <IconActivity className="size-4" /> Activity summary
               </CardTitle>
-              <CardDescription>Last 7 days across your workspace</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="flex items-end justify-between">
@@ -355,7 +353,6 @@ export default function ActivityPage() {
           <Card>
             <CardHeader>
               <CardTitle className="text-sm">Top contributors</CardTitle>
-              <CardDescription>Most active teammates this week</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {contributors.map(({ actor, count }) => (

@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/feature/layout/PageHeader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { CreditCard as IconCreditCard, Info as IconInfoCircle, Lock as IconLock, Users as IconUsers } from "lucide-react";
 
@@ -34,7 +34,6 @@ export default function FAQPage() {
         <CardHeader className="mx-auto w-full max-w-2xl text-center">
           <span className="mx-auto flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary"><IconInfoCircle className="size-6" /></span>
           <CardTitle className="text-2xl">{t("helpTitle")}</CardTitle>
-          <CardDescription>{t("searchHint")}</CardDescription>
           <Input aria-label={t("searchLabel")} placeholder={t("searchPlaceholder")} className="mt-2 w-full" value={query} onChange={(event) => setQuery(event.target.value)} />
         </CardHeader>
         <CardContent className="grid gap-4 lg:grid-cols-2">

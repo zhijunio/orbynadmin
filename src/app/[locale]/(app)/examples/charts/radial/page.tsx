@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/feature/layout/PageHeader";
 import dynamic from "next/dynamic";
 import type { ApexOptions } from "apexcharts";
@@ -33,25 +33,25 @@ export default function RadialChartPage() {
       <PageHeader title="Radial Charts" />
       <div className="grid gap-5 xl:grid-cols-3">
         <Card>
-          <CardHeader><CardTitle className="text-sm">Sales Goal</CardTitle><CardDescription>Monthly target attainment</CardDescription></CardHeader>
+          <CardHeader><CardTitle className="text-sm">Sales Goal</CardTitle></CardHeader>
           <CardContent><RadialChart values={[78]} labels={["Sales"]} compact /></CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-sm">Customer Satisfaction</CardTitle><CardDescription>Positive feedback this quarter</CardDescription></CardHeader>
+          <CardHeader><CardTitle className="text-sm">Customer Satisfaction</CardTitle></CardHeader>
           <CardContent><RadialChart values={[92]} labels={["Satisfaction"]} compact /></CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-sm">On-time Delivery</CardTitle><CardDescription>Shipments delivered on schedule</CardDescription></CardHeader>
+          <CardHeader><CardTitle className="text-sm">On-time Delivery</CardTitle></CardHeader>
           <CardContent><RadialChart values={[84]} labels={["On time"]} compact /></CardContent>
         </Card>
       </div>
       <div className="grid gap-5 lg:grid-cols-2">
         <Card>
-          <CardHeader><CardTitle className="text-sm">Team Progress</CardTitle><CardDescription>Completion across active initiatives</CardDescription></CardHeader>
+          <CardHeader><CardTitle className="text-sm">Team Progress</CardTitle></CardHeader>
           <CardContent><RadialChart values={[86, 72, 64, 91]} labels={["Platform", "Mobile", "Website", "Operations"]} height={340} /></CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle className="text-sm">Service Health</CardTitle><CardDescription>Availability and operational service indicators</CardDescription></CardHeader>
+          <CardHeader><CardTitle className="text-sm">Service Health</CardTitle></CardHeader>
           <CardContent><RadialChart values={[99.9, 96, 88]} labels={["Uptime", "API success", "Capacity"]} height={340} /></CardContent>
         </Card>
       </div>

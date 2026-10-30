@@ -19,7 +19,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -213,12 +212,6 @@ export default function DataTableExamplePage() {
           <CardTitle className="flex items-center gap-2 text-sm">
             <IconTable className="size-4" /> Customers
           </CardTitle>
-          <CardDescription>
-            Click a column header to sort, use the View menu to toggle columns,
-            select rows with the checkboxes, and search by name. The same
-            <span className="font-medium text-foreground"> DataTable </span>
-            component powers every list in this template.
-          </CardDescription>
         </CardHeader>
         <CardContent>
           <DataTable
