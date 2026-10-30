@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
 import { IconChevronRight } from "@tabler/icons-react";
 
 import { cn } from "@/lib/utils";

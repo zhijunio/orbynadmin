@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname as useLocalizedPathname, useRouter as useLocalizedRouter } from "@/i18n/navigation";
 import {
@@ -73,7 +73,7 @@ const CRUMB_LABELS: Record<string, string> = {
 };
 
 function useBreadcrumb() {
-  const pathname = usePathname();
+  const pathname = useLocalizedPathname();
   const segments = pathname.split("/").filter(Boolean);
   return segments.map(
     (s) =>

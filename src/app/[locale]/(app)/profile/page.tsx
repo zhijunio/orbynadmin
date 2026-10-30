@@ -1,286 +1,97 @@
-import Link from "next/link";
-import {
-  IconMapPin,
-  IconMail,
-  IconPhone,
-  IconWorld,
-  IconCalendar,
-  IconBrandGithub,
-  IconBrandLinkedin,
-  IconBrandX,
-  IconBrandDribbble,
-  IconArrowUpRight,
-  IconRosetteDiscountCheckFilled,
-} from "@tabler/icons-react";
+"use client";
 
+import { useState } from "react";
+import Link from "next/link";
+import { IconArrowUpRight, IconBuilding, IconMail, IconMapPin, IconShieldCheck, IconUser } from "@tabler/icons-react";
+
+import { PageHeader } from "@/components/feature/layout/PageHeader";
 import { ProfileActions } from "./profile-actions";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { currentUser, recentActivity, productList } from "@/data";
+import { currentUser, team } from "@/data";
 
-export const metadata = { title: "Profile" };
-
-const stats = [
-  { label: "Projects", value: 48 },
-  { label: "Followers", value: 2384 },
-  { label: "Following", value: 312 },
-];
-
-const skills = [
-  "Product Strategy",
-  "UI/UX Design",
-  "Figma",
-  "TypeScript",
-  "React",
-  "Analytics",
-  "Team Leadership",
-  "Roadmapping",
-];
-
-const socials = [
-  { label: "GitHub", handle: "@alexmorgan", icon: IconBrandGithub, href: "#" },
-  { label: "LinkedIn", handle: "in/alexmorgan", icon: IconBrandLinkedin, href: "#" },
-  { label: "X", handle: "@alex_morgan", icon: IconBrandX, href: "#" },
-  { label: "Dribbble", handle: "alexmorgan", icon: IconBrandDribbble, href: "#" },
-];
-
-const about = [
-  { label: "Email", value: currentUser.email, icon: IconMail },
-  { label: "Phone", value: "+1 (415) 555-0138", icon: IconPhone },
-  { label: "Website", value: "alexmorgan.design", icon: IconWorld },
-  { label: "Joined", value: "March 2021", icon: IconCalendar },
-];
+const account = team.find((member) => member.name === currentUser.name);
 
 export default function ProfilePage() {
-  const projects = productList.slice(0, 4);
+  const [profile, setProfile] = useState({ name: currentUser.name, email: currentUser.email });
+  const accountDetails = [
+    { label: "Email address", value: profile.email, icon: IconMail },
+    { label: "Role", value: currentUser.role, icon: IconShieldCheck },
+    { label: "Department", value: account?.department ?? "—", icon: IconBuilding },
+    { label: "Location", value: account?.location ?? "—", icon: IconMapPin },
+  ];
 
   return (
     <div className="space-y-6">
-      <Card className="overflow-hidden pt-0">
-        {/* Cover banner — soft aurora mesh */}
-        <div className="relative h-36 overflow-hidden bg-zinc-950 sm:h-44">
-          <div
-            className="absolute inset-0"
-            style={{
-              opacity: 0.9,
-              backgroundImage:
-                "radial-gradient(45% 90% at 12% 20%, var(--chart-1), transparent 60%), radial-gradient(42% 85% at 55% 0%, var(--chart-5), transparent 55%), radial-gradient(55% 100% at 90% 75%, var(--chart-3), transparent 60%), radial-gradient(40% 80% at 78% 15%, var(--chart-4), transparent 55%)",
-            }}
-          />
-          <div className="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] [background-size:36px_36px]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-        </div>
+      <PageHeader title="Profile" />
 
-        <CardContent className="pt-0">
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-end">
-              <Avatar className="-mt-14 size-28 rounded-full sm:-mt-16 sm:size-32">
-                <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
-                <AvatarFallback className="rounded-full text-2xl">
-                  {currentUser.name.slice(0, 2)}
-                </AvatarFallback>
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)]">
+        <Card>
+          <CardHeader className="flex flex-row items-start justify-between gap-4">
+            <div className="flex min-w-0 items-center gap-4">
+              <Avatar className="size-16 shrink-0">
+              <AvatarImage src={currentUser.avatar} alt={profile.name} />
+              <AvatarFallback>{profile.name.slice(0, 2)}</AvatarFallback>
               </Avatar>
-              <div className="space-y-1.5 pb-1 text-center sm:pb-2 sm:text-left">
-                <div className="flex items-center justify-center gap-2 sm:justify-start">
-                  <h1 className="text-2xl font-semibold tracking-tight">
-                    {currentUser.name}
-                  </h1>
-                  <IconRosetteDiscountCheckFilled className="size-5 text-sky-500" />
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  {currentUser.role} · Product & Growth
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm text-muted-foreground sm:justify-start">
-                  <span className="flex items-center gap-1">
-                    <IconMapPin className="size-4" /> San Francisco, US
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <IconWorld className="size-4" /> alexmorgan.design
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <IconCalendar className="size-4" /> Joined Mar 2021
-                  </span>
-                </div>
+              <div className="min-w-0 space-y-1">
+                <CardTitle className="truncate text-lg">{profile.name}</CardTitle>
+                <p className="truncate text-sm text-muted-foreground">{profile.email}</p>
+                <Badge variant="secondary" className="mt-1">{currentUser.role}</Badge>
               </div>
             </div>
-            <ProfileActions />
-          </div>
-
-          <Separator className="my-6" />
-
-          <div className="mx-auto grid max-w-md grid-cols-3 divide-x sm:mx-0">
-            {stats.map((s) => (
-              <div key={s.label} className="px-4 text-center first:pl-0 last:pr-0">
-                <div className="text-2xl font-semibold tabular-nums tracking-tight">
-                  {s.value.toLocaleString()}
+            <ProfileActions name={profile.name} email={profile.email} onSave={setProfile} />
+          </CardHeader>
+          <CardContent>
+            <Separator className="mb-5" />
+            <dl className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+              {accountDetails.map(({ label, value, icon: Icon }) => (
+                <div key={label} className="flex min-w-0 items-start gap-3">
+                  <Icon className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+                  <div className="min-w-0">
+                    <dt className="text-xs text-muted-foreground">{label}</dt>
+                    <dd className="mt-1 truncate text-sm font-medium">{value}</dd>
+                  </div>
                 </div>
-                <div className="text-xs text-muted-foreground">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>About</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-sm">
-              <p className="text-muted-foreground">
-                Product leader focused on building delightful, data-driven
-                experiences. I partner with design and engineering to ship
-                products that customers love.
-              </p>
-              <Separator />
-              <ul className="space-y-3">
-                {about.map((a) => (
-                  <li key={a.label} className="flex items-center gap-3">
-                    <a.icon className="size-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">{a.label}</span>
-                    <span className="ml-auto font-medium">{a.value}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Skills</CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-wrap gap-2">
-              {skills.map((s) => (
-                <Badge key={s} variant="secondary">
-                  {s}
-                </Badge>
               ))}
-            </CardContent>
-          </Card>
+            </dl>
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Social</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-1">
-              {socials.map((s) => (
-                <Link
-                  key={s.label}
-                  href={s.href}
-                  className="flex items-center gap-3 rounded-lg px-2 py-2 text-sm transition-colors hover:bg-muted"
-                >
-                  <s.icon className="size-4 text-muted-foreground" />
-                  <span className="font-medium">{s.label}</span>
-                  <span className="ml-auto text-muted-foreground">
-                    {s.handle}
-                  </span>
-                </Link>
-              ))}
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="lg:col-span-2">
-          <Tabs defaultValue="overview">
-            <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="activity">Activity</TabsTrigger>
-              <TabsTrigger value="projects">Projects</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="overview" className="space-y-6">
-              <div className="grid gap-4 sm:grid-cols-2">
-                {projects.map((p) => (
-                  <Card key={p.id}>
-                    <CardHeader>
-                      <CardTitle className="text-base">{p.name}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground tabular-nums">
-                        {p.sold} contributions
-                      </span>
-                      <Badge
-                        variant="secondary"
-                        className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                      >
-                        Active
-                      </Badge>
-                    </CardContent>
-                  </Card>
-                ))}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Account management</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-start gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <IconUser className="size-4" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="text-sm font-medium">Personal information</p>
+                <p className="mt-1 text-sm text-muted-foreground">Manage the name and email shown across your workspace.</p>
               </div>
-            </TabsContent>
-
-            <TabsContent value="activity">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Activity Feed</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ol className="relative space-y-5 border-l pl-6">
-                    {recentActivity.map((a) => (
-                      <li key={a.id} className="relative">
-                        <span className="absolute -left-[31px] top-0.5">
-                          <Avatar className="size-6 ring-4 ring-background">
-                            <AvatarImage src={a.avatar} alt={a.user} />
-                            <AvatarFallback>{a.user.slice(0, 2)}</AvatarFallback>
-                          </Avatar>
-                        </span>
-                        <p className="text-sm">
-                          <span className="font-medium">{a.user}</span>{" "}
-                          {a.action}{" "}
-                          {a.target && (
-                            <span className="font-medium">{a.target}</span>
-                          )}
-                        </p>
-                        <span className="text-xs text-muted-foreground">
-                          {a.time}
-                        </span>
-                      </li>
-                    ))}
-                  </ol>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="projects">
-              <div className="grid gap-4 sm:grid-cols-2">
-                {productList.slice(0, 6).map((p) => (
-                  <Card key={p.id}>
-                    <CardHeader>
-                      <CardTitle className="text-base">{p.name}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground tabular-nums">
-                        ${p.price}
-                      </span>
-                      <Button variant="ghost" size="sm" asChild>
-                        <Link href="/products">
-                          View <IconArrowUpRight className="size-4" />
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
+            </div>
+            <Separator />
+            <div className="flex items-start gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+                <IconBuilding className="size-4" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="text-sm font-medium">Organization access</p>
+                <p className="mt-1 text-sm text-muted-foreground">Your role and team details are managed by your organization.</p>
               </div>
-            </TabsContent>
-          </Tabs>
-        </div>
+            </div>
+            <Button variant="outline" className="w-full justify-between" asChild>
+              <Link href="/settings">
+                Open account settings
+                <IconArrowUpRight className="size-4" aria-hidden="true" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

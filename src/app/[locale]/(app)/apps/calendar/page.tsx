@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import {
   IconChevronLeft,
@@ -37,6 +38,7 @@ type EventColor = "blue" | "emerald" | "amber" | "rose" | "violet";
 type CalEvent = {
   day: number;
   title: string;
+  translationKey?: string;
   time: string;
   color: EventColor;
 };
@@ -60,14 +62,14 @@ const colorPill: Record<EventColor, string> = {
 const eventColors: EventColor[] = ["blue", "emerald", "amber", "rose", "violet"];
 
 const initialEvents: CalEvent[] = [
-  { day: 3, title: "Design review", time: "10:00 AM", color: "violet" },
-  { day: 7, title: "Sprint planning", time: "9:30 AM", color: "blue" },
-  { day: 9, title: "1:1 with Emma", time: "2:00 PM", color: "emerald" },
-  { day: 14, title: "Product demo", time: "11:00 AM", color: "amber" },
-  { day: 17, title: "Board meeting", time: "3:00 PM", color: "rose" },
-  { day: 17, title: "Team lunch", time: "12:30 PM", color: "emerald" },
-  { day: 22, title: "Release v2.4", time: "All day", color: "blue" },
-  { day: 28, title: "Quarterly review", time: "1:00 PM", color: "violet" },
+  { day: 3, title: "Design review", translationKey: "designReview", time: "10:00 AM", color: "violet" },
+  { day: 7, title: "Sprint planning", translationKey: "sprintPlanning", time: "9:30 AM", color: "blue" },
+  { day: 9, title: "1:1 with Emma", translationKey: "oneOnOneEmma", time: "2:00 PM", color: "emerald" },
+  { day: 14, title: "Product demo", translationKey: "productDemo", time: "11:00 AM", color: "amber" },
+  { day: 17, title: "Board meeting", translationKey: "boardMeeting", time: "3:00 PM", color: "rose" },
+  { day: 17, title: "Team lunch", translationKey: "teamLunch", time: "12:30 PM", color: "emerald" },
+  { day: 22, title: "Release v2.4", translationKey: "releaseV24", time: "All day", color: "blue" },
+  { day: 28, title: "Quarterly review", translationKey: "quarterlyReview", time: "1:00 PM", color: "violet" },
 ];
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -76,6 +78,8 @@ const BASE_MONTH = 6; // July (0-indexed)
 const TODAY = 17;
 
 export default function CalendarPage() {
+  const locale = useLocale();
+  const tr = useTranslations("Apps.Calendar");
   const [events, setEvents] = useState<CalEvent[]>(initialEvents);
   const [monthOffset, setMonthOffset] = useState(0);
   const [selected, setSelected] = useState<number>(TODAY);
@@ -87,8 +91,13 @@ export default function CalendarPage() {
   const [evTime, setEvTime] = useState("");
   const [evColor, setEvColor] = useState<EventColor>("blue");
 
+  const eventTitle = (event: CalEvent) => {
+    const key = event.translationKey ? `events.${event.translationKey}` : "";
+    return key && tr.has(key) ? tr(key) : event.title;
+  };
+
   const view = new Date(BASE_YEAR, BASE_MONTH + monthOffset, 1);
-  const monthLabel = view.toLocaleDateString("en-US", {
+  const monthLabel = view.toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US", {
     month: "long",
     year: "numeric",
   });
@@ -136,13 +145,13 @@ export default function CalendarPage() {
     setMonthOffset(0); // events live in the base month — jump there so it shows
     setSelected(day);
     setAddOpen(false);
-    toast.success("Event added", { description: `${t} · Jul ${day}` });
+    toast.success(tr("eventAdded"), { description: `${t} · ${new Date(BASE_YEAR, BASE_MONTH, day).toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US", { month: "short", day: "numeric" })}` });
   }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold tracking-tight">Calendar</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{tr("title")}</h1>
         <div className="flex flex-wrap items-center gap-2">
           <div className="flex items-center rounded-md border">
             <Button
@@ -150,7 +159,7 @@ export default function CalendarPage() {
               size="icon"
               className="rounded-r-none"
               onClick={() => setMonthOffset((o) => o - 1)}
-              aria-label="Previous month"
+              aria-label={tr("previousMonth")}
             >
               <IconChevronLeft className="size-4" />
             </Button>
@@ -162,16 +171,16 @@ export default function CalendarPage() {
               size="icon"
               className="rounded-l-none"
               onClick={() => setMonthOffset((o) => o + 1)}
-              aria-label="Next month"
+              aria-label={tr("nextMonth")}
             >
               <IconChevronRight className="size-4" />
             </Button>
           </div>
           <Button variant="outline" onClick={goToday}>
-            Today
+            {tr("today")}
           </Button>
           <Button onClick={openAdd}>
-            <IconPlus className="size-4" /> New event
+            <IconPlus className="size-4" /> {tr("newEvent")}
           </Button>
         </div>
       </div>
@@ -186,7 +195,7 @@ export default function CalendarPage() {
                 key={d}
                 className="py-2.5 text-center text-xs font-medium text-muted-foreground"
               >
-                {d}
+                {tr(`weekdays.${d}`)}
               </div>
             ))}
           </div>
@@ -225,12 +234,12 @@ export default function CalendarPage() {
                             className="flex items-center gap-1 truncate rounded px-1 py-0.5 text-[11px]"
                           >
                             <span className={cn("size-1.5 shrink-0 rounded-full", colorDot[e.color])} />
-                            <span className="truncate text-muted-foreground">{e.title}</span>
+                            <span className="truncate text-muted-foreground">{eventTitle(e)}</span>
                           </div>
                         ))}
                         {dayEvents.length > 2 && (
                           <span className="px-1 text-[11px] text-muted-foreground">
-                            +{dayEvents.length - 2} more
+                            {tr("more", { count: dayEvents.length - 2 })}
                           </span>
                         )}
                       </div>
@@ -246,14 +255,14 @@ export default function CalendarPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Upcoming events</CardTitle>
+            <CardTitle className="text-base">{tr("upcoming")}</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <ScrollArea className="h-[440px]">
               <div className="space-y-1 px-4 pb-4">
                 {upcoming.length === 0 && (
                   <p className="px-2.5 py-6 text-center text-sm text-muted-foreground">
-                    No upcoming events.
+                    {tr("noUpcoming")}
                   </p>
                 )}
                 {upcoming.map((e, i) => (
@@ -262,14 +271,14 @@ export default function CalendarPage() {
                     className="flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-muted/50"
                   >
                     <div className="flex flex-col items-center rounded-md bg-muted px-2 py-1">
-                      <span className="text-[10px] uppercase text-muted-foreground">Jul</span>
+                      <span className="text-[10px] uppercase text-muted-foreground">{new Date(BASE_YEAR, BASE_MONTH, e.day).toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US", { month: "short" })}</span>
                       <span className="text-sm font-semibold tabular-nums">{e.day}</span>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium">{e.title}</p>
+                      <p className="truncate text-sm font-medium">{eventTitle(e)}</p>
                       <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
                         <IconClock className="size-3" />
-                        {e.time}
+                        {e.time === "All day" ? tr("allDay") : e.time}
                       </p>
                     </div>
                     <Badge variant="secondary" className={colorPill[e.color]}>
@@ -286,19 +295,19 @@ export default function CalendarPage() {
       <Dialog open={addOpen} onOpenChange={setAddOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>New event</DialogTitle>
+            <DialogTitle>{tr("newEvent")}</DialogTitle>
             <DialogDescription>
-              Add an event to July {BASE_YEAR}.
+              {tr("addEventDescription", { month: new Date(BASE_YEAR, BASE_MONTH, 1).toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US", { month: "long" }), year: BASE_YEAR })}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="ev-title">Title</Label>
+              <Label htmlFor="ev-title">{tr("eventTitle")}</Label>
               <Input
                 id="ev-title"
                 value={evTitle}
                 onChange={(e) => setEvTitle(e.target.value)}
-                placeholder="What's the occasion?"
+                placeholder={tr("eventPlaceholder")}
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.nativeEvent.isComposing) addEvent();
@@ -307,7 +316,7 @@ export default function CalendarPage() {
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="ev-day">Day</Label>
+                <Label htmlFor="ev-day">{tr("day")}</Label>
                 <Input
                   id="ev-day"
                   type="number"
@@ -318,7 +327,7 @@ export default function CalendarPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="ev-time">Time</Label>
+                <Label htmlFor="ev-time">{tr("time")}</Label>
                 <Input
                   id="ev-time"
                   value={evTime}
@@ -327,7 +336,7 @@ export default function CalendarPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Color</Label>
+                <Label>{tr("color")}</Label>
                 <Select value={evColor} onValueChange={(v) => setEvColor(v as EventColor)}>
                   <SelectTrigger className="w-full">
                     <SelectValue />
@@ -337,7 +346,7 @@ export default function CalendarPage() {
                       <SelectItem key={c} value={c}>
                         <span className="flex items-center gap-2">
                           <span className={cn("size-2.5 rounded-full", colorDot[c])} />
-                          <span className="capitalize">{c}</span>
+                        <span>{tr(`colors.${c}`)}</span>
                         </span>
                       </SelectItem>
                     ))}
@@ -348,10 +357,10 @@ export default function CalendarPage() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setAddOpen(false)}>
-              Cancel
+              {tr("cancel")}
             </Button>
             <Button onClick={addEvent} disabled={!evTitle.trim()}>
-              Add event
+              {tr("addEvent")}
             </Button>
           </DialogFooter>
         </DialogContent>

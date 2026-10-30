@@ -23,6 +23,7 @@
     "date-fns": "^4.4.0",
     "lucide-react": "^1.61.0",
     "maplibre-gl": "^6.14.0",
+    "motion": "^14.8.0",
     "next": "^16.4.0",
     "next-intl": "^4.14.9",
     "next-themes": "^0.4.6",
@@ -49,5 +50,5 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "description": "OrbynAdmin — a free & open-source admin dashboard template built with Next.js 16, Tailwind CSS v4 and shadcn/ui."
+  "description": "OrbynAdmin — an open-source enterprise admin dashboard starter built with Next.js 16, React 19, Tailwind CSS v4 and shadcn/ui."
 }

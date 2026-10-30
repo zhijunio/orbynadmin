@@ -41,8 +41,8 @@ function InputStatesExample() {
   return <ExampleCard title="Input states"><div className="grid gap-4 sm:grid-cols-2">
     <Field label="With leading icon" id="state-icon"><InputGroup className="h-10"><InputGroupAddon><IconSearch /></InputGroupAddon><InputGroupInput id="state-icon" placeholder="Search projects..." /></InputGroup></Field>
     <Field label="Disabled" id="state-disabled"><Input className="h-10" id="state-disabled" defaultValue="Locked value" disabled /></Field>
-    <Field label="With helper text" id="state-help" hint="Use 24 characters or fewer, no spaces."><Input className="h-10" id="state-help" defaultValue="nextboard-production" /></Field>
-    <Field label="Error state" id="state-error" error="Enter a valid email address."><InputGroup className="h-10 border-destructive ring-3 ring-destructive/20"><InputGroupAddon><IconAlertCircle className="text-destructive" /></InputGroupAddon><InputGroupInput id="state-error" aria-invalid defaultValue="alex@nextboard" /></InputGroup></Field>
+    <Field label="With helper text" id="state-help" hint="Use 24 characters or fewer, no spaces."><Input className="h-10" id="state-help" defaultValue="orbynadmin-production" /></Field>
+    <Field label="Error state" id="state-error" error="Enter a valid email address."><InputGroup className="h-10 border-destructive ring-3 ring-destructive/20"><InputGroupAddon><IconAlertCircle className="text-destructive" /></InputGroupAddon><InputGroupInput id="state-error" aria-invalid defaultValue="alex@orbynadmin" /></InputGroup></Field>
   </div></ExampleCard>;
 }
 

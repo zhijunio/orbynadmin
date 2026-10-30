@@ -2,7 +2,7 @@
 
 # OrbynAdmin
 
-A free and open-source admin dashboard template built with Next.js, React, Tailwind CSS and shadcn/ui. It ships with 100+ prebuilt pages and views, including 15 dashboards, commerce management, project management, productivity apps, examples and auth flows. Demo data lets you start building without first setting up tables, charts and forms.
+An open-source enterprise admin dashboard starter built with Next.js, React, Tailwind CSS and shadcn/ui. It includes management views for teams, roles, integrations, activity, support and operations, alongside industry dashboards and reusable examples. Demo data lets you explore the interface without first connecting a backend.
 
 Everything is MIT licensed. No pro tier, no locked components.
 
@@ -13,6 +13,8 @@ Everything is MIT licensed. No pro tier, no locked components.
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 **[Live demo](https://orbynadmin.vercel.app)** · [Getting started](#getting-started) · [What's included](#whats-included)
+
+[Nextboard page coverage and scope](docs/nextboard-parity.md)
 
 ![OrbynAdmin dashboard](docs/screenshots/orbynadmin-dashboard.png)
 
@@ -26,7 +28,8 @@ Everything is MIT licensed. No pro tier, no locked components.
 - Responsive down to mobile
 - Command palette (⌘K), collapsible sidebar with nested menus, workspace switcher and account menu
 - Interactive charts with [ApexCharts](https://apexcharts.com) and reusable tables built on [TanStack Table](https://tanstack.com/table)
-- English and Simplified Chinese interface support with [next-intl](https://next-intl.dev)
+- Conversation transitions use [Motion](https://motion.dev) and respect the system reduced-motion preference
+- English and Simplified Chinese locale routing with [next-intl](https://next-intl.dev); translations cover navigation, shared controls, page titles, Overview, AI and SaaS dashboards, system settings, notifications, Tasks, Calendar and selected examples, while several page bodies remain English
 - MapLibre maps, draggable Kanban boards and persisted theme preferences
 - Auth pages: login, register, forgot / reset password, OTP and lock screen
 - Written in TypeScript with locale-aware App Router routes
@@ -68,7 +71,7 @@ Everything is MIT licensed. No pro tier, no locked components.
 ## Getting started
 
 ```bash
-git clone https://github.com/masondevx/orbynadmin.git
+git clone https://github.com/zhijunio/orbynadmin.git
 cd orbynadmin
 npm install --legacy-peer-deps
 npm run dev
@@ -92,6 +95,8 @@ npm run start   # run the build
 - [dnd-kit](https://dndkit.com) for drag-and-drop interactions
 - [MapLibre GL](https://maplibre.org), React Map GL and [React JVectorMap](https://github.com/kadoshms/react-jvectormap) for interactive maps
 - [next-intl](https://next-intl.dev) for English and Simplified Chinese
+- [Motion](https://motion.dev) for focused interface transitions with reduced-motion support
+- Geist and Geist Mono served through [ZeoSeven Fonts](https://fonts.zeoseven.com) for web typography
 - [Zustand](https://zustand.docs.pmnd.rs) for persisted theme configuration
 - [Tabler Icons](https://tabler.io/icons)
 - [next-themes](https://github.com/pacocoursey/next-themes) for dark mode
@@ -129,11 +134,11 @@ All data is mock data. Replace `src/data/index.ts` (and the inline datasets on a
 
 ## Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/masondevx/orbynadmin)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/zhijunio/orbynadmin)
 
 ## Credits
 
-Cryptocurrency icons are the respective projects' own brand marks (trademarks of their owners), drawn as inline SVGs in the flat style popularized by [theSVG](https://thesvg.org) and the [cryptocurrency-icons](https://github.com/spothq/cryptocurrency-icons) set. Demo avatars are generated with [DiceBear](https://www.dicebear.com). All names, balances, prices and figures throughout the template are fictional and for demonstration only.
+Geist and Geist Mono are licensed under OFL-1.1 and served by [ZeoSeven Fonts](https://fonts.zeoseven.com). Cryptocurrency icons are the respective projects' own brand marks (trademarks of their owners), drawn as inline SVGs in the flat style popularized by [theSVG](https://thesvg.org) and the [cryptocurrency-icons](https://github.com/spothq/cryptocurrency-icons) set. Demo avatars are generated with [DiceBear](https://www.dicebear.com). All names, balances, prices and figures throughout the template are fictional and for demonstration only.
 
 ## License
 

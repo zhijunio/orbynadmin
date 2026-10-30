@@ -1,33 +1,20 @@
 "use client";
+import { team as teamMembers } from "@/data";
+import { getInitials } from "@/lib/text";
+import { demoAvatarUrl } from "@/lib/demo-avatar";
 
+import { Link } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
-import Link from "next/link";
-import { toast } from "sonner";
-import {
-  IconAt,
-  IconMessage2,
-  IconArrowRight,
-  IconUserPlus,
-  IconRocket,
-  IconCircleCheck,
-  IconStar,
-  IconPlus,
-  IconReceipt,
-  IconLogin,
-  IconFlag,
-  IconCreditCard,
-  IconAlertTriangle,
-  IconSearch,
-  IconChecks,
-  IconActivity,
-  IconTrendingUp,
-} from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
+import { toast } from "sonner";
+import { MessageSquare as IconMessage2, CircleCheck as IconCircleCheck, CreditCard as IconCreditCard, TriangleAlert as IconAlertTriangle, Search as IconSearch, ListChecks as IconChecks, Activity as IconActivity, TrendingUp as IconTrendingUp } from "lucide-react";
+
+import { PageHeader } from "@/components/feature/layout/PageHeader";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -36,30 +23,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { team } from "@/data";
-
-type TablerIcon = React.ComponentType<{ className?: string }>;
-type Category = "comment" | "task" | "billing" | "system";
-type Group = "today" | "yesterday" | "week";
-
-type Actor = { name: string; avatar: string };
-
-type Event = {
-  id: string;
-  group: Group;
-  category: Category;
-  actor?: Actor;
-  lead?: string;
-  icon: TablerIcon;
-  message: string;
-  target?: string;
-  href?: string;
-  meta?: string;
-  time: string;
-};
 
 const categoryMeta: Record<
-  Category,
+  ActivityCategory,
   { label: string; dot: string; icon: string; badge: string; text: string }
 > = {
   comment: {
@@ -92,225 +58,14 @@ const categoryMeta: Record<
   },
 };
 
-// Actors sourced from the team directory (deterministic — no Math.random).
-const tm = (i: number): Actor => ({ name: team[i].name, avatar: team[i].avatar });
-const olivia: Actor = { name: "Olivia Patel", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=5" };
-const ava: Actor = { name: "Ava Brooks", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=9" };
-
-const events: Event[] = [
-  // ---- Today ----
-  {
-    id: "e1",
-    group: "today",
-    category: "comment",
-    actor: tm(3),
-    icon: IconAt,
-    message: "mentioned you in",
-    target: "Mobile App Revamp",
-    href: "/apps",
-    time: "12 min ago",
-  },
-  {
-    id: "e2",
-    group: "today",
-    category: "task",
-    actor: tm(2),
-    icon: IconArrowRight,
-    message: "moved to In Review —",
-    target: "Implement metered usage events",
-    href: "/apps",
-    time: "40 min ago",
-  },
-  {
-    id: "e3",
-    group: "today",
-    category: "billing",
-    lead: "Payment received",
-    icon: IconCreditCard,
-    message: "for",
-    target: "INV-2043",
-    href: "/invoices",
-    meta: "from Northwind · $1,296.00",
-    time: "1 hour ago",
-  },
-  {
-    id: "e4",
-    group: "today",
-    category: "task",
-    actor: tm(0),
-    icon: IconUserPlus,
-    message: "assigned Emma Novak to",
-    target: "Add SSO / SAML provisioning",
-    href: "/apps",
-    time: "2 hours ago",
-  },
-  {
-    id: "e5",
-    group: "today",
-    category: "system",
-    lead: "Deployment succeeded",
-    icon: IconRocket,
-    message: "",
-    target: "web-app v2.14.0",
-    href: "#",
-    meta: "deployed to production · 3m 12s",
-    time: "2 hours ago",
-  },
-  {
-    id: "e6",
-    group: "today",
-    category: "comment",
-    actor: tm(1),
-    icon: IconMessage2,
-    message: "commented on",
-    target: "Website Redesign",
-    href: "/apps",
-    time: "3 hours ago",
-  },
-  {
-    id: "e7",
-    group: "today",
-    category: "task",
-    actor: tm(5),
-    icon: IconCircleCheck,
-    message: "completed",
-    target: "Audit accessibility (WCAG AA)",
-    href: "/apps",
-    time: "4 hours ago",
-  },
-  // ---- Yesterday ----
-  {
-    id: "e8",
-    group: "yesterday",
-    category: "comment",
-    actor: olivia,
-    icon: IconStar,
-    message: "left a 5-star review on",
-    target: "Pulse Watch",
-    href: "/products",
-    time: "4:20 PM",
-  },
-  {
-    id: "e9",
-    group: "yesterday",
-    category: "task",
-    actor: tm(6),
-    icon: IconPlus,
-    message: "created",
-    target: "Set up dbt staging models",
-    href: "/apps",
-    meta: "in Data Warehouse",
-    time: "2:10 PM",
-  },
-  {
-    id: "e10",
-    group: "yesterday",
-    category: "billing",
-    lead: "Invoice sent",
-    icon: IconReceipt,
-    message: "",
-    target: "INV-2048",
-    href: "/invoices",
-    meta: "to Aperture · due Aug 12",
-    time: "11:05 AM",
-  },
-  {
-    id: "e11",
-    group: "yesterday",
-    category: "system",
-    lead: "New sign-in detected",
-    icon: IconLogin,
-    message: "from Chrome on macOS in San Francisco",
-    time: "9:30 AM",
-  },
-  {
-    id: "e12",
-    group: "yesterday",
-    category: "task",
-    actor: tm(4),
-    icon: IconFlag,
-    message: "closed milestone",
-    target: "Design sign-off",
-    href: "/apps",
-    meta: "in Billing Platform v2",
-    time: "8:15 AM",
-  },
-  // ---- This week ----
-  {
-    id: "e13",
-    group: "week",
-    category: "comment",
-    actor: tm(2),
-    icon: IconMessage2,
-    message: "commented on",
-    target: "Add SSO / SAML provisioning",
-    href: "/apps",
-    time: "Mon 5:42 PM",
-  },
-  {
-    id: "e14",
-    group: "week",
-    category: "task",
-    actor: tm(8),
-    icon: IconArrowRight,
-    message: "moved to In Progress —",
-    target: "Write API rate-limit middleware",
-    href: "/apps",
-    time: "Mon 1:18 PM",
-  },
-  {
-    id: "e15",
-    group: "week",
-    category: "billing",
-    lead: "Payment received",
-    icon: IconCreditCard,
-    message: "for",
-    target: "INV-2045",
-    href: "/invoices",
-    meta: "from Vertex Labs · $2,430.00",
-    time: "Sun 6:02 PM",
-  },
-  {
-    id: "e16",
-    group: "week",
-    category: "system",
-    lead: "Storage at 82%",
-    icon: IconAlertTriangle,
-    message: "your workspace is approaching its storage limit",
-    time: "Sun 10:11 AM",
-  },
-  {
-    id: "e17",
-    group: "week",
-    category: "comment",
-    actor: tm(5),
-    icon: IconAt,
-    message: "mentioned you about the",
-    target: "Q3 roadmap",
-    href: "/apps",
-    time: "Sat 3:26 PM",
-  },
-  {
-    id: "e18",
-    group: "week",
-    category: "task",
-    actor: ava,
-    icon: IconUserPlus,
-    message: "invited a teammate to",
-    target: "Vertex Labs",
-    href: "/team",
-    time: "Sat 9:04 AM",
-  },
-];
-
-const groupLabels: Record<Group, string> = {
+const groupLabels: Record<ActivityGroup, string> = {
   today: "Today",
   yesterday: "Yesterday",
   week: "This week",
 };
-const groupOrder: Group[] = ["today", "yesterday", "week"];
+const groupOrder: ActivityGroup[] = ["today", "yesterday", "week"];
 
-const filters: { value: "all" | Category; label: string; icon?: TablerIcon }[] = [
+const filters: { value: "all" | ActivityCategory; label: string; icon?: SvgIcon }[] = [
   { value: "all", label: "All" },
   { value: "comment", label: "Comments", icon: IconMessage2 },
   { value: "task", label: "Tasks", icon: IconCircleCheck },
@@ -318,16 +73,8 @@ const filters: { value: "all" | Category; label: string; icon?: TablerIcon }[] =
   { value: "system", label: "System", icon: IconAlertTriangle },
 ];
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2);
-}
-
 export default function ActivityPage() {
-  const [filter, setFilter] = useState<"all" | Category>("all");
+  const [filter, setFilter] = useState<"all" | ActivityCategory>("all");
   const [search, setSearch] = useState("");
   const [allRead, setAllRead] = useState(false);
 
@@ -339,20 +86,20 @@ export default function ActivityPage() {
   };
 
   const counts = useMemo(() => {
-    const base: Record<"all" | Category, number> = {
-      all: events.length,
+    const base: Record<"all" | ActivityCategory, number> = {
+      all: activityEvents.length,
       comment: 0,
       task: 0,
       billing: 0,
       system: 0,
     };
-    for (const e of events) base[e.category] += 1;
+    for (const e of activityEvents) base[e.category] += 1;
     return base;
   }, []);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return events.filter((e) => {
+    return activityEvents.filter((e) => {
       const matchesFilter = filter === "all" || e.category === filter;
       const haystack = [e.actor?.name, e.lead, e.message, e.target, e.meta]
         .filter(Boolean)
@@ -376,7 +123,7 @@ export default function ActivityPage() {
 
   const contributors = useMemo(() => {
     const map = new Map<string, { actor: Actor; count: number }>();
-    for (const e of events) {
+    for (const e of activityEvents) {
       if (!e.actor) continue;
       const existing = map.get(e.actor.name);
       if (existing) existing.count += 1;
@@ -391,6 +138,7 @@ export default function ActivityPage() {
     <div className="space-y-6">
       <PageHeader
         title="Activity"
+        description="Everything happening across your workspace, in one feed."
       >
         <Button
           variant="outline"
@@ -444,7 +192,7 @@ export default function ActivityPage() {
 
           {/* Timeline */}
           <Card>
-            <CardContent className="space-y-8 px-6">
+            <CardContent className="space-y-8">
               {grouped.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center">
                   <IconActivity className="mb-3 size-8 text-muted-foreground opacity-50" />
@@ -482,7 +230,7 @@ export default function ActivityPage() {
                                       alt={e.actor.name}
                                     />
                                     <AvatarFallback>
-                                      {initials(e.actor.name)}
+                                      {getInitials(e.actor.name)}
                                     </AvatarFallback>
                                   </Avatar>
                                   <span
@@ -556,15 +304,16 @@ export default function ActivityPage() {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base">
+              <CardTitle className="flex items-center gap-2 text-sm">
                 <IconActivity className="size-4" /> Activity summary
               </CardTitle>
+              <CardDescription>Last 7 days across your workspace</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="flex items-end justify-between">
                 <div>
                   <p className="text-3xl font-semibold tracking-tight tabular-nums">
-                    {events.length}
+                    {activityEvents.length}
                   </p>
                   <p className="text-xs text-muted-foreground">Total events</p>
                 </div>
@@ -577,10 +326,10 @@ export default function ActivityPage() {
               <Separator />
 
               <div className="space-y-4">
-                {(Object.keys(categoryMeta) as Category[]).map((c) => {
+                {(Object.keys(categoryMeta) as ActivityCategory[]).map((c) => {
                   const meta = categoryMeta[c];
                   const value = counts[c];
-                  const pct = Math.round((value / events.length) * 100);
+                  const pct = Math.round((value / activityEvents.length) * 100);
                   return (
                     <div key={c} className="space-y-1.5">
                       <div className="flex items-center gap-2 text-sm">
@@ -605,14 +354,15 @@ export default function ActivityPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Top contributors</CardTitle>
+              <CardTitle className="text-sm">Top contributors</CardTitle>
+              <CardDescription>Most active teammates this week</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {contributors.map(({ actor, count }) => (
                 <div key={actor.name} className="flex items-center gap-3">
                   <Avatar className="size-9">
                     <AvatarImage src={actor.avatar} alt={actor.name} />
-                    <AvatarFallback>{initials(actor.name)}</AvatarFallback>
+                    <AvatarFallback>{getInitials(actor.name)}</AvatarFallback>
                   </Avatar>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{actor.name}</p>
@@ -633,3 +383,222 @@ export default function ActivityPage() {
     </div>
   );
 }
+
+import { ArrowRight as IconArrowRight, AtSign as IconAt, Flag as IconFlag, LogIn as IconLogin, Plus as IconPlus, Receipt as IconReceipt, Rocket as IconRocket, Star as IconStar, UserPlus as IconUserPlus } from "lucide-react";
+
+type SvgIcon = React.ComponentType<{ className?: string }>;
+type ActivityCategory = "comment" | "task" | "billing" | "system";
+type ActivityGroup = "today" | "yesterday" | "week";
+
+type Actor = { name: string; avatar: string };
+
+type ActivityEvent = {
+  id: string;
+  group: ActivityGroup;
+  category: ActivityCategory;
+  actor?: Actor;
+  lead?: string;
+  icon: SvgIcon;
+  message: string;
+  target?: string;
+  href?: string;
+  meta?: string;
+  time: string;
+};
+
+// Actors sourced from the team directory (deterministic — no Math.random).
+const tm = (i: number): Actor => ({ name: teamMembers[i].name, avatar: teamMembers[i].avatar });
+const olivia: Actor = { name: "Olivia Patel", avatar: demoAvatarUrl("Olivia Patel") };
+const ava: Actor = { name: "Ava Brooks", avatar: demoAvatarUrl("Ava Brooks") };
+
+const activityEvents: ActivityEvent[] = [
+  // ---- Today ----
+  {
+    id: "e1",
+    group: "today",
+    category: "comment",
+    actor: tm(3),
+    icon: IconAt,
+    message: "mentioned you in",
+    target: "Mobile App Revamp",
+    time: "12 min ago",
+  },
+  {
+    id: "e2",
+    group: "today",
+    category: "task",
+    actor: tm(2),
+    icon: IconArrowRight,
+    message: "moved to In Review —",
+    target: "Implement metered usage events",
+    time: "40 min ago",
+  },
+  {
+    id: "e3",
+    group: "today",
+    category: "billing",
+    lead: "Payment received",
+    icon: IconCreditCard,
+    message: "for",
+    target: "INV-2043",
+    meta: "from Northwind · $1,296.00",
+    time: "1 hour ago",
+  },
+  {
+    id: "e4",
+    group: "today",
+    category: "task",
+    actor: tm(0),
+    icon: IconUserPlus,
+    message: "assigned Emma Novak to",
+    target: "Add SSO / SAML provisioning",
+    time: "2 hours ago",
+  },
+  {
+    id: "e5",
+    group: "today",
+    category: "system",
+    lead: "Deployment succeeded",
+    icon: IconRocket,
+    message: "",
+    target: "web-app v2.14.0",
+    href: "#",
+    meta: "deployed to production · 3m 12s",
+    time: "2 hours ago",
+  },
+  {
+    id: "e6",
+    group: "today",
+    category: "comment",
+    actor: tm(1),
+    icon: IconMessage2,
+    message: "commented on",
+    target: "Website Redesign",
+    time: "3 hours ago",
+  },
+  {
+    id: "e7",
+    group: "today",
+    category: "task",
+    actor: tm(5),
+    icon: IconCircleCheck,
+    message: "completed",
+    target: "Audit accessibility (WCAG AA)",
+    time: "4 hours ago",
+  },
+  // ---- Yesterday ----
+  {
+    id: "e8",
+    group: "yesterday",
+    category: "comment",
+    actor: olivia,
+    icon: IconStar,
+    message: "left a 5-star review on",
+    target: "Pulse Watch",
+    time: "4:20 PM",
+  },
+  {
+    id: "e9",
+    group: "yesterday",
+    category: "task",
+    actor: tm(6),
+    icon: IconPlus,
+    message: "created",
+    target: "Set up dbt staging models",
+    meta: "in Data Warehouse",
+    time: "2:10 PM",
+  },
+  {
+    id: "e10",
+    group: "yesterday",
+    category: "billing",
+    lead: "Invoice sent",
+    icon: IconReceipt,
+    message: "",
+    target: "INV-2048",
+    meta: "to Aperture · due Aug 12",
+    time: "11:05 AM",
+  },
+  {
+    id: "e11",
+    group: "yesterday",
+    category: "system",
+    lead: "New sign-in detected",
+    icon: IconLogin,
+    message: "from Chrome on macOS in San Francisco",
+    time: "9:30 AM",
+  },
+  {
+    id: "e12",
+    group: "yesterday",
+    category: "task",
+    actor: tm(4),
+    icon: IconFlag,
+    message: "closed milestone",
+    target: "Design sign-off",
+    meta: "in Billing Platform v2",
+    time: "8:15 AM",
+  },
+  // ---- This week ----
+  {
+    id: "e13",
+    group: "week",
+    category: "comment",
+    actor: tm(2),
+    icon: IconMessage2,
+    message: "commented on",
+    target: "Add SSO / SAML provisioning",
+    time: "Mon 5:42 PM",
+  },
+  {
+    id: "e14",
+    group: "week",
+    category: "task",
+    actor: tm(8),
+    icon: IconArrowRight,
+    message: "moved to In Progress —",
+    target: "Write API rate-limit middleware",
+    time: "Mon 1:18 PM",
+  },
+  {
+    id: "e15",
+    group: "week",
+    category: "billing",
+    lead: "Payment received",
+    icon: IconCreditCard,
+    message: "for",
+    target: "INV-2045",
+    meta: "from Vertex Labs · $2,430.00",
+    time: "Sun 6:02 PM",
+  },
+  {
+    id: "e16",
+    group: "week",
+    category: "system",
+    lead: "Storage at 82%",
+    icon: IconAlertTriangle,
+    message: "your workspace is approaching its storage limit",
+    time: "Sun 10:11 AM",
+  },
+  {
+    id: "e17",
+    group: "week",
+    category: "comment",
+    actor: tm(5),
+    icon: IconAt,
+    message: "mentioned you about the",
+    target: "Q3 roadmap",
+    time: "Sat 3:26 PM",
+  },
+  {
+    id: "e18",
+    group: "week",
+    category: "task",
+    actor: ava,
+    icon: IconUserPlus,
+    message: "invited a teammate to",
+    target: "Vertex Labs",
+    href: "/team",
+    time: "Sat 9:04 AM",
+  },
+];

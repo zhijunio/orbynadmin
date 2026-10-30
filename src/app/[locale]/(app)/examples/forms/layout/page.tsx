@@ -19,10 +19,10 @@ function AccountBillingExamples() {
     <ExampleCard title="Account settings" footer={<SaveFooter />}>
       <div className="space-y-5">
         <FieldRow htmlFor="acc-name" label="Display name"><Input id="acc-name" defaultValue="Wei Zhang" /></FieldRow>
-        <FieldRow htmlFor="acc-email" label="Email address"><InputGroup className="h-10"><InputGroupAddon><IconMail /></InputGroupAddon><InputGroupInput id="acc-email" type="email" defaultValue="wei.zhang@nextboard.io" /></InputGroup></FieldRow>
+        <FieldRow htmlFor="acc-email" label="Email address"><InputGroup className="h-10"><InputGroupAddon><IconMail /></InputGroupAddon><InputGroupInput id="acc-email" type="email" defaultValue="alex.morgan@orbynadmin.com" /></InputGroup></FieldRow>
         <FieldRow htmlFor="acc-username" label="Username"><InputGroup className="h-10"><InputGroupAddon><IconAt /></InputGroupAddon><InputGroupInput id="acc-username" defaultValue="alexmorgan" /></InputGroup></FieldRow>
         <FieldRow htmlFor="acc-website" label="Website"><InputGroup className="h-10"><InputGroupAddon><InputGroupText>https://</InputGroupText></InputGroupAddon><InputGroupInput id="acc-website" defaultValue="alexmorgan.design" /></InputGroup></FieldRow>
-        <FieldRow htmlFor="acc-bio" label="Bio"><Textarea id="acc-bio" rows={3} defaultValue="Head of Product at NextBoard. Building calm, focused software for teams that ship." /></FieldRow>
+        <FieldRow htmlFor="acc-bio" label="Bio"><Textarea id="acc-bio" rows={3} defaultValue="Administrator at OrbynAdmin. Helping teams manage their operations." /></FieldRow>
       </div>
     </ExampleCard>
 

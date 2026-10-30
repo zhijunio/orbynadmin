@@ -71,7 +71,7 @@ export const fonts: FontOption[] = [
     key: "mono",
     label: "Mono",
     stack:
-      "var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace",
+      '"Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace',
   },
 ];
 

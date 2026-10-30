@@ -1,21 +1,11 @@
 "use client";
+import { getInitials } from "@/lib/text";
+import { demoAvatarUrl } from "@/lib/demo-avatar";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { toast } from "sonner";
-import {
-  IconArrowLeft,
-  IconSearch,
-  IconSend,
-  IconPhone,
-  IconVideo,
-  IconDotsVertical,
-  IconPaperclip,
-  IconMoodSmile,
-  IconUser,
-  IconBellOff,
-  IconEraser,
-  IconBan,
-} from "@tabler/icons-react";
+import { ArrowLeft as IconArrowLeft, Search as IconSearch, Send as IconSend, Phone as IconPhone, Video as IconVideo, EllipsisVertical as IconDotsVertical, Paperclip as IconPaperclip, Smile as IconMoodSmile, User as IconUser, BellOff as IconBellOff, Eraser as IconEraser, Ban as IconBan, Archive as IconArchive, Users as IconUsers } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -32,7 +22,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { customers } from "@/data";
 
 type Message = {
   id: string;
@@ -55,16 +44,36 @@ const snippets = [
 ];
 
 const times = ["9:41", "10:12", "11:03", "12:30", "1:15", "2:48", "3:22", "4:07", "Yesterday", "Mon"];
+const chatNames = [
+  "Emma Nguyen",
+  "Noah Novak",
+  "Sophia Fischer",
+  "Lucas Bauer",
+  "Product Launch Team",
+  "Benjamin Novak",
+  "Design Team",
+  "Liam Bauer",
+  "Mason Novak",
+  "Ava Carter",
+];
 
-const conversations = customers.slice(0, 10).map((c, i) => ({
-  id: c.id,
-  name: c.name,
-  avatar: c.avatar,
-  snippet: snippets[i],
-  time: times[i],
-  unread: i === 1 ? 3 : i === 4 ? 1 : i === 6 ? 2 : 0,
-  online: i % 3 === 0,
-}));
+const conversations = chatNames.map((name, i) => {
+  const group = i === 4 || i === 6;
+  return {
+    id: `conversation-${i + 1}`,
+    name,
+    avatar: demoAvatarUrl(name),
+    snippet: snippets[i],
+    time: times[i],
+    unread: i === 1 ? 3 : i === 4 ? 1 : i === 6 ? 2 : 0,
+    online: !group && i % 3 === 0,
+    group,
+    archived: i === 8,
+  };
+});
+
+type ChatFilter = "All" | "Unread" | "Group" | "Archive";
+const chatFilters: ChatFilter[] = ["All", "Unread", "Group", "Archive"];
 
 const seedThreads: Record<string, Message[]> = {};
 conversations.forEach((c, i) => {
@@ -91,15 +100,20 @@ export default function ChatPage() {
   const [threads, setThreads] = useState<Record<string, Message[]>>(seedThreads);
   const [draft, setDraft] = useState("");
   const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<ChatFilter>("All");
   // Mobile master-detail: show the list first, the thread after tapping one.
   const [mobileThreadOpen, setMobileThreadOpen] = useState(false);
 
   const active = convos.find((c) => c.id === activeId)!;
   const messages = threads[activeId] ?? [];
 
-  const filtered = convos.filter((c) =>
-    c.name.toLowerCase().includes(query.toLowerCase()),
-  );
+  const filtered = convos.filter((c) => {
+    if (!c.name.toLowerCase().includes(query.toLowerCase())) return false;
+    if (filter === "Unread") return c.unread > 0 && !c.archived;
+    if (filter === "Group") return c.group && !c.archived;
+    if (filter === "Archive") return c.archived;
+    return !c.archived;
+  });
 
   // Opening a conversation marks it read (clears its unread badge).
   function openConversation(id: string) {
@@ -128,45 +142,73 @@ export default function ChatPage() {
     toast.success("Conversation cleared");
   }
 
-  return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold tracking-tight">Messages</h1>
+  function archiveChat() {
+    setConvos((prev) => prev.map((c) => c.id === activeId ? { ...c, archived: true } : c));
+    setFilter("Archive");
+    toast.success("Conversation archived");
+  }
 
-      <Card className="grid h-[calc(100vh-9rem)] grid-cols-1 overflow-hidden p-0 md:grid-cols-[320px_1fr]">
+  return (
+    <div className="space-y-4">
+      <h1 className="text-2xl font-semibold tracking-tight">Chats</h1>
+
+      <Card className="grid h-[calc(100dvh-13rem)] min-h-[420px] grid-cols-1 overflow-hidden p-0 lg:grid-cols-[minmax(320px,23%)_minmax(0,1fr)]">
         {/* Conversation list */}
         <div
           className={cn(
-            "flex-col border-r md:flex",
+            "min-h-0 flex-col border-r lg:flex",
             mobileThreadOpen ? "hidden" : "flex"
           )}
         >
-          <div className="p-4">
+          <div className="space-y-3 p-4">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold">Chats</p>
+              <Badge variant="secondary">{convos.filter((c) => !c.archived).length}</Badge>
+            </div>
             <div className="relative">
               <IconSearch className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search conversations"
+                placeholder="Search..."
                 className="pl-9"
               />
+            </div>
+            <div className="flex gap-1 overflow-x-auto">
+              {chatFilters.map((chatFilter) => (
+                <Button
+                  key={chatFilter}
+                  size="sm"
+                  variant={filter === chatFilter ? "secondary" : "ghost"}
+                  className="h-8 px-2.5"
+                  onClick={() => setFilter(chatFilter)}
+                >
+                  {chatFilter}
+                </Button>
+              ))}
             </div>
           </div>
           <Separator />
           <ScrollArea className="flex-1">
             <div className="p-2">
-              {filtered.map((c) => (
+              {filtered.length === 0 ? (
+                <div className="px-4 py-10 text-center">
+                  <p className="text-sm font-medium">No chats found</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Try another filter or search.</p>
+                </div>
+              ) : filtered.map((c) => (
                 <button
                   key={c.id}
                   onClick={() => openConversation(c.id)}
                   className={cn(
-                    "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-muted/60",
+                    "flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors hover:bg-muted/60",
                     c.id === activeId && "bg-muted",
                   )}
                 >
                   <div className="relative">
-                    <Avatar className="size-10">
+                    <Avatar className="size-12">
                       <AvatarImage src={c.avatar} alt={c.name} />
-                      <AvatarFallback>{c.name.slice(0, 2)}</AvatarFallback>
+                      <AvatarFallback>{getInitials(c.name)}</AvatarFallback>
                     </Avatar>
                     {c.online && (
                       <span className="absolute bottom-0 right-0 size-2.5 rounded-full border-2 border-card bg-emerald-500" />
@@ -174,11 +216,11 @@ export default function ChatPage() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="truncate text-sm font-medium">{c.name}</span>
-                      <span className="shrink-0 text-xs text-muted-foreground">{c.time}</span>
+                      <span className="truncate text-[15px] font-medium">{c.name}</span>
+                      <span className="w-12 shrink-0 text-right text-xs text-muted-foreground">{c.time}</span>
                     </div>
                     <div className="flex items-center justify-between gap-2">
-                      <span className="truncate text-xs text-muted-foreground">{c.snippet}</span>
+                      <span className="flex min-w-0 items-center gap-1 truncate text-xs text-muted-foreground">{c.group && <IconUsers className="size-3 shrink-0" />}{c.snippet}</span>
                       {c.unread > 0 && (
                         <Badge className="size-5 shrink-0 justify-center rounded-full p-0 text-[10px] tabular-nums">
                           {c.unread}
@@ -195,7 +237,7 @@ export default function ChatPage() {
         {/* Active conversation */}
         <div
           className={cn(
-            "min-w-0 flex-col md:flex",
+            "min-h-0 min-w-0 flex-col lg:flex",
             mobileThreadOpen ? "flex" : "hidden"
           )}
         >
@@ -203,7 +245,7 @@ export default function ChatPage() {
             <Button
               variant="ghost"
               size="icon"
-              className="-ml-1 shrink-0 md:hidden"
+              className="-ml-1 shrink-0 lg:hidden"
               onClick={() => setMobileThreadOpen(false)}
               aria-label="Back to conversations"
             >
@@ -212,7 +254,7 @@ export default function ChatPage() {
             <div className="relative">
               <Avatar className="size-9">
                 <AvatarImage src={active.avatar} alt={active.name} />
-                <AvatarFallback>{active.name.slice(0, 2)}</AvatarFallback>
+                <AvatarFallback>{getInitials(active.name)}</AvatarFallback>
               </Avatar>
               {active.online && (
                 <span className="absolute bottom-0 right-0 size-2.5 rounded-full border-2 border-card bg-emerald-500" />
@@ -221,7 +263,7 @@ export default function ChatPage() {
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{active.name}</p>
               <p className="text-xs text-muted-foreground">
-                {active.online ? "Online" : "Last seen recently"}
+                {active.group ? "Group conversation" : active.online ? "Online" : "Last seen recently"}
               </p>
             </div>
             <Button
@@ -256,6 +298,9 @@ export default function ChatPage() {
                 <DropdownMenuItem onClick={clearChat}>
                   <IconEraser className="size-4" /> Clear messages
                 </DropdownMenuItem>
+                {!active.archived && <DropdownMenuItem onClick={archiveChat}>
+                  <IconArchive className="size-4" /> Archive conversation
+                </DropdownMenuItem>}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   variant="destructive"
@@ -267,49 +312,58 @@ export default function ChatPage() {
             </DropdownMenu>
           </div>
 
-          <ScrollArea className="flex-1 bg-muted/20">
-            <div className="flex flex-col gap-3 p-4">
-              {messages.map((m) => (
-                <div
-                  key={m.id}
-                  className={cn("flex items-end gap-2", m.from === "me" && "flex-row-reverse")}
-                >
-                  {m.from === "them" && (
-                    <Avatar className="size-7">
-                      <AvatarImage src={active.avatar} alt={active.name} />
-                      <AvatarFallback>{active.name.slice(0, 2)}</AvatarFallback>
-                    </Avatar>
-                  )}
+          <ScrollArea className="min-h-0 flex-1 bg-muted/20">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={activeId}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -3 }}
+                transition={{ duration: 0.16, ease: "easeOut" }}
+                className="flex flex-col gap-3 p-4"
+              >
+                {messages.map((m) => (
                   <div
-                    className={cn(
-                      "max-w-[75%] rounded-2xl px-3.5 py-2 text-sm shadow-sm",
-                      m.from === "me"
-                        ? "rounded-br-sm bg-primary text-primary-foreground"
-                        : "rounded-bl-sm bg-muted",
-                    )}
+                    key={m.id}
+                    className={cn("flex items-end gap-2", m.from === "me" && "flex-row-reverse")}
                   >
-                    <p>{m.text}</p>
-                    <p
+                    {m.from === "them" && (
+                      <Avatar className="size-7">
+                        <AvatarImage src={active.avatar} alt={active.name} />
+                        <AvatarFallback>{getInitials(active.name)}</AvatarFallback>
+                      </Avatar>
+                    )}
+                    <div
                       className={cn(
-                        "mt-1 text-right text-[10px]",
+                        "max-w-[75%] rounded-2xl px-3.5 py-2 text-sm shadow-sm",
                         m.from === "me"
-                          ? "text-primary-foreground/70"
-                          : "text-muted-foreground",
+                          ? "rounded-br-sm bg-primary text-primary-foreground"
+                          : "rounded-bl-sm bg-muted",
                       )}
                     >
-                      {m.time}
-                    </p>
+                      <p>{m.text}</p>
+                      <p
+                        className={cn(
+                          "mt-1 text-right text-[10px]",
+                          m.from === "me"
+                            ? "text-primary-foreground/70"
+                            : "text-muted-foreground",
+                        )}
+                      >
+                        {m.time}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
           </ScrollArea>
 
-          <div className="flex items-center gap-2 border-t p-3">
+          <div className="flex shrink-0 items-center gap-2 border-t bg-card p-3 sm:gap-3 sm:p-4">
             <Button
               variant="ghost"
               size="icon"
-              className="shrink-0"
+              className="size-10 shrink-0 rounded-xl"
               onClick={() => toast("Attach a file", { description: "File sharing isn't available in the demo." })}
               aria-label="Attach file"
             >
@@ -322,18 +376,19 @@ export default function ChatPage() {
                 if (e.key === "Enter" && !e.nativeEvent.isComposing) send();
               }}
               placeholder="Type a message…"
+              className="h-11 rounded-xl px-4"
             />
             <Button
               variant="ghost"
               size="icon"
-              className="shrink-0"
+              className="size-10 shrink-0 rounded-xl"
               onClick={() => setDraft((d) => d + " 🙂")}
               aria-label="Add emoji"
             >
               <IconMoodSmile className="size-4" />
             </Button>
-            <Button size="icon" className="shrink-0" onClick={send}>
-              <IconSend className="size-4" />
+            <Button size="icon" className="size-11 shrink-0 rounded-xl" onClick={send} aria-label="Send message">
+              <IconSend className="size-5" />
             </Button>
           </div>
         </div>

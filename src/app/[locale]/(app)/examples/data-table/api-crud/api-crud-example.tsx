@@ -51,6 +51,8 @@ const EMPTY_CONTACT: ContactInput = {
   status: "Invited",
 };
 
+const contactsEndpoint = "/examples/data-table/api-crud/contacts";
+
 async function readError(response: Response) {
   const body = await response.json().catch(() => null) as { error?: unknown } | null;
   return typeof body?.error === "string" ? body.error : "The request failed. Please try again.";
@@ -68,7 +70,7 @@ export function ApiCrudExample() {
 
   const loadContacts = useCallback(async (signal?: AbortSignal) => {
     try {
-      const response = await fetch("/example/table/api-crud/contacts", { cache: "no-store", signal });
+      const response = await fetch(contactsEndpoint, { cache: "no-store", signal });
       if (!response.ok) throw new Error(await readError(response));
       const body: { data: Contact[] } = await response.json();
       setContacts(body.data);
@@ -109,8 +111,8 @@ export function ApiCrudExample() {
 
   const saveContact = async (input: ContactInput) => {
     const url = editing
-      ? `/example/table/api-crud/contacts/${encodeURIComponent(editing.id)}`
-      : "/example/table/api-crud/contacts";
+      ? `${contactsEndpoint}/${encodeURIComponent(editing.id)}`
+      : contactsEndpoint;
     const response = await fetch(url, {
       method: editing ? "PATCH" : "POST",
       headers: { "Content-Type": "application/json" },
@@ -130,7 +132,7 @@ export function ApiCrudExample() {
     if (!deleteTarget) return;
     setDeleting(true);
     try {
-      const response = await fetch(`/example/table/api-crud/contacts/${encodeURIComponent(deleteTarget.id)}`, {
+      const response = await fetch(`${contactsEndpoint}/${encodeURIComponent(deleteTarget.id)}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error(await readError(response));
@@ -210,7 +212,7 @@ export function ApiCrudExample() {
         <Button onClick={openCreate}><IconPlus className="size-4" /> Add contact</Button>
       </PageHeader>
       <Card><CardContent className="flex flex-col gap-2 py-4 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <span>Requests use <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">/example/table/api-crud/contacts</code>.</span>
+        <span>Requests use <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">{contactsEndpoint}</code>.</span>
         <span>Mock data is process-local and may reset on server restarts or serverless cold starts.</span>
       </CardContent></Card>
 

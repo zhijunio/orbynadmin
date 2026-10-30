@@ -30,7 +30,7 @@ export const useThemeConfigStore = create<ThemeConfigStore>()(
     }),
     {
       name: "orbynadmin-theme-config",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => window.localStorage),
       partialize: (state) => ({ config: state.config }),
       version: 1,
       migrate: (persistedState, version) => {

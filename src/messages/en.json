@@ -57,6 +57,7 @@
     "Account": "Account",
     "Profile": "Profile",
     "Settings": "Settings",
+    "System Settings": "System Settings",
     "Notifications": "Notifications",
     "Developers": "Developers",
     "Integrations": "Integrations",
@@ -172,6 +173,7 @@
     "Search": "Search",
     "Contacts": "Contacts",
     "Settings": "Settings",
+    "System Settings": "System Settings",
     "Invoices": "Invoices",
     "Blog": "Blog",
     "Data Table": "Data Table",
@@ -257,6 +259,37 @@
     "Layout Five": "Layout Five",
     "Layout Six": "Layout Six"
   },
+  "Dashboard": {
+    "Overview": {
+      "export": "Export", "addWidget": "Add widget", "newWidget": "New widget", "exported": "Exported to CSV", "summaryDownloading": "Your dashboard summary is downloading.", "widgetAdded": "Widget added", "widgetPinned": "“{name}” was pinned to your dashboard.", "refresh": "Refresh", "downloadPng": "Download PNG", "viewFullReport": "View full report",
+      "stats": { "totalRevenue": "Total Revenue", "newCustomers": "New Customers", "activeAccounts": "Active Accounts", "churnRate": "Churn Rate" }, "vsLastMonth": "vs. last month",
+      "revenueOverview": "Revenue Overview", "trafficSources": "Traffic Sources", "recentOrders": "Recent Orders", "viewAll": "View all", "customer": "Customer", "product": "Product", "status": "Status", "amount": "Amount", "topProducts": "Top Products", "sold": "sold", "recentActivity": "Recent Activity", "enterprisePlan": "Enterprise plan",
+      "chartOptions": "{title} options", "chartRefreshed": "{title} refreshed", "latestData": "Showing the latest available data.", "chartExported": "Chart exported", "chartSavedAsPng": "{title} was saved as a PNG image.", "openingReport": "Opening full report", "preparingReport": "Preparing a detailed {title} report.",
+      "widgetDescription": "Choose a widget to pin to your dashboard.", "widgetName": "Widget name", "widgetPlaceholder": "e.g. Weekly signups", "type": "Type", "selectType": "Select a type", "metricCard": "Metric card", "lineChart": "Line chart", "barChart": "Bar chart", "table": "Table", "cancel": "Cancel",
+      "traffic": { "organic": "Organic", "direct": "Direct", "referral": "Referral", "social": "Social", "email": "Email" },
+      "categories": { "electronics": "Electronics", "home": "Home", "sports": "Sports" },
+      "orderStatus": { "paid": "Paid", "pending": "Pending", "refunded": "Refunded", "failed": "Failed" },
+      "activity": { "a1": "created a new order", "a2": "upgraded to", "a3": "left a review on", "a4": "requested a refund for", "a5": "invited a teammate to", "a6": "completed onboarding" },
+      "times": { "2 min ago": "2 min ago", "18 min ago": "18 min ago", "1 hour ago": "1 hour ago", "3 hours ago": "3 hours ago", "5 hours ago": "5 hours ago", "Yesterday": "Yesterday" }
+    },
+    "AI": {
+      "metrics": { "users": "Users", "projects": "Projects", "revenue": "Revenue", "paidusers": "Paid Users", "freeUsers": "Free Users", "paidUsers": "Paid Users", "thisMonth": "This Month", "thisYear": "This Year" },
+      "last30Days": "Last 30 Days", "usersRevenueStats": "Users & Revenue Statistics", "monthlyProgress": "Visualize month-to-month progress and engagement.", "periods": { "monthly": "Monthly", "quarterly": "Quarterly", "annually": "Annually" }, "months": { "jan": "Jan", "feb": "Feb", "mar": "Mar", "apr": "Apr", "may": "May", "jun": "Jun", "jul": "Jul", "aug": "Aug", "sep": "Sep", "oct": "Oct", "nov": "Nov", "dec": "Dec" }, "users": "Users", "revenue": "Revenue", "apiTokenUsage": "API Token Usage", "apiKeysConfigured": "{count, plural, one {# API key configured} other {# API keys configured}}", "tokensUsed": "Tokens used", "viewUsage": "View all usage details",
+      "userAnalytics": "User Analytics", "platformUserInsights": "Platform user insights", "totalUsers": "Total Users", "notes": { "freeUserShare": "95% of total users", "paidUserShare": "5% of total users", "usersMonthChange": "+5,238 from last month", "usersYearChange": "+12,495 from last year", "projectCreated": "Projects created", "projectsMonthChange": "+2,093 from last month", "projectsYearChange": "+8,532 from last year" },
+      "projectsAnalytics": "Projects Analytics", "projectInsights": "View detailed project insights", "totalProjects": "Total Projects", "periodLabels": { "today": "Today", "yesterday": "Yesterday", "thisMonth": "This Month", "thisYear": "This Year" },
+      "recentTransactions": "Recent Transactions", "searchTransactions": "Search transactions…", "status": { "all": "All", "active": "Active", "expired": "Expired" }, "paidBy": "Paid By", "packageName": "Package Name", "price": "Price", "paidDate": "Paid Date", "statusLabel": "Status", "actions": "Actions", "subscriptionDetails": "Subscription details", "view": "View", "noTransactions": "No transactions found.", "showingTransactions": "Showing {from}–{to} of {total} transactions", "pageOf": "Page {page} of {pages}", "previous": "Previous", "next": "Next", "plans": { "starter": "Starter", "growth": "Growth", "premium": "Premium" }, "billing": { "monthly": "Monthly", "yearly": "Yearly" }
+    },
+    "SaaS": {
+      "title": "SaaS Dashboard", "metrics": { "totalrevenue": "Total Revenue", "activeusers": "Active Users", "customerlifetimevalue": "Customer Lifetime Value", "customeracquisitioncost": "Customer Acquisition Cost" }, "vsLastWeek": "vs. last week", "vsLastMonth": "vs. last month", "churnRate": "Churn Rate", "thanLastWeek": "than last week", "monthlyTarget": "Below the 5% monthly target", "userGrowth": "User Growth", "conversionFunnel": "Conversion Funnel", "funnel": { "visitors": "Visitors", "signups": "Sign ups", "activated": "Activated", "paidusers": "Paid users" },
+      "productPerformance": "Product Performance", "periods": { "monthly": "Monthly", "quarterly": "Quarterly", "annually": "Annually" }, "performance": { "dailysales": "Daily Sales", "onlinesales": "Online Sales", "newusers": "New Users" }, "salesMetrics": { "digitalProduct": "Digital Product", "physicalProduct": "Physical Product", "averageDailySales": "Average Daily Sales" }, "months": { "jan": "Jan", "feb": "Feb", "mar": "Mar", "apr": "Apr", "may": "May", "jun": "Jun", "jul": "Jul", "aug": "Aug", "sep": "Sep", "oct": "Oct", "nov": "Nov", "dec": "Dec" },
+      "activities": "Activities", "activity": { "createdInvoice": "created an invoice", "joinedGrowthPlan": "joined the Growth plan" }, "workspacePlan": "Workspace plan", "times": { "justnow": "Just now", "15minutesago": "15 minutes ago", "yesterday": "Yesterday", "2daysago": "2 days ago" }, "recentInvoices": "Recent Invoices", "searchInvoices": "Search invoices…", "invoiceNo": "Invoice No.", "closeDate": "Close Date", "user": "User", "amount": "Amount", "statusLabel": "Status", "view": "View", "status": { "complete": "Complete", "pending": "Pending", "cancelled": "Cancelled" }, "invoiceToast": "Invoice {id}", "viewInvoice": "View invoice {id}"
+    }
+  },
+  "Charts": {
+    "revenue": "Revenue", "profit": "Profit", "visitors": "Visitors",
+    "months": { "jan": "Jan", "feb": "Feb", "mar": "Mar", "apr": "Apr", "may": "May", "jun": "Jun", "jul": "Jul", "aug": "Aug", "sep": "Sep", "oct": "Oct", "nov": "Nov", "dec": "Dec" },
+    "traffic": { "organic": "Organic", "direct": "Direct", "referral": "Referral", "social": "Social", "email": "Email" }
+  },
   "ThemeCustomizer": {
     "title": "Customize",
     "description": "Tune the theme and copy the config into your project.",
@@ -304,7 +337,24 @@
   "Notifications": {
     "title": "Notifications",
     "newCount": "{count} new",
-    "viewAll": "View all notifications"
+    "viewAll": "View all notifications",
+    "page": {
+      "tabs": { "all": "All", "unread": "Unread", "mentions": "Mentions", "system": "System" },
+      "markAllRead": "Mark all as read", "settings": "Notification settings", "empty": "You're all caught up.", "actions": "Notification actions", "markUnread": "Mark as unread", "markRead": "Mark as read", "remove": "Remove", "markedAllRead": "All notifications marked as read", "removed": "Notification removed",
+      "times": { "2 min ago": "2 min ago", "25 min ago": "25 min ago", "1 hour ago": "1 hour ago", "2 hours ago": "2 hours ago", "4 hours ago": "4 hours ago", "6 hours ago": "6 hours ago", "Yesterday": "Yesterday", "2 days ago": "2 days ago", "3 days ago": "3 days ago" },
+      "entries": {
+        "N-01": { "title": "Priya Nair mentioned you", "description": "“@alex can you review the new onboarding checklist?” in Mobile App Revamp" },
+        "N-02": { "title": "New task assigned", "description": "You were assigned “Implement metered usage events” in Billing Platform v2" },
+        "N-03": { "title": "Marcus Chen commented", "description": "Left a comment on “Add SSO / SAML provisioning”" },
+        "N-04": { "title": "Deployment succeeded", "description": "web-app v2.14.0 deployed to production in 3m 12s" },
+        "N-05": { "title": "Payment received", "description": "Invoice INV-2043 was paid by Northwind — $1,296.00" },
+        "N-06": { "title": "New sign-in detected", "description": "A new sign-in from Chrome on macOS in San Francisco" },
+        "N-07": { "title": "Sofia Rossi commented", "description": "“Looks great — shipping the localized pages next week.”" },
+        "N-08": { "title": "Hannah Kim mentioned you", "description": "“@alex a customer asked about the Q3 roadmap.”" },
+        "N-09": { "title": "Milestone due soon", "description": "“Beta release” for Mobile App Revamp is due in 3 days" },
+        "N-10": { "title": "Storage at 82%", "description": "Your workspace is approaching its storage limit" }
+      }
+    }
   },
   "UserMenu": {
     "account": "Account",
@@ -412,6 +462,56 @@
       "Getting Started": "Getting Started",
       "Components": "Components",
       "API Reference": "API Reference"
+    }
+  },
+  "SystemSettings": {
+    "saveChanges": "Save changes",
+    "demoNotice": "Demo settings only. Connect these controls to your installation API to persist or enforce changes.",
+    "saved": "{section} settings saved",
+    "general": {
+      "tab": "General",
+      "title": "Installation identity",
+      "description": "Set the name and public address used by this installation.",
+      "applicationName": "Application name",
+      "baseUrl": "Base URL",
+      "baseUrlHint": "Used when generating sign-in, email, and callback links."
+    },
+    "security": {
+      "tab": "Security",
+      "mfaTitle": "Multi-factor authentication",
+      "mfaDescription": "Set the sign-in verification policy for administrator accounts.",
+      "mfaLabel": "Require multi-factor authentication",
+      "mfaHint": "Administrators must complete an additional verification step when this is enabled.",
+      "passwordTitle": "Password policy",
+      "passwordDescription": "Set the minimum password requirements for accounts.",
+      "minimumLength": "Minimum password length",
+      "rules": { "uppercase": "Require an uppercase letter", "lowercase": "Require a lowercase letter", "number": "Require a number", "symbol": "Require a symbol" }
+    }
+  },
+  "Apps": {
+    "Tasks": {
+      "empty": "No tasks here yet.",
+      "addPlaceholder": "Add a task and press Enter…",
+      "add": "Add",
+      "all": "All ({count})",
+      "active": "Active ({count})",
+      "completed": "Completed ({count})",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "noDate": "No date",
+      "due": { "k1": "Jul 15", "k2": "Jul 17", "k3": "Jul 18", "k4": "Jul 19", "k5": "Jul 20", "k6": "Jul 21", "k7": "Jul 22", "k8": "Jul 14", "k9": "Jul 12", "k10": "Jul 11", "k11": "Jul 10", "k12": "Jul 9" },
+      "tags": { "Design": "Design", "Engineering": "Engineering", "Marketing": "Marketing", "Ops": "Ops", "Sales": "Sales" },
+      "items": {
+        "k1": "Finalize Q3 marketing budget", "k2": "Review pull request #487", "k3": "Ship dark mode contrast fixes", "k4": "Prepare board deck", "k5": "Onboard new enterprise account", "k6": "Update API documentation", "k7": "Draft weekly product digest", "k8": "Kickoff analytics redesign", "k9": "Migrate search index", "k10": "Publish new pricing page", "k11": "Renew SSL certificates", "k12": "Send Q2 retrospective notes"
+      }
+    },
+    "Calendar": {
+      "title": "Calendar", "previousMonth": "Previous month", "nextMonth": "Next month", "today": "Today", "newEvent": "New event", "more": "+{count} more", "upcoming": "Upcoming events", "noUpcoming": "No upcoming events.", "eventAdded": "Event added", "addEventDescription": "Add an event to {month} {year}.", "eventTitle": "Title", "eventPlaceholder": "What's the occasion?", "day": "Day", "time": "Time", "color": "Color", "cancel": "Cancel", "addEvent": "Add event",
+      "allDay": "All day",
+      "events": { "designReview": "Design review", "sprintPlanning": "Sprint planning", "oneOnOneEmma": "1:1 with Emma", "productDemo": "Product demo", "boardMeeting": "Board meeting", "teamLunch": "Team lunch", "releaseV24": "Release v2.4", "quarterlyReview": "Quarterly review" },
+      "weekdays": { "Sun": "Sun", "Mon": "Mon", "Tue": "Tue", "Wed": "Wed", "Thu": "Thu", "Fri": "Fri", "Sat": "Sat" },
+      "colors": { "blue": "Blue", "emerald": "Emerald", "amber": "Amber", "rose": "Rose", "violet": "Violet" }
     }
   }
 }

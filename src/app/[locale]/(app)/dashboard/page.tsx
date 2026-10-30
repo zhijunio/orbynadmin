@@ -2,6 +2,7 @@
 import Image from "next/image";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { toast } from "sonner";
 import {
@@ -69,42 +70,50 @@ import {
   orders,
 } from "@/data";
 
+const statTranslationKeys: Record<string, string> = {
+  "Total Revenue": "totalRevenue",
+  "New Customers": "newCustomers",
+  "Active Accounts": "activeAccounts",
+  "Churn Rate": "churnRate",
+};
+
 function ChartMenu({ title }: { title: string }) {
+  const t = useTranslations("Dashboard.Overview");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
           <IconDotsVertical className="size-4" />
-          <span className="sr-only">{title} options</span>
+          <span className="sr-only">{t("chartOptions", { title })}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem
           onSelect={() =>
-            toast.success(`${title} refreshed`, {
-              description: "Showing the latest available data.",
+            toast.success(t("chartRefreshed", { title }), {
+              description: t("latestData"),
             })
           }
         >
-          <IconRefresh className="size-4" /> Refresh
+          <IconRefresh className="size-4" /> {t("refresh")}
         </DropdownMenuItem>
         <DropdownMenuItem
           onSelect={() =>
-            toast.success("Chart exported", {
-              description: `${title} was saved as a PNG image.`,
+            toast.success(t("chartExported"), {
+              description: t("chartSavedAsPng", { title }),
             })
           }
         >
-          <IconPhoto className="size-4" /> Download PNG
+          <IconPhoto className="size-4" /> {t("downloadPng")}
         </DropdownMenuItem>
         <DropdownMenuItem
           onSelect={() =>
-            toast("Opening full report", {
-              description: `Preparing a detailed ${title.toLowerCase()} report.`,
+            toast(t("openingReport"), {
+              description: t("preparingReport", { title }),
             })
           }
         >
-          <IconReportAnalytics className="size-4" /> View full report
+          <IconReportAnalytics className="size-4" /> {t("viewFullReport")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -112,21 +121,22 @@ function ChartMenu({ title }: { title: string }) {
 }
 
 export default function DashboardPage() {
+  const t = useTranslations("Dashboard.Overview");
   const [addOpen, setAddOpen] = useState(false);
 
   function handleExport() {
-    toast.success("Exported to CSV", {
-      description: "Your dashboard summary is downloading.",
+    toast.success(t("exported"), {
+      description: t("summaryDownloading"),
     });
   }
 
   function handleAddWidget(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const name = (data.get("name") as string)?.trim() || "New widget";
+    const name = (data.get("name") as string)?.trim() || t("newWidget");
     setAddOpen(false);
-    toast.success("Widget added", {
-      description: `“${name}” was pinned to your dashboard.`,
+    toast.success(t("widgetAdded"), {
+      description: t("widgetPinned", { name }),
     });
   }
 
@@ -136,25 +146,25 @@ export default function DashboardPage() {
         title="Welcome back, Alex"
       >
         <Button variant="outline" onClick={handleExport}>
-          <IconDownload className="size-4" /> Export
+          <IconDownload className="size-4" /> {t("export")}
         </Button>
         <Button onClick={() => setAddOpen(true)}>
-          <IconPlus className="size-4" /> Add widget
+          <IconPlus className="size-4" /> {t("addWidget")}
         </Button>
       </PageHeader>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4 xl:gap-4">
         {overviewStats.map((s) => (
-          <StatCard key={s.label} stat={s} />
+          <StatCard key={s.label} stat={{ ...s, label: t(`stats.${statTranslationKeys[s.label]}`), hint: t("vsLastMonth") }} />
         ))}
       </div>
 
       <div className="grid items-start gap-4 xl:grid-cols-3">
         <Card className="xl:col-span-2">
           <CardHeader>
-            <CardTitle>Revenue Overview</CardTitle>
+            <CardTitle>{t("revenueOverview")}</CardTitle>
             <CardAction>
-              <ChartMenu title="Revenue Overview" />
+              <ChartMenu title={t("revenueOverview")} />
             </CardAction>
           </CardHeader>
           <CardContent>
@@ -164,21 +174,21 @@ export default function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Traffic Sources</CardTitle>
+            <CardTitle>{t("trafficSources")}</CardTitle>
           </CardHeader>
           <CardContent>
             <TrafficDonutChart />
           </CardContent>
           <CardFooter className="flex-col items-stretch gap-2">
-            {trafficSources.map((t) => (
-              <div key={t.source} className="flex items-center gap-2 text-sm">
+            {trafficSources.map((source) => (
+              <div key={source.source} className="flex items-center gap-2 text-sm">
                 <span
                   className="size-2.5 rounded-full"
-                  style={{ background: t.fill }}
+                  style={{ background: source.fill }}
                 />
-                <span className="text-muted-foreground">{t.source}</span>
+                <span className="text-muted-foreground">{t(`traffic.${source.source.toLowerCase()}`)}</span>
                 <span className="ml-auto font-medium tabular-nums">
-                  {t.value.toLocaleString()}
+                  {source.value.toLocaleString()}
                 </span>
               </div>
             ))}
@@ -189,11 +199,11 @@ export default function DashboardPage() {
       <div className="grid items-start gap-4 xl:grid-cols-3">
         <Card className="xl:col-span-2">
           <CardHeader>
-            <CardTitle>Recent Orders</CardTitle>
+            <CardTitle>{t("recentOrders")}</CardTitle>
             <CardAction>
               <Button variant="ghost" size="sm" asChild>
                 <Link href="/orders">
-                  View all <IconArrowUpRight className="size-4" />
+                  {t("viewAll")} <IconArrowUpRight className="size-4" />
                 </Link>
               </Button>
             </CardAction>
@@ -202,10 +212,10 @@ export default function DashboardPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="pl-6">Customer</TableHead>
-                  <TableHead>Product</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="pr-6 text-right">Amount</TableHead>
+                  <TableHead className="pl-6">{t("customer")}</TableHead>
+                  <TableHead>{t("product")}</TableHead>
+                  <TableHead>{t("status")}</TableHead>
+                  <TableHead className="pr-6 text-right">{t("amount")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -238,7 +248,7 @@ export default function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Top Products</CardTitle>
+            <CardTitle>{t("topProducts")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-0.5">
             {topProducts
@@ -265,7 +275,7 @@ export default function DashboardPage() {
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{p.name}</p>
                     <p className="truncate text-xs text-muted-foreground">
-                      {p.category} · {p.sold.toLocaleString()} sold
+                      {t.has(`categories.${p.category.toLowerCase()}`) ? t(`categories.${p.category.toLowerCase()}`) : p.category} · {p.sold.toLocaleString()} {t("sold")}
                     </p>
                   </div>
                   <div className="shrink-0 text-right">
@@ -285,7 +295,7 @@ export default function DashboardPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
+          <CardTitle>{t("recentActivity")}</CardTitle>
         </CardHeader>
         <CardContent>
           <ol className="relative space-y-5 border-l pl-6">
@@ -298,10 +308,10 @@ export default function DashboardPage() {
                   </Avatar>
                 </span>
                 <p className="text-sm">
-                  <span className="font-medium">{a.user}</span> {a.action}{" "}
-                  {a.target && <span className="font-medium">{a.target}</span>}
+                  <span className="font-medium">{a.user}</span> {t.has(`activity.${a.id}`) ? t(`activity.${a.id}`) : a.action}{" "}
+                  {a.target && <span className="font-medium">{a.target === "Enterprise plan" ? t("enterprisePlan") : a.target}</span>}
                 </p>
-                <span className="text-xs text-muted-foreground">{a.time}</span>
+                <span className="text-xs text-muted-foreground">{t.has(`times.${a.time}`) ? t(`times.${a.time}`) : a.time}</span>
               </li>
             ))}
           </ol>
@@ -312,32 +322,32 @@ export default function DashboardPage() {
         <DialogContent>
           <form onSubmit={handleAddWidget}>
             <DialogHeader>
-              <DialogTitle>Add a widget</DialogTitle>
+              <DialogTitle>{t("addWidget")}</DialogTitle>
               <DialogDescription>
-                Choose a widget to pin to your dashboard.
+                {t("widgetDescription")}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="widget-name">Widget name</Label>
+                <Label htmlFor="widget-name">{t("widgetName")}</Label>
                 <Input
                   id="widget-name"
                   name="name"
-                  placeholder="e.g. Weekly signups"
+                  placeholder={t("widgetPlaceholder")}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="widget-type">Type</Label>
+                <Label htmlFor="widget-type">{t("type")}</Label>
                 <Select name="type" defaultValue="metric">
                   <SelectTrigger id="widget-type" className="w-full">
-                    <SelectValue placeholder="Select a type" />
+                    <SelectValue placeholder={t("selectType")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="metric">Metric card</SelectItem>
-                    <SelectItem value="line">Line chart</SelectItem>
-                    <SelectItem value="bar">Bar chart</SelectItem>
-                    <SelectItem value="table">Table</SelectItem>
+                    <SelectItem value="metric">{t("metricCard")}</SelectItem>
+                    <SelectItem value="line">{t("lineChart")}</SelectItem>
+                    <SelectItem value="bar">{t("barChart")}</SelectItem>
+                    <SelectItem value="table">{t("table")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -345,11 +355,11 @@ export default function DashboardPage() {
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="button" variant="outline">
-                  Cancel
+                  {t("cancel")}
                 </Button>
               </DialogClose>
               <Button type="submit">
-                <IconPlus className="size-4" /> Add widget
+                <IconPlus className="size-4" /> {t("addWidget")}
               </Button>
             </DialogFooter>
           </form>
@@ -360,6 +370,7 @@ export default function DashboardPage() {
 }
 
 function StatusBadge({ status }: { status: string }) {
+  const t = useTranslations("Dashboard.Overview");
   const map: Record<string, string> = {
     Paid: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
     Pending: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
@@ -368,7 +379,7 @@ function StatusBadge({ status }: { status: string }) {
   };
   return (
     <Badge variant="secondary" className={map[status]}>
-      {status}
+      {t(`orderStatus.${status.toLowerCase()}`)}
     </Badge>
   );
 }

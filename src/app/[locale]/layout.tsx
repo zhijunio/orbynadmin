@@ -1,23 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeConfigProvider } from "@/components/theme-customizer";
+import { AppMotionProvider } from "@/components/app-motion-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { routing, type Locale } from "@/i18n/routing";
-
-const geistSans = Geist({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s · OrbynAdmin",
   },
   description:
-    "A polished admin & SaaS dashboard template built with Next.js, Tailwind and shadcn/ui.",
+    "An enterprise admin dashboard starter for managing teams, access, integrations and operations.",
 };
 
 export function generateStaticParams() {
@@ -47,7 +37,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full" suppressHydrationWarning>
         <NextIntlClientProvider>
@@ -57,10 +47,12 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <ThemeConfigProvider>
-              {children}
-              <Toaster />
-            </ThemeConfigProvider>
+            <AppMotionProvider>
+              <ThemeConfigProvider>
+                {children}
+                <Toaster />
+              </ThemeConfigProvider>
+            </AppMotionProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

@@ -3,10 +3,10 @@ import type { Contact, ContactInput } from "./contacts-data";
 type ContactStore = { contacts: Contact[]; nextId: number };
 
 const globalStore = globalThis as typeof globalThis & {
-  __nextboardDemoContactsStore?: ContactStore;
+  __orbynadminDemoContactsStore?: ContactStore;
 };
 
-const store = globalStore.__nextboardDemoContactsStore ??= {
+const store = globalStore.__orbynadminDemoContactsStore ??= {
   contacts: [
   { id: "CON-1001", name: "Avery Chen", email: "avery.chen@example.com", role: "Admin", status: "Active", createdAt: "2026-09-12T09:00:00.000Z" },
   { id: "CON-1002", name: "Jordan Rivera", email: "jordan.rivera@example.com", role: "Editor", status: "Active", createdAt: "2026-09-15T12:30:00.000Z" },

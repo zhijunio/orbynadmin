@@ -188,6 +188,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { title: "Profile", url: "/profile", icon: IconUserCircle },
       { title: "Settings", url: "/settings", icon: IconSettings },
+      { title: "System Settings", url: "/admin/settings", icon: IconShieldLock, badge: "New" },
       { title: "Notifications", url: "/notifications", icon: IconBell, badge: "3" },
       { title: "Developers", url: "/developers", icon: IconCode },
       { title: "Integrations", url: "/integrations", icon: IconPuzzle },

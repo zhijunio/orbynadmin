@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import {
   IconAt,
@@ -79,6 +80,7 @@ function initials(name: string) {
 type TabValue = "all" | "unread" | "mentions" | "system";
 
 export default function NotificationsPage() {
+  const t = useTranslations("Notifications.page");
   const [items, setItems] = useState<Notification[]>(notifications);
   const [tab, setTab] = useState<TabValue>("all");
 
@@ -103,7 +105,7 @@ export default function NotificationsPage() {
   const markAll = () => {
     if (counts.unread === 0) return;
     setItems((prev) => prev.map((n) => ({ ...n, read: true })));
-    toast.success("All notifications marked as read");
+    toast.success(t("markedAllRead"));
   };
 
   const setRead = (id: string, read: boolean) =>
@@ -111,14 +113,14 @@ export default function NotificationsPage() {
 
   const remove = (id: string) => {
     setItems((prev) => prev.filter((n) => n.id !== id));
-    toast.success("Notification removed");
+    toast.success(t("removed"));
   };
 
   const tabs: { value: TabValue; label: string; count: number }[] = [
-    { value: "all", label: "All", count: counts.all },
-    { value: "unread", label: "Unread", count: counts.unread },
-    { value: "mentions", label: "Mentions", count: counts.mentions },
-    { value: "system", label: "System", count: counts.system },
+    { value: "all", label: t("tabs.all"), count: counts.all },
+    { value: "unread", label: t("tabs.unread"), count: counts.unread },
+    { value: "mentions", label: t("tabs.mentions"), count: counts.mentions },
+    { value: "system", label: t("tabs.system"), count: counts.system },
   ];
 
   return (
@@ -132,12 +134,12 @@ export default function NotificationsPage() {
           onClick={markAll}
           disabled={counts.unread === 0}
         >
-          <IconChecks className="size-4" /> Mark all as read
+          <IconChecks className="size-4" /> {t("markAllRead")}
         </Button>
         <Button
           variant="ghost"
           size="icon"
-          aria-label="Notification settings"
+          aria-label={t("settings")}
           asChild
         >
           <Link href="/settings">
@@ -168,7 +170,7 @@ export default function NotificationsPage() {
           {visible.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-16 text-center text-muted-foreground">
               <IconBellOff className="size-7 opacity-50" />
-              <p className="text-sm">You&apos;re all caught up.</p>
+              <p className="text-sm">{t("empty")}</p>
             </div>
           ) : (
             <div className="space-y-1">
@@ -223,16 +225,16 @@ export default function NotificationsPage() {
                             n.read ? "font-medium" : "font-semibold"
                           )}
                         >
-                          {n.title}
+                          {t.has(`entries.${n.id}.title`) ? t(`entries.${n.id}.title`) : n.title}
                         </p>
                         {!n.read && (
                           <span className="size-1.5 shrink-0 rounded-full bg-primary" />
                         )}
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        {n.description}
+                        {t.has(`entries.${n.id}.description`) ? t(`entries.${n.id}.description`) : n.description}
                       </p>
-                      <p className="text-xs text-muted-foreground">{n.time}</p>
+                      <p className="text-xs text-muted-foreground">{t.has(`times.${n.time}`) ? t(`times.${n.time}`) : n.time}</p>
                     </div>
 
                     <DropdownMenu>
@@ -243,17 +245,17 @@ export default function NotificationsPage() {
                           className="size-8 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 data-[state=open]:opacity-100"
                         >
                           <IconDots className="size-4" />
-                          <span className="sr-only">Notification actions</span>
+                          <span className="sr-only">{t("actions")}</span>
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         {n.read ? (
                           <DropdownMenuItem onSelect={() => setRead(n.id, false)}>
-                            <IconCircleDot className="size-4" /> Mark as unread
+                            <IconCircleDot className="size-4" /> {t("markUnread")}
                           </DropdownMenuItem>
                         ) : (
                           <DropdownMenuItem onSelect={() => setRead(n.id, true)}>
-                            <IconCircleCheck className="size-4" /> Mark as read
+                            <IconCircleCheck className="size-4" /> {t("markRead")}
                           </DropdownMenuItem>
                         )}
                         <DropdownMenuSeparator />
@@ -261,7 +263,7 @@ export default function NotificationsPage() {
                           variant="destructive"
                           onSelect={() => remove(n.id)}
                         >
-                          <IconTrash className="size-4" /> Remove
+                          <IconTrash className="size-4" /> {t("remove")}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

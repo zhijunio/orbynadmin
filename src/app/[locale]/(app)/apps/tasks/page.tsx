@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   IconPlus,
   IconCalendar,
@@ -60,6 +61,7 @@ const seedTasks: Task[] = [
 ];
 
 export default function TasksPage() {
+  const tr = useTranslations("Apps.Tasks");
   const [tasks, setTasks] = useState(seedTasks);
   const [draft, setDraft] = useState("");
 
@@ -78,7 +80,7 @@ export default function TasksPage() {
       {
         id: `k${Date.now()}`,
         title,
-        due: "No date",
+        due: tr("noDate"),
         priority: "Medium",
         tag: tags.ops,
         assigneeIndex: 0,
@@ -96,7 +98,7 @@ export default function TasksPage() {
     if (items.length === 0) {
       return (
         <div className="py-12 text-center text-sm text-muted-foreground">
-          No tasks here yet.
+          {tr("empty")}
         </div>
       );
     }
@@ -114,11 +116,11 @@ export default function TasksPage() {
                     t.done && "text-muted-foreground line-through",
                   )}
                 >
-                  {t.title}
+                  {tr.has(`items.${t.id}`) ? tr(`items.${t.id}`) : t.title}
                 </p>
                 <div className="mt-1 flex items-center gap-2">
                   <Badge variant="secondary" className={t.tag.className}>
-                    {t.tag.text}
+                    {tr.has(`tags.${t.tag.text}`) ? tr(`tags.${t.tag.text}`) : t.tag.text}
                   </Badge>
                   <span
                     className={cn(
@@ -127,12 +129,12 @@ export default function TasksPage() {
                     )}
                   >
                     <IconCalendar className="size-3" />
-                    {t.due}
+                    {tr.has(`due.${t.id}`) ? tr(`due.${t.id}`) : t.due}
                   </span>
                 </div>
               </div>
               <Badge variant="secondary" className={priorityStyles[t.priority]}>
-                {t.priority}
+                {tr(t.priority.toLowerCase())}
               </Badge>
               <Avatar className="size-7">
                 <AvatarImage src={assignee.avatar} alt={assignee.name} />
@@ -158,18 +160,18 @@ export default function TasksPage() {
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.nativeEvent.isComposing) addTask();
               }}
-              placeholder="Add a task and press Enter…"
+              placeholder={tr("addPlaceholder")}
             />
             <Button onClick={addTask}>
-              <IconPlus className="size-4" /> Add
+              <IconPlus className="size-4" /> {tr("add")}
             </Button>
           </div>
 
           <Tabs defaultValue="all">
             <TabsList>
-              <TabsTrigger value="all">All ({total})</TabsTrigger>
-              <TabsTrigger value="active">Active ({inProgress})</TabsTrigger>
-              <TabsTrigger value="completed">Completed ({completed})</TabsTrigger>
+              <TabsTrigger value="all">{tr("all", { count: total })}</TabsTrigger>
+              <TabsTrigger value="active">{tr("active", { count: inProgress })}</TabsTrigger>
+              <TabsTrigger value="completed">{tr("completed", { count: completed })}</TabsTrigger>
             </TabsList>
             <TabsContent value="all">{list("all")}</TabsContent>
             <TabsContent value="active">{list("active")}</TabsContent>
