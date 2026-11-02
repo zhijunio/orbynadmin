@@ -7,8 +7,8 @@ import { ChartCard } from "../../_components/ChartCard";
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[270px] animate-pulse rounded-lg bg-muted/40" /> });
 
 const config = {
-  groupA: { label: "Group A", color: "#818cf8" },
-  groupB: { label: "Group B", color: "#93c5fd" },
+  groupA: { label: "Group A", color: "var(--chart-1)" },
+  groupB: { label: "Group B", color: "var(--chart-2)" },
 } satisfies Record<string, { label: string; color: string }>;
 
 const points = [

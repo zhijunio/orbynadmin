@@ -13,21 +13,21 @@ import {
   IconReportAnalytics,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { StatCard } from "@/components/stat-card";
-import { RevenueAreaChart } from "@/components/charts/revenue-area-chart";
-import { CategoryBarChart } from "@/components/charts/category-bar-chart";
-import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { StatCard } from "@/components/application/dashboard/MetricCard";
+import { RevenueAreaChart } from "@/components/application/charts/revenue-area-chart";
+import { CategoryBarChart } from "@/components/application/charts/category-bar-chart";
+import { Button } from "@/components/base/ui/button";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+} from "@/components/base/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Badge } from "@/components/base/ui/badge";
+import { Progress } from "@/components/base/ui/progress";
 import {
   Table,
   TableBody,
@@ -35,13 +35,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/base/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 import { ecommerceStats, orders, topProducts } from "@/data";
 
 function ChartMenu({ title }: { title: string }) {

@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PageHeader } from "@/components/feature/layout/PageHeader";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import dynamic from "next/dynamic";
 import type { ApexOptions } from "apexcharts";
 
@@ -9,7 +9,7 @@ const ApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
   loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" />,
 });
-const chartColors = ["#465fff", "#9cb9ff", "#12b76a", "#f79009", "#ee46bc"];
+const chartColors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"];
 
 function RadialChart({ values, labels, height = 300, compact = false }: { values: number[]; labels: string[]; height?: number; compact?: boolean }) {
   const options: ApexOptions = {
@@ -17,9 +17,9 @@ function RadialChart({ values, labels, height = 300, compact = false }: { values
     colors: chartColors,
     stroke: { width: 0, lineCap: "round" },
     fill: { opacity: 1 },
-    legend: { show: !compact, position: "bottom", fontSize: "12px", labels: { colors: "#667085" }, markers: { size: 4 } },
+    legend: { show: !compact, position: "bottom", fontSize: "12px", labels: { colors: "var(--muted-foreground)" }, markers: { size: 4 } },
     tooltip: { theme: typeof document !== "undefined" && document.documentElement.classList.contains("dark") ? "dark" : "light", y: { formatter: (value) => `${value}%` } },
-    plotOptions: { radialBar: { hollow: { size: compact ? "52%" : "38%" }, track: { background: "#eef2f6", strokeWidth: "100%" }, dataLabels: { name: { show: !compact, fontSize: "13px", color: "#667085", offsetY: 22 }, value: { show: true, fontSize: compact ? "20px" : "24px", fontWeight: 600, offsetY: compact ? 4 : -4, formatter: (value) => `${Math.round(value)}%` }, total: { show: !compact, label: "Average", color: "#667085", formatter: (chart) => `${Math.round(chart.globals.seriesTotals.reduce((sum: number, item: number) => sum + item, 0) / chart.globals.seriesTotals.length)}%` } } } },
+    plotOptions: { radialBar: { hollow: { size: compact ? "52%" : "38%" }, track: { background: "var(--muted)", strokeWidth: "100%" }, dataLabels: { name: { show: !compact, fontSize: "13px", color: "var(--muted-foreground)", offsetY: 22 }, value: { show: true, fontSize: compact ? "20px" : "24px", fontWeight: 600, color: "var(--foreground)", offsetY: compact ? 4 : -4, formatter: (value) => `${Math.round(value)}%` }, total: { show: !compact, label: "Average", color: "var(--muted-foreground)", formatter: (chart) => `${Math.round(chart.globals.seriesTotals.reduce((sum: number, item: number) => sum + item, 0) / chart.globals.seriesTotals.length)}%` } } } },
     dataLabels: { enabled: false },
     labels,
   };

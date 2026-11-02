@@ -1,7 +1,7 @@
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Skeleton } from "@/components/ui/skeleton";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Skeleton } from "@/components/base/ui/skeleton";
 
 function SkeletonExamples() {
   return <>

@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/page-header";
+import { PageHeader } from "@/components/application/layout/page-header";
 import { EmptyStatesGrid } from "./empty-states-grid";
 
 export const metadata = { title: "Empty States" };

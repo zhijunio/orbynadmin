@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Showcase } from "@/components/feature/example/Showcase";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Button } from "@/components/ui/button";
+import { Showcase } from "@/components/application/examples/Showcase";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Button } from "@/components/base/ui/button";
 
 const slides = ["/images/cycles/cycle-1.jpg", "/images/cycles/cycle-2.jpg", "/images/cycles/cycle-3.jpg"];
 

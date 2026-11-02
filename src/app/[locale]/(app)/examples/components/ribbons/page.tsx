@@ -1,5 +1,5 @@
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Showcase } from "@/components/feature/example/Showcase";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 const description = "Lorem ipsum dolor sit amet consectetur. Eget nulla suscipit arcu rutrum amet vel nec fringilla vulputate. Sed aliquam fringilla vulputate imperdiet arcu natoque purus ac nec ultricies nulla ultrices.";
 

@@ -22,18 +22,18 @@ import {
   IconArrowUpRight,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { DeleteDialog } from "@/components/delete-dialog";
-import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
+import { Button } from "@/components/base/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
+import { Textarea } from "@/components/base/ui/textarea";
 import {
   Table,
   TableBody,
@@ -41,7 +41,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/base/ui/table";
 import {
   Dialog,
   DialogClose,
@@ -50,21 +50,21 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/base/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { productList } from "@/data";
 

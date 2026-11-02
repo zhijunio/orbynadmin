@@ -6,8 +6,8 @@ import { ChartCard } from "../../_components/ChartCard";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[210px] animate-pulse rounded-lg bg-muted/40" /> });
 const segments = [
-  { name: "Group A", value: 40, fill: "#1e3a8a" }, { name: "Group B", value: 25, fill: "#c4b5fd" },
-  { name: "Group C", value: 25, fill: "#fbcfe8" }, { name: "Group D", value: 10, fill: "#bfdbfe" },
+  { name: "Group A", value: 40, fill: "var(--chart-1)" }, { name: "Group B", value: 25, fill: "var(--chart-2)" },
+  { name: "Group C", value: 25, fill: "var(--chart-3)" }, { name: "Group D", value: 10, fill: "var(--chart-4)" },
 ];
 const options: ApexOptions = {
   chart: { type: "pie", toolbar: { show: false }, background: "transparent", fontFamily: "inherit" },

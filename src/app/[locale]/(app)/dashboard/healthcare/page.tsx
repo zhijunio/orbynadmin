@@ -17,22 +17,22 @@ import {
   IconUserPlus,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { StatCard } from "@/components/stat-card";
-import { ApexChart } from "@/components/charts/apex-chart";
-import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { StatCard } from "@/components/application/dashboard/MetricCard";
+import { ApexChart } from "@/components/application/charts/apex-chart";
+import { Button } from "@/components/base/ui/button";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Progress } from "@/components/base/ui/progress";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
 import {
   Table,
   TableBody,
@@ -40,14 +40,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/base/ui/table";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import {
   Dialog,
   DialogClose,
@@ -56,14 +56,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/base/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 
 // --- demo data (inline, deterministic) -------------------------------------
 

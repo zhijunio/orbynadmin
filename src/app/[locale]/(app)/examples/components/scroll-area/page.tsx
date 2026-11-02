@@ -1,7 +1,7 @@
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { ScrollArea } from "@/components/base/ui/scroll-area";
 
 function ScrollAreaExamples() {
   return <>

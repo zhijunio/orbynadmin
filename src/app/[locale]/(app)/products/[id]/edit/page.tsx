@@ -13,25 +13,25 @@ import {
   IconAlertTriangle,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/base/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
+} from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
+import { Textarea } from "@/components/base/ui/textarea";
+import { Switch } from "@/components/base/ui/switch";
+import { Separator } from "@/components/base/ui/separator";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import { getProductById, productList } from "@/data";
 
 const categories = Array.from(new Set(productList.map((p) => p.category))).sort();

@@ -5,13 +5,13 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { toast } from "sonner";
 import { Plus as IconPlus, Pencil as IconPencil, Trash as IconTrash } from "lucide-react";
 
-import { PageHeader } from "@/components/feature/layout/PageHeader";
-import { DataTable, SortableHeader } from "@/components/feature/table/DataTable";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
+import { DataTable, SortableHeader } from "@/components/application/tables/DataTable";
+import { Badge } from "@/components/base/ui/badge";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent } from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -19,15 +19,15 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/base/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
+} from "@/components/base/ui/select";
+import { Skeleton } from "@/components/base/ui/skeleton";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -35,7 +35,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from "@/components/base/ui/alert-dialog";
 import {
   contactInputSchema,
   contactRoles,

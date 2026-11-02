@@ -1,6 +1,6 @@
-import { Showcase } from "@/components/feature/example/Showcase";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Button } from "@/components/ui/button";
+import { Showcase } from "@/components/application/examples/Showcase";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Button } from "@/components/base/ui/button";
 import { LoaderCircle as IconLoader2 } from "lucide-react";
 
 export default function SpinnersPage() {

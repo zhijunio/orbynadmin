@@ -18,16 +18,16 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { StatCard } from "@/components/stat-card";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { StatCard } from "@/components/application/dashboard/MetricCard";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent } from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
+import { Textarea } from "@/components/base/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -35,27 +35,27 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/base/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { DeleteDialog } from "@/components/delete-dialog";
+} from "@/components/base/ui/tooltip";
+import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
 import {
   projects,
   team,

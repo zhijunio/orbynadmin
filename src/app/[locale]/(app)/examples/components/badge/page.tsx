@@ -1,8 +1,8 @@
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import { ArrowUp } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
+import { Badge } from "@/components/base/ui/badge";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import { cn } from "@/lib/utils";
 
 const badgeColors = [

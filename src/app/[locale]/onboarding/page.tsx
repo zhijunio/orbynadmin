@@ -16,25 +16,25 @@ import {
   IconX,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Button } from "@/components/base/ui/button";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
+import { Progress } from "@/components/base/ui/progress";
+import { Separator } from "@/components/base/ui/separator";
+import { RadioGroup, RadioGroupItem } from "@/components/base/ui/radio-group";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
   InputGroupText,
-} from "@/components/ui/input-group";
+} from "@/components/base/ui/input-group";
 
 const steps = [
   { title: "Account", subtitle: "Tell us about you", icon: IconUser },

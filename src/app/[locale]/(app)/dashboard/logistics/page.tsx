@@ -4,15 +4,15 @@ import { useMemo, useState } from "react";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Badge } from "@/components/base/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/base/ui/pagination";
 import { Box as IconBox, ChevronDown as IconChevronDown, CircleCheck as IconCircleCheck, MessageCircle as IconMessageCircle, Package as IconPackage, Phone as IconPhone, Truck as IconTruckDelivery } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/base/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
 import { demoAvatarUrl } from "@/lib/demo-avatar";
-import { DeliveryRouteMap } from "@/components/feature/maps/DeliveryRouteMap";
+import { DeliveryRouteMap } from "@/components/application/maps/DeliveryRouteMap";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" /> });
 
@@ -67,7 +67,7 @@ export default function LogisticsDashboardPage() {
       <div className="grid items-start gap-4 xl:grid-cols-3">
         <Card className="xl:col-span-2"><CardHeader className="flex flex-row items-start justify-between gap-3"><div><CardTitle>Delivery Statistics</CardTitle><p className="mt-1 text-sm text-muted-foreground">Total number of deliveries 70.5K</p></div><Button variant="outline" className="min-w-32 justify-between">Monthly <IconChevronDown className="size-4" /></Button></CardHeader><CardContent><div className="mb-3 flex flex-wrap gap-5 text-sm text-muted-foreground"><span className="flex items-center gap-2"><span className="size-2.5 rounded-full bg-primary/30" />Shipment</span><span className="flex items-center gap-2"><span className="size-2.5 rounded-full bg-primary" />Delivery</span></div><div className="h-[340px]"><ApexChart type="bar" height="100%" options={{
           chart: { toolbar: { show: false }, fontFamily: "inherit", background: "transparent" },
-          colors: ["#b9caff", "#5368ff"], plotOptions: { bar: { columnWidth: "45%", borderRadius: 4 } },
+          colors: ["var(--chart-1)", "var(--chart-2)"], plotOptions: { bar: { columnWidth: "45%", borderRadius: 4 } },
           dataLabels: { enabled: false }, grid: { borderColor: "var(--border)" },
           xaxis: { categories: monthly.map(({ month }) => month), axisBorder: { show: false }, axisTicks: { show: false } },
           yaxis: { min: 0, max: 100, labels: { formatter: (value) => `${value}%` } },

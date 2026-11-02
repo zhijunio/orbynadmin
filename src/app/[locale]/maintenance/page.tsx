@@ -12,9 +12,9 @@ import {
   IconMail,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/base/ui/button";
+import { Badge } from "@/components/base/ui/badge";
+import { Input } from "@/components/base/ui/input";
 
 export const metadata: Metadata = {
   title: "We'll be right back",

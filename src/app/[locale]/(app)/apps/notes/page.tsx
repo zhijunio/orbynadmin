@@ -24,14 +24,14 @@ import {
 
 import { toast } from "sonner";
 
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card } from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
+import { Textarea } from "@/components/base/ui/textarea";
+import { Button } from "@/components/base/ui/button";
+import { Badge } from "@/components/base/ui/badge";
+import { Separator } from "@/components/base/ui/separator";
+import { ScrollArea } from "@/components/base/ui/scroll-area";
 import {
   Dialog,
   DialogContent,
@@ -39,14 +39,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/base/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,8 +54,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { DeleteDialog } from "@/components/delete-dialog";
+} from "@/components/base/ui/dropdown-menu";
+import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
 import { cn } from "@/lib/utils";
 
 type NoteColor = "blue" | "violet" | "emerald" | "amber" | "rose" | "slate";

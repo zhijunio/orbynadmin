@@ -14,11 +14,11 @@ const points = [
   { month: "Nov", groupA: 8500, groupB: 4000 }, { month: "Dec", groupA: 11500, groupB: 5500 },
 ];
 
-const config = { groupA: { label: "Group A", color: "var(--chart-1)" }, groupB: { label: "Group B", color: "#a5b4fc" } } satisfies Record<string, { label: string; color: string }>;
+const config = { groupA: { label: "Group A", color: "var(--chart-1)" }, groupB: { label: "Group B", color: "var(--chart-2)" } } satisfies Record<string, { label: string; color: string }>;
 
 export default function BarChartTwo() {
   return <ChartCard title="Bar Chart 2"><div className="flex flex-col gap-5">
-    <div className="flex items-center gap-5 text-sm font-medium text-muted-foreground"><span className="flex items-center gap-1.5"><i className="size-2 rounded-xs bg-[var(--chart-1)]" />Group A</span><span className="flex items-center gap-1.5"><i className="size-2 rounded-xs bg-[#a5b4fc]" />Group B</span></div>
+    <div className="flex items-center gap-5 text-sm font-medium text-muted-foreground"><span className="flex items-center gap-1.5"><i className="size-2 rounded-xs bg-[var(--chart-1)]" />Group A</span><span className="flex items-center gap-1.5"><i className="size-2 rounded-xs bg-[var(--chart-2)]" />Group B</span></div>
     <ApexChart type="bar" height={270} options={{
       chart: { stacked: true, toolbar: { show: false }, fontFamily: "inherit", background: "transparent" },
       colors: [config.groupA.color, config.groupB.color], plotOptions: { bar: { borderRadius: 4, columnWidth: "45%", borderRadiusApplication: "end" } },

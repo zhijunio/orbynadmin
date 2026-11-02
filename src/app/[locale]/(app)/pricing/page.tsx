@@ -3,23 +3,23 @@
 import { useState } from "react";
 import { IconCheck } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/base/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+} from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
+import { Label } from "@/components/base/ui/label";
+import { Switch } from "@/components/base/ui/switch";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/components/base/ui/accordion";
 import { cn } from "@/lib/utils";
 
 const tiers = [

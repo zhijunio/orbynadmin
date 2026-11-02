@@ -15,11 +15,11 @@ import {
   IconCalendarEvent,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { StatCard } from "@/components/stat-card";
-import { ApexChart } from "@/components/charts/apex-chart";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { StatCard } from "@/components/application/dashboard/MetricCard";
+import { ApexChart } from "@/components/application/charts/apex-chart";
+import { Button } from "@/components/base/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
 import {
   Table,
   TableBody,
@@ -27,26 +27,26 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/base/ui/table";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
+import { Progress } from "@/components/base/ui/progress";
+import { Separator } from "@/components/base/ui/separator";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import {
   Dialog,
   DialogClose,
@@ -55,14 +55,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/base/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 import type { StatCard as StatCardType } from "@/data";
 
 // --- demo data (inline, deterministic) -------------------------------------

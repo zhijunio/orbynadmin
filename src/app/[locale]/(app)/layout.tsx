@@ -1,8 +1,8 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import { AppHeader } from "@/components/app-header";
-import { ThemeCustomizer } from "@/components/theme-customizer";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { AppSidebar } from "@/components/application/shell/app-sidebar";
+import { AppHeader } from "@/components/application/shell/app-header";
+import { ThemeCustomizer } from "@/components/application/theme/theme-customizer";
+import { SidebarInset, SidebarProvider } from "@/components/base/ui/sidebar";
+import { TooltipProvider } from "@/components/base/ui/tooltip";
 
 export default function AppLayout({
   children,

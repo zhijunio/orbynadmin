@@ -1,5 +1,5 @@
-import { Showcase } from "@/components/feature/example/Showcase";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
+import { Showcase } from "@/components/application/examples/Showcase";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import Link from "next/link";
 
 const variants = [

@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { IconArrowLeft, IconShieldLock } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/base/ui/button";
 import { cn } from "@/lib/utils";
 
 const LENGTH = 6;

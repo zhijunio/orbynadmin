@@ -7,11 +7,11 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Upload as IconCloudUpload, Folder as IconFolder, Folder as IconFolderFilled, Image as IconPhoto, FileText as IconFileText, Video as IconVideo, Music as IconMusic, FileArchive as IconFileZip, Code as IconCode, Star as IconStar, Star as IconStarFilled, Ellipsis as IconDots, Search as IconSearch, LayoutGrid as IconLayoutGrid, LayoutList as IconLayoutList, Files as IconFiles, Clock as IconClock, Users as IconUsers, Trash as IconTrash, Download as IconDownload, Pencil as IconPencil, Copy as IconCopy, Link as IconLink, FolderPlus as IconFolderPlus, Server as IconServer2, PanelLeft as IconLayoutSidebar } from "lucide-react";
 
-import { PageHeader } from "@/components/feature/layout/PageHeader";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent } from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -19,10 +19,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+} from "@/components/base/ui/dialog";
+import { Progress } from "@/components/base/ui/progress";
+import { Separator } from "@/components/base/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -30,21 +30,21 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from "@/components/base/ui/breadcrumb";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -52,7 +52,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/base/ui/table";
 import {
   Sheet,
   SheetContent,
@@ -60,7 +60,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/components/base/ui/sheet";
 import { cn } from "@/lib/utils";
 
 type FileNode = {

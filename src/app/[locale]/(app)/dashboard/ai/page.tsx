@@ -4,14 +4,14 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
 import dynamic from "next/dynamic";
-import { StatCard } from "@/components/feature/dashboard/StatCard";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { StatCard } from "@/components/application/dashboard/TrendStatCard";
+import { Badge } from "@/components/base/ui/badge";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/base/ui/pagination";
 import { toast } from "sonner";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" /> });
@@ -99,7 +99,7 @@ export default function AiDashboardPage() {
             tooltip: { y: { formatter: (value) => `${value}k` } }, legend: { show: false },
           }} series={[{ name: t("users"), data: chartData.map(({ users }) => users) }, { name: t("revenue"), data: chartData.map(({ revenue }) => revenue) }]} /></div></CardContent>
         </Card>
-        <Card><CardHeader><CardTitle>{t("apiTokenUsage")}</CardTitle></CardHeader><CardContent><div className="flex h-52 items-center justify-center"><div className="flex size-48 items-center justify-center rounded-full" style={{ background: "conic-gradient(from 0deg, #7593ff 0deg 210deg, #68c9ed 210deg 305deg, transparent 305deg 360deg)" }}><div className="size-28 rounded-full bg-card" /></div></div><div className="mt-2 divide-y">{tokenUsage.map((item, index) => <div key={item.provider} className="flex items-center gap-3 py-3"><span className="flex size-9 items-center justify-center rounded-full border bg-muted/20 text-xs font-semibold">{index === 0 ? "◎" : index === 1 ? "✦" : "𝕏"}</span><div className="min-w-0 flex-1"><p className="text-sm font-medium">{item.provider}</p><p className="text-xs text-muted-foreground">{t("apiKeysConfigured", { count: Number.parseInt(item.keys, 10) })}</p></div><div className="text-right"><p className="text-sm font-semibold">{item.tokens}</p><p className="text-[11px] text-muted-foreground">{t("tokensUsed")}</p></div></div>)}</div><Button variant="link" className="mt-2 w-full">{t("viewUsage")}</Button></CardContent></Card>
+        <Card><CardHeader><CardTitle>{t("apiTokenUsage")}</CardTitle></CardHeader><CardContent><div className="flex h-52 items-center justify-center"><div className="flex size-48 items-center justify-center rounded-full" style={{ background: "conic-gradient(from 0deg, var(--chart-1) 0deg 210deg, var(--chart-2) 210deg 305deg, transparent 305deg 360deg)" }}><div className="size-28 rounded-full bg-card" /></div></div><div className="mt-2 divide-y">{tokenUsage.map((item, index) => <div key={item.provider} className="flex items-center gap-3 py-3"><span className="flex size-9 items-center justify-center rounded-full border bg-muted/20 text-xs font-semibold">{index === 0 ? "◎" : index === 1 ? "✦" : "𝕏"}</span><div className="min-w-0 flex-1"><p className="text-sm font-medium">{item.provider}</p><p className="text-xs text-muted-foreground">{t("apiKeysConfigured", { count: Number.parseInt(item.keys, 10) })}</p></div><div className="text-right"><p className="text-sm font-semibold">{item.tokens}</p><p className="text-[11px] text-muted-foreground">{t("tokensUsed")}</p></div></div>)}</div><Button variant="link" className="mt-2 w-full">{t("viewUsage")}</Button></CardContent></Card>
       </div>
 
       <div className="grid gap-4 xl:grid-cols-2">

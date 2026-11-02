@@ -12,23 +12,23 @@ import {
   IconShoppingBag,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/base/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+} from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
+import { Separator } from "@/components/base/ui/separator";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import { customers, productList, getOrderById } from "@/data";
 
 const paymentMethods = ["Visa", "Mastercard", "Amex", "PayPal", "Apple Pay"];

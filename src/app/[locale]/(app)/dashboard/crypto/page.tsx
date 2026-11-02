@@ -6,10 +6,10 @@ import type { ApexOptions } from "apexcharts";
 import { toast } from "sonner";
 import { Plus as IconPlus, Wallet as IconWallet, ArrowLeftRight as IconArrowsExchange2, ArrowUpRight as IconArrowUpRight, ArrowDownLeft as IconArrowDownLeft, ArrowDownRight as IconArrowDownRight, Send as IconSend, EllipsisVertical as IconDotsVertical, Copy as IconCopy, Share as IconShare, QrCode as IconQrcode, RefreshCw as IconRefresh, Star as IconStar, Star as IconStarFilled, Lock as IconLock, ShieldCheck as IconShieldCheck, type LucideIcon as Icon } from "lucide-react";
 
-import { PageHeader } from "@/components/feature/layout/PageHeader";
-import { StatCard } from "@/components/feature/dashboard/StatCard";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
+import { StatCard } from "@/components/application/dashboard/TrendStatCard";
 import { CoinIcon } from "./_components/CoinIcon";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/base/ui/button";
 import {
   Table,
   TableBody,
@@ -17,25 +17,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/base/ui/table";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import {
   Dialog,
   DialogClose,
@@ -44,14 +44,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/base/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" /> });
 

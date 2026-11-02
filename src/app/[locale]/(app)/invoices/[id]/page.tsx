@@ -2,9 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { IconArrowLeft, IconFileInvoice } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent } from "@/components/base/ui/card";
+import { Separator } from "@/components/base/ui/separator";
 import {
   Table,
   TableBody,
@@ -12,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/base/ui/table";
 import { invoices, getInvoiceById, company } from "@/data";
 import { InvoiceActions } from "./invoice-actions";
 

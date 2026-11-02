@@ -10,12 +10,12 @@ import {
   IconClock,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
+import { ScrollArea } from "@/components/base/ui/scroll-area";
 import {
   Dialog,
   DialogContent,
@@ -23,14 +23,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/base/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/base/ui/select";
 import { cn } from "@/lib/utils";
 
 type EventColor = "blue" | "emerald" | "amber" | "rose" | "violet";

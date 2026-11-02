@@ -3,19 +3,19 @@
 import { useState } from "react";
 
 import dynamic from "next/dynamic";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Badge } from "@/components/base/ui/badge";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Checkbox } from "@/components/base/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from "@/components/base/ui/dropdown-menu";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
 import { EllipsisVertical as IconDotsVertical } from "lucide-react";
 import { demoAvatarUrl } from "@/lib/demo-avatar";
 import { getInitials } from "@/lib/text";
@@ -52,9 +52,9 @@ const annualStatistics = [
 ];
 
 const categories = [
-  { name: "Affiliate Program", value: 48, products: "2,040", color: "#3C50E0" },
-  { name: "Direct Buy", value: 33, products: "1,402", color: "#80CAEE" },
-  { name: "Adsense", value: 19, products: "510", color: "#8099FF" },
+  { name: "Affiliate Program", value: 48, products: "2,040", color: "var(--chart-1)" },
+  { name: "Direct Buy", value: 33, products: "1,402", color: "var(--chart-2)" },
+  { name: "Adsense", value: 19, products: "510", color: "var(--chart-3)" },
 ];
 
 const schedule = [
@@ -145,7 +145,7 @@ export default function CrmPage() {
             </div>
             <div className="h-[300px] w-full"><ApexChart type="area" height="100%" options={{
               chart: { toolbar: { show: false }, fontFamily: "inherit", background: "transparent" },
-              colors: ["var(--chart-1)", "#9CB9FF"], stroke: { curve: "smooth", width: 2 },
+              colors: ["var(--chart-1)", "var(--chart-2)"], stroke: { curve: "smooth", width: 2 },
               fill: { type: "gradient", gradient: { opacityFrom: 0.26, opacityTo: 0.02 } },
               dataLabels: { enabled: false }, markers: { size: 0 }, grid: { borderColor: "var(--border)" },
               xaxis: { categories: chartData.map(({ month }) => month) }, yaxis: { labels: { formatter: (value) => String(value) } },
@@ -176,7 +176,7 @@ export default function CrmPage() {
             <CardAction><Button variant="ghost" size="icon" aria-label="Sales category options"><IconDotsVertical className="size-4" /></Button></CardAction>
           </CardHeader>
           <CardContent className="grid items-center gap-5 md:grid-cols-2">
-            <div className="relative mx-auto size-56 rounded-full" style={{ background: "conic-gradient(#3C50E0 0% 48%, #80CAEE 48% 81%, #8099FF 81% 100%)" }}>
+            <div className="relative mx-auto size-56 rounded-full" style={{ background: "conic-gradient(var(--chart-1) 0% 48%, var(--chart-2) 48% 81%, var(--chart-3) 81% 100%)" }}>
               <div className="absolute inset-[24%] flex flex-col items-center justify-center rounded-full bg-card"><span className="text-sm text-muted-foreground">Total</span><span className="text-xl font-semibold">3.5K</span></div>
             </div>
             <div className="space-y-5">

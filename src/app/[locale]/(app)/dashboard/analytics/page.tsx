@@ -3,13 +3,13 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Button } from "@/components/base/ui/button";
+import { Input } from "@/components/base/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
 import { ArrowUpRight as IconArrowUpRight, Monitor as IconDeviceDesktop, Smartphone as IconDeviceMobile, Tablet as IconDeviceTablet, EllipsisVertical as IconDotsVertical, Eye as IconEye, Users as IconUsers } from "lucide-react";
-import { VisitorsWorldMap } from "@/components/feature/maps/VisitorsWorldMap";
+import { VisitorsWorldMap } from "@/components/application/maps/VisitorsWorldMap";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-full min-h-28 animate-pulse rounded-lg bg-muted/40" /> });
 

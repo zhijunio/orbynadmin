@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/feature/layout/PageHeader";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import BarChartOne from "@/app/[locale]/(app)/examples/charts/bar/_components/BarChartOne";
 import BarChartTwo from "@/app/[locale]/(app)/examples/charts/bar/_components/BarChartTwo";
 import BarChartThree from "@/app/[locale]/(app)/examples/charts/bar/_components/BarChartThree";

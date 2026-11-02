@@ -1,10 +1,10 @@
 "use client";
 
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import { CircleCheck, Info, CircleAlert as IconAlertCircle, TriangleAlert as IconAlertTriangle, CircleCheck as IconCircleCheck, CircleX as IconCircleX } from "lucide-react";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Button } from "@/components/ui/button";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Button } from "@/components/base/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -14,9 +14,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/components/base/ui/dialog";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,7 +27,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/components/base/ui/alert-dialog";
 
 const dialogContentClass = "w-[calc(100%-2rem)] gap-0 border border-border bg-background p-6 shadow-lg ring-0 max-w-[calc(100%-2rem)] sm:w-[480px] sm:max-w-[480px]";
 const footerClass = "mx-0 mb-0 border-0 bg-transparent p-0 pt-4";

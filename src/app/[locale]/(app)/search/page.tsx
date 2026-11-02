@@ -23,18 +23,18 @@ import {
   IconBell,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Kbd } from "@/components/ui/kbd";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { Card, CardContent } from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Kbd } from "@/components/base/ui/kbd";
+import { Badge } from "@/components/base/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs";
+} from "@/components/base/ui/tabs";
 import { cn } from "@/lib/utils";
 import { customers, orders, productList } from "@/data";
 

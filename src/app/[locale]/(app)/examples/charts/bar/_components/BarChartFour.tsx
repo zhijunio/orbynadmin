@@ -7,8 +7,8 @@ import { ChartCard } from "../../_components/ChartCard";
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[270px] animate-pulse rounded-lg bg-muted/40" /> });
 
 const config = {
-  organic: { label: "Organic", color: "#2b448d" }, direct: { label: "Direct", color: "#b5aaff" },
-  social: { label: "Social", color: "#ffbcf9" }, referral: { label: "Referral", color: "#c9e5ff" },
+  organic: { label: "Organic", color: "var(--chart-1)" }, direct: { label: "Direct", color: "var(--chart-2)" },
+  social: { label: "Social", color: "var(--chart-3)" }, referral: { label: "Referral", color: "var(--chart-4)" },
 } satisfies Record<string, { label: string; color: string }>;
 const points = [{ name: "Traffic Sources", organic: 480, direct: 240, social: 130, referral: 150 }];
 

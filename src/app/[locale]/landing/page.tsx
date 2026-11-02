@@ -19,16 +19,16 @@ import {
   IconBrandDiscord,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent } from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/components/base/ui/accordion";
 
 export const metadata: Metadata = {
   title: { absolute: "OrbynAdmin — The free & open-source admin template" },

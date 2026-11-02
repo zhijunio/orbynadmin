@@ -1,10 +1,10 @@
 "use client";
 
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import { ChevronDown, FileText, Folder, FolderOpen } from "lucide-react";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/base/ui/collapsible";
 
 function CollapsibleExamples() {
   return (

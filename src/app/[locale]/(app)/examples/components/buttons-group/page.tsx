@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Showcase } from "@/components/feature/example/Showcase";
-import { Button } from "@/components/ui/button";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Showcase } from "@/components/application/examples/Showcase";
+import { Button } from "@/components/base/ui/button";
 import { ChevronLeft as IconChevronLeft, ChevronRight as IconChevronRight, Download as IconDownload, LayoutGrid as IconLayoutGrid, List as IconList } from "lucide-react";
 
 const joined = "rounded-none first:rounded-l-lg last:rounded-r-lg [&:not(:first-child)]:-ml-px";

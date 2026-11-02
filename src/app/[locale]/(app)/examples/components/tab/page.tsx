@@ -1,12 +1,12 @@
 "use client";
 
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import type { ReactNode } from "react";
 import { ChartPie as IconChartPie, Bell as IconBell, FileText as IconFileText, Home as IconHome, History as IconHistory, MessageCircle as IconMessageCircle, ShieldLock as IconShieldLock, Settings as IconSettings, CircleUser as IconUserCircle } from "lucide-react";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Badge } from "@/components/base/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
 
 const regularTabs = [
   { value: "overview", label: "Overview", title: "Overview", description: "Get a high-level view of your dashboard metrics and key performance indicators." },

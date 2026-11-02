@@ -25,17 +25,17 @@ import {
   IconPhoto,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/base/ui/button";
+import { Card } from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
+import { Textarea } from "@/components/base/ui/textarea";
+import { Separator } from "@/components/base/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/components/base/ui/tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,7 +43,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { currentUser } from "@/data";
 

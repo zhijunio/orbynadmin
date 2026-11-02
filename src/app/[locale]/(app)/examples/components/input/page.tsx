@@ -1,15 +1,15 @@
 "use client";
 
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import { useEffect, useId, useState } from "react";
 import { Check as IconCheck, Search as IconSearch, Eye as IconEye, EyeOff as IconEyeOff, Mail as IconMail, Send as IconSend } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
+import { Button } from "@/components/base/ui/button";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/base/ui/input-group";
 
 function EmailVerificationInput() {
   const id = useId();

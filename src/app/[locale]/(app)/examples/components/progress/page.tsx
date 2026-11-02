@@ -1,6 +1,6 @@
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Showcase } from "@/components/feature/example/Showcase";
-import { Progress } from "@/components/ui/progress";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Showcase } from "@/components/application/examples/Showcase";
+import { Progress } from "@/components/base/ui/progress";
 
 const examples = [
   { value: 55, color: "[&>div]:bg-primary" },

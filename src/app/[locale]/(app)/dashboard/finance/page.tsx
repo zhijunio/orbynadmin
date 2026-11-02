@@ -4,13 +4,13 @@ import { useMemo, useState } from "react";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/base/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
 import { ArrowDownLeft as IconArrowDownLeft, ArrowUpRight as IconArrowUpRight, ChevronDown as IconChevronDown, ChevronLeft as IconChevronLeft, ChevronRight as IconChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { demoAvatarUrl } from "@/lib/demo-avatar";
@@ -26,12 +26,12 @@ const monthlyCashflow = [
   { month: "Nov", income: 5600, expenses: 5200 }, { month: "Dec", income: 4500, expenses: 4300 },
 ];
 const spending = [
-  { name: "Activity", value: "$3,870", color: "#6675f5", width: 29 },
-  { name: "Online Purchases", value: "$2,840", color: "#56c6ed", width: 21 },
-  { name: "Groceries", value: "$2,105", color: "#a5a1fa", width: 16 },
-  { name: "Digital Goods", value: "$1,140", color: "#e98ee7", width: 12 },
-  { name: "Stationery", value: "$698", color: "#75d9b0", width: 8 },
-  { name: "Others", value: "$2,105", color: "#d6d9df", width: 14 },
+  { name: "Activity", value: "$3,870", color: "var(--chart-1)", width: 29 },
+  { name: "Online Purchases", value: "$2,840", color: "var(--chart-2)", width: 21 },
+  { name: "Groceries", value: "$2,105", color: "var(--chart-3)", width: 16 },
+  { name: "Digital Goods", value: "$1,140", color: "var(--chart-4)", width: 12 },
+  { name: "Stationery", value: "$698", color: "var(--chart-5)", width: 8 },
+  { name: "Others", value: "$2,105", color: "var(--muted-foreground)", width: 14 },
 ];
 const recipients = ["Amelia Moore", "Ethan Wilson", "Sofia Fischer", "Noah Brown", "Mia Chen"];
 const recentActivity = [
@@ -83,7 +83,7 @@ export default function FinanceDashboardPage() {
       <div className="space-y-4 xl:col-span-2">
         <Card><CardHeader className="flex flex-row items-start justify-between"><CardTitle>Cashflow Overview</CardTitle><div className="flex gap-2"><Select aria-label="Cashflow year" value={cashflowYear} onValueChange={setCashflowYear}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="2025">2025</SelectItem><SelectItem value="2024">2024</SelectItem></SelectContent></Select><Select aria-label="Cashflow period" value={cashflowRange} onValueChange={setCashflowRange}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{["3 Month", "6 Month", "12 Month"].map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent></Select></div></CardHeader><CardContent><div className="flex items-end justify-between gap-4"><div><p className="text-sm text-muted-foreground">Total Revenue</p><p className="mt-1 text-2xl font-semibold">$9,758.00 <span className="rounded-full bg-emerald-500/10 px-2 py-1 text-xs font-medium text-emerald-600">+7.96%</span></p></div><div className="flex gap-4 text-xs text-muted-foreground"><span className="flex items-center gap-2"><i className="size-2 rounded-full bg-primary" />Income</span><span className="flex items-center gap-2"><i className="size-2 rounded-full bg-primary/40" />Expense</span></div></div><div className="mt-4 h-[280px]"><ApexChart type="bar" height="100%" options={{
           chart: { stacked: true, toolbar: { show: false }, fontFamily: "inherit", background: "transparent" },
-          colors: ["#4f5fff", "#9bb4ff"], plotOptions: { bar: { columnWidth: "45%", borderRadius: 4, borderRadiusApplication: "end" } },
+          colors: ["var(--chart-1)", "var(--chart-2)"], plotOptions: { bar: { columnWidth: "45%", borderRadius: 4, borderRadiusApplication: "end" } },
           dataLabels: { enabled: false }, grid: { borderColor: "var(--border)", strokeDashArray: 3 },
           xaxis: { categories: data.map(({ month }) => month), axisBorder: { show: false }, axisTicks: { show: false } },
           yaxis: { labels: { formatter: (value) => value === 0 ? "0" : `${Math.round(Number(value) / 1000)}K` } },

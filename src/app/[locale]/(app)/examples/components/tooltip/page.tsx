@@ -1,7 +1,7 @@
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Showcase } from "@/components/feature/example/Showcase";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Showcase } from "@/components/application/examples/Showcase";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/base/ui/tooltip";
 
 function TooltipsPositions() {
   return (

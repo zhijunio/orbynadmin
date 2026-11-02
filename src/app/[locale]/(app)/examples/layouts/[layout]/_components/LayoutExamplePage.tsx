@@ -1,13 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { PageHeader } from "@/components/feature/layout/PageHeader";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
+import { Avatar, AvatarFallback } from "@/components/base/ui/avatar";
+import { Badge } from "@/components/base/ui/badge";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Progress } from "@/components/base/ui/progress";
 import { Activity as IconActivity, ArrowRight as IconArrowRight, Check as IconCheck, ChevronDown as IconChevronDown, ChevronRight as IconChevronRight, PanelsTopLeft as IconApps, FileText as IconFileText, Folder as IconFolder, LayoutDashboard as IconLayoutDashboard, Menu as IconMenu2, Search as IconSearch, Users as IconUsers } from "lucide-react";
 import { toast } from "sonner";
 

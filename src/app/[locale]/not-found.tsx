@@ -1,6 +1,6 @@
 import { IconMapPinQuestion, IconLifebuoy } from "@tabler/icons-react";
 
-import { ErrorState } from "@/components/error-state";
+import { ErrorState } from "@/components/application/feedback/error-state";
 
 export default function NotFound() {
   return (

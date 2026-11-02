@@ -19,10 +19,10 @@ import {
   IconShare,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { StatCard } from "@/components/stat-card";
-import { TrafficDonutChart } from "@/components/charts/traffic-donut-chart";
-import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { StatCard } from "@/components/application/dashboard/MetricCard";
+import { TrafficDonutChart } from "@/components/application/charts/traffic-donut-chart";
+import { Button } from "@/components/base/ui/button";
 import {
   Card,
   CardAction,
@@ -30,9 +30,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ApexChart } from "@/components/charts/apex-chart";
+} from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
+import { ApexChart } from "@/components/application/charts/apex-chart";
 import {
   Table,
   TableBody,
@@ -40,7 +40,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/base/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,7 +49,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 import {
   revenueByMonth,
   trafficSources,

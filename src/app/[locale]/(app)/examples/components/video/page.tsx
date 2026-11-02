@@ -1,6 +1,6 @@
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 
 const videoRatios = [
   { label: "16:9", className: "aspect-video" },

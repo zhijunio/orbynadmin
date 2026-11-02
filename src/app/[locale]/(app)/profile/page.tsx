@@ -4,13 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { IconArrowUpRight, IconBuilding, IconMail, IconMapPin, IconShieldCheck, IconUser } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/feature/layout/PageHeader";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import { ProfileActions } from "./profile-actions";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Badge } from "@/components/base/ui/badge";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Separator } from "@/components/base/ui/separator";
 import { currentUser, team } from "@/data";
 
 const account = team.find((member) => member.name === currentUser.name);

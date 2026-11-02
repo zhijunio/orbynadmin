@@ -1,6 +1,6 @@
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Showcase } from "@/components/feature/example/Showcase";
-import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@/components/ui/avatar";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Showcase } from "@/components/application/examples/Showcase";
+import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@/components/base/ui/avatar";
 
 import { User as IconUser } from "lucide-react";
 import { demoAvatarUrl } from "@/lib/demo-avatar";

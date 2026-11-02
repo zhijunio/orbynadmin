@@ -1,26 +1,26 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PageHeader } from "@/components/feature/layout/PageHeader";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import dynamic from "next/dynamic";
 import type { ApexOptions } from "apexcharts";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" /> });
-const chartColors = ["#465fff", "#9cb9ff", "#12b76a", "#f79009", "#ee46bc"];
+const chartColors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"];
 
 function RadarChart({ series, categories, height = 300 }: { series: { name: string; data: number[] }[]; categories: string[]; height?: number }) {
   const options: ApexOptions = {
     chart: { type: "radar", toolbar: { show: false }, fontFamily: "inherit", background: "transparent", animations: { enabled: true, speed: 350 } },
     colors: chartColors,
-    xaxis: { categories, labels: { style: { colors: categories.map(() => "#667085"), fontSize: "12px" } } },
-    yaxis: { show: true, min: 0, max: 100, tickAmount: 4, labels: { style: { colors: ["#667085"] } } },
+    xaxis: { categories, labels: { style: { colors: categories.map(() => "var(--muted-foreground)"), fontSize: "12px" } } },
+    yaxis: { show: true, min: 0, max: 100, tickAmount: 4, labels: { style: { colors: ["var(--muted-foreground)"] } } },
     stroke: { width: 2, lineCap: "round" },
     fill: { opacity: 0.16 },
     markers: { size: 3, hover: { size: 5 } },
-    grid: { borderColor: "rgba(148,163,184,.18)", padding: { top: 4, right: 12, bottom: 0, left: 12 } },
-    legend: { show: true, position: "bottom", fontSize: "12px", labels: { colors: "#667085" }, markers: { size: 4 } },
+    grid: { borderColor: "var(--border)", padding: { top: 4, right: 12, bottom: 0, left: 12 } },
+    legend: { show: true, position: "bottom", fontSize: "12px", labels: { colors: "var(--muted-foreground)" }, markers: { size: 4 } },
     tooltip: { theme: typeof document !== "undefined" && document.documentElement.classList.contains("dark") ? "dark" : "light", y: { formatter: (value) => `${value}%` } },
-    plotOptions: { radar: { polygons: { strokeColors: "rgba(148,163,184,.25)", connectorColors: "rgba(148,163,184,.25)", fill: { colors: ["transparent", "transparent"] } } } },
+    plotOptions: { radar: { polygons: { strokeColors: "var(--border)", connectorColors: "var(--border)", fill: { colors: ["transparent", "transparent"] } } } },
     dataLabels: { enabled: false },
   };
 

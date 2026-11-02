@@ -14,11 +14,11 @@ const points = [
   { month: "Nov", groupA: 600, groupB: 780 }, { month: "Dec", groupA: 750, groupB: 600 },
 ];
 
-const config = { groupA: { label: "Group A", color: "var(--chart-1)" }, groupB: { label: "Group B", color: "#d8b4fe" } } satisfies Record<string, { label: string; color: string }>;
+const config = { groupA: { label: "Group A", color: "var(--chart-1)" }, groupB: { label: "Group B", color: "var(--chart-2)" } } satisfies Record<string, { label: string; color: string }>;
 
 export default function LineChartTwo() {
   return <ChartCard title="Line Chart 2"><div className="flex flex-col gap-5">
-    <div className="flex items-center gap-5 text-sm font-medium text-muted-foreground"><span className="flex items-center gap-1.5"><i className="size-2 rounded-xs bg-[var(--chart-1)]" />Group A</span><span className="flex items-center gap-1.5"><i className="size-2 rounded-xs bg-[#d8b4fe]" />Group B</span></div>
+    <div className="flex items-center gap-5 text-sm font-medium text-muted-foreground"><span className="flex items-center gap-1.5"><i className="size-2 rounded-xs bg-[var(--chart-1)]" />Group A</span><span className="flex items-center gap-1.5"><i className="size-2 rounded-xs bg-[var(--chart-2)]" />Group B</span></div>
     <ApexChart type="area" height={270} options={{
       chart: { toolbar: { show: false }, fontFamily: "inherit", background: "transparent" },
       colors: [config.groupA.color, config.groupB.color], stroke: { curve: "smooth", width: 2 },

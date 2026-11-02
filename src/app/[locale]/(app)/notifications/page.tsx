@@ -20,22 +20,22 @@ import {
   IconBellOff,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/base/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
 import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs";
+} from "@/components/base/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { notifications, type Notification, type NotificationKind } from "@/data";
 

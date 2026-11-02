@@ -14,16 +14,16 @@ import {
   IconTag,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/base/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+} from "@/components/base/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Badge } from "@/components/base/ui/badge";
+import { Separator } from "@/components/base/ui/separator";
 import { cn } from "@/lib/utils";
 import {
   tickets,

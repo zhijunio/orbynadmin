@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { IconLock, IconLifebuoy } from "@tabler/icons-react";
 
-import { ErrorState } from "@/components/error-state";
+import { ErrorState } from "@/components/application/feedback/error-state";
 
 export const metadata: Metadata = {
   title: "Access denied",

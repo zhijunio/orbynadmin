@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Book as IconBook, ChevronDown as IconChevronDown, PanelLeft as IconLayoutSidebar, Menu as IconMenu2, Search as IconSearch, Settings as IconSettings, Users as IconUsers } from "lucide-react";
-import { PageHeader } from "@/components/feature/layout/PageHeader";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
+import { Badge } from "@/components/base/ui/badge";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
 import { toast } from "sonner";
 
 const layouts = [

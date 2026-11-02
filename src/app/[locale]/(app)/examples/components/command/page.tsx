@@ -1,13 +1,13 @@
 "use client";
 
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import { useState } from "react";
 import { ArrowUpRight, FilePlus2, LayoutDashboard, Search, Settings, Users } from "lucide-react";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Button } from "@/components/ui/button";
-import { Kbd, KbdGroup } from "@/components/ui/kbd";
-import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Button } from "@/components/base/ui/button";
+import { Kbd, KbdGroup } from "@/components/base/ui/kbd";
+import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/base/ui/command";
 
 function CommandExamples() {
   const [open, setOpen] = useState(false);

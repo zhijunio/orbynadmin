@@ -4,13 +4,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { IconBuilding, IconShieldLock } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
+import { Switch } from "@/components/base/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
 import { useTranslations } from "next-intl";
 
 const passwordRules = ["uppercase", "lowercase", "number", "symbol"] as const;

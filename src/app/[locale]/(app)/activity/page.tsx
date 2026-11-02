@@ -9,18 +9,18 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { MessageSquare as IconMessage2, CircleCheck as IconCircleCheck, CreditCard as IconCreditCard, TriangleAlert as IconAlertTriangle, Search as IconSearch, ListChecks as IconChecks, Activity as IconActivity, TrendingUp as IconTrendingUp } from "lucide-react";
 
-import { PageHeader } from "@/components/feature/layout/PageHeader";
-import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
+import { Button } from "@/components/base/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
+} from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Progress } from "@/components/base/ui/progress";
+import { Separator } from "@/components/base/ui/separator";
 import { cn } from "@/lib/utils";
 
 const categoryMeta: Record<

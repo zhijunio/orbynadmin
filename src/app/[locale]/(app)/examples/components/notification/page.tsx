@@ -1,11 +1,11 @@
 "use client";
 
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import { Check as IconCheck, Info as IconInfoCircle, X as IconX } from "lucide-react";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Button } from "@/components/base/ui/button";
 import { demoAvatarUrl } from "@/lib/demo-avatar";
 import { getInitials } from "@/lib/text";
 

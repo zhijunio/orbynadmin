@@ -9,19 +9,19 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { toast } from "sonner";
 import { EllipsisVertical as IconDotsVertical, Copy as IconCopy, Trash as IconTrash, Table as IconTable, Download as IconDownload } from "lucide-react";
 
-import { PageHeader } from "@/components/feature/layout/PageHeader";
-import { DataTable, SortableHeader } from "@/components/feature/table/DataTable";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
+import { DataTable, SortableHeader } from "@/components/application/tables/DataTable";
+import { Button } from "@/components/base/ui/button";
+import { Badge } from "@/components/base/ui/badge";
+import { Checkbox } from "@/components/base/ui/checkbox";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/base/ui/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/base/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,7 +30,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 
 const statusStyles: Record<Customer["status"], string> = {
   Active: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",

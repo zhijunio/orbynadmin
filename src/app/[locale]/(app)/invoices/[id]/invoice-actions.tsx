@@ -3,7 +3,7 @@
 import { toast } from "sonner";
 import { IconDownload, IconPrinter, IconSend } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/base/ui/button";
 
 export function InvoiceActions({
   number,

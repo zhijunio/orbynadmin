@@ -1,10 +1,10 @@
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Showcase } from "@/components/feature/example/Showcase";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import Link from "next/link";
 import type { ElementType } from "react";
 import { ChartColumn as IconChartBar, ChevronRight as IconChevronRight, Home as IconHome, ShieldLock as IconShieldLock, Slash as IconSlash, CircleUser as IconUserCircle } from "lucide-react";
-import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/base/ui/breadcrumb";
 
 function BreadcrumbArrow() {
   return <BreadcrumbListExample divider="arrow" />;

@@ -7,14 +7,14 @@ import {
   IconCalendar,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { Card, CardContent } from "@/components/base/ui/card";
+import { Input } from "@/components/base/ui/input";
+import { Button } from "@/components/base/ui/button";
+import { Checkbox } from "@/components/base/ui/checkbox";
+import { Badge } from "@/components/base/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/base/ui/tabs";
 import { cn } from "@/lib/utils";
 import { customers } from "@/data";
 

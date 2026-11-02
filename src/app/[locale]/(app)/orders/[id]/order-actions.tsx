@@ -14,15 +14,15 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/base/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { DeleteDialog } from "@/components/delete-dialog";
+} from "@/components/base/ui/dropdown-menu";
+import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
 
 export function OrderActions({
   slug,

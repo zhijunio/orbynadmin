@@ -10,8 +10,8 @@ const ApexChart = dynamic(() => import("react-apexcharts"), {
 });
 
 const segments = [
-  { name: "Group A", value: 35, fill: "#1e3a8a" }, { name: "Group B", value: 20, fill: "#a78bfa" },
-  { name: "Group C", value: 20, fill: "#a5b4fc" }, { name: "Group D", value: 15, fill: "#bfdbfe" }, { name: "Group E", value: 10, fill: "#fbcfe8" },
+  { name: "Group A", value: 35, fill: "var(--chart-1)" }, { name: "Group B", value: 20, fill: "var(--chart-2)" },
+  { name: "Group C", value: 20, fill: "var(--chart-3)" }, { name: "Group D", value: 15, fill: "var(--chart-4)" }, { name: "Group E", value: 10, fill: "var(--chart-5)" },
 ];
 const options: ApexOptions = {
   chart: { type: "donut", toolbar: { show: false }, background: "transparent", fontFamily: "inherit" },

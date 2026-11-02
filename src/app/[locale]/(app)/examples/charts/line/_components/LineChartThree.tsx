@@ -8,8 +8,8 @@ const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loadin
 
 const config = {
   groupA: { label: "Group A", color: "var(--chart-1)" },
-  groupB: { label: "Group B", color: "#d8b4fe" },
-  groupC: { label: "Group C", color: "var(--muted-foreground)" },
+  groupB: { label: "Group B", color: "var(--chart-2)" },
+  groupC: { label: "Group C", color: "var(--chart-3)" },
 } satisfies Record<string, { label: string; color: string }>;
 
 const points = [

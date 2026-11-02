@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { PageHeader } from "@/components/feature/layout/PageHeader";
-import { VisitorsWorldMap } from "@/components/feature/maps/VisitorsWorldMap";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
+import { VisitorsWorldMap } from "@/components/application/maps/VisitorsWorldMap";
+import { Badge } from "@/components/base/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
 import { MapPin as IconMapPin, Globe2 as IconWorld } from "lucide-react";
 
 const regions = [

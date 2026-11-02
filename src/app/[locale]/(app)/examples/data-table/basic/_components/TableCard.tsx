@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
 
 export function TableCard({ title, action, children, flush = false }: { title?: string; action?: ReactNode; children: ReactNode; flush?: boolean }) {
   return <Card className={flush ? "gap-0 overflow-hidden py-0" : "gap-0"}>

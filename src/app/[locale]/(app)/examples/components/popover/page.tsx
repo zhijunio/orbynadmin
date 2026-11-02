@@ -1,10 +1,10 @@
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import { Trash as IconTrash } from "lucide-react";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
+import { Button } from "@/components/base/ui/button";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
 import {
   Popover,
   PopoverClose,
@@ -13,7 +13,7 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/components/base/ui/popover";
 
 const directions = ["top", "left", "bottom", "right"] as const;
 const popoverDescription = "Popovers are great for showing small bits of context without navigating away from the current page.";

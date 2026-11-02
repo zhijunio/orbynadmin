@@ -1,10 +1,10 @@
 "use client";
 
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import { useEffect, useRef, useState } from "react";
-import { FileUpload } from "@/components/ui/file-upload";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
+import { FileUpload } from "@/components/base/ui/file-upload";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 
 const imageAccept = {
   "image/png": [".png"],

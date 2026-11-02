@@ -6,9 +6,9 @@ import { ChartCard } from "../../_components/ChartCard";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[210px] animate-pulse rounded-lg bg-muted/40" /> });
 const segments = [
-  { name: "Group A", value: 50, fill: "#93c5fd" },
-  { name: "Group B", value: 20, fill: "#d8b4fe" },
-  { name: "Group C", value: 30, fill: "#a5b4fc" },
+  { name: "Group A", value: 50, fill: "var(--chart-1)" },
+  { name: "Group B", value: 20, fill: "var(--chart-2)" },
+  { name: "Group C", value: 30, fill: "var(--chart-3)" },
 ];
 const options: ApexOptions = {
   chart: { type: "donut", toolbar: { show: false }, background: "transparent", fontFamily: "inherit" },

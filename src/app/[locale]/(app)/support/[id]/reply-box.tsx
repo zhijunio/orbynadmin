@@ -9,9 +9,9 @@ import {
   IconCircleCheck,
 } from "@tabler/icons-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Button } from "@/components/base/ui/button";
+import { Textarea } from "@/components/base/ui/textarea";
 
 export function ReplyBox({
   ticketId,

@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/feature/layout/PageHeader";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import { LoadingStatesExample } from "./loading-states-example";
 
 export const metadata = { title: "Loading & Error States" };

@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/feature/layout/PageHeader";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import PieChartOne from "@/app/[locale]/(app)/examples/charts/pie/_components/PieChartOne";
 import PieChartTwo from "@/app/[locale]/(app)/examples/charts/pie/_components/PieChartTwo";
 import PieChartThree from "@/app/[locale]/(app)/examples/charts/pie/_components/PieChartThree";

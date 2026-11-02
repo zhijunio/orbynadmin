@@ -1,9 +1,9 @@
 "use client";
 
-import { Showcase } from "@/components/feature/example/Showcase";
+import { Showcase } from "@/components/application/examples/Showcase";
 
 import { Fragment, useState } from "react";
-import { ComponentPreview } from "@/components/feature/example/ComponentPreview";
+import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import {
   Pagination,
   PaginationContent,
@@ -12,7 +12,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/components/base/ui/pagination";
 
 type PaginationRowProps = {
   currentPage: number;

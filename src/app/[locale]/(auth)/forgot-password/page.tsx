@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { IconArrowLeft } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/base/ui/button";
+import { Input } from "@/components/base/ui/input";
+import { Label } from "@/components/base/ui/label";
 
 export const metadata = { title: "Reset password" };
 

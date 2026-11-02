@@ -1,4 +1,4 @@
-import { PageHeader } from "@/components/feature/layout/PageHeader";
+import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import LineChartOne from "@/app/[locale]/(app)/examples/charts/line/_components/LineChartOne";
 import LineChartTwo from "@/app/[locale]/(app)/examples/charts/line/_components/LineChartTwo";
 import LineChartThree from "@/app/[locale]/(app)/examples/charts/line/_components/LineChartThree";

@@ -13,19 +13,19 @@ import {
   IconLayoutGrid,
 } from "@tabler/icons-react";
 
-import { PageHeader } from "@/components/page-header";
-import { DataTable, SortableHeader } from "@/components/data-table";
-import { DeleteDialog } from "@/components/delete-dialog";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/application/layout/page-header";
+import { DataTable, SortableHeader } from "@/components/application/tables/SortableDataTable";
+import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
+import { Button } from "@/components/base/ui/button";
+import { Card, CardContent } from "@/components/base/ui/card";
+import { Badge } from "@/components/base/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/base/ui/dropdown-menu";
 import { productList, type Product } from "@/data";
 
 const statusStyles: Record<Product["status"], string> = {

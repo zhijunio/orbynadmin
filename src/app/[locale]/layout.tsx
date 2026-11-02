@@ -3,10 +3,10 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import "../globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { ThemeConfigProvider } from "@/components/theme-customizer";
-import { AppMotionProvider } from "@/components/app-motion-provider";
-import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/foundations/providers/theme-provider";
+import { ThemeConfigProvider } from "@/components/application/theme/theme-customizer";
+import { AppMotionProvider } from "@/components/foundations/providers/app-motion-provider";
+import { Toaster } from "@/components/base/ui/sonner";
 import { routing, type Locale } from "@/i18n/routing";
 
 export const metadata: Metadata = {

@@ -119,17 +119,22 @@ npm run start   # run the build
 ```
 src/
   app/[locale]/
-    (app)/           # dashboard pages (sidebar + header)
+    (app)/           # dashboard routes; route-only code can live in _components/_lib
     (auth)/          # login, register, password reset, otp, lock
     errors/          # 403, 404, 500 and 503
     landing/         # landing, onboarding and utility pages
-  components/        # app shell, charts, maps, tables, theme customizer and UI
+  components/
+    base/ui/          # shadcn/ui primitives
+    application/      # dashboard, charts, examples, layout, maps, tables and shell
+    foundations/      # providers and app-wide infrastructure
   config/nav.ts      # sidebar navigation
   data/index.ts      # demo data
   i18n/              # locale routing and request configuration
   messages/          # English and Simplified Chinese translations
   stores/            # persisted theme configuration
 ```
+
+`components/base` contains low-level UI primitives. `components/application` contains composed product UI shared across routes. `components/foundations` contains provider-level infrastructure. Keep page-specific components and helpers beside their route in private folders such as `_components` and `_lib`; promote them to `components/application` when multiple routes reuse them. Keep `page.tsx` focused on composing the route and its application blocks.
 
 All data is mock data. Replace `src/data/index.ts` (and the inline datasets on a few pages) with your own API.
 
