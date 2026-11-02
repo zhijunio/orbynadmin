@@ -2,6 +2,8 @@
 // Fake data for the OrbynAdmin admin template. All figures are illustrative.
 // ---------------------------------------------------------------------------
 
+import { demoAvatarUrl } from "@/utils/demo-avatar";
+
 export const revenueByMonth = [
   { month: "Jan", revenue: 18600, orders: 240, profit: 6200 },
   { month: "Feb", revenue: 22050, orders: 298, profit: 7400 },
@@ -107,6 +109,11 @@ export const customers: Customer[] = Array.from({ length: 48 }, (_, i) => {
     joined: new Date(2024, i % 12, ((i * 7) % 27) + 1).toISOString().slice(0, 10),
   };
 });
+
+export const exampleCustomers: Customer[] = customers.map((customer, index) => ({
+  ...customer,
+  avatar: demoAvatarUrl(index),
+}));
 
 export type Order = {
   id: string;
