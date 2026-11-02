@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import { VisitorsWorldMap } from "@/components/application/maps/VisitorsWorldMap";
-import { Badge } from "@/components/base/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Badge } from "@/components/base/badges/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
 import { MapPin as IconMapPin, Globe2 as IconWorld } from "lucide-react";
 
 const regions = [

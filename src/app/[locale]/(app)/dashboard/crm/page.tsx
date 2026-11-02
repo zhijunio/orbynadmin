@@ -3,19 +3,19 @@
 import { useState } from "react";
 
 import dynamic from "next/dynamic";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Badge } from "@/components/base/ui/badge";
-import { Button } from "@/components/base/ui/button";
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
-import { Checkbox } from "@/components/base/ui/checkbox";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Badge } from "@/components/base/badges/badge";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
+import { Checkbox } from "@/components/base/checkbox/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
-import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
+} from "@/components/base/dropdown/dropdown-menu";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/table/table";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/tabs/tabs";
 import { EllipsisVertical as IconDotsVertical } from "lucide-react";
 import { demoAvatarUrl } from "@/lib/demo-avatar";
 import { getInitials } from "@/lib/text";

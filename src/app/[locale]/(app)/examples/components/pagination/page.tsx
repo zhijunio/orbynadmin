@@ -12,7 +12,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/base/ui/pagination";
+} from "@/components/base/pagination/pagination";
 
 type PaginationRowProps = {
   currentPage: number;

@@ -18,12 +18,12 @@ import {
 } from "@tabler/icons-react";
 
 import { PageHeader } from "@/components/application/layout/page-header";
-import { Button } from "@/components/base/ui/button";
-import { Card, CardContent } from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Badge } from "@/components/base/ui/badge";
-import { Separator } from "@/components/base/ui/separator";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardContent } from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Badge } from "@/components/base/badges/badge";
+import { Separator } from "@/components/base/divider/separator";
 import {
   Dialog,
   DialogContent,
@@ -31,7 +31,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/ui/dialog";
+} from "@/components/base/dialog/dialog";
 import { cn } from "@/lib/utils";
 import { integrations, type Integration } from "@/data";
 

@@ -13,11 +13,11 @@ import {
   IconCalendarDue,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/base/ui/button";
-import { Badge } from "@/components/base/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
+import { Button } from "@/components/base/buttons/button";
+import { Badge } from "@/components/base/badges/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
 import {
   Dialog,
   DialogContent,
@@ -25,14 +25,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/ui/dialog";
+} from "@/components/base/dialog/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
 import {
   type Project,

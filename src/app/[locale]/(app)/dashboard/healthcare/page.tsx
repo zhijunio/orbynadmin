@@ -20,19 +20,19 @@ import {
 import { PageHeader } from "@/components/application/layout/page-header";
 import { StatCard } from "@/components/application/dashboard/MetricCard";
 import { ApexChart } from "@/components/application/charts/apex-chart";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Badge } from "@/components/base/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Progress } from "@/components/base/ui/progress";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
+} from "@/components/base/card/card";
+import { Badge } from "@/components/base/badges/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Progress } from "@/components/base/progress/progress";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
 import {
   Table,
   TableBody,
@@ -40,14 +40,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/base/ui/table";
+} from "@/components/base/table/table";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import {
   Dialog,
   DialogClose,
@@ -56,14 +56,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/ui/dialog";
+} from "@/components/base/dialog/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 
 // --- demo data (inline, deterministic) -------------------------------------
 

@@ -5,7 +5,7 @@ import {
   type TablerIcon,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 
 export type ErrorStateProps = {
   /** The HTTP status code shown as the large faded hero number. */

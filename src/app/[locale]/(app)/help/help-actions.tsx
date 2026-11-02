@@ -8,8 +8,8 @@ import {
   IconMessageCircle,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/base/ui/button";
-import { Input } from "@/components/base/ui/input";
+import { Button } from "@/components/base/buttons/button";
+import { Input } from "@/components/base/input/input";
 
 export function HelpSearch() {
   const [query, setQuery] = useState("");

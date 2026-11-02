@@ -16,16 +16,16 @@ import {
 import { PageHeader } from "@/components/application/layout/page-header";
 import { DataTable, SortableHeader } from "@/components/application/tables/SortableDataTable";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
-import { Button } from "@/components/base/ui/button";
-import { Card, CardContent } from "@/components/base/ui/card";
-import { Badge } from "@/components/base/ui/badge";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardContent } from "@/components/base/card/card";
+import { Badge } from "@/components/base/badges/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import { productList, type Product } from "@/data";
 
 const statusStyles: Record<Product["status"], string> = {

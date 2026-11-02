@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import dynamic from "next/dynamic";
 import type { ApexOptions } from "apexcharts";

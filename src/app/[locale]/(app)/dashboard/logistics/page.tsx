@@ -4,13 +4,13 @@ import { useMemo, useState } from "react";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Badge } from "@/components/base/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/base/ui/pagination";
+import { Badge } from "@/components/base/badges/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/table/table";
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/base/pagination/pagination";
 import { Box as IconBox, ChevronDown as IconChevronDown, CircleCheck as IconCircleCheck, MessageCircle as IconMessageCircle, Package as IconPackage, Phone as IconPhone, Truck as IconTruckDelivery } from "lucide-react";
-import { Button } from "@/components/base/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Button } from "@/components/base/buttons/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import { demoAvatarUrl } from "@/lib/demo-avatar";
 import { DeliveryRouteMap } from "@/components/application/maps/DeliveryRouteMap";
 

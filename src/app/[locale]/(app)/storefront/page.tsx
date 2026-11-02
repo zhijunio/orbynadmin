@@ -17,30 +17,30 @@ import {
 
 import { PageHeader } from "@/components/application/layout/page-header";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Badge } from "@/components/base/ui/badge";
+} from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Badge } from "@/components/base/badges/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import { productList, type Product } from "@/data";
 
 const statusStyles: Record<Product["status"], string> = {

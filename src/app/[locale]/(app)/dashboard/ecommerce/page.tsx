@@ -17,17 +17,17 @@ import { PageHeader } from "@/components/application/layout/page-header";
 import { StatCard } from "@/components/application/dashboard/MetricCard";
 import { RevenueAreaChart } from "@/components/application/charts/revenue-area-chart";
 import { CategoryBarChart } from "@/components/application/charts/category-bar-chart";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Badge } from "@/components/base/ui/badge";
-import { Progress } from "@/components/base/ui/progress";
+} from "@/components/base/card/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Badge } from "@/components/base/badges/badge";
+import { Progress } from "@/components/base/progress/progress";
 import {
   Table,
   TableBody,
@@ -35,13 +35,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/base/ui/table";
+} from "@/components/base/table/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import { ecommerceStats, orders, topProducts } from "@/data";
 
 function ChartMenu({ title }: { title: string }) {

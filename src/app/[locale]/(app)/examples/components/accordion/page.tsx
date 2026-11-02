@@ -7,7 +7,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/base/ui/accordion";
+} from "@/components/base/accordion/accordion";
 
 const styles = {
   style_one: {

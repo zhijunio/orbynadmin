@@ -18,20 +18,20 @@ import {
 import { navGroups } from "@/config/nav";
 import { currentUser, recentActivity } from "@/data";
 import { useIsMac } from "@/hooks/use-platform";
-import { Kbd, KbdGroup } from "@/components/base/ui/kbd";
-import { SidebarTrigger } from "@/components/base/ui/sidebar";
+import { Kbd, KbdGroup } from "@/components/base/kbd/kbd";
+import { SidebarTrigger } from "@/components/base/sidebar/sidebar";
 import { ThemeToggle } from "@/components/application/theme/theme-toggle";
 import { CustomizerButton } from "@/components/application/theme/theme-customizer";
-import { Button } from "@/components/base/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Badge } from "@/components/base/ui/badge";
+import { Button } from "@/components/base/buttons/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Badge } from "@/components/base/badges/badge";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/base/ui/breadcrumb";
+} from "@/components/base/breadcrumb/breadcrumb";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,7 +40,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import {
   CommandDialog,
   CommandEmpty,
@@ -48,7 +48,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/base/ui/command";
+} from "@/components/base/command/command";
 
 // Acronyms that shouldn't be title-cased from the URL segment.
 const CRUMB_LABELS: Record<string, string> = {

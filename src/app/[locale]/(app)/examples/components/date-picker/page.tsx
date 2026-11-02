@@ -4,7 +4,7 @@ import { useState } from "react";
 import { addDays, addMonths, addYears, eachDayOfInterval, endOfMonth, endOfWeek, format, isSameDay, isSameMonth, startOfDay, startOfMonth, startOfWeek, subMonths } from "date-fns";
 import { ChevronLeft as IconChevronLeft, ChevronRight as IconChevronRight } from "lucide-react";
 import { Showcase } from "@/components/application/examples/Showcase";
-import { DatePicker } from "@/components/base/ui/date-picker";
+import { DatePicker } from "@/components/base/date-picker/date-picker";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import { cn } from "@/lib/utils";
 

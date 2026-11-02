@@ -5,9 +5,9 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { TriangleAlert as IconAlertTriangle, RefreshCw as IconRefresh, Users as IconUsers } from "lucide-react";
 
-import { Button } from "@/components/base/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
-import { Skeleton } from "@/components/base/ui/skeleton";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
+import { Skeleton } from "@/components/base/skeleton/skeleton";
 
 type DemoState = "ready" | "loading" | "error" | "empty";
 

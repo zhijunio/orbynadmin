@@ -10,8 +10,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/base/ui/alert-dialog";
-import { buttonVariants } from "@/components/base/ui/button";
+} from "@/components/base/dialog/alert-dialog";
+import { buttonVariants } from "@/components/base/buttons/button";
 import { cn } from "@/lib/utils";
 
 /**

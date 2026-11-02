@@ -23,24 +23,24 @@ import {
 } from "@tabler/icons-react";
 
 import { PageHeader } from "@/components/application/layout/page-header";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Badge } from "@/components/base/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Separator } from "@/components/base/ui/separator";
+} from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Badge } from "@/components/base/badges/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Separator } from "@/components/base/divider/separator";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import {
   Table,
   TableBody,
@@ -48,14 +48,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/base/ui/table";
+} from "@/components/base/table/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import {
   Dialog,
   DialogContent,
@@ -63,8 +63,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/ui/dialog";
-import { Label } from "@/components/base/ui/label";
+} from "@/components/base/dialog/dialog";
+import { Label } from "@/components/base/input/label";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
 import { cn } from "@/lib/utils";
 import { team, currentUser, type TeamMember } from "@/data";

@@ -16,23 +16,23 @@ import {
   IconCircleCheckFilled,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/base/ui/button";
-import { Card, CardContent } from "@/components/base/ui/card";
-import { Badge } from "@/components/base/ui/badge";
-import { Separator } from "@/components/base/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardContent } from "@/components/base/card/card";
+import { Badge } from "@/components/base/badges/badge";
+import { Separator } from "@/components/base/divider/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/base/ui/tabs";
+} from "@/components/base/tabs/tabs";
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
-} from "@/components/base/ui/table";
+} from "@/components/base/table/table";
 import { getProductById, productList, type Product } from "@/data";
 
 export const metadata = { title: "Product" };

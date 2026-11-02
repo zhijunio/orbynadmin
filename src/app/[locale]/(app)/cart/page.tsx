@@ -18,16 +18,16 @@ import {
 } from "@tabler/icons-react";
 
 import { PageHeader } from "@/components/application/layout/page-header";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Separator } from "@/components/base/ui/separator";
+} from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Separator } from "@/components/base/divider/separator";
 import { productList, type Product } from "@/data";
 
 type CartLine = Product & { qty: number };

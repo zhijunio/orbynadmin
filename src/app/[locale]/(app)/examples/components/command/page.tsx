@@ -5,9 +5,9 @@ import { Showcase } from "@/components/application/examples/Showcase";
 import { useState } from "react";
 import { ArrowUpRight, FilePlus2, LayoutDashboard, Search, Settings, Users } from "lucide-react";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { Button } from "@/components/base/ui/button";
-import { Kbd, KbdGroup } from "@/components/base/ui/kbd";
-import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/base/ui/command";
+import { Button } from "@/components/base/buttons/button";
+import { Kbd, KbdGroup } from "@/components/base/kbd/kbd";
+import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/base/command/command";
 
 function CommandExamples() {
   const [open, setOpen] = useState(false);

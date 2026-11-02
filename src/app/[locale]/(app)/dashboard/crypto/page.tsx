@@ -9,7 +9,7 @@ import { Plus as IconPlus, Wallet as IconWallet, ArrowLeftRight as IconArrowsExc
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import { StatCard } from "@/components/application/dashboard/TrendStatCard";
 import { CoinIcon } from "./_components/CoinIcon";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Table,
   TableBody,
@@ -17,25 +17,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/base/ui/table";
+} from "@/components/base/table/table";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Badge } from "@/components/base/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
+} from "@/components/base/card/card";
+import { Badge } from "@/components/base/badges/badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/tabs/tabs";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import {
   Dialog,
   DialogClose,
@@ -44,14 +44,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/ui/dialog";
+} from "@/components/base/dialog/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" /> });
 

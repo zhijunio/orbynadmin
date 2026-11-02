@@ -6,8 +6,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { TriangleAlert as IconAlertTriangle, Check as IconCheck, Info as IconInfoCircle, Settings as IconSettings, X as IconX } from "lucide-react";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { Alert, AlertAction, AlertDescription, AlertTitle } from "@/components/base/ui/alert";
-import { Button } from "@/components/base/ui/button";
+import { Alert, AlertAction, AlertDescription, AlertTitle } from "@/components/base/alert/alert";
+import { Button } from "@/components/base/buttons/button";
 
 const alertTypes = [
   { title: "Default", description: "This is a default alert. It provides general information to the user.", icon: IconInfoCircle, className: "border-border bg-muted/40 text-muted-foreground", titleClassName: "text-foreground" },

@@ -14,7 +14,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/base/ui/collapsible";
+} from "@/components/base/collapsible/collapsible";
 import {
   Sidebar,
   SidebarContent,
@@ -31,7 +31,7 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
   useSidebar,
-} from "@/components/base/ui/sidebar";
+} from "@/components/base/sidebar/sidebar";
 
 export function AppSidebar() {
   const pathname = usePathname();

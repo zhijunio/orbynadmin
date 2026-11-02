@@ -11,17 +11,17 @@ import { EllipsisVertical as IconDotsVertical, Copy as IconCopy, Trash as IconTr
 
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import { DataTable, SortableHeader } from "@/components/application/tables/DataTable";
-import { Button } from "@/components/base/ui/button";
-import { Badge } from "@/components/base/ui/badge";
-import { Checkbox } from "@/components/base/ui/checkbox";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/base/ui/alert-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Button } from "@/components/base/buttons/button";
+import { Badge } from "@/components/base/badges/badge";
+import { Checkbox } from "@/components/base/checkbox/checkbox";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/base/dialog/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
+} from "@/components/base/card/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,7 +30,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 
 const statusStyles: Record<Customer["status"], string> = {
   Active: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",

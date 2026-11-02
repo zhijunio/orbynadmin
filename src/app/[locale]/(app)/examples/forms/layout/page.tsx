@@ -3,16 +3,16 @@
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 
 import { AtSign as IconAt, CreditCard as IconCreditCard, Mail as IconMail, Search as IconSearch, Save as IconDeviceFloppy, Filter as IconFilter, RefreshCw as IconRefresh } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Textarea } from "@/components/base/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/ui/select";
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/base/ui/input-group";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Textarea } from "@/components/base/textarea/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/select/select";
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/base/input/input-group";
 import { toast } from "sonner";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import { Link } from "@/i18n/navigation";
-import { Checkbox } from "@/components/base/ui/checkbox";
+import { Checkbox } from "@/components/base/checkbox/checkbox";
 
 function AccountBillingExamples() {
   return <div className="grid gap-5 xl:grid-cols-2">

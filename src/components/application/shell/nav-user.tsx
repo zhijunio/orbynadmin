@@ -17,8 +17,8 @@ import {
 } from "@tabler/icons-react";
 
 import { currentUser } from "@/data";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Badge } from "@/components/base/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Badge } from "@/components/base/badges/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,13 +27,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/base/ui/sidebar";
+} from "@/components/base/sidebar/sidebar";
 
 export function NavUser() {
   const { isMobile } = useSidebar();

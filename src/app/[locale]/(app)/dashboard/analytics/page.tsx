@@ -3,11 +3,11 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
-import { Button } from "@/components/base/ui/button";
-import { Input } from "@/components/base/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
-import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
+import { Button } from "@/components/base/buttons/button";
+import { Input } from "@/components/base/input/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/table/table";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/tabs/tabs";
 import { ArrowUpRight as IconArrowUpRight, Monitor as IconDeviceDesktop, Smartphone as IconDeviceMobile, Tablet as IconDeviceTablet, EllipsisVertical as IconDotsVertical, Eye as IconEye, Users as IconUsers } from "lucide-react";
 import { VisitorsWorldMap } from "@/components/application/maps/VisitorsWorldMap";
 

@@ -1,7 +1,7 @@
 import { Showcase } from "@/components/application/examples/Showcase";
 
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { Skeleton } from "@/components/base/ui/skeleton";
+import { Skeleton } from "@/components/base/skeleton/skeleton";
 
 function SkeletonExamples() {
   return <>

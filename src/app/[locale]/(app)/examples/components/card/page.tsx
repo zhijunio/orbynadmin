@@ -2,10 +2,10 @@ import { Showcase } from "@/components/application/examples/Showcase";
 
 import { ArrowRight as IconArrowRight, Check as IconCheck, Sparkles as IconSparkles } from "lucide-react";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Badge } from "@/components/base/ui/badge";
-import { Button } from "@/components/base/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Badge } from "@/components/base/badges/badge";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
 import { demoAvatarUrl } from "@/lib/demo-avatar";
 import { getInitials } from "@/lib/text";
 

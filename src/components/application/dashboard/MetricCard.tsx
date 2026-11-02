@@ -1,5 +1,5 @@
 import { IconTrendingUp, IconTrendingDown } from "@tabler/icons-react";
-import { Card, CardContent } from "@/components/base/ui/card";
+import { Card, CardContent } from "@/components/base/card/card";
 import { cn } from "@/lib/utils";
 import type { StatCard as StatCardType } from "@/data";
 

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Card } from "@/components/base/ui/card";
+import { Card } from "@/components/base/card/card";
 
 export function ChartCard({ title, children }: { title: string; children: ReactNode }) {
   return (

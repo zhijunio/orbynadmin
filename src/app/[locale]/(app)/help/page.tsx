@@ -15,7 +15,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
+} from "@/components/base/card/card";
 import { HelpSearch, ClickToast, SupportButtons } from "./help-actions";
 
 export const metadata = { title: "Help Center" };

@@ -35,25 +35,25 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Badge } from "@/components/base/ui/badge";
-import { Button } from "@/components/base/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Separator } from "@/components/base/ui/separator";
-import { Checkbox } from "@/components/base/ui/checkbox";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
+} from "@/components/base/card/card";
+import { Badge } from "@/components/base/badges/badge";
+import { Button } from "@/components/base/buttons/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Separator } from "@/components/base/divider/separator";
+import { Checkbox } from "@/components/base/checkbox/checkbox";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/base/tabs/tabs";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/base/ui/tooltip";
+} from "@/components/base/tooltip/tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -61,7 +61,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/base/ui/table";
+} from "@/components/base/table/table";
 import {
   tasksForProject,
   type Project,

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Showcase } from "@/components/application/examples/Showcase";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 
 const slides = ["/images/cycles/cycle-1.jpg", "/images/cycles/cycle-2.jpg", "/images/cycles/cycle-3.jpg"];
 

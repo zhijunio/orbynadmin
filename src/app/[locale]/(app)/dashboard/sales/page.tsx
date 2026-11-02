@@ -6,12 +6,12 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 import { StatCard } from "@/components/application/dashboard/TrendStatCard";
-import { Badge } from "@/components/base/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
-import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
-import { Button } from "@/components/base/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/ui/select";
+import { Badge } from "@/components/base/badges/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/table/table";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/tabs/tabs";
+import { Button } from "@/components/base/buttons/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/select/select";
 import { Download as IconDownload } from "lucide-react";
 import { Filter as IconFilter } from "lucide-react";
 

@@ -24,14 +24,14 @@ import {
 
 import { toast } from "sonner";
 
-import { Card } from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Textarea } from "@/components/base/ui/textarea";
-import { Button } from "@/components/base/ui/button";
-import { Badge } from "@/components/base/ui/badge";
-import { Separator } from "@/components/base/ui/separator";
-import { ScrollArea } from "@/components/base/ui/scroll-area";
+import { Card } from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Textarea } from "@/components/base/textarea/textarea";
+import { Button } from "@/components/base/buttons/button";
+import { Badge } from "@/components/base/badges/badge";
+import { Separator } from "@/components/base/divider/separator";
+import { ScrollArea } from "@/components/base/scroll-area/scroll-area";
 import {
   Dialog,
   DialogContent,
@@ -39,14 +39,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/ui/dialog";
+} from "@/components/base/dialog/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,7 +54,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
 import { cn } from "@/lib/utils";
 

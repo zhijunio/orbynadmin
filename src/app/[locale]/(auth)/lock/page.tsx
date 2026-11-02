@@ -9,10 +9,10 @@ import {
   IconArrowRight,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/base/ui/button";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Button } from "@/components/base/buttons/button";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import { currentUser } from "@/data";
 
 export default function LockPage() {

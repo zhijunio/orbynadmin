@@ -3,16 +3,16 @@ import { getInitials } from "@/lib/text";
 
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 
-import { Avatar, AvatarFallback } from "@/components/base/ui/avatar";
-import { Badge } from "@/components/base/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/ui/table";
+import { Avatar, AvatarFallback } from "@/components/base/avatar/avatar";
+import { Badge } from "@/components/base/badges/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/table/table";
 import { TableCard } from "./_components/TableCard";
 import { toast } from "sonner";
 import { Download as IconDownload, Eye as IconEye, Trash as IconTrash, SlidersHorizontal as IconAdjustmentsHorizontal, Ellipsis as IconDots, Search as IconSearch } from "lucide-react";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import { useMemo, useState } from "react";
-import { Checkbox } from "@/components/base/ui/checkbox";
-import { Input } from "@/components/base/ui/input";
+import { Checkbox } from "@/components/base/checkbox/checkbox";
+import { Input } from "@/components/base/input/input";
 
 function LeadsReportTable() {
   return <TableCard title="Leads Report" flush><Table><TableHeader><TableRow className="bg-muted/40"><TableHead className="pl-6">Rep Name</TableHead><TableHead>Deals Closed</TableHead><TableHead>Revenue</TableHead><TableHead className="pr-6">Performance</TableHead></TableRow></TableHeader><TableBody>{leads.map((lead) => <TableRow key={lead.name}><TableCell className="pl-6"><div className="flex items-center gap-3"><Avatar className="size-9"><AvatarFallback>{getInitials(lead.name)}</AvatarFallback></Avatar><div><p className="font-medium">{lead.name}</p><p className="text-xs text-muted-foreground">{lead.role}</p></div></div></TableCell><TableCell className="tabular-nums">{lead.deals}</TableCell><TableCell className="font-medium tabular-nums">${lead.revenue.toLocaleString()}</TableCell><TableCell className="pr-6"><Badge variant="secondary" className={lead.performance > 85 ? "bg-emerald-500/10 text-emerald-600" : lead.performance > 75 ? "bg-blue-500/10 text-blue-600" : "bg-amber-500/10 text-amber-600"}>{lead.performance}%</Badge></TableCell></TableRow>)}</TableBody></Table></TableCard>;

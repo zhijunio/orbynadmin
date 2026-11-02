@@ -3,8 +3,8 @@
 import { toast } from "sonner";
 import { IconDeviceFloppy, IconFilter, IconRefresh } from "@tabler/icons-react";
 
-import { Button } from "@/components/base/ui/button";
-import { CardFooter } from "@/components/base/ui/card";
+import { Button } from "@/components/base/buttons/button";
+import { CardFooter } from "@/components/base/card/card";
 
 export function SaveFooter({ saveLabel = "Save changes" }: { saveLabel?: string }) {
   return (

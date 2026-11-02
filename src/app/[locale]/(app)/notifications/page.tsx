@@ -21,21 +21,21 @@ import {
 } from "@tabler/icons-react";
 
 import { PageHeader } from "@/components/application/layout/page-header";
-import { Button } from "@/components/base/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/base/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardContent, CardHeader } from "@/components/base/card/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from "@/components/base/ui/tabs";
+} from "@/components/base/tabs/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { notifications, type Notification, type NotificationKind } from "@/data";
 

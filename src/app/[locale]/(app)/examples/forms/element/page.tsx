@@ -3,20 +3,20 @@
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 
 import { CircleAlert as IconAlertCircle, Info as IconInfoCircle, Search as IconSearch, Check as IconCheck, Clock as IconClock, Copy as IconCopy, Eye as IconEye, EyeOff as IconEyeOff, Minus as IconMinus, Plus as IconPlus, X as IconX } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Textarea } from "@/components/base/ui/textarea";
-import { Checkbox } from "@/components/base/ui/checkbox";
-import { Switch } from "@/components/base/ui/switch";
-import { RadioGroup, RadioGroupItem } from "@/components/base/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/ui/select";
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton, InputGroupText } from "@/components/base/ui/input-group";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Textarea } from "@/components/base/textarea/textarea";
+import { Checkbox } from "@/components/base/checkbox/checkbox";
+import { Switch } from "@/components/base/switch/switch";
+import { RadioGroup, RadioGroupItem } from "@/components/base/radio/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/select/select";
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupButton, InputGroupText } from "@/components/base/input/input-group";
 import { useRef, useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/base/ui/popover";
-import { Button } from "@/components/base/ui/button";
-import { FileUpload } from "@/components/base/ui/file-upload";
-import { DatePicker } from "@/components/base/ui/date-picker";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/base/popover/popover";
+import { Button } from "@/components/base/buttons/button";
+import { FileUpload } from "@/components/base/file-upload/file-upload";
+import { DatePicker } from "@/components/base/date-picker/date-picker";
 import { toast } from "sonner";
 import Image from "next/image";
 

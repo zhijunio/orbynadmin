@@ -18,11 +18,11 @@ import {
 } from "@tabler/icons-react";
 
 import { PageHeader } from "@/components/application/layout/page-header";
-import { Button } from "@/components/base/ui/button";
-import { Card, CardContent } from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Badge } from "@/components/base/ui/badge";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardContent } from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Badge } from "@/components/base/badges/badge";
 import {
   Table,
   TableBody,
@@ -30,12 +30,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/base/ui/table";
+} from "@/components/base/table/table";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/base/ui/popover";
+} from "@/components/base/popover/popover";
 import {
   Dialog,
   DialogClose,
@@ -44,14 +44,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/ui/dialog";
+} from "@/components/base/dialog/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import { productList, type Product } from "@/data";
 
 type StockStatus = "In Stock" | "Low Stock" | "Out of Stock";

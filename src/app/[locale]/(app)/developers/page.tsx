@@ -22,20 +22,20 @@ import {
 
 import { PageHeader } from "@/components/application/layout/page-header";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Badge } from "@/components/base/ui/badge";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Switch } from "@/components/base/ui/switch";
-import { Checkbox } from "@/components/base/ui/checkbox";
-import { Separator } from "@/components/base/ui/separator";
+} from "@/components/base/card/card";
+import { Badge } from "@/components/base/badges/badge";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Switch } from "@/components/base/switch/switch";
+import { Checkbox } from "@/components/base/checkbox/checkbox";
+import { Separator } from "@/components/base/divider/separator";
 import {
   Table,
   TableBody,
@@ -43,7 +43,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/base/ui/table";
+} from "@/components/base/table/table";
 import {
   Dialog,
   DialogClose,
@@ -52,27 +52,27 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/ui/dialog";
+} from "@/components/base/dialog/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/components/base/ui/input-group";
+} from "@/components/base/input/input-group";
 
 // ---------------------------------------------------------------------------
 // Types & deterministic key generation (no Math.random / Date.now at render)

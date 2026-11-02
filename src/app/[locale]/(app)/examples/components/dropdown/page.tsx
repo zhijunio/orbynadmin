@@ -5,9 +5,9 @@ import { Showcase } from "@/components/application/examples/Showcase";
 import { useState } from "react";
 import { Archive, ChevronDown, Copy, CreditCard, Download, Ellipsis, Eye, FolderPlus, LogOut, Pencil, Settings, Share2, Trash2, UserRound } from "lucide-react";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import { demoAvatarUrl } from "@/lib/demo-avatar";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,8 +18,8 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/ui/select";
+} from "@/components/base/dropdown/dropdown-menu";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/select/select";
 
 const menuContentClass = "min-w-40 rounded-xl border border-border bg-popover p-1.5 shadow-md ring-0";
 const menuItemClass = "gap-3 rounded-md px-1.5 py-1 text-sm text-foreground";

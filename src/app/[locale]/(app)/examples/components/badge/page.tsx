@@ -1,7 +1,7 @@
 import { Showcase } from "@/components/application/examples/Showcase";
 
 import { ArrowUp } from "lucide-react";
-import { Badge } from "@/components/base/ui/badge";
+import { Badge } from "@/components/base/badges/badge";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import { cn } from "@/lib/utils";
 

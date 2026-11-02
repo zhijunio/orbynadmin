@@ -7,20 +7,20 @@ import { AnimatePresence, motion } from "motion/react";
 import { toast } from "sonner";
 import { ArrowLeft as IconArrowLeft, Search as IconSearch, Send as IconSend, Phone as IconPhone, Video as IconVideo, EllipsisVertical as IconDotsVertical, Paperclip as IconPaperclip, Smile as IconMoodSmile, User as IconUser, BellOff as IconBellOff, Eraser as IconEraser, Ban as IconBan, Archive as IconArchive, Users as IconUsers } from "lucide-react";
 
-import { Card } from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Button } from "@/components/base/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Badge } from "@/components/base/ui/badge";
-import { ScrollArea } from "@/components/base/ui/scroll-area";
-import { Separator } from "@/components/base/ui/separator";
+import { Card } from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Button } from "@/components/base/buttons/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Badge } from "@/components/base/badges/badge";
+import { ScrollArea } from "@/components/base/scroll-area/scroll-area";
+import { Separator } from "@/components/base/divider/separator";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 type Message = {

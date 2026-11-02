@@ -2,7 +2,7 @@ import { ComponentPreview } from "@/components/application/examples/ComponentPre
 import { Showcase } from "@/components/application/examples/Showcase";
 
 import { ChevronLeft as IconChevronLeft, ChevronRight as IconChevronRight, Download as IconDownload, LoaderCircle as IconLoader2, Plus as IconPlus, Download, Plus, Search, Trash2, Apple as IconBrandAppleFilled, MessageCircle as IconBrandDiscord, Users as IconBrandFacebookFilled, Globe as IconBrandGoogle, Share2 as IconBrandX } from "lucide-react";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 
 const joinedButtons = "rounded-none px-3.5 first:rounded-l-lg last:rounded-r-lg [&:not(:first-child)]:-ml-px";
 

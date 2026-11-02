@@ -6,25 +6,25 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { IconArrowLeft, IconDeviceFloppy, IconUpload } from "@tabler/icons-react";
 
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Textarea } from "@/components/base/ui/textarea";
-import { Switch } from "@/components/base/ui/switch";
-import { Separator } from "@/components/base/ui/separator";
+} from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Textarea } from "@/components/base/textarea/textarea";
+import { Switch } from "@/components/base/switch/switch";
+import { Separator } from "@/components/base/divider/separator";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import { productList } from "@/data";
 
 const categories = Array.from(new Set(productList.map((p) => p.category))).sort();

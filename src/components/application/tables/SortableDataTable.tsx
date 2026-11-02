@@ -32,9 +32,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/base/ui/table";
-import { Button } from "@/components/base/ui/button";
-import { Input } from "@/components/base/ui/input";
+} from "@/components/base/table/table";
+import { Button } from "@/components/base/buttons/button";
+import { Input } from "@/components/base/input/input";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -42,14 +42,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

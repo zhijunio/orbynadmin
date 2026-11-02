@@ -5,11 +5,11 @@ import { Showcase } from "@/components/application/examples/Showcase";
 import { useEffect, useId, useState } from "react";
 import { Check as IconCheck, Search as IconSearch, Eye as IconEye, EyeOff as IconEyeOff, Mail as IconMail, Send as IconSend } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@/components/base/ui/button";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
+import { Button } from "@/components/base/buttons/button";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/base/ui/input-group";
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/base/input/input-group";
 
 function EmailVerificationInput() {
   const id = useId();

@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 
-import { Card, CardContent } from "@/components/base/ui/card";
+import { Card, CardContent } from "@/components/base/card/card";
 
 export function MetricTile({
   label,

@@ -17,30 +17,30 @@ import {
 
 import { PageHeader } from "@/components/application/layout/page-header";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Badge } from "@/components/base/ui/badge";
-import { Input } from "@/components/base/ui/input";
-import { Textarea } from "@/components/base/ui/textarea";
-import { Progress } from "@/components/base/ui/progress";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+} from "@/components/base/card/card";
+import { Badge } from "@/components/base/badges/badge";
+import { Input } from "@/components/base/input/input";
+import { Textarea } from "@/components/base/textarea/textarea";
+import { Progress } from "@/components/base/progress/progress";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from "@/components/base/ui/tabs";
+} from "@/components/base/tabs/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { customers } from "@/data";
 

@@ -124,7 +124,7 @@ src/
     errors/          # 403, 404, 500 and 503
     landing/         # landing, onboarding and utility pages
   components/
-    base/ui/          # shadcn/ui primitives
+    base/              # shadcn/ui primitives grouped by component family
     application/      # dashboard, charts, examples, layout, maps, tables and shell
     foundations/      # providers and app-wide infrastructure
   config/nav.ts      # sidebar navigation

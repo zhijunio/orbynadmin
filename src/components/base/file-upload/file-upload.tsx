@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { File as FileIcon, Upload, X } from "lucide-react";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import { cn } from "@/lib/utils";
 
 type Accept = Record<string, string[]>;

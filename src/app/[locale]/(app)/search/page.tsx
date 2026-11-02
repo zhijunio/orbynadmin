@@ -24,17 +24,17 @@ import {
 } from "@tabler/icons-react";
 
 import { PageHeader } from "@/components/application/layout/page-header";
-import { Card, CardContent } from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Kbd } from "@/components/base/ui/kbd";
-import { Badge } from "@/components/base/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
+import { Card, CardContent } from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Kbd } from "@/components/base/kbd/kbd";
+import { Badge } from "@/components/base/badges/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/base/ui/tabs";
+} from "@/components/base/tabs/tabs";
 import { cn } from "@/lib/utils";
 import { customers, orders, productList } from "@/data";
 

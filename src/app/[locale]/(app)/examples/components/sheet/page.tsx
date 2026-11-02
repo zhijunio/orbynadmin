@@ -2,9 +2,9 @@
 
 import { Showcase } from "@/components/application/examples/Showcase";
 
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/base/ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/base/sheet/sheet";
 
 const placements = [
   { side: "right", label: "Right Sheet", trigger: "Open Inspector", title: "Project details", description: "Review the current project summary and ownership." },

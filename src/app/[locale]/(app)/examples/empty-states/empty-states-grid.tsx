@@ -16,8 +16,8 @@ import {
   IconArrowRight,
 } from "@tabler/icons-react";
 
-import { Button } from "@/components/base/ui/button";
-import { Card, CardContent } from "@/components/base/ui/card";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardContent } from "@/components/base/card/card";
 
 type Action = { label: string; icon?: React.ComponentType<{ className?: string }> };
 

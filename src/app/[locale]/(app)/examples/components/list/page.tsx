@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import { Showcase } from "@/components/application/examples/Showcase";
-import { Badge } from "@/components/base/ui/badge";
-import { Checkbox } from "@/components/base/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/base/ui/radio-group";
-import { Label } from "@/components/base/ui/label";
-import { Button } from "@/components/base/ui/button";
+import { Badge } from "@/components/base/badges/badge";
+import { Checkbox } from "@/components/base/checkbox/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/base/radio/radio-group";
+import { Label } from "@/components/base/input/label";
+import { Button } from "@/components/base/buttons/button";
 import { ArrowRight as IconArrowRight, Check as IconCheck, Inbox as IconInbox, Send as IconSend, Trash as IconTrash } from "lucide-react";
 
 const tasks = ["Review the dashboard wireframes", "Confirm the launch checklist", "Share the Q3 report with the team", "Schedule a customer interview"];

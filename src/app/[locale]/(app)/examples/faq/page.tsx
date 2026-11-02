@@ -3,9 +3,9 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/base/ui/accordion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/base/accordion/accordion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
 import { CreditCard as IconCreditCard, Info as IconInfoCircle, Lock as IconLock, Users as IconUsers } from "lucide-react";
 
 const faqGroups = [

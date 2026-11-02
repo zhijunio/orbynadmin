@@ -20,14 +20,14 @@ import {
 
 import { PageHeader } from "@/components/application/layout/page-header";
 import { StatCard } from "@/components/application/dashboard/MetricCard";
-import { Button } from "@/components/base/ui/button";
-import { Card, CardContent } from "@/components/base/ui/card";
-import { Badge } from "@/components/base/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/ui/avatar";
-import { Tabs, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Textarea } from "@/components/base/ui/textarea";
+import { Button } from "@/components/base/buttons/button";
+import { Card, CardContent } from "@/components/base/card/card";
+import { Badge } from "@/components/base/badges/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
+import { Tabs, TabsList, TabsTrigger } from "@/components/base/tabs/tabs";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Textarea } from "@/components/base/textarea/textarea";
 import {
   Dialog,
   DialogContent,
@@ -35,26 +35,26 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/ui/dialog";
+} from "@/components/base/dialog/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/base/ui/tooltip";
+} from "@/components/base/tooltip/tooltip";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
 import {
   projects,

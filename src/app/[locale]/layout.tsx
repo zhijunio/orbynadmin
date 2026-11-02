@@ -6,7 +6,7 @@ import "../globals.css";
 import { ThemeProvider } from "@/components/foundations/providers/theme-provider";
 import { ThemeConfigProvider } from "@/components/application/theme/theme-customizer";
 import { AppMotionProvider } from "@/components/foundations/providers/app-motion-provider";
-import { Toaster } from "@/components/base/ui/sonner";
+import { Toaster } from "@/components/base/notification/sonner";
 import { routing, type Locale } from "@/i18n/routing";
 
 export const metadata: Metadata = {

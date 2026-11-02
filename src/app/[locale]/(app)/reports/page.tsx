@@ -22,7 +22,7 @@ import {
 import { PageHeader } from "@/components/application/layout/page-header";
 import { StatCard } from "@/components/application/dashboard/MetricCard";
 import { TrafficDonutChart } from "@/components/application/charts/traffic-donut-chart";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardAction,
@@ -30,8 +30,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Badge } from "@/components/base/ui/badge";
+} from "@/components/base/card/card";
+import { Badge } from "@/components/base/badges/badge";
 import { ApexChart } from "@/components/application/charts/apex-chart";
 import {
   Table,
@@ -40,7 +40,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/base/ui/table";
+} from "@/components/base/table/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,7 +49,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/base/ui/dropdown-menu";
+} from "@/components/base/dropdown/dropdown-menu";
 import {
   revenueByMonth,
   trafficSources,

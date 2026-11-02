@@ -3,7 +3,7 @@
 import { Showcase } from "@/components/application/examples/Showcase";
 
 import { useEffect, useRef, useState } from "react";
-import { FileUpload } from "@/components/base/ui/file-upload";
+import { FileUpload } from "@/components/base/file-upload/file-upload";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 
 const imageAccept = {

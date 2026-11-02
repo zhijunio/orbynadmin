@@ -4,7 +4,7 @@ import { Showcase } from "@/components/application/examples/Showcase";
 
 import { ChevronDown, FileText, Folder, FolderOpen } from "lucide-react";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/base/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/base/collapsible/collapsible";
 
 function CollapsibleExamples() {
   return (

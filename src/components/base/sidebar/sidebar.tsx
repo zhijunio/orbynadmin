@@ -6,22 +6,22 @@ import { Slot } from "radix-ui"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/base/ui/button"
-import { Input } from "@/components/base/ui/input"
-import { Separator } from "@/components/base/ui/separator"
+import { Button } from "@/components/base/buttons/button"
+import { Input } from "@/components/base/input/input"
+import { Separator } from "@/components/base/divider/separator"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/base/ui/sheet"
-import { Skeleton } from "@/components/base/ui/skeleton"
+} from "@/components/base/sheet/sheet"
+import { Skeleton } from "@/components/base/skeleton/skeleton"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/base/ui/tooltip"
+} from "@/components/base/tooltip/tooltip"
 import { PanelLeftIcon } from "lucide-react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"

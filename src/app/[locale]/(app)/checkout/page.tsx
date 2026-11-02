@@ -20,24 +20,24 @@ import {
 } from "@tabler/icons-react";
 
 import { PageHeader } from "@/components/application/layout/page-header";
-import { Button } from "@/components/base/ui/button";
+import { Button } from "@/components/base/buttons/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/base/ui/card";
-import { Input } from "@/components/base/ui/input";
-import { Label } from "@/components/base/ui/label";
-import { Separator } from "@/components/base/ui/separator";
-import { RadioGroup, RadioGroupItem } from "@/components/base/ui/radio-group";
+} from "@/components/base/card/card";
+import { Input } from "@/components/base/input/input";
+import { Label } from "@/components/base/input/label";
+import { Separator } from "@/components/base/divider/separator";
+import { RadioGroup, RadioGroupItem } from "@/components/base/radio/radio-group";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/base/ui/select";
+} from "@/components/base/select/select";
 import { cn } from "@/lib/utils";
 import { productList, type Product } from "@/data";
 

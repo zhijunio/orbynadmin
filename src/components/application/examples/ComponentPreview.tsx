@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
 
 export function ComponentPreview({
   title,
