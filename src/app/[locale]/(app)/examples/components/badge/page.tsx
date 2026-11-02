@@ -2,6 +2,7 @@ import { Showcase } from "@/components/application/examples/Showcase";
 
 import { ArrowUp } from "lucide-react";
 import { Badge } from "@/components/base/badges/badge";
+import { StatusDot } from "@/components/base/badges/status-dot";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import { cn } from "@/utils/cn";
 
@@ -64,6 +65,15 @@ function BadgeRow({ style, icon }: { style: BadgeStyle; icon?: "prefix" | "suffi
 function BadgeExample() {
   return (
     <>
+      <ComponentPreview title="Status Dot">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
+          <span className="inline-flex items-center gap-2"><StatusDot color="success" />Operational</span>
+          <span className="inline-flex items-center gap-2"><StatusDot color="warning" />Needs attention</span>
+          <span className="inline-flex items-center gap-2"><StatusDot color="error" />Unavailable</span>
+          <span className="inline-flex items-center gap-2"><StatusDot color="info" />In progress</span>
+          <span className="inline-flex items-center gap-2"><StatusDot color="neutral" />Unknown</span>
+        </div>
+      </ComponentPreview>
       <ComponentPreview title="Badge Soft"><BadgeRow style="soft" /></ComponentPreview>
       <ComponentPreview title="Badge Ghost"><BadgeRow style="ghost" /></ComponentPreview>
       <ComponentPreview title="Badge Outline"><BadgeRow style="outline" /></ComponentPreview>
