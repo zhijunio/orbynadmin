@@ -45,7 +45,9 @@ BoardUI 值得评估的新增能力：
 
 尺寸方面，BoardUI 使用约 36 / 32 / 24px；当前 `default` 为 36px、`sm` 为 28px、`xs` 为 24px，而 `lg` 当前与 `default` 同高。值得重新核对尺寸命名，但不能直接把 `sm` 改为 32px：项目已有大量 `sm` 使用点，需先评估视觉影响。
 
-BoardUI 的 Button 默认 `type="button"`，当前 Button 沿用 HTML 默认行为。后续可以审查所有表单里的按钮，再考虑统一默认值；表单提交按钮应明确标记 `type="submit"`，避免行为改变。
+已借鉴 BoardUI 的默认 `type="button"`：当前 Button 在原生按钮模式下不再隐式提交表单；显式传入的 `type` 仍生效，`asChild` 未指定类型时不会把按钮类型传给链接。迁移前扫描确认，表单中的原生 Button 都已明确声明 `type="submit"` 或 `type="button"`，因此没有改变现有提交行为。
+
+尺寸和图标 API 暂不迁移。当前项目有大量 `sm` 用法，BoardUI 的 32px small 与当前 28px small 不兼容；图标以 ReactNode 传入也比 BoardUI 固定组件引用更灵活。只有明确需求并完成调用点视觉检查后再统一尺寸。
 
 ## 分阶段实施
 
