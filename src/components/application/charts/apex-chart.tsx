@@ -6,7 +6,7 @@ import type {
   ApexNonAxisChartSeries,
   ApexOptions,
 } from "apexcharts";
-import { useThemeConfigStore } from "@/stores/theme-config-store";
+import { useThemeConfigStore } from "@/components/application/theme/theme-config-store";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,

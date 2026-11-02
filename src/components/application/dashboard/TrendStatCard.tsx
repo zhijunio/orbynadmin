@@ -1,6 +1,6 @@
 import { TrendingUp as IconTrendingUp, TrendingDown as IconTrendingDown } from "lucide-react";
 import { Card, CardContent } from "@/components/base/card/card";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 export type StatCardData = {
   label: string;

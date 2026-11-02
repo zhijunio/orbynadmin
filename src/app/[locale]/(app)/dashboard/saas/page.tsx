@@ -14,8 +14,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsList, TabsTrigger } from "@/components/base/tabs/tabs";
 import { ArrowRight as IconArrowRight, Check as IconCheck } from "lucide-react";
 import { toast } from "sonner";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
-import { getInitials } from "@/lib/text";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
+import { getInitials } from "@/utils/text";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" /> });
 

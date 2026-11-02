@@ -1,7 +1,7 @@
 "use client";
 import { team as teamMembers } from "@/data";
-import { getInitials } from "@/lib/text";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
+import { getInitials } from "@/utils/text";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
 
 import { Link } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
@@ -21,7 +21,7 @@ import { Input } from "@/components/base/input/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import { Progress } from "@/components/base/progress/progress";
 import { Separator } from "@/components/base/divider/separator";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 const categoryMeta: Record<
   ActivityCategory,

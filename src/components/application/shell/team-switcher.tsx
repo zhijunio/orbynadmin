@@ -3,7 +3,7 @@
 import * as React from "react";
 import { IconSelector, IconPlus, IconCheck } from "@tabler/icons-react";
 
-import { workspaces } from "@/config/nav";
+import { workspaces } from "@/components/application/shell/nav-config";
 import {
   DropdownMenu,
   DropdownMenuContent,

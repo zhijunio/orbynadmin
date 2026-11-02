@@ -34,7 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/base/table/table";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { orders, getOrderById, type Order } from "@/data";
 import { OrderActions } from "./order-actions";
 

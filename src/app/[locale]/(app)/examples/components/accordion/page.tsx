@@ -1,7 +1,7 @@
 import { Info } from "lucide-react";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import { Showcase } from "@/components/application/examples/Showcase";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import {
   Accordion,
   AccordionContent,

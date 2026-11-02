@@ -72,7 +72,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/base/dropdown/dropdown-menu";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { team, customers } from "@/data";
 
 type Action = "read" | "write" | "delete";

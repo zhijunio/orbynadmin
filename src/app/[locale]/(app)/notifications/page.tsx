@@ -36,7 +36,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/base/dropdown/dropdown-menu";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { notifications, type Notification, type NotificationKind } from "@/data";
 
 const kindConfig: Record<

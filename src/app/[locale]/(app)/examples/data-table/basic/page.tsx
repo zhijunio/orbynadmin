@@ -1,5 +1,5 @@
 "use client";
-import { getInitials } from "@/lib/text";
+import { getInitials } from "@/utils/text";
 
 import { PageHeader } from "@/components/application/layout/LocalizedPageHeader";
 

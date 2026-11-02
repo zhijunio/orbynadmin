@@ -20,9 +20,9 @@ import {
   collapsibleModes,
   contentLayouts,
   buildThemeCss,
-} from "@/lib/theme-config";
-import { useThemeConfigStore } from "@/stores/theme-config-store";
-import { cn } from "@/lib/utils";
+} from "@/components/application/theme/theme-config";
+import { useThemeConfigStore } from "@/components/application/theme/theme-config-store";
+import { cn } from "@/utils/cn";
 import { Button } from "@/components/base/buttons/button";
 import { Label } from "@/components/base/input/label";
 import { Separator } from "@/components/base/divider/separator";

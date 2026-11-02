@@ -11,7 +11,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationNext, Paginati
 import { Box as IconBox, ChevronDown as IconChevronDown, CircleCheck as IconCircleCheck, MessageCircle as IconMessageCircle, Package as IconPackage, Phone as IconPhone, Truck as IconTruckDelivery } from "lucide-react";
 import { Button } from "@/components/base/buttons/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
 import { DeliveryRouteMap } from "@/components/application/maps/DeliveryRouteMap";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" /> });

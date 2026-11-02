@@ -56,7 +56,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/base/dropdown/dropdown-menu";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 type NoteColor = "blue" | "violet" | "emerald" | "amber" | "rose" | "slate";
 type FolderId = "work" | "personal" | "ideas" | "archive";

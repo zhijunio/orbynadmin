@@ -118,6 +118,10 @@ npm run start   # run the build
 
 ```
 src/
+  styles/             # global entry, theme tokens and typography
+    globals.css
+    theme.css
+    typography.css
   app/[locale]/
     (app)/           # dashboard routes; route-only code can live in _components/_lib
     (auth)/          # login, register, password reset, otp, lock
@@ -127,16 +131,15 @@ src/
     base/              # shadcn/ui primitives grouped by component family
     application/      # dashboard, charts, examples, layout, maps, tables and shell
     foundations/      # providers and app-wide infrastructure
-  config/nav.ts      # sidebar navigation
-  data/index.ts      # demo data
+  data/               # shared demo datasets
+  utils/              # shared formatting, avatar and class-name helpers
   i18n/              # locale routing and request configuration
   messages/          # English and Simplified Chinese translations
-  stores/            # persisted theme configuration
 ```
 
-`components/base` contains low-level UI primitives. `components/application` contains composed product UI shared across routes. `components/foundations` contains provider-level infrastructure. Keep page-specific components and helpers beside their route in private folders such as `_components` and `_lib`; promote them to `components/application` when multiple routes reuse them. Keep `page.tsx` focused on composing the route and its application blocks.
+`components/application/shell/nav-config.ts` defines shared navigation. Theme presets and persisted theme state live together in `components/application/theme/`. `components/base` contains low-level UI primitives. `components/application` contains composed product UI shared across routes. `components/foundations` contains provider-level infrastructure. `utils/` is for reusable stateless helpers, while `data/` holds shared demo datasets. Keep page-specific components and helpers beside their route in private folders such as `_components` and `_lib`; promote them to `components/application` when multiple routes reuse them. Keep `page.tsx` focused on composing the route and its application blocks.
 
-All data is mock data. Replace `src/data/index.ts` (and the inline datasets on a few pages) with your own API.
+All data is mock data. Replace the datasets under `src/data/` (and the inline datasets on a few pages) with your own API.
 
 ## Deploy
 

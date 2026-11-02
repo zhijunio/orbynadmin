@@ -12,7 +12,7 @@ import {
   AlertDialogTitle,
 } from "@/components/base/dialog/alert-dialog";
 import { buttonVariants } from "@/components/base/buttons/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 /**
  * Controlled delete-confirmation dialog. Drive `open`/`onOpenChange` from the

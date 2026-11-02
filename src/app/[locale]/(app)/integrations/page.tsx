@@ -32,7 +32,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/base/dialog/dialog";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { integrations, type Integration } from "@/data";
 
 function scopesFor(i: Integration): string[] {

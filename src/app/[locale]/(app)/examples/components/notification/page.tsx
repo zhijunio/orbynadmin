@@ -6,8 +6,8 @@ import { Check as IconCheck, Info as IconInfoCircle, X as IconX } from "lucide-r
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import { Button } from "@/components/base/buttons/button";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
-import { getInitials } from "@/lib/text";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
+import { getInitials } from "@/utils/text";
 
 function NotificationsExample() {
   return (

@@ -5,8 +5,8 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import { IconChevronRight } from "@tabler/icons-react";
 
-import { cn } from "@/lib/utils";
-import { navGroups, type NavItem } from "@/config/nav";
+import { cn } from "@/utils/cn";
+import { navGroups, type NavItem } from "@/components/application/shell/nav-config";
 import { TeamSwitcher } from "@/components/application/shell/team-switcher";
 import { NavUser } from "@/components/application/shell/nav-user";
 import { useThemeConfig } from "@/components/application/theme/theme-customizer";

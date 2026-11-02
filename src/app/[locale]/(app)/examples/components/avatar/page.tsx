@@ -3,7 +3,7 @@ import { Showcase } from "@/components/application/examples/Showcase";
 import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@/components/base/avatar/avatar";
 
 import { User as IconUser } from "lucide-react";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
 
 function AvatarFallbacksPreview() {
   return (

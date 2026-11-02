@@ -31,7 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/base/select/select";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 type EventColor = "blue" | "emerald" | "amber" | "rose" | "violet";
 

@@ -66,7 +66,7 @@ import {
 } from "@/components/base/dialog/dialog";
 import { Label } from "@/components/base/input/label";
 import { DeleteDialog } from "@/components/application/feedback/delete-dialog";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { team, currentUser, type TeamMember } from "@/data";
 
 const departmentStyles: Record<string, string> = {

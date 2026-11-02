@@ -15,7 +15,7 @@ import { Checkbox } from "@/components/base/checkbox/checkbox";
 import { Badge } from "@/components/base/badges/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/base/tabs/tabs";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { customers } from "@/data";
 
 type Priority = "Low" | "Medium" | "High";

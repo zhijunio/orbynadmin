@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
 import { Label } from "@/components/base/input/label";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 const rules = [
   { label: "At least 8 characters", test: (v: string) => v.length >= 8 },

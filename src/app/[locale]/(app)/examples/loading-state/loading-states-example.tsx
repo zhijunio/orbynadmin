@@ -1,5 +1,5 @@
 "use client";
-import { getInitials } from "@/lib/text";
+import { getInitials } from "@/utils/text";
 import { useTranslations } from "next-intl";
 
 import { useEffect, useRef, useState } from "react";

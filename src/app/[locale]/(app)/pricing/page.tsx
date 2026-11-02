@@ -20,7 +20,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/base/accordion/accordion";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 const tiers = [
   {

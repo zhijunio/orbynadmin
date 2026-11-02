@@ -24,7 +24,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import { Badge } from "@/components/base/badges/badge";
 import { Separator } from "@/components/base/divider/separator";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import {
   tickets,
   getTicketById,

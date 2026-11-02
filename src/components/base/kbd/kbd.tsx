@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 /**
  * A single keyboard keycap. Compose several side by side to show a shortcut,

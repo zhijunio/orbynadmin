@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Archive, ChevronDown, Copy, CreditCard, Download, Ellipsis, Eye, FolderPlus, LogOut, Pencil, Settings, Share2, Trash2, UserRound } from "lucide-react";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
 import { Button } from "@/components/base/buttons/button";
 import {
   DropdownMenu,

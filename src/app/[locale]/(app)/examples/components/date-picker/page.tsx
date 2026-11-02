@@ -6,7 +6,7 @@ import { ChevronLeft as IconChevronLeft, ChevronRight as IconChevronRight } from
 import { Showcase } from "@/components/application/examples/Showcase";
 import { DatePicker } from "@/components/base/date-picker/date-picker";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 function Calendar({ selected, onSelect }: { selected?: Date; onSelect: (date: Date | undefined) => void }) {
   const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(selected ?? new Date()));

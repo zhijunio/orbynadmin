@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/table/table";
 import { ArrowDownLeft as IconArrowDownLeft, ArrowUpRight as IconArrowUpRight, ChevronDown as IconChevronDown, ChevronLeft as IconChevronLeft, ChevronRight as IconChevronRight } from "lucide-react";
 import { toast } from "sonner";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" /> });
 

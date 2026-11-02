@@ -35,7 +35,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/tabs/tabs";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { customers, orders, productList } from "@/data";
 
 type ResultType = "customer" | "order" | "product" | "page";

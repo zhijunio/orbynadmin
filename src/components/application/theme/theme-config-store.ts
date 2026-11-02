@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { Dispatch, SetStateAction } from "react";
-import { defaultConfig, type ThemeConfig } from "@/lib/theme-config";
+import { defaultConfig, type ThemeConfig } from "@/components/application/theme/theme-config";
 
 type ThemeConfigStore = {
   config: ThemeConfig;

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import "../globals.css";
+import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/foundations/providers/theme-provider";
 import { ThemeConfigProvider } from "@/components/application/theme/theme-customizer";
 import { AppMotionProvider } from "@/components/foundations/providers/app-motion-provider";

@@ -1,6 +1,6 @@
 "use client";
-import { getInitials } from "@/lib/text";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
+import { getInitials } from "@/utils/text";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
@@ -21,7 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/base/dropdown/dropdown-menu";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 type Message = {
   id: string;

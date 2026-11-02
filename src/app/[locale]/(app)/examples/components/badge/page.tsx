@@ -3,7 +3,7 @@ import { Showcase } from "@/components/application/examples/Showcase";
 import { ArrowUp } from "lucide-react";
 import { Badge } from "@/components/base/badges/badge";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 const badgeColors = [
   { label: "Primary", soft: "bg-[#eff3ff] text-[#3758f9]", solid: "bg-[#3758f9]", ghost: "text-[#3758f9]" },

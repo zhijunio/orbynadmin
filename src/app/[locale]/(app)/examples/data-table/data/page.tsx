@@ -1,7 +1,7 @@
 "use client";
-import { getInitials } from "@/lib/text";
-import { customers } from "@/lib/demo-data";
-import type { Customer } from "@/lib/demo-data";
+import { getInitials } from "@/utils/text";
+import { customers } from "@/data/demo-customers";
+import type { Customer } from "@/data/demo-customers";
 
 import { useMemo, useState } from "react";
 

@@ -65,7 +65,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/base/dropdown/dropdown-menu";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { productList } from "@/data";
 
 type IconType = React.ComponentType<{ className?: string }>;

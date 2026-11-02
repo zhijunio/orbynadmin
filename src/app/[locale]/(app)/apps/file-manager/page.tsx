@@ -1,5 +1,5 @@
 "use client";
-import { getInitials } from "@/lib/text";
+import { getInitials } from "@/utils/text";
 import { currentUser } from "@/data";
 import { getTeamMember, team as teamMembers, type TeamMember } from "@/data";
 
@@ -61,7 +61,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/base/sheet/sheet";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 type FileNode = {
   id: string;

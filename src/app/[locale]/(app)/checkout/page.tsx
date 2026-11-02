@@ -38,7 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/base/select/select";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { productList, type Product } from "@/data";
 
 type CartLine = Product & { qty: number };

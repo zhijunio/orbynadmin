@@ -6,8 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/av
 import { Badge } from "@/components/base/badges/badge";
 import { Button } from "@/components/base/buttons/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
-import { getInitials } from "@/lib/text";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
+import { getInitials } from "@/utils/text";
 
 function CardsExample() {
   return (

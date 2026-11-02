@@ -17,8 +17,8 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/base/table/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/base/tabs/tabs";
 import { EllipsisVertical as IconDotsVertical } from "lucide-react";
-import { demoAvatarUrl } from "@/lib/demo-avatar";
-import { getInitials } from "@/lib/text";
+import { demoAvatarUrl } from "@/utils/demo-avatar";
+import { getInitials } from "@/utils/text";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false, loading: () => <div className="h-[280px] animate-pulse rounded-lg bg-muted/40" /> });
 

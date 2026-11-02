@@ -2,7 +2,7 @@
 
 import { format } from "date-fns";
 import { CalendarDays } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 type DisabledDateRule = Date | Date[] | { before?: Date; after?: Date } | ((date: Date) => boolean);
 

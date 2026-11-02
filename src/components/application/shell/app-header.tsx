@@ -15,7 +15,7 @@ import {
   IconWorld,
 } from "@tabler/icons-react";
 
-import { navGroups } from "@/config/nav";
+import { navGroups } from "@/components/application/shell/nav-config";
 import { currentUser, recentActivity } from "@/data";
 import { useIsMac } from "@/hooks/use-platform";
 import { Kbd, KbdGroup } from "@/components/base/kbd/kbd";
