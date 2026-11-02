@@ -1,6 +1,5 @@
 "use client";
 
-import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,7 +16,8 @@ import { cn } from "@/utils/cn";
 /**
  * Controlled delete-confirmation dialog. Drive `open`/`onOpenChange` from the
  * caller (e.g. a dropdown menu item sets open=true). `onConfirm` runs the
- * actual removal; a success toast is shown automatically.
+ * actual removal; feedback belongs to the caller because it knows whether
+ * removal completed successfully.
  */
 export function DeleteDialog({
   open,
@@ -28,7 +28,7 @@ export function DeleteDialog({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onConfirm?: () => void;
+  onConfirm: () => void;
   name?: string;
   description?: string;
 }) {
@@ -47,10 +47,7 @@ export function DeleteDialog({
           <AlertDialogAction
             className={cn(buttonVariants({ variant: "destructive" }))}
             onClick={() => {
-              onConfirm?.();
-              toast.success(`${name} deleted`, {
-                description: "The record has been removed.",
-              });
+              onConfirm();
             }}
           >
             Delete

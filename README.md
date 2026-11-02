@@ -2,7 +2,7 @@
 
 # OrbynAdmin
 
-An open-source enterprise admin dashboard starter built with Next.js, React, Tailwind CSS and shadcn/ui. It includes management views for teams, roles, integrations, activity, support and operations, alongside industry dashboards and reusable examples. Demo data lets you explore the interface without first connecting a backend.
+An open-source enterprise admin dashboard starter built with Next.js, React, Tailwind CSS and Radix UI. It includes management views for teams, roles, integrations, activity, support and operations, alongside industry dashboards and reusable examples. Demo data lets you explore the interface without first connecting a backend.
 
 Everything is MIT licensed. No pro tier, no locked components.
 
@@ -28,12 +28,12 @@ Everything is MIT licensed. No pro tier, no locked components.
 - Responsive down to mobile
 - Compact card headers without repeated description copy; page-level guidance and action confirmations remain where they help users
 - Command palette (⌘K), collapsible sidebar with nested menus, workspace switcher and account menu
-- Interactive charts with [ApexCharts](https://apexcharts.com) and reusable tables built on [TanStack Table](https://tanstack.com/table)
+- Interactive charts with [Recharts](https://recharts.org) and reusable tables built on [TanStack Table](https://tanstack.com/table)
 - Conversation transitions use [Motion](https://motion.dev) and respect the system reduced-motion preference
-- English and Simplified Chinese locale routing with [next-intl](https://next-intl.dev); translations cover navigation, shared controls, page titles, Overview, AI and SaaS dashboards, system settings, notifications, Tasks, Calendar and selected examples, while several page bodies remain English
+- English and Simplified Chinese localization with [next-intl](https://next-intl.dev); translations cover navigation, shared controls, page titles, Overview, AI and SaaS dashboards, system settings, notifications, Tasks, Calendar and selected examples, while several page bodies remain English
 - MapLibre maps, draggable Kanban boards and persisted theme preferences
 - Auth pages: login, register, forgot / reset password, OTP and lock screen
-- Written in TypeScript with locale-aware App Router routes
+- Written in TypeScript with feature-based App Router routes
 
 ## Screenshots
 
@@ -90,11 +90,11 @@ npm run start   # run the build
 - [Next.js 16](https://nextjs.org) (App Router, Turbopack)
 - TypeScript
 - [Tailwind CSS v4](https://tailwindcss.com)
-- [shadcn/ui](https://ui.shadcn.com) + [Radix UI](https://www.radix-ui.com)
-- [ApexCharts](https://apexcharts.com) and [react-apexcharts](https://github.com/apexcharts/react-apexcharts) for charts
+- [Radix UI](https://www.radix-ui.com) primitives styled with Tailwind CSS
+- [Recharts](https://recharts.org) for composable React charts
 - [TanStack Table](https://tanstack.com/table) for data tables
 - [dnd-kit](https://dndkit.com) for drag-and-drop interactions
-- [MapLibre GL](https://maplibre.org), React Map GL and [React JVectorMap](https://github.com/kadoshms/react-jvectormap) for interactive maps
+- [MapLibre GL](https://maplibre.org) and React Map GL for interactive street and world maps
 - [next-intl](https://next-intl.dev) for English and Simplified Chinese
 - [Motion](https://motion.dev) for focused interface transitions with reduced-motion support
 - Geist and Geist Mono served through [ZeoSeven Fonts](https://fonts.zeoseven.com) for web typography
@@ -112,7 +112,8 @@ npm run start   # run the build
 - **Pages:** Profile, Settings, Developers (API keys & webhooks), Pricing, Integrations, Notifications, Help Center, Search
 - **Auth:** Login, Register, Forgot / Reset password, OTP, Lock screen
 - **Utility:** 404 / 403 / 500 / 503, Maintenance, Coming soon, Landing page, Onboarding
-- **Examples:** ApexCharts (bar, line, pie, radial and radar), forms, data tables (basic, data and API CRUD), maps, FAQ, loading and error states, layout examples, UI elements and empty states
+- **Chart examples:** 7 bar, 5 line, 5 pie, 3 radar and 6 radial examples, aligned to the current [TailAdmin Bar](https://nextjs-demo.tailadmin.com/bar-chart), [Line](https://nextjs-demo.tailadmin.com/line-chart), [Pie](https://nextjs-demo.tailadmin.com/pie-chart), [Radar](https://nextjs-demo.tailadmin.com/radar-chart) and [Radial](https://nextjs-demo.tailadmin.com/radial-chart) chart pages. They use Recharts and OrbynAdmin theme tokens.
+- **Other examples:** Forms, data tables (basic, data and API CRUD), maps, FAQ, loading and error states, layout examples, UI elements and empty states
 
 ## Project structure
 
@@ -122,22 +123,27 @@ src/
     globals.css
     theme.css
     typography.css
-  app/[locale]/
-    (app)/           # dashboard routes; route-only code can live in _components/_lib
-    (auth)/          # login, register, password reset, otp, lock
-    errors/          # 403, 404, 500 and 503
-    landing/         # landing, onboarding and utility pages
+  app/
+    dashboard/       # overview and industry dashboards
+    commerce/        # products, orders, customers and operations
+    workspace/       # projects, teams, contacts, roles and activity
+    apps/            # chat, mail, calendar, tasks and other apps
+    account/         # profile, settings, billing, support and authentication
+    elements/        # UI element examples
+    blocks/          # reusable module and page-block examples
+    (public)/        # standalone public pages
+    layout.tsx       # global providers; locale comes from cookie/browser language
   components/
-    base/              # shadcn/ui primitives grouped by component family
-    application/      # dashboard, charts, examples, layout, maps, tables and shell
-    foundations/      # providers and app-wide infrastructure
+    base/            # reusable controls grouped by component family
+    application/     # reusable feature components, dashboards and app shell
+    foundations/     # providers and app-wide infrastructure
   data/               # shared demo datasets
   utils/              # shared formatting, avatar and class-name helpers
   i18n/              # locale routing and request configuration
   messages/          # English and Simplified Chinese translations
 ```
 
-`components/application/shell/nav-config.ts` defines shared navigation. Theme presets and persisted theme state live together in `components/application/theme/`. `components/base` contains low-level UI primitives. `components/application` contains composed product UI shared across routes. `components/foundations` contains provider-level infrastructure. `utils/` is for reusable stateless helpers, while `data/` holds shared demo datasets. Keep page-specific components and helpers beside their route in private folders such as `_components` and `_lib`; promote them to `components/application` when multiple routes reuse them. Keep `page.tsx` focused on composing the route and its application blocks.
+`src/app/` groups routes directly by product function. Non-public pages compose the shared `ConsoleLayout` directly, following BoardUI's page-level `AppShell` pattern; the only Next.js layout file is `src/app/layout.tsx`. Module examples shown in the Blocks navigation live under `src/app/blocks/` and use `/blocks/...` URLs; UI element examples live under `src/app/elements/` and use `/elements/...` URLs. Public pages live under `(public)/` and do not use the console shell. English and Chinese messages are selected from the `NEXT_LOCALE` cookie, with the browser language as the initial fallback. Routes do not include a locale segment. `src/components/base/` contains low-level reusable controls, aligned with BoardUI's base layer. `src/components/application/` contains reusable product-feature components such as auth cards, dashboards, data tables, charts, maps and app-shell UI; files are grouped by feature and use kebab-case names, following BoardUI's application organization. Showcase helpers and UI example code live under `src/app/elements/` beside their routes. `/blocks` is a route group; there is no blocks or docs directory under `src/components/application`. `src/components/foundations/` contains providers and app-wide infrastructure. Shared navigation lives in `components/application/app-shell/nav-config.ts`, and theme presets and persisted theme state live together in `components/application/theme/`. Keep page-specific content, demo data, translations, route links, and scenario state with the relevant route. Keep `page.tsx` focused on composing base controls and Application components. `utils/` is for reusable stateless helpers, while `data/` holds shared demo datasets.
 
 All data is mock data. Replace the datasets under `src/data/` (and the inline datasets on a few pages) with your own API.
 

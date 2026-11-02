@@ -161,7 +161,7 @@ export function InputOtp({
               event.currentTarget.select();
             }}
             className={cn(
-              "size-10 shrink-0 rounded-lg border bg-background text-center text-lg font-semibold tabular-nums shadow-sm outline-none transition-colors sm:size-12",
+              "size-9 shrink-0 rounded-md border bg-background text-center text-base font-semibold tabular-nums shadow-sm outline-none transition-colors sm:size-10 sm:text-lg",
               "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40",
               isInvalid && "border-destructive focus-visible:ring-destructive/30",
               disabled && "cursor-not-allowed opacity-50",

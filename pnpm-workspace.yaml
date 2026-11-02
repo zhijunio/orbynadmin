@@ -1,0 +1,8 @@
+allowBuilds:
+  '@parcel/watcher': false
+  '@swc/core': false
+  unrs-resolver: false
+minimumReleaseAgeExclude:
+  - framer-motion@14.8.0
+  - motion-dom@14.8.0
+  - motion@14.8.0

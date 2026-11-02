@@ -2,12 +2,12 @@ import * as React from "react"
 import { Slot } from "radix-ui"
 
 import { cn } from "@/utils/cn"
-import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
+import { IconChevronRight as ChevronRightIcon, IconDots as MoreHorizontalIcon } from "@tabler/icons-react"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
-      aria-label="breadcrumb"
+      aria-label="Breadcrumb"
       data-slot="breadcrumb"
       className={cn(className)}
       {...props}
@@ -50,7 +50,10 @@ function BreadcrumbLink({
   return (
     <Comp
       data-slot="breadcrumb-link"
-      className={cn("transition-colors hover:text-foreground", className)}
+      className={cn(
+        "rounded-md px-1.5 py-1 transition-colors hover:bg-muted hover:text-foreground",
+        className,
+      )}
       {...props}
     />
   )
@@ -60,8 +63,6 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="breadcrumb-page"
-      role="link"
-      aria-disabled="true"
       aria-current="page"
       className={cn("font-normal text-foreground", className)}
       {...props}

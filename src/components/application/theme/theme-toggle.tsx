@@ -5,8 +5,9 @@ import { IconMoon, IconSun } from "@tabler/icons-react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/base/buttons/button";
+import { cn } from "@/utils/cn";
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string } = {}) {
   const { setTheme, resolvedTheme } = useTheme();
   const t = useTranslations("ThemeCustomizer");
   const [mounted, setMounted] = React.useState(false);
@@ -19,7 +20,7 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      className="rounded-full"
+      className={cn("rounded-full", className)}
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       aria-label={t("toggleTheme")}
     >

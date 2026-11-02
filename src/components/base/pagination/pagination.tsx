@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { IconChevronLeft as ChevronLeft, IconChevronRight as ChevronRight, IconDots as MoreHorizontal } from "@tabler/icons-react";
 import { Button } from "@/components/base/buttons/button";
 import { cn } from "@/utils/cn";
 

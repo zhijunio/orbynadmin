@@ -51,20 +51,21 @@ export type StatCard = {
   change: number;
   trend: "up" | "down";
   hint: string;
+  goodWhen?: "up" | "down";
 };
 
 export const overviewStats: StatCard[] = [
   { label: "Total Revenue", value: "$284,392", change: 12.5, trend: "up", hint: "vs. last month" },
   { label: "New Customers", value: "2,318", change: 8.2, trend: "up", hint: "vs. last month" },
   { label: "Active Accounts", value: "18,472", change: 3.1, trend: "up", hint: "vs. last month" },
-  { label: "Churn Rate", value: "1.8%", change: 0.4, trend: "down", hint: "vs. last month" },
+  { label: "Churn Rate", value: "1.8%", change: 0.4, trend: "down", hint: "vs. last month", goodWhen: "down" },
 ];
 
 export const ecommerceStats: StatCard[] = [
   { label: "Gross Sales", value: "$52,420", change: 14.2, trend: "up", hint: "this month" },
   { label: "Orders", value: "612", change: 9.7, trend: "up", hint: "this month" },
   { label: "Avg. Order Value", value: "$85.65", change: 2.3, trend: "up", hint: "this month" },
-  { label: "Refunds", value: "$1,240", change: 1.1, trend: "down", hint: "this month" },
+  { label: "Refunds", value: "$1,240", change: 1.1, trend: "down", hint: "this month", goodWhen: "down" },
 ];
 
 const firstNames = ["Emma", "Liam", "Olivia", "Noah", "Ava", "Ethan", "Sophia", "Mason", "Isabella", "Lucas", "Mia", "Aiden", "Harper", "James", "Ella", "Benjamin", "Amelia", "Elijah", "Chloe", "Daniel"];
@@ -551,91 +552,4 @@ export const notifications: Notification[] = [
   { id: "N-08", kind: "mention", title: "Hannah Kim mentioned you", description: "“@alex a customer asked about the Q3 roadmap.”", actor: getTeamMember(5), time: "Yesterday", read: true },
   { id: "N-09", kind: "assign", title: "Milestone due soon", description: "“Beta release” for Mobile App Revamp is due in 3 days", time: "2 days ago", read: true },
   { id: "N-10", kind: "system", title: "Storage at 82%", description: "Your workspace is approaching its storage limit", time: "3 days ago", read: true },
-];
-
-// ---------------------------------------------------------------------------
-// Crypto / Web3 dashboard. Token names and tickers are real; figures, balances
-// and on-chain activity are illustrative. Coin icons are inline brand marks
-// (see components/crypto-icon.tsx).
-// ---------------------------------------------------------------------------
-
-export type CryptoAsset = {
-  symbol: string;
-  name: string;
-  chain: string;
-  price: number;
-  change24h: number; // percent, +/-
-  holdings: number; // units held
-  color: string; // brand-ish color for the monogram badge
-  spark: number[]; // 7-day price trend for the sparkline
-};
-
-export const cryptoAssets: CryptoAsset[] = [
-  { symbol: "BTC", name: "Bitcoin", chain: "Bitcoin", price: 68214.32, change24h: 2.4, holdings: 0.684, color: "#F7931A", spark: [64100, 63800, 65200, 66100, 65700, 67300, 68214] },
-  { symbol: "ETH", name: "Ethereum", chain: "Ethereum", price: 3541.08, change24h: 3.8, holdings: 9.2, color: "#627EEA", spark: [3280, 3325, 3298, 3410, 3388, 3472, 3541] },
-  { symbol: "SOL", name: "Solana", chain: "Solana", price: 168.24, change24h: 7.1, holdings: 120, color: "#14B8A6", spark: [141, 148, 152, 149, 158, 163, 168] },
-  { symbol: "BNB", name: "BNB", chain: "BNB Chain", price: 592.4, change24h: -1.2, holdings: 14, color: "#D9A400", spark: [612, 604, 598, 601, 595, 599, 592] },
-  { symbol: "USDC", name: "USD Coin", chain: "Ethereum", price: 1.0, change24h: 0.0, holdings: 12000, color: "#2775CA", spark: [1, 1, 1, 1, 1, 1, 1] },
-  { symbol: "XRP", name: "XRP", chain: "XRP Ledger", price: 0.62, change24h: -2.8, holdings: 9000, color: "#475569", spark: [0.66, 0.65, 0.64, 0.63, 0.64, 0.63, 0.62] },
-  { symbol: "ADA", name: "Cardano", chain: "Cardano", price: 0.46, change24h: 4.2, holdings: 6500, color: "#2B6BE4", spark: [0.42, 0.43, 0.44, 0.43, 0.45, 0.45, 0.46] },
-  { symbol: "POL", name: "Polygon", chain: "Polygon", price: 0.72, change24h: -3.4, holdings: 700, color: "#7C3AED", spark: [0.78, 0.76, 0.75, 0.74, 0.73, 0.74, 0.72] },
-];
-
-// Portfolio value over several time ranges, generated deterministically at
-// module load (never during render). Ends near the current portfolio total.
-function genSeries(
-  labels: string[],
-  start: number,
-  end: number,
-  volatility: number,
-  seed: number
-): { t: string; value: number }[] {
-  const n = labels.length;
-  return labels.map((t, i) => {
-    const p = n === 1 ? 1 : i / (n - 1);
-    const trend = start + (end - start) * p;
-    const wobble =
-      Math.sin(i * 1.7 + seed) * volatility +
-      Math.sin(i * 0.6 + seed * 2) * volatility * 0.5;
-    return { t, value: Math.max(0, Math.round(trend + wobble)) };
-  });
-}
-
-const hours = Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, "0")}:00`);
-const days30 = Array.from({ length: 30 }, (_, i) => `${i + 1}`);
-const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const monthsYear = ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
-
-export const cryptoPortfolioRanges: Record<
-  string,
-  { t: string; value: number }[]
-> = {
-  "24H": genSeries(hours, 124600, 128420, 900, 1),
-  "7D": genSeries(weekdays, 118200, 128420, 2200, 3),
-  "30D": genSeries(days30, 96400, 128420, 3600, 5),
-  "1Y": genSeries(monthsYear, 52800, 128420, 6400, 7),
-};
-
-export type CryptoTx = {
-  id: string;
-  type: "Buy" | "Sell" | "Swap" | "Send" | "Receive" | "Stake";
-  asset: string; // symbol
-  detail?: string; // e.g. swap pair or address
-  amount: number; // units
-  value: number; // usd
-  time: string;
-  status: "Completed" | "Pending" | "Failed";
-};
-
-export const cryptoTransactions: CryptoTx[] = [
-  { id: "TX-9F2A", type: "Buy", asset: "ETH", amount: 1.5, value: 5311.62, time: "2 min ago", status: "Completed" },
-  { id: "TX-7C4B", type: "Receive", asset: "USDC", detail: "from 0x8f…3a91", amount: 2500, value: 2500, time: "18 min ago", status: "Completed" },
-  { id: "TX-5A18", type: "Swap", asset: "SOL", detail: "USDC → SOL", amount: 12.4, value: 2086.18, time: "1 hour ago", status: "Completed" },
-  { id: "TX-2E90", type: "Stake", asset: "ETH", detail: "Lido", amount: 3.0, value: 10623.24, time: "3 hours ago", status: "Completed" },
-  { id: "TX-1D77", type: "Sell", asset: "POL", amount: 1800, value: 1296, time: "5 hours ago", status: "Completed" },
-  { id: "TX-8B03", type: "Send", asset: "BTC", detail: "to 0x1c…9d2f", amount: 0.05, value: 3410.72, time: "Yesterday", status: "Completed" },
-  { id: "TX-6F55", type: "Buy", asset: "BTC", amount: 0.12, value: 8185.72, time: "Yesterday", status: "Completed" },
-  { id: "TX-4A2C", type: "Swap", asset: "ADA", detail: "XRP → ADA", amount: 4200, value: 1932, time: "2 days ago", status: "Pending" },
-  { id: "TX-3E81", type: "Receive", asset: "SOL", detail: "from 0x4b…7e10", amount: 40, value: 6729.6, time: "2 days ago", status: "Completed" },
-  { id: "TX-0C6D", type: "Sell", asset: "BNB", amount: 6, value: 3554.4, time: "3 days ago", status: "Failed" },
 ];

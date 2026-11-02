@@ -51,6 +51,7 @@ export function ThemeConfigProvider({
 }) {
   const config = useThemeConfigStore((state) => state.config);
   const configLoaded = useThemeConfigStore((state) => state.hydrated);
+  const { resolvedTheme } = useTheme();
 
   React.useEffect(() => {
     void useThemeConfigStore.persist.rehydrate();
@@ -70,13 +71,16 @@ export function ThemeConfigProvider({
       "--sidebar-ring",
       "--chart-1",
     ];
-    if (accent?.primary) {
-      root.style.setProperty("--primary", accent.primary);
-      root.style.setProperty("--primary-foreground", accent.fg);
-      root.style.setProperty("--ring", accent.primary);
-      root.style.setProperty("--sidebar-primary", accent.primary);
-      root.style.setProperty("--sidebar-ring", accent.primary);
-      root.style.setProperty("--chart-1", accent.primary);
+    if (accent) {
+      const dark = resolvedTheme === "dark";
+      const primary = dark ? accent.darkPrimary ?? accent.primary : accent.primary;
+      const foreground = dark ? accent.darkFg ?? accent.fg : accent.fg;
+      root.style.setProperty("--primary", primary);
+      root.style.setProperty("--primary-foreground", foreground);
+      root.style.setProperty("--ring", primary);
+      root.style.setProperty("--sidebar-primary", primary);
+      root.style.setProperty("--sidebar-ring", primary);
+      root.style.setProperty("--chart-1", primary);
     } else {
       props.forEach((p) => root.style.removeProperty(p));
     }
@@ -89,7 +93,7 @@ export function ThemeConfigProvider({
 
     root.dataset.content = config.contentLayout;
 
-  }, [config, configLoaded]);
+  }, [config, configLoaded, resolvedTheme]);
   return children;
 }
 

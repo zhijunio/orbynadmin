@@ -1,6 +1,6 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import {
-  IconSparkles,
   IconArrowLeft,
   type TablerIcon,
 } from "@tabler/icons-react";
@@ -16,9 +16,13 @@ export type ErrorStateProps = {
   description: string;
   /** Optional accent icon rendered in a rounded card above the code. */
   icon?: TablerIcon;
-  /** Primary action link (defaults to the dashboard). */
-  primaryHref?: string;
-  primaryLabel?: string;
+  /** Caller-provided branding or application navigation. */
+  brand?: ReactNode;
+  /** Primary action link. */
+  primaryHref: string;
+  primaryLabel: string;
+  /** Optional caller-provided footer. */
+  footer?: ReactNode;
   /** Optional secondary action link. */
   secondaryHref?: string;
   secondaryLabel?: string;
@@ -31,8 +35,10 @@ export function ErrorState({
   title,
   description,
   icon: Icon,
-  primaryHref = "/dashboard",
-  primaryLabel = "Back to dashboard",
+  brand,
+  primaryHref,
+  primaryLabel,
+  footer,
   secondaryHref,
   secondaryLabel,
   secondaryIcon: SecondaryIcon,
@@ -51,18 +57,7 @@ export function ErrorState({
         />
       </div>
 
-      {/* Header — OrbynAdmin wordmark */}
-      <header className="flex items-center px-6 py-5">
-        <Link
-          href="/dashboard"
-          className="flex items-center gap-2 font-semibold"
-        >
-          <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <IconSparkles className="size-5" />
-          </span>
-          <span className="tracking-tight">OrbynAdmin</span>
-        </Link>
-      </header>
+      {brand}
 
       {/* Content */}
       <main className="flex flex-1 items-center justify-center px-4 py-10">
@@ -98,20 +93,17 @@ export function ErrorState({
                 className="h-11 gap-2 px-6 text-sm"
                 asChild
               >
-                <Link href={secondaryHref}>
+              <Link href={secondaryHref}>
                   {SecondaryIcon ? <SecondaryIcon className="size-4" /> : null}
                   {secondaryLabel}
-                </Link>
+              </Link>
               </Button>
             ) : null}
           </div>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="px-6 py-6 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} OrbynAdmin. All rights reserved.
-      </footer>
+      {footer}
     </div>
   );
 }
