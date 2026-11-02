@@ -21,8 +21,8 @@ BoardUI 值得评估的新增能力：
 | 优先级 | 组件 | 建议与适用场景 |
 |---|---|---|
 | 已完成 | Button Group | 已新增 `ButtonGroup` / `ButtonGroupItem`，示例页已改为使用组件。复用当前 Button、主题 token 和图标；选中项同步 `aria-pressed`。 |
-| 高 | Status Dot | 与文字型 Badge 不同，可在紧凑列表中显示在线、待处理等状态。使用当前主题颜色实现。 |
-| 高 | Input OTP | 当前 OTP 页面已有分格输入。将现有交互抽成通用组件，覆盖粘贴、自动填充、退格、方向键、禁用和完成回调。 |
+| 已完成 | Status Dot | 已新增 `success`、`warning`、`error`、`info` 和 `neutral` 五种语义颜色，并在 Badge 示例页展示。 |
+| 已完成 | Input OTP | 已抽成通用组件，并用于 OTP 验证页和输入组件示例；支持受控值、粘贴/自动填充、键盘移动、禁用、错误和完成回调。 |
 | 高 | Date Range Picker | 用于订单、报告和活动记录的日期筛选。沿用当前 Calendar、React Day Picker 与 `date-fns`，不引入 BoardUI 的日期栈。 |
 | 中 | Slider | 当前基础目录没有滑块；可基于已安装的 Radix 实现单值和范围选择，并在表单示例中展示。 |
 | 中 | Checkbox Card / Radio Card / Switch Card | 适用于设置和表单中的选项卡片。复用当前 Radix 控件与主题变量，不迁 React Aria 实现。 |
@@ -63,3 +63,5 @@ BoardUI 值得评估的新增能力：
 - 用当前项目的语义 token（如 `primary`、`border`、`muted`）映射 BoardUI 视觉，不搬入 BoardUI 私有 token。
 - 交互组件优先保持 Radix 和现有日期库，不为单个控件增加另一套交互依赖。
 - Button Group 当前实现位于 `src/components/base/buttons/button-group.tsx`，示例位于 `src/app/[locale]/(app)/examples/components/buttons-group/page.tsx`。
+- Status Dot 当前实现位于 `src/components/base/badges/status-dot.tsx`，示例位于 `src/app/[locale]/(app)/examples/components/badge/page.tsx`。项目列表保留自己的灰度状态点样式，避免改变项目页既有的单色状态表达。
+- Input OTP 当前实现位于 `src/components/base/input-otp/input-otp.tsx`，复用位置为 `src/app/[locale]/(auth)/verify-otp/page.tsx` 和 `src/app/[locale]/(app)/examples/components/input/page.tsx`。

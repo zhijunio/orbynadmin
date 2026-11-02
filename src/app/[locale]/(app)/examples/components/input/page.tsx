@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
 import { Label } from "@/components/base/input/label";
+import { InputOtp } from "@/components/base/input-otp/input-otp";
 import { ComponentPreview } from "@/components/application/examples/ComponentPreview";
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/base/input/input-group";
 
@@ -87,15 +88,11 @@ function EmailVerificationInput() {
       {emailError && <p id={`${id}-error`} className="text-xs text-destructive" role="alert">Enter a valid email address.</p>}
       {secondsLeft > 0 && (
         <div className="flex flex-col gap-2 pt-2 sm:flex-row">
-          <Input
+          <InputOtp
             aria-label="Six-digit verification code"
-            inputMode="numeric"
-            autoComplete="one-time-code"
-            maxLength={6}
             value={verificationCode}
-            onChange={(event) => setVerificationCode(event.target.value.replace(/\D/g, "").slice(0, 6))}
-            placeholder="Enter 6-digit code"
-            className="sm:max-w-xs"
+            onChange={setVerificationCode}
+            className="w-full sm:w-auto"
           />
           <Button type="button" variant="outline" disabled={verificationCode.length !== 6} onClick={verifyCode}>
             Verify email
