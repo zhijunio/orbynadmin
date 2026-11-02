@@ -2,7 +2,6 @@
 
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
-import { useState } from "react";
 import { IconArrowUp as ArrowUp, IconCheck as Check } from "@tabler/icons-react";
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
@@ -14,7 +13,6 @@ import { CloseButton } from "@/components/base/buttons/close-button";
 import { Kbd, KbdGroup } from "@/components/base/kbd/kbd";
 
 function BadgeExamples() {
-  const [filters, setFilters] = useState(["Operations", "Finance"]);
   return <>
       <ComponentPreview title="Variants">
         <div className="flex flex-wrap items-center gap-3">
@@ -74,7 +72,7 @@ function BadgeExamples() {
           <span className="inline-flex items-center gap-2">Close<Kbd>Esc</Kbd></span>
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Chips"><div className="flex flex-wrap items-center gap-2">{filters.map((filter) => <Chip key={filter} onRemove={() => setFilters((current) => current.filter((item) => item !== filter))}>{filter}</Chip>)}{filters.length === 0 && <span className="text-sm text-muted-foreground">All filters removed</span>}<Chip variant="default">Active</Chip></div></ComponentPreview>
+      <ComponentPreview title="Chips"><div className="flex flex-wrap items-center gap-2"><Chip variant="bold" color="lime">Active</Chip><Chip variant="subtle" color="cyan">Enterprise</Chip><Chip variant="caption" color="gray">Renewal</Chip></div></ComponentPreview>
       <ComponentPreview title="Close Button"><div className="flex items-center gap-3"><CloseButton aria-label="Close compact item" size="xs" /><CloseButton aria-label="Close panel" size="sm" /><CloseButton aria-label="Close dialog" size="md" /></div></ComponentPreview>
     </>;
 }
