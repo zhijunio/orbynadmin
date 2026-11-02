@@ -15,7 +15,6 @@ import { Button } from "@/components/base/buttons/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
 import { demoAvatarUrl } from "@/utils/demo-avatar";
 import { getInitials } from "@/utils/text";
-import { CardSelectionExamples } from "@/app/elements/ui/card/card-selection-examples";
 
 function CardsExample() {
   return <>
@@ -57,7 +56,6 @@ function CardsExample() {
       <ComponentPreview title="Cards with Icon" className="lg:col-span-2">
         <div className="grid w-full gap-4 sm:grid-cols-2">{[{ title: "Workspace Health", icon: IconCheck, value: "All systems operational", tint: "bg-emerald-500/10 text-emerald-600" }, { title: "AI Insights", icon: IconSparkles, value: "3 recommendations ready", tint: "bg-primary/10 text-primary" }].map((item) => <Card key={item.title} className="w-full gap-4 p-5 shadow-none"><span className={`flex size-11 items-center justify-center rounded-xl ${item.tint}`}><item.icon className="size-5" /></span><div><CardTitle className="text-sm">{item.title}</CardTitle><p className="mt-1 text-sm text-muted-foreground">{item.value}</p></div><Button variant="link" className="h-auto self-start p-0">View details <IconArrowRight className="size-4" /></Button></Card>)}</div>
       </ComponentPreview>
-      <CardSelectionExamples />
     </>;
 }
 

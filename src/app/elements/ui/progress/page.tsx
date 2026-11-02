@@ -50,6 +50,6 @@ export default function ProgressPage() {
     <ComponentPreview title="Progress Bar with Outside Label"><OutsideLabels /></ComponentPreview>
     <ComponentPreview title="Progress Bar with Inside Label"><InsideLabels /></ComponentPreview>
     <ComponentPreview title="Progress with Status Labels" className="xl:col-span-2"><StatusProgress /></ComponentPreview>
-    <ComponentPreview title="Meter Thresholds"><div className="w-full max-w-md space-y-5"><Meter label="Storage quota" value={32} low={40} high={80} showValue /><Meter label="API budget" value={92} low={30} high={80} showValue /><Meter label="Completed imports" value={64} low={25} high={85} showValue /></div></ComponentPreview>
+    <ComponentPreview title="Meter Thresholds"><div className="w-full max-w-md space-y-5"><Meter label="Storage quota" value={32} valueLabel="32%" /><Meter label="API budget" value={92} valueLabel="92%" tone="error" /><Meter label="Completed imports" value={64} valueLabel="64%" /></div></ComponentPreview>
   </Showcase>}</ConsoleLayout>;
 }

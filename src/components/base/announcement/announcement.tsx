@@ -2,18 +2,20 @@
 
 import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion, type HTMLMotionProps } from "motion/react";
+import { IconShieldStar } from "@tabler/icons-react";
 import { Button } from "@/components/base/buttons/button";
 import { CloseButton } from "@/components/base/buttons/close-button";
 import { cn } from "@/utils/cn";
 
 export type AnnouncementProps = Omit<HTMLMotionProps<"aside">, "children" | "title"> & {
-  title: string;
-  description?: string;
-  actionLabel?: string;
+  title: ReactNode;
+  description?: ReactNode;
+  actionLabel?: ReactNode;
   onAction?: () => void;
   icon?: ReactNode;
   dismissible?: boolean;
   onDismiss?: () => void;
+  closeLabel?: string;
 };
 
 export function Announcement({
@@ -24,60 +26,52 @@ export function Announcement({
   icon,
   dismissible = false,
   onDismiss,
+  closeLabel = "Dismiss announcement",
   className,
   ...props
 }: AnnouncementProps) {
   const [visible, setVisible] = useState(true);
 
-  function dismiss() {
-    setVisible(false);
-    onDismiss?.();
-  }
-
   return (
-    <AnimatePresence initial={false}>
+    <AnimatePresence initial={false} onExitComplete={onDismiss}>
       {visible && (
         <motion.aside
           {...props}
           aria-label={props["aria-label"] ?? "Announcement"}
-          initial={{ opacity: 0, height: 0, y: 6 }}
-          animate={{ opacity: 1, height: "auto", y: 0 }}
-          exit={{ opacity: 0, height: 0, y: -4 }}
-          transition={{ duration: 0.18, ease: "easeOut" }}
-          className={cn("overflow-hidden", className)}
+          initial={false}
+          exit={{
+            opacity: 0,
+            scale: 0.85,
+            filter: "blur(6px)",
+            transition: { duration: 0.25, ease: "easeInOut" },
+          }}
+          className="overflow-hidden"
         >
-          <div className="relative rounded-xl border bg-card p-4 shadow-sm">
-            {dismissible && (
-              <CloseButton
-                aria-label={`Dismiss ${title}`}
-                onClick={dismiss}
-                className="absolute top-3 right-3 rounded-md"
-              />
-            )}
-            <div className="flex items-start gap-3">
-              {icon && (
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  {icon}
-                </span>
+          <div className={cn("relative flex w-full flex-col items-start gap-3 rounded-xl border border-border bg-card p-3", className)}>
+            <div className="flex w-full flex-col items-start gap-1">
+              {icon === undefined ? (
+                <IconShieldStar aria-hidden="true" className="size-5 shrink-0 text-muted-foreground" />
+              ) : (
+                icon
               )}
-              <div className="min-w-0 flex-1 space-y-1">
-                <h2 className="pr-7 text-sm font-semibold leading-5">{title}</h2>
-                {description && (
-                  <p className="text-xs leading-5 text-muted-foreground">{description}</p>
-                )}
-                {actionLabel && (
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    size="sm"
-                    onClick={onAction}
-                    className="mt-2 w-full"
-                  >
-                    {actionLabel}
-                  </Button>
-                )}
+              <div className="flex w-full flex-col items-start gap-0.5">
+                <p className="w-full text-sm font-medium leading-5 text-foreground">{title}</p>
+                {description && <p className="w-full text-[13px] leading-[18px] text-muted-foreground">{description}</p>}
               </div>
             </div>
+            {dismissible && (
+              <CloseButton
+                size="xs"
+                aria-label={closeLabel}
+                onClick={() => setVisible(false)}
+                className="absolute end-3 top-3"
+              />
+            )}
+            {actionLabel && (
+              <Button type="button" variant="secondary" size="sm" onClick={onAction} className="w-full">
+                {actionLabel}
+              </Button>
+            )}
           </div>
         </motion.aside>
       )}

@@ -18,11 +18,26 @@ const slides = [
   { src: "/images/carousel/carousel-04.png", alt: "Team collaborating around a table" },
 ];
 
-function Gallery({ controls = true, indicators = true }: { controls?: boolean; indicators?: boolean }) {
+function Gallery({
+  controls = true,
+  indicators = true,
+  align = "start",
+  itemClassName,
+  autoPlay = true,
+}: {
+  controls?: boolean;
+  indicators?: boolean;
+  align?: "start" | "center";
+  itemClassName?: string;
+  autoPlay?: boolean;
+}) {
   return <Carousel
       aria-label="Bicycle image gallery"
       showArrows={controls}
       showDots={indicators}
+      align={align}
+      itemClassName={itemClassName}
+      autoPlay={autoPlay}
     >
       {slides.map((slide) => (
         <div key={slide.src} className="relative aspect-[487/297] overflow-hidden rounded-lg">
@@ -53,6 +68,9 @@ export default function CarouselPage() {
       </ComponentPreview>
       <ComponentPreview title="Controls and Indicators">
         <Gallery />
+      </ComponentPreview>
+      <ComponentPreview title="Card Widths and Alignment">
+        <Gallery align="center" itemClassName="w-[78%] sm:w-[58%]" autoPlay={false} />
       </ComponentPreview>
     </Showcase>}</ConsoleLayout>;
 }

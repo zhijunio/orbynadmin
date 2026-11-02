@@ -5,6 +5,7 @@ import { Showcase } from "@/components/application/docs/showcase";
 import Link from "next/link";
 import type { ElementType } from "react";
 import { IconChartBar, IconChevronRight, IconHome, IconShieldLock, IconSlash, IconUserCircle } from "@tabler/icons-react";
+import { Avatar, AvatarFallback } from "@/components/base/avatar/avatar";
 import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/base/breadcrumb/breadcrumb";
 
 function BreadcrumbArrow() {
@@ -66,6 +67,34 @@ function BreadcrumbSlashIcon() {
   return <BreadcrumbListExample divider="slash-icon" />;
 }
 
+function BreadcrumbWithAvatars() {
+  return (
+    <Breadcrumb className="w-full">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild><Link href="/dashboard">Workspace</Link></BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link href="/dashboard" className="inline-flex items-center gap-2">
+              <Avatar size="sm" aria-hidden="true"><AvatarFallback>DT</AvatarFallback></Avatar>
+              Design team
+            </Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage className="inline-flex items-center gap-2">
+            <Avatar size="sm" aria-hidden="true"><AvatarFallback>MC</AvatarFallback></Avatar>
+            Maya Chen
+          </BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+
 export const metadata = { title: "Breadcrumbs" };
 
 export default function BreadcrumbsPage() {
@@ -74,6 +103,7 @@ export default function BreadcrumbsPage() {
       <ComponentPreview title="Breadcrumbs With Arrow Divider"><BreadcrumbArrow /></ComponentPreview>
       <ComponentPreview title="Breadcrumbs With Slash Divider"><BreadcrumbSlash /></ComponentPreview>
       <ComponentPreview title="Breadcrumbs With Slash Icon Divider"><BreadcrumbSlashIcon /></ComponentPreview>
+      <ComponentPreview title="Breadcrumbs With Avatars"><BreadcrumbWithAvatars /></ComponentPreview>
     </Showcase>
   )}</ConsoleLayout>;
 }

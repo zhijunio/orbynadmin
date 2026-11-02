@@ -102,7 +102,7 @@ function TabDemo({
   showTabTitle = false,
 }: {
   tabs: readonly (TabItem & ContentItem)[];
-  variant?: "default" | "line";
+  variant?: "default" | "line" | "pill";
   contentClassName?: string;
   showTabTitle?: boolean;
 }) {
@@ -170,6 +170,9 @@ function LeftSideTabsExample() {
 function TabsExamples() {
   return (
     <>
+      <ComponentPreview title="Pill Tabs">
+        <TabPanel><TabDemo tabs={minimalTabs} variant="pill" /></TabPanel>
+      </ComponentPreview>
       <ComponentPreview title="Regular Tab">
         <TabPanel><TabDemo tabs={regularTabs} showTabTitle /></TabPanel>
       </ComponentPreview>

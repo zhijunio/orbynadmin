@@ -692,7 +692,10 @@
   },
   "Header": {
     "search": "Search…",
+    "commandTitle": "Search commands and pages",
+    "commandDescription": "Navigate to pages or run an action.",
     "commandPlaceholder": "Type a command or search…",
+    "commands": "Commands",
     "noResults": "No results found."
   },
   "Blocks": {

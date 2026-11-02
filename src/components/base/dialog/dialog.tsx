@@ -52,11 +52,15 @@ function DialogContent({
   children,
   showCloseButton = true,
   showOverlay = true,
+  size,
+  closeLabel = "Close dialog",
   overlayClassName,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean
   showOverlay?: boolean
+  size?: "sm" | "md" | "lg" | "xl"
+  closeLabel?: string
   overlayClassName?: string
 }) {
   return (
@@ -64,8 +68,9 @@ function DialogContent({
       {showOverlay && <DialogOverlay className={overlayClassName} />}
       <DialogPrimitive.Content
         data-slot="dialog-content"
+        data-size={size ?? "default"}
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-200 outline-none sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-200 outline-none data-[size=default]:sm:max-w-sm data-[size=sm]:sm:max-w-[400px] data-[size=md]:sm:max-w-[480px] data-[size=lg]:sm:max-w-[640px] data-[size=xl]:sm:max-w-[800px] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           className
         )}
         {...props}
@@ -73,11 +78,57 @@ function DialogContent({
         {children}
         {showCloseButton && (
           <DialogPrimitive.Close data-slot="dialog-close" asChild>
-            <CloseButton aria-label="Close dialog" className="absolute top-2 right-2" />
+            <CloseButton aria-label={closeLabel} className="absolute end-3 top-3" />
           </DialogPrimitive.Close>
         )}
       </DialogPrimitive.Content>
     </DialogPortal>
+  )
+}
+
+function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="dialog-body"
+      className={cn("min-h-0 flex-1 overflow-y-auto", className)}
+      {...props}
+    />
+  )
+}
+
+function Modal({ size = "md", ...props }: React.ComponentProps<typeof DialogContent>) {
+  return <DialogContent size={size} {...props} />
+}
+
+function ModalHeader({
+  title,
+  description,
+  children,
+  className,
+  ...props
+}: React.ComponentProps<"div"> & {
+  title?: React.ReactNode
+  description?: React.ReactNode
+}) {
+  return (
+    <DialogHeader className={className} {...props}>
+      {title && <DialogTitle>{title}</DialogTitle>}
+      {description && <DialogDescription>{description}</DialogDescription>}
+      {children}
+    </DialogHeader>
+  )
+}
+
+function ModalFooter({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="modal-footer"
+      className={cn(
+        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end [&>button]:w-full sm:[&>button]:w-auto",
+        className
+      )}
+      {...props}
+    />
   )
 }
 
@@ -153,6 +204,7 @@ function DialogDescription({
 export {
   Dialog,
   DialogClose,
+  DialogBody,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -161,4 +213,9 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  DialogTrigger as ModalTrigger,
+  Modal,
+  DialogBody as ModalBody,
+  ModalFooter,
+  ModalHeader,
 }

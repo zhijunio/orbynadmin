@@ -7,6 +7,7 @@ import { useId, useState } from "react";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
 import { Showcase } from "@/components/application/docs/showcase";
 import { Checkbox } from "@/components/base/checkbox/checkbox";
+import { CheckboxCard } from "@/components/base/checkbox/checkbox-card";
 import { HintText } from "@/components/base/input/hint-text";
 import { Label } from "@/components/base/input/label";
 
@@ -19,6 +20,7 @@ const preferences = [
 function CheckboxExamples() {
   const id = useId();
   const [selected, setSelected] = useState<string[]>(["security"]);
+  const [includeAuditLog, setIncludeAuditLog] = useState(true);
   const allSelected = selected.length === preferences.length;
   const someSelected = selected.length > 0 && !allSelected;
 
@@ -41,6 +43,21 @@ function CheckboxExamples() {
             <Checkbox defaultChecked aria-label="Receive product updates" />
             <span>Receive product updates</span>
           </label>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Checkbox Card">
+        <div className="grid w-full max-w-xl gap-3">
+          <CheckboxCard
+            checked={includeAuditLog}
+            onCheckedChange={(checked) => setIncludeAuditLog(checked === true)}
+            label="Include audit log"
+            description="Keep an export of changes made to this workspace."
+          />
+          <CheckboxCard
+            label="Notify workspace owners"
+            description="Send a summary when the export is ready."
+          />
         </div>
       </ComponentPreview>
 

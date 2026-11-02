@@ -693,7 +693,10 @@
   },
   "Header": {
     "search": "搜索…",
+    "commandTitle": "搜索命令和页面",
+    "commandDescription": "跳转到页面或执行操作。",
     "commandPlaceholder": "输入命令或搜索…",
+    "commands": "命令",
     "noResults": "没有找到结果。"
   },
   "Blocks": {

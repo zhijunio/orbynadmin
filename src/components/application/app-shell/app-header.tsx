@@ -102,19 +102,21 @@ export function AppHeader() {
 
   function renderNestedNavItems(
     items: NavChild[],
-    parentTitle: string,
+    parentTitles: string[],
     Icon?: NavItem["icon"]
   ): React.ReactNode[] {
     return items.flatMap((item) => {
-      const title = `${parentTitle} ${item.title}`;
       const command: React.ReactNode[] = [];
 
       if (item.url) {
         const url = item.url;
+        const searchValue = [...parentTitles, item.title]
+          .map((label) => navTranslations.has(label) ? navTranslations(label) : label)
+          .join(" ");
         command.push(
           <CommandItem
             key={url}
-            value={title}
+            value={searchValue}
             onSelect={() => go(url)}
           >
             {Icon && <Icon className="size-4" />}
@@ -123,7 +125,7 @@ export function AppHeader() {
         );
       }
 
-      return [...command, ...renderNestedNavItems(item.items ?? [], title, Icon)];
+      return [...command, ...renderNestedNavItems(item.items ?? [], [...parentTitles, item.title], Icon)];
     });
   }
 
@@ -192,22 +194,23 @@ export function AppHeader() {
         <UserMenu />
       </div>
 
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog open={open} onOpenChange={setOpen} title={t("commandTitle")} description={t("commandDescription")}>
         <CommandInput placeholder={t("commandPlaceholder")} />
-        <CommandList>
+        <CommandList aria-label={t("commands")}>
           <CommandEmpty>{t("noResults")}</CommandEmpty>
           {navGroups.map((group) => (
             <CommandGroup key={group.label} heading={navTranslations.has(group.label) ? navTranslations(group.label) : group.label}>
               {group.items.flatMap((item) => {
                 if (item.items?.length) {
-                  return renderNestedNavItems(item.items, item.title, item.icon);
+                  return renderNestedNavItems(item.items, [item.title], item.icon);
                 }
                 if (!item.url) return [];
                 const url = item.url;
+                const label = navTranslations.has(item.title) ? navTranslations(item.title) : item.title;
                 return (
                   <CommandItem
                     key={item.title}
-                    value={item.title}
+                    value={label}
                     onSelect={() => go(url)}
                   >
                     {item.icon && <item.icon className="size-4" />}
