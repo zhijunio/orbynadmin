@@ -129,21 +129,23 @@ src/
     workspace/       # projects, teams, contacts, roles and activity
     apps/            # chat, mail, calendar, tasks and other apps
     account/         # profile, settings, billing, support and authentication
-    elements/        # UI element examples
-    blocks/          # reusable module and page-block examples
+    components/      # component examples at /components/*
+    blocks/           # block examples grouped by product surface
+    templates/        # full-page application templates
     (public)/        # standalone public pages
     layout.tsx       # global providers; locale comes from cookie/browser language
   components/
-    base/            # reusable controls grouped by component family
-    application/     # reusable feature components, dashboards and app shell
-    foundations/     # providers and app-wide infrastructure
+    ui/              # low-level reusable controls
+    custom/          # OrbynAdmin-specific feature components and helpers
+    blocks/          # complete compositions; block modules end in -block.tsx
+    *.tsx            # app-motion-provider.tsx and theme-provider.tsx
   data/               # shared demo datasets
   utils/              # shared formatting, avatar and class-name helpers
   i18n/              # locale routing and request configuration
   messages/          # English and Simplified Chinese translations
 ```
 
-`src/app/` groups routes directly by product function. Non-public pages compose the shared `ConsoleLayout` directly, following the project's page-level `AppShell` pattern; the only Next.js layout file is `src/app/layout.tsx`. Module examples shown in the Blocks navigation live under `src/app/blocks/` and use `/blocks/...` URLs; UI element examples live under `src/app/elements/` and use `/elements/...` URLs. Public pages live under `(public)/` and do not use the console shell. English and Chinese messages are selected from the `NEXT_LOCALE` cookie, with the browser language as the initial fallback. Routes do not include a locale segment. `src/components/base/` contains low-level reusable controls, following the project's base-layer conventions. `src/components/application/` contains reusable product-feature components such as auth cards, dashboards, data tables, charts, maps and app-shell UI; files are grouped by feature and use kebab-case names, following the project's application organization. Showcase helpers and UI example code live under `src/app/elements/` beside their routes. `/blocks` is a route group; there is no blocks or docs directory under `src/components/application`. `src/components/foundations/` contains providers and app-wide infrastructure. Shared navigation lives in `components/application/app-shell/nav-config.ts`, and theme presets and persisted theme state live together in `components/application/theme/`. Keep page-specific content, demo data, translations, route links, and scenario state with the relevant route. Keep `page.tsx` focused on composing base controls and Application components. `utils/` is for reusable stateless helpers, while `data/` holds shared demo datasets.
+`src/app/` exposes three catalogs: `/components/*` for individual component examples, `/blocks/*` for composed UI grouped by product surface, and `/templates/*` for full-page application templates. Components examples are directly under `src/app/components/`, with chart examples under `src/app/components/charts/`. Blocks routes are grouped under `application/`, `data-grid/`, `charts-card/`, and `marketing/`; old example URLs are not retained. Public pages live under `(public)/` and do not use the console shell. English and Chinese messages are selected from the `NEXT_LOCALE` cookie, with the browser language as the initial fallback. Routes do not include a locale segment. `src/components/ui/` contains low-level reusable controls, `src/components/custom/` contains OrbynAdmin feature components grouped by feature, and `src/components/blocks/` contains complete compositions with `-block.tsx` filenames. App-wide providers live directly under `src/components/`. Shared navigation lives in `components/custom/app-shell/nav-config.ts`, and theme presets and persisted theme state live together in `components/custom/theme/`. Keep page-specific content, demo data, translations, route links, and scenario state with the relevant route. Keep `page.tsx` focused on composing UI, custom, and block modules. `utils/` is for reusable stateless helpers, while `data/` holds shared demo datasets.
 
 All data is mock data. Replace the datasets under `src/data/` (and the inline datasets on a few pages) with your own API.
 

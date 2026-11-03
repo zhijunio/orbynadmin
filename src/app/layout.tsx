@@ -2,18 +2,17 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import "@/styles/globals.css";
-import { ThemeProvider } from "@/components/foundations/providers/theme-provider";
-import { ThemeConfigProvider } from "@/components/application/theme/theme-customizer";
-import { AppMotionProvider } from "@/components/foundations/providers/app-motion-provider";
-import { Toaster } from "@/components/base/notification/sonner";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeConfigProvider } from "@/components/custom/theme/theme-customizer";
+import { AppMotionProvider } from "@/components/app-motion-provider";
+import { Toaster } from "@/components/ui/notification/sonner";
 
 export const metadata: Metadata = {
   title: {
     default: "OrbynAdmin",
     template: "%s · OrbynAdmin",
   },
-  description:
-    "An enterprise admin dashboard starter for managing teams, access, integrations and operations.",
+  description: "A component library and interface framework.",
 };
 
 export default async function RootLayout({

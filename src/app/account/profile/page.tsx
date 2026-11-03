@@ -1,18 +1,17 @@
 "use client";
 
-import ConsoleLayout from "@/components/application/app-shell/console-layout";
+import ConsoleLayout from "@/components/custom/app-shell/console-layout";
 
 import { useState } from "react";
-import Link from "next/link";
-import { IconArrowUpRight, IconBuilding, IconMail, IconMapPin, IconShieldCheck, IconUser } from "@tabler/icons-react";
+import { IconBuilding, IconMail, IconMapPin, IconShieldCheck, IconUser } from "@tabler/icons-react";
 
-import { CompactPageHeader as PageHeader } from "@/components/application/app-shell/page-header";
+import { CompactPageHeader as PageHeader } from "@/components/custom/app-shell/page-header";
 import { ProfileActions } from "@/app/account/profile/profile-actions";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
-import { Badge } from "@/components/base/badges/badge";
-import { Button } from "@/components/base/buttons/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/base/card/card";
-import { Separator } from "@/components/base/divider/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar/avatar";
+import { Badge } from "@/components/ui/badges/badge";
+import { Button } from "@/components/ui/buttons/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card/card";
+import { Separator } from "@/components/ui/divider/separator";
 import { currentUser, team } from "@/data";
 
 const account = team.find((member) => member.name === currentUser.name);
@@ -85,12 +84,6 @@ export default function ProfilePage() {
                 <p className="mt-1 text-sm text-muted-foreground">Your role and team details are managed by your organization.</p>
               </div>
             </div>
-            <Button variant="outline" className="w-full justify-between" asChild>
-              <Link href="/account/settings">
-                Open account settings
-                <IconArrowUpRight className="size-4" aria-hidden="true" />
-              </Link>
-            </Button>
           </CardContent>
         </Card>
       </div>

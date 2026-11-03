@@ -1,0 +1,124 @@
+"use client";
+
+import Link from "next/link";
+import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
+import {
+  IconDotsVertical,
+  IconUserCircle,
+  IconAdjustmentsHorizontal,
+  IconSun,
+  IconMoon,
+} from "@tabler/icons-react";
+
+import { currentUser } from "@/data";
+import { useThemeConfig } from "@/components/custom/theme/theme-customizer";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar/avatar";
+import { Badge } from "@/components/ui/badges/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown/dropdown-menu";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar/sidebar";
+
+export function NavUser({ iconOnly = false }: { iconOnly?: boolean } = {}) {
+  const { isMobile, state } = useSidebar();
+  const compact = iconOnly && state === "collapsed";
+  const { resolvedTheme, setTheme } = useTheme();
+  const { setOpen } = useThemeConfig();
+  const t = useTranslations("UserMenu");
+
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
+              <Avatar className="size-8 rounded-lg">
+                <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
+                <AvatarFallback className="rounded-lg">AM</AvatarFallback>
+              </Avatar>
+              {!compact && <div className="grid flex-1 text-left leading-tight">
+                <span className="truncate text-sm font-medium">
+                  {currentUser.name}
+                </span>
+                <span className="truncate text-xs text-muted-foreground">
+                  {currentUser.email}
+                </span>
+              </div>}
+              {!compact && <IconDotsVertical className="ml-auto size-4 text-muted-foreground" />}
+            </SidebarMenuButton>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-60 rounded-lg"
+            side={isMobile ? "bottom" : "right"}
+            align="end"
+            sideOffset={4}
+          >
+            <DropdownMenuLabel className="p-0 font-normal">
+              <div className="flex items-center gap-2 px-1 py-1.5">
+                <Avatar className="size-8 rounded-lg">
+                  <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
+                  <AvatarFallback className="rounded-lg">AM</AvatarFallback>
+                </Avatar>
+                <div className="grid flex-1 leading-tight">
+                  <span className="truncate text-sm font-medium">
+                    {currentUser.name}
+                  </span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    {currentUser.email}
+                  </span>
+                </div>
+                <Badge
+                  variant="secondary"
+                  className="bg-emerald-500/10 text-[10px] text-emerald-600 dark:text-emerald-400"
+                >
+                  {t("planFree")}
+                </Badge>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild>
+                <Link href="/account/profile">
+                  <IconUserCircle className="size-4" /> {t("account")}
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <button type="button" onClick={() => setOpen(true)}>
+                  <IconAdjustmentsHorizontal className="size-4" /> {t("settings")}
+                </button>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() =>
+                setTheme(resolvedTheme === "dark" ? "light" : "dark")
+              }
+            >
+              {resolvedTheme === "dark" ? (
+                <IconSun className="size-4" />
+              ) : (
+                <IconMoon className="size-4" />
+              )}
+              {t("toggleTheme")}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  );
+}

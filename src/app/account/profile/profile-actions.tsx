@@ -4,9 +4,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { IconDeviceFloppy, IconEdit } from "@tabler/icons-react";
 
-import { Button } from "@/components/base/buttons/button";
-import { Input } from "@/components/base/input/input";
-import { Label } from "@/components/base/input/label";
+import { Button } from "@/components/ui/buttons/button";
+import { Input } from "@/components/ui/input/input";
+import { Label } from "@/components/ui/input/label";
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/base/dialog/dialog";
+} from "@/components/ui/dialog/dialog";
 
 type ProfileActionsProps = {
   name: string;
