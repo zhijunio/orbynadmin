@@ -1,6 +1,6 @@
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { Chip, type ChipColor, type ChipVariant } from "@/components/base/badges/chip";
 import { StatusDot, type StatusDotColor } from "@/components/base/badges/status-dot";
 
@@ -21,8 +21,8 @@ const statuses: { color: StatusDotColor; label: string }[] = [
 export default function ChipPage() {
   return (
     <ConsoleLayout>
-      <Showcase title="Chip" columns={1}>
-        <ComponentPreview title="Variants & colors">
+      <div className="min-w-0 space-y-5"><PageHeader title="Chip" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
+        <ComponentPreview title="Chip Variants and Colors">
           <div className="grid w-full gap-3">
             {variants.map(({ variant, label, sample }) => (
               <div key={variant} className="grid gap-2 sm:grid-cols-[5rem_minmax(0,1fr)] sm:items-center">
@@ -37,7 +37,7 @@ export default function ChipPage() {
           </div>
         </ComponentPreview>
 
-        <ComponentPreview title="StatusDot">
+        <ComponentPreview title="Status Indicators">
           <div role="group" aria-label="Status indicators" className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
             {statuses.map(({ color, label }) => (
               <span key={color} className="inline-flex items-center gap-2">
@@ -47,7 +47,7 @@ export default function ChipPage() {
             ))}
           </div>
         </ComponentPreview>
-      </Showcase>
+      </div></div>
     </ConsoleLayout>
   );
 }

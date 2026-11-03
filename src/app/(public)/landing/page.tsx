@@ -1,3 +1,4 @@
+import { demoAvatarUrl } from "@/utils/demo-avatar";
 import type { Metadata } from "next";
 
 
@@ -113,21 +114,21 @@ const testimonials = [
       "We replaced our entire internal admin with OrbynAdmin in a weekend. The code is clean enough that our whole team was productive on day one.",
     name: "Sofia Rossi",
     role: "Head of Growth, Northwind",
-    avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=32",
+    avatar: demoAvatarUrl("Sofia Rossi"),
   },
   {
     quote:
       "Genuinely the best free template I've come across. The dark mode is flawless and the components are a joy to extend.",
     name: "Alex Morgan",
     role: "Staff Engineer, Vertex Labs",
-    avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=8",
+    avatar: demoAvatarUrl("Alex Morgan"),
   },
   {
     quote:
       "MIT licensed and this polished? I kept waiting for the catch. There isn't one. We shipped our dashboard two sprints early.",
     name: "Hannah Kim",
     role: "Product Lead, Lumen",
-    avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=47",
+    avatar: demoAvatarUrl("Hannah Kim"),
   },
 ];
 

@@ -2,7 +2,7 @@
 
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import type { ReactNode } from "react";
 import { IconChartPie, IconBell, IconFileText, IconHome, IconHistory, IconMessageCircle, IconShieldLock, IconSettings, IconUserCircle } from "@tabler/icons-react";
@@ -110,11 +110,13 @@ function TabDemo({
     <Tabs defaultValue={tabs[0].value} className="w-full">
       <TabsList variant={variant} className={variant === "line"
         ? "mx-6 mt-4 h-12 w-[calc(100%-3rem)] justify-start gap-4 border-b"
-        : "mx-4 mt-4 h-11 w-[calc(100%-2rem)]"}>
+        : variant === "default"
+          ? "mx-4 mt-4 h-11 w-fit max-w-[calc(100%-2rem)]"
+          : "mx-4 mt-4 h-11 w-[calc(100%-2rem)]"}>
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return (
-            <TabsTrigger key={tab.value} value={tab.value} className={variant === "line" ? "flex-none gap-2 px-3" : "h-9 flex-1 gap-2 px-3"}>
+            <TabsTrigger key={tab.value} value={tab.value} className={variant === "line" ? "flex-none gap-2 px-3" : variant === "default" ? "h-9 flex-none gap-2 px-4" : "h-9 flex-1 gap-2 px-3"}>
               {Icon && <Icon className="size-4" />}
               {tab.label}
               {tab.badge && <Badge variant="secondary" className="h-5 min-w-5 rounded-full bg-primary/10 px-1.5 text-[10px] leading-none text-primary">{tab.badge}</Badge>}
@@ -170,14 +172,20 @@ function LeftSideTabsExample() {
 function TabsExamples() {
   return (
     <>
-      <ComponentPreview title="Pill Tabs">
-        <TabPanel><TabDemo tabs={minimalTabs} variant="pill" /></TabPanel>
-      </ComponentPreview>
-      <ComponentPreview title="Regular Tab">
+      <ComponentPreview title="Default Tab">
         <TabPanel><TabDemo tabs={regularTabs} showTabTitle /></TabPanel>
       </ComponentPreview>
-      <ComponentPreview title="Minimal Tab">
+      <ComponentPreview title="Tab With Underline">
         <TabPanel><TabDemo tabs={minimalTabs} variant="line" /></TabPanel>
+      </ComponentPreview>
+      <ComponentPreview title="Tab with Line and Icon">
+        <TabPanel><TabDemo tabs={iconMinimalTabs} variant="line" /></TabPanel>
+      </ComponentPreview>
+      <ComponentPreview title="Tab with Badge">
+        <TabPanel><TabDemo tabs={badgeSegmentedTabs} /></TabPanel>
+      </ComponentPreview>
+      <ComponentPreview title="Pill Tabs">
+        <TabPanel><TabDemo tabs={minimalTabs} variant="pill" /></TabPanel>
       </ComponentPreview>
       <ComponentPreview title="Tabs with Icon" className="xl:col-span-2">
         <div className="flex w-full flex-wrap items-start gap-5">
@@ -185,7 +193,7 @@ function TabsExamples() {
           <TabPanel className="max-w-[32rem]"><TabDemo tabs={iconMinimalTabs} variant="line" /></TabPanel>
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Tabs with Badge" className="xl:col-span-2">
+      <ComponentPreview title="Minimal Tabs with Badge" className="xl:col-span-2">
         <div className="flex w-full flex-wrap items-start gap-5">
           <TabPanel className="max-w-[36rem]"><TabDemo tabs={badgeSegmentedTabs} /></TabPanel>
           <TabPanel className="max-w-[32rem]"><TabDemo tabs={badgeMinimalTabs} variant="line" /></TabPanel>
@@ -199,8 +207,8 @@ function TabsExamples() {
 
 export default function TabsPage() {
   return <ConsoleLayout>{(
-    <Showcase title="Tabs">
+    <div className="min-w-0 space-y-5"><PageHeader title="Tabs" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <TabsExamples />
-    </Showcase>
+    </div></div>
   )}</ConsoleLayout>;
 }

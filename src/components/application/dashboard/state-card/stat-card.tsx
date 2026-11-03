@@ -18,7 +18,7 @@ export function StatCard({ stat, className }: { stat: StatCardData; className?: 
   const Icon = stat.icon;
 
   return (
-    <Card className={cn("h-[132px] rounded-2xl border-0 bg-muted/45 p-4 ring-0", className)}>
+    <Card className={cn("h-28 rounded-2xl border-0 bg-muted/45 p-4 ring-0", className)}>
       <CardContent className="flex h-full items-center gap-3 p-0">
         {Icon && (
           <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -47,8 +47,8 @@ export function StatCardChange({ stat }: { stat: StatCardData }) {
       className={cn(
         "inline-flex shrink-0 items-center gap-0.5 text-xs font-medium tabular-nums",
         favorable
-          ? "text-emerald-600 dark:text-emerald-400"
-          : "text-rose-600 dark:text-rose-400"
+          ? "text-emerald-700 dark:text-emerald-400"
+          : "text-rose-700 dark:text-rose-400"
       )}
     >
       {stat.trend === "up" ? (
@@ -56,7 +56,7 @@ export function StatCardChange({ stat }: { stat: StatCardData }) {
       ) : (
         <IconTrendingDown aria-hidden="true" className="size-3.5" />
       )}
-      {stat.change}%
+      {stat.change > 0 ? "+" : ""}{stat.change}%
     </span>
   );
 }

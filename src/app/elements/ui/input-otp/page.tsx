@@ -4,14 +4,14 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
 import { useState } from "react";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { InputOtp } from "@/components/base/input-otp/input-otp";
 
 function InputOtpExamples() {
   const [code, setCode] = useState("");
 
   return <>
-      <ComponentPreview title="Default">
+      <ComponentPreview title="Six-Digit Verification Code">
         <InputOtp aria-label="Six-digit verification code" />
       </ComponentPreview>
 
@@ -41,31 +41,18 @@ function InputOtpExamples() {
         />
       </ComponentPreview>
 
-      <ComponentPreview title="Invalid and Disabled">
-        <div className="grid w-full gap-5 sm:grid-cols-2">
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Invalid</p>
-            <InputOtp
-              defaultValue="12"
-              isInvalid
-              aria-label="Invalid verification code"
-            />
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Disabled</p>
-            <InputOtp
-              defaultValue="123456"
-              disabled
-              aria-label="Disabled verification code"
-            />
-          </div>
-        </div>
+      <ComponentPreview title="Invalid Code">
+        <InputOtp defaultValue="12" isInvalid aria-label="Invalid verification code" />
+      </ComponentPreview>
+
+      <ComponentPreview title="Disabled Input">
+        <InputOtp defaultValue="123456" disabled aria-label="Disabled verification code" />
       </ComponentPreview>
     </>;
 }
 
 export default function InputOtpPage() {
-  return <ConsoleLayout>{<Showcase title="Input OTP">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Input OTP" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <InputOtpExamples />
-    </Showcase>}</ConsoleLayout>;
+    </div></div>}</ConsoleLayout>;
 }

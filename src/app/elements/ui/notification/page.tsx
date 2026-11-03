@@ -1,43 +1,72 @@
 "use client";
 
+import { useState } from "react";
+import { AnimatePresence } from "motion/react";
+
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
-
-import { Showcase } from "@/components/application/docs/showcase";
-
-import { IconCheck as IconCheck, IconInfoCircle as IconInfoCircle, IconX as IconX } from "@tabler/icons-react";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/base/avatar/avatar";
 import { Button } from "@/components/base/buttons/button";
+import { Notification, NotificationViewport, type NotificationStatus } from "@/components/base/notification/notification";
 import { demoAvatarUrl } from "@/utils/demo-avatar";
-import { getInitials } from "@/utils/text";
-import { toast } from "sonner";
+
+type DemoNotification = { id: number; status: NotificationStatus | "avatar" | "actions" };
+const notificationStatuses = [
+  { status: "success", label: "Success", title: "Success! Action completed!", description: "Your workspace settings have been saved." },
+  { status: "information", label: "Info", title: "Heads up! New information", description: "A new version is ready to install." },
+  { status: "warning", label: "Warning", title: "Double check required", description: "Your workspace is using 90% of its storage." },
+  { status: "error", label: "Error", title: "Something went wrong", description: "The file could not be uploaded. Try again." },
+] as const;
 
 function NotificationsExample() {
-  return <>
-      <ComponentPreview title="Toast Feedback" className="xl:col-span-2"><div className="flex flex-wrap gap-2"><Button variant="outline" onClick={() => toast.success("Changes saved", { description: "Your workspace settings are up to date." })}>Success</Button><Button variant="outline" onClick={() => toast.info("Export started", { description: "We will notify you when the file is ready." })}>Info</Button><Button variant="outline" onClick={() => toast.error("Could not save changes", { description: "Check your connection and try again." })}>Error</Button><Button variant="outline" onClick={() => { const id = toast.loading("Processing request..."); window.setTimeout(() => toast.dismiss(id), 1800); }}>Loading</Button></div></ComponentPreview>
-      <ComponentPreview title="Notifications Style 1">
-        <div className="flex w-full items-start gap-3 rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4"><IconCheck className="mt-0.5 size-5 shrink-0 text-emerald-600" /><div className="min-w-0 flex-1"><p className="font-medium">Congratulations</p><p className="mt-1 text-sm text-muted-foreground">Your message sent successfully</p></div><Button variant="ghost" size="icon" className="-mr-2 -mt-2 shrink-0" aria-label="Dismiss notification"><IconX /></Button></div>
+  const [active, setActive] = useState<DemoNotification[]>([]);
+  const show = (status: DemoNotification["status"]) => setActive((current) => [...current, { id: Date.now() + Math.random(), status }]);
+  const dismiss = (id: number) => setActive((current) => current.filter((notification) => notification.id !== id));
+
+  return (
+    <>
+      <ComponentPreview title="Release Announcement Banner">
+        <div className="flex w-full flex-wrap items-center justify-between gap-4 rounded-xl border bg-muted/40 p-4">
+          <div><p className="text-sm font-semibold">New update available</p><p className="mt-1 text-sm text-muted-foreground">Enjoy improved functionality and enhancements.</p></div>
+          <div className="flex gap-2"><Button variant="outline" size="sm">Later</Button><Button size="sm">Update now</Button></div>
+        </div>
       </ComponentPreview>
-      <ComponentPreview title="Notifications Style 2">
-        <div className="flex w-full items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/5 p-4"><IconX className="mt-0.5 size-5 shrink-0 text-destructive" /><div className="min-w-0 flex-1"><p className="font-medium">Uh oh, something went wrong</p><p className="mt-1 text-sm text-muted-foreground">Sorry! There was a problem with your request</p></div><Button variant="ghost" size="icon" className="-mr-2 -mt-2 shrink-0" aria-label="Dismiss notification"><IconX /></Button></div>
+      <ComponentPreview title="Cookie Consent Notice">
+        <div className="w-full rounded-xl border bg-card p-4 shadow-sm">
+          <p className="text-sm leading-5 text-muted-foreground">By clicking Accept, you agree to the storing of cookies on your device to enhance navigation and analyze site usage.</p>
+          <div className="mt-4 flex flex-wrap justify-end gap-2"><Button variant="outline" size="sm">Cookie settings</Button><Button variant="outline" size="sm">Deny all</Button><Button size="sm">Accept all</Button></div>
+        </div>
       </ComponentPreview>
-      <ComponentPreview title="Notifications Style 3" className="lg:col-span-2">
-        <div className="flex w-full items-start gap-3 rounded-lg border bg-card p-4"><IconInfoCircle className="mt-0.5 size-5 shrink-0 text-primary" /><div className="min-w-0 flex-1"><p className="font-medium">New update available!</p><p className="mt-1 text-sm text-muted-foreground">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec ligula at dolor aliquam mollis.</p></div><div className="flex shrink-0 items-center gap-1"><Button size="sm">Update now</Button><Button variant="ghost" size="icon" aria-label="Dismiss notification"><IconX /></Button></div></div>
+      {notificationStatuses.map((item) => <ComponentPreview key={item.status} title={`${item.label} Notification`}><Notification status={item.status} title={item.title} description={item.description} /></ComponentPreview>)}
+      <ComponentPreview title="Avatar and actions">
+        <div className="grid w-full gap-3">
+          <Notification avatar={{ src: demoAvatarUrl("Livia Saris"), alt: "Livia Saris", presence: "busy" }} title="Livia Saris" timestamp="just now" description="Mentioned you in the launch checklist." actions={[{ label: "Reply", variant: "secondary", onClick: () => show("information") }, { label: "View thread", variant: "primary", onClick: () => show("success") }]} />
+          <Notification status="information" title="Backup ready" description="Your latest workspace backup is ready to download." actions={[{ label: "Not now", variant: "secondary", onClick: () => undefined }, { label: "Download", variant: "primary", onClick: () => show("success") }]} />
+        </div>
       </ComponentPreview>
-      <ComponentPreview title="Notifications Style 4" className="lg:col-span-2">
-        <div className="w-full divide-y rounded-lg border">{notifications.map((item) => <div key={item.name} className="flex items-center gap-3 p-4"><Avatar><AvatarImage src={item.avatar} alt={item.name} /><AvatarFallback>{getInitials(item.name)}</AvatarFallback></Avatar><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-x-2"><p className="text-sm font-medium">{item.name}</p><span className="text-xs text-muted-foreground">{item.age}</span></div><p className="truncate text-sm text-muted-foreground">{item.message}</p></div><time className="shrink-0 text-xs text-muted-foreground">{item.date}</time></div>)}</div>
+      <ComponentPreview title="Timed notifications">
+        <div className="flex flex-wrap gap-2">
+          {(["information", "success", "warning", "error", "avatar", "actions"] as const).map((status) => (
+            <Button key={status} variant="outline" onClick={() => show(status)}>{status === "avatar" ? "With avatar" : status === "actions" ? "With actions" : status}</Button>
+          ))}
+        </div>
+        <NotificationViewport position="bottom-right">
+          <AnimatePresence initial={false}>
+            {active.map((notification, index) => {
+              const dismissSelf = () => dismiss(notification.id);
+              const common = { onDismiss: dismissSelf, autoDismissDuration: 5000, introDelay: index * 80 };
+              if (notification.status === "avatar") return <Notification key={notification.id} {...common} avatar={{ src: demoAvatarUrl("Livia Saris"), alt: "Livia Saris", presence: "online" }} title="Livia Saris" timestamp="just now" description="Mentioned you in the launch checklist." />;
+              if (notification.status === "actions") return <Notification key={notification.id} {...common} status="information" title="Backup ready" description="Your latest workspace backup is ready to download." actions={[{ label: "Not now", variant: "secondary", onClick: dismissSelf }, { label: "Download", variant: "primary", onClick: dismissSelf }]} />;
+              const copy = notificationStatuses.find((item) => item.status === notification.status)!;
+              return <Notification key={notification.id} {...common} status={notification.status} title={copy.title} description={copy.description} />;
+            })}
+          </AnimatePresence>
+        </NotificationViewport>
       </ComponentPreview>
-    </>;
+    </>
+  );
 }
 
-const notifications = [
-  { name: "Dwayne Bero", avatar: demoAvatarUrl("Dwayne Bero"), message: "Project assigned by the manager", age: "3 months ago", date: "24, Nov 2027" },
-  { name: "Talan Curtis", avatar: demoAvatarUrl("Talan Curtis"), message: "Approved date for sanction of loan is verified", age: "3 months ago", date: "24, Nov 2027" },
-  { name: "Talan Rhiel Madsen", avatar: demoAvatarUrl("Talan Rhiel Madsen"), message: "Admin and other team accepted your work request", age: "3 months ago", date: "12, Jan 2027" },
-  { name: "Charlie Botosh", avatar: demoAvatarUrl("Charlie Botosh"), message: "Temporarily your account has been suspended", age: "a year ago", date: "09, Dec 2026" },
-  { name: "Jordyn Torff", avatar: demoAvatarUrl("Jordyn Torff"), message: "You have changed your password successfully", age: "a year ago", date: "30, Mar 2026" },
-];
-
 export default function NotificationsPage() {
-  return <ConsoleLayout>{<Showcase title="Notifications"><NotificationsExample /></Showcase>}</ConsoleLayout>;
+  return <ConsoleLayout><div className="min-w-0 space-y-5"><PageHeader title="Notifications" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><NotificationsExample /></div></div></ConsoleLayout>;
 }

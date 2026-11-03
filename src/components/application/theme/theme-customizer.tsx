@@ -29,7 +29,6 @@ import { Separator } from "@/components/base/divider/separator";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/base/sheet/sheet";
@@ -178,9 +177,6 @@ export function ThemeCustomizer() {
       <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-sm">
         <SheetHeader className="shrink-0 border-b">
           <SheetTitle>{t("title")}</SheetTitle>
-          <SheetDescription>
-            {t("description")}
-          </SheetDescription>
         </SheetHeader>
 
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">

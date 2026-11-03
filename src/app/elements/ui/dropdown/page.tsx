@@ -2,7 +2,7 @@
 
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import { useState } from "react";
 import { IconArchive as Archive, IconChevronDown as ChevronDown, IconCopy as Copy, IconCreditCard as CreditCard, IconDownload as Download, IconDots as Ellipsis, IconEye as Eye, IconFolderPlus as FolderPlus, IconLogout as LogOut, IconPencil as Pencil, IconSettings as Settings, IconShare2 as Share2, IconTrash as Trash2, IconUser as UserRound } from "@tabler/icons-react";
@@ -28,6 +28,32 @@ import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator,
 
 const menuContentClass = "min-w-40 rounded-xl border border-border bg-popover p-1.5 shadow-md ring-0";
 const menuItemClass = "gap-3 rounded-md px-1.5 py-1 text-sm text-foreground";
+
+function AccountDropdown() {
+  return <DropdownMenu>
+    <DropdownMenuTrigger asChild><Button variant="outline">Account Menu <ChevronDown aria-hidden="true" className="size-4" /></Button></DropdownMenuTrigger>
+    <DropdownMenuContent align="start" className={menuContentClass}>
+      <DropdownMenuItem>View profile</DropdownMenuItem>
+      <DropdownMenuItem>Account settings</DropdownMenuItem>
+      <DropdownMenuItem>Billing</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem>Sign out</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>;
+}
+
+function DividerOnlyDropdown() {
+  return <DropdownMenu>
+    <DropdownMenuTrigger asChild><Button variant="outline">Options <ChevronDown aria-hidden="true" className="size-4" /></Button></DropdownMenuTrigger>
+    <DropdownMenuContent align="start" className={menuContentClass}>
+      <DropdownMenuItem>New project</DropdownMenuItem>
+      <DropdownMenuItem>Import project</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem>Share</DropdownMenuItem>
+      <DropdownMenuItem>Archive</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>;
+}
 
 function BasicDropdown() {
   return <DropdownMenu>
@@ -91,7 +117,7 @@ function ProfileDropdown() {
   return <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="group mx-auto h-auto gap-2.5 rounded-lg border-0 px-2 py-2 hover:bg-muted">
-          <Avatar size="default" className="rounded-lg">
+          <Avatar size="sm" className="rounded-lg">
             <AvatarImage src={demoAvatarUrl("John Smith")} alt="John Smith" className="rounded-lg" />
             <AvatarFallback className="rounded-lg">JS</AvatarFallback>
           </Avatar>
@@ -101,7 +127,7 @@ function ProfileDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-[280px] overflow-hidden rounded-xl border border-border bg-popover p-0 shadow-xl ring-0">
         <header className="flex items-center gap-2 border-b px-4 py-3">
-          <Avatar size="default" className="size-10">
+          <Avatar size="sm" className="size-10">
             <AvatarImage src={demoAvatarUrl("John Smith")} alt="John Smith" />
             <AvatarFallback>JS</AvatarFallback>
           </Avatar>
@@ -141,9 +167,11 @@ function NestedDropdown() {
 
 function DropdownsExample() {
   return <>
-      <ComponentPreview title="Basic Dropdown"><div className="flex w-full justify-center"><BasicDropdown /></div></ComponentPreview>
+      <ComponentPreview title="Default Dropdown"><div className="flex w-full justify-center"><AccountDropdown /></div></ComponentPreview>
+      <ComponentPreview title="Dropdown With Divider"><div className="flex w-full justify-center"><DividerOnlyDropdown /></div></ComponentPreview>
+      <ComponentPreview title="Dropdown With Icon"><div className="flex w-full justify-center"><BasicDropdown /></div></ComponentPreview>
+      <ComponentPreview title="Dropdown With Icon and Divider"><div className="flex w-full justify-center"><DividerDropdown /></div></ComponentPreview>
       <ComponentPreview title="Radio Selection"><div className="flex w-full justify-center"><CheckableDropdown /></div></ComponentPreview>
-      <ComponentPreview title="Divider"><div className="flex w-full justify-center"><DividerDropdown /></div></ComponentPreview>
       <ComponentPreview title="Profile Dropdown"><div className="flex w-full justify-center"><ProfileDropdown /></div></ComponentPreview>
       <ComponentPreview title="Nested Menu" className="xl:col-span-2"><div className="flex w-full justify-center"><NestedDropdown /></div></ComponentPreview>
       <ComponentPreview title="Context Menu"><ContextMenu><ContextMenuTrigger asChild><button type="button" className="flex h-32 w-full items-center justify-center rounded-lg border border-dashed bg-muted/30 text-sm text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Right-click or press the context menu key</button></ContextMenuTrigger><ContextMenuContent><ContextMenuItem>Open</ContextMenuItem><ContextMenuItem>Rename</ContextMenuItem><ContextMenuSeparator /><ContextMenuItem variant="destructive">Delete</ContextMenuItem></ContextMenuContent></ContextMenu></ComponentPreview>
@@ -151,5 +179,5 @@ function DropdownsExample() {
 }
 
 export default function DropdownsPage() {
-  return <ConsoleLayout>{<Showcase title="Dropdowns"><DropdownsExample /></Showcase>}</ConsoleLayout>;
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Dropdowns" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><DropdownsExample /></div></div>}</ConsoleLayout>;
 }

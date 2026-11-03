@@ -4,7 +4,7 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
 import { useState } from "react";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { ColorPicker, ColorWell } from "@/components/base/color-picker/color-picker";
 
 const palette = ["#2563eb", "#7c3aed", "#059669", "#d97706", "#dc2626"];
@@ -19,11 +19,11 @@ export default function ColorPickerPage() {
     setHexValue(next);
   };
 
-  return <ConsoleLayout>{<Showcase title="Color Picker">
-      <ComponentPreview title="Default">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Color Picker" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+      <ComponentPreview title="Default Color Picker">
         <ColorPicker aria-label="Choose a color" />
       </ComponentPreview>
-      <ComponentPreview title="Controlled Value">
+      <ComponentPreview title="Controlled Value and Presets">
         <div className="space-y-3">
           <ColorPicker aria-label="Choose brand color" value={color} onValueChange={updateColor} />
           <div className="flex flex-wrap gap-2" aria-label="Color presets">
@@ -34,7 +34,7 @@ export default function ColorPickerPage() {
           <div className="h-12 w-full max-w-xs rounded-lg border" style={{ backgroundColor: color }} />
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Hex Input">
+      <ComponentPreview title="HEX Input and Validation">
         <div className="w-full max-w-xs space-y-2">
           <label htmlFor="brand-color-hex" className="text-sm font-medium">Hex color</label>
           <div className="flex items-center gap-3">
@@ -44,10 +44,10 @@ export default function ColorPickerPage() {
           <p className="text-xs text-muted-foreground">Enter a six-digit HEX value, such as #2563EB.</p>
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Color well">
+      <ComponentPreview title="Color Well with Swatches">
         <ColorWell label="Project color" value={color} onValueChange={updateColor} swatches={palette} />
       </ComponentPreview>
-      <ComponentPreview title="Opacity preview">
+      <ComponentPreview title="Opacity Preview">
         <div className="w-full max-w-xs space-y-3">
           <ColorPicker aria-label="Choose overlay color" value={color} onValueChange={updateColor} />
           <label htmlFor="color-opacity" className="flex items-center justify-between text-sm font-medium">
@@ -59,9 +59,11 @@ export default function ColorPickerPage() {
           </div>
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Disabled">
+      <ComponentPreview title="Disabled Color Picker">
         <ColorPicker aria-label="Locked brand color" value="#64748b" disabled />
+      </ComponentPreview>
+      <ComponentPreview title="Disabled Color Well">
         <ColorWell label="Locked color" value="#64748b" disabled />
       </ComponentPreview>
-    </Showcase>}</ConsoleLayout>;
+    </div></div>}</ConsoleLayout>;
 }

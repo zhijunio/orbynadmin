@@ -1,10 +1,10 @@
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import Link from "next/link";
 import type { ElementType } from "react";
-import { IconChartBar, IconChevronRight, IconHome, IconShieldLock, IconSlash, IconUserCircle } from "@tabler/icons-react";
+import { IconChevronRight, IconComponents, IconHome, IconSlash, IconUserCircle } from "@tabler/icons-react";
 import { Avatar, AvatarFallback } from "@/components/base/avatar/avatar";
 import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/base/breadcrumb/breadcrumb";
 
@@ -13,15 +13,14 @@ function BreadcrumbArrow() {
 }
 
 const icons: Record<BreadcrumbIconName, ElementType> = {
-  dashboard: IconHome,
-  analytics: IconChartBar,
-  profile: IconUserCircle,
-  security: IconShieldLock,
+  home: IconHome,
+  kits: IconComponents,
+  avatar: IconUserCircle,
 };
 
 type Divider = "arrow" | "slash" | "slash-icon";
-function BreadcrumbListExample({ divider }: { divider: Divider }) {
-  const rows = divider === "slash-icon" ? breadcrumbIconExamples : breadcrumbExamples;
+function BreadcrumbListExample({ divider, examples }: { divider: Divider; examples?: BreadcrumbExampleItem[][] }) {
+  const rows = examples ?? (divider === "slash-icon" ? breadcrumbIconExamples : breadcrumbExamples);
   return <div className="flex w-full flex-col gap-5">{rows.map((items, row) => <Breadcrumb key={row}><BreadcrumbList>{items.map((item, index) => {
     if ("ellipsis" in item) {
       return <span key={`${item.label}-${index}`} className="contents">{index > 0 && <BreadcrumbSeparator>{divider === "arrow" ? <IconChevronRight /> : divider === "slash-icon" ? <IconSlash /> : "/"}</BreadcrumbSeparator>}<BreadcrumbItem><BreadcrumbEllipsis /></BreadcrumbItem></span>;
@@ -38,7 +37,7 @@ function BreadcrumbListExample({ divider }: { divider: Divider }) {
   })}</BreadcrumbList></Breadcrumb>)}</div>;
 }
 
-type BreadcrumbIconName = "dashboard" | "analytics" | "profile" | "security";
+type BreadcrumbIconName = "home" | "kits" | "avatar";
 
 type BreadcrumbExampleItem =
   | { label: string; href: string; icon: BreadcrumbIconName }
@@ -46,18 +45,24 @@ type BreadcrumbExampleItem =
 
 const breadcrumbExamples: BreadcrumbExampleItem[][] = [
   [
-    { label: "Dashboard", href: "/dashboard", icon: "dashboard" },
-    { label: "Analytics", href: "/dashboard", icon: "analytics" },
+    { label: "Home", href: "/dashboard", icon: "home" },
+    { label: "UI Kits", href: "/elements/ui/button", icon: "kits" },
   ],
   [
-    { label: "Dashboard", href: "/dashboard", icon: "dashboard" },
-    { label: "…", ellipsis: true },
-    { label: "Profile", href: "/user/settings/profile", icon: "profile" },
-    { label: "Security", href: "/user/settings/security", icon: "security" },
+    { label: "Home", href: "/dashboard", icon: "home" },
+    { label: "UI Kits", href: "/elements/ui/button", icon: "kits" },
+    { label: "Avatar", href: "/elements/ui/avatar", icon: "avatar" },
   ],
 ];
 
 const breadcrumbIconExamples = breadcrumbExamples;
+
+const breadcrumbEllipsisExamples: BreadcrumbExampleItem[][] = [[
+  { label: "Home", href: "/dashboard", icon: "home" },
+  { label: "…", ellipsis: true },
+  { label: "Avatar", href: "/elements/ui/avatar", icon: "avatar" },
+  { label: "Profile", href: "/account/profile", icon: "avatar" },
+]];
 
 function BreadcrumbSlash() {
   return <BreadcrumbListExample divider="slash" />;
@@ -78,7 +83,7 @@ function BreadcrumbWithAvatars() {
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link href="/dashboard" className="inline-flex items-center gap-2">
-              <Avatar size="sm" aria-hidden="true"><AvatarFallback>DT</AvatarFallback></Avatar>
+              <Avatar size="xs" aria-hidden="true"><AvatarFallback>DT</AvatarFallback></Avatar>
               Design team
             </Link>
           </BreadcrumbLink>
@@ -86,7 +91,7 @@ function BreadcrumbWithAvatars() {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbPage className="inline-flex items-center gap-2">
-            <Avatar size="sm" aria-hidden="true"><AvatarFallback>MC</AvatarFallback></Avatar>
+            <Avatar size="xs" aria-hidden="true"><AvatarFallback>MC</AvatarFallback></Avatar>
             Maya Chen
           </BreadcrumbPage>
         </BreadcrumbItem>
@@ -95,15 +100,20 @@ function BreadcrumbWithAvatars() {
   );
 }
 
+function BreadcrumbWithEllipsis() {
+  return <BreadcrumbListExample divider="arrow" examples={breadcrumbEllipsisExamples} />;
+}
+
 export const metadata = { title: "Breadcrumbs" };
 
 export default function BreadcrumbsPage() {
   return <ConsoleLayout>{(
-    <Showcase title="Breadcrumbs">
-      <ComponentPreview title="Breadcrumbs With Arrow Divider"><BreadcrumbArrow /></ComponentPreview>
-      <ComponentPreview title="Breadcrumbs With Slash Divider"><BreadcrumbSlash /></ComponentPreview>
-      <ComponentPreview title="Breadcrumbs With Slash Icon Divider"><BreadcrumbSlashIcon /></ComponentPreview>
-      <ComponentPreview title="Breadcrumbs With Avatars"><BreadcrumbWithAvatars /></ComponentPreview>
-    </Showcase>
+    <div className="min-w-0 space-y-5"><PageHeader title="Breadcrumbs" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+      <ComponentPreview title="Default Breadcrumb"><BreadcrumbArrow /></ComponentPreview>
+      <ComponentPreview title="Breadcrumb With Icon"><BreadcrumbSlashIcon /></ComponentPreview>
+      <ComponentPreview title="Breadcrumb With Slash Divider"><BreadcrumbSlash /></ComponentPreview>
+      <ComponentPreview title="Breadcrumb With Ellipsis"><BreadcrumbWithEllipsis /></ComponentPreview>
+      <ComponentPreview title="Breadcrumb with Avatars"><BreadcrumbWithAvatars /></ComponentPreview>
+    </div></div>
   )}</ConsoleLayout>;
 }

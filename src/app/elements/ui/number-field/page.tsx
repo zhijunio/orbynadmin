@@ -5,17 +5,18 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { useState } from "react";
 import { NumberField } from "@/components/base/number-field/number-field";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 export default function NumberFieldPage() {
   const [seats, setSeats] = useState(8);
   const [budget, setBudget] = useState(1250);
   const [conversionRate, setConversionRate] = useState(0.25);
   const [weight, setWeight] = useState(4.5);
-  return <ConsoleLayout>{<Showcase title="Number Field">
-    <ComponentPreview title="Controlled with limits"><div className="grid gap-2"><NumberField aria-label="Seats" min={1} max={25} value={seats} onValueChange={setSeats} /><p className="text-xs text-muted-foreground" aria-live="polite">{seats} seats selected</p></div></ComponentPreview>
-    <ComponentPreview title="Step and disabled"><div className="grid gap-3"><NumberField aria-label="Discount percentage" min={0} max={100} step={5} defaultValue={15} /><NumberField aria-label="Locked value" value={12} disabled /></div></ComponentPreview>
-    <ComponentPreview title="Formatting">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Number Field" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+    <ComponentPreview title="Controlled Value and Limits"><div className="grid gap-2"><NumberField aria-label="Seats" min={1} max={25} value={seats} onValueChange={setSeats} /><p className="text-xs text-muted-foreground" aria-live="polite">{seats} seats selected</p></div></ComponentPreview>
+    <ComponentPreview title="Custom Step Size"><NumberField aria-label="Discount percentage" min={0} max={100} step={5} defaultValue={15} /></ComponentPreview>
+    <ComponentPreview title="Disabled State"><NumberField aria-label="Locked value" value={12} disabled /></ComponentPreview>
+    <ComponentPreview title="Currency, Percentage, and Unit Formatting">
       <div className="grid w-full gap-4 sm:grid-cols-3">
         <div className="grid gap-2 text-sm font-medium">
           <label htmlFor="monthly-budget">Monthly budget</label>
@@ -53,5 +54,5 @@ export default function NumberFieldPage() {
         </div>
       </div>
     </ComponentPreview>
-  </Showcase>}</ConsoleLayout>;
+  </div></div>}</ConsoleLayout>;
 }

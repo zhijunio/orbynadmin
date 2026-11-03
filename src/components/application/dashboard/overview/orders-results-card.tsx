@@ -16,10 +16,10 @@ import { orders, type Order } from "@/data";
 const PAGE_SIZE = 8;
 
 const statusStyles: Record<Order["status"], string> = {
-  Paid: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-  Pending: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  Paid: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+  Pending: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
   Refunded: "bg-slate-500/10 text-slate-600 dark:text-slate-400",
-  Failed: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+  Failed: "bg-rose-500/10 text-rose-700 dark:text-rose-400",
 };
 
 const products = Array.from(new Set(orders.map((order) => order.product)));

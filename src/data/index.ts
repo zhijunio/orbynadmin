@@ -101,7 +101,7 @@ export const customers: Customer[] = Array.from({ length: 48 }, (_, i) => {
     id: `CUS-${(1042 + i).toString()}`,
     name,
     email: `${first.toLowerCase()}.${last.toLowerCase()}@${pick(companies, i).toLowerCase().replace(/\s/g, "")}.com`,
-    avatar: `https://api.dicebear.com/9.x/avataaars/svg?seed=${(i % 70) + 1}`,
+    avatar: demoAvatarUrl(name),
     company: pick(companies, i),
     status: pick(statuses, i + (i % 4)),
     plan: pick(plans, i + (i % 3)),
@@ -137,7 +137,7 @@ export const orders: Order[] = Array.from({ length: 40 }, (_, i) => {
   return {
     id: `#ORD-${7100 + i}`,
     customer: `${first} ${last}`,
-    avatar: `https://api.dicebear.com/9.x/avataaars/svg?seed=${((i + 12) % 70) + 1}`,
+    avatar: demoAvatarUrl(`${first} ${last}`),
     product: pick(products, i),
     date: new Date(2026, 6, ((i * 3) % 27) + 1).toISOString().slice(0, 10),
     amount: 29 + ((i * 53) % 940),
@@ -208,19 +208,19 @@ export type Activity = {
 };
 
 export const recentActivity: Activity[] = [
-  { id: "a1", user: "Emma Carter", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=1", action: "created a new order", target: "#ORD-7241", time: "2 min ago" },
-  { id: "a2", user: "Liam Nguyen", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=12", action: "upgraded to", target: "Enterprise plan", time: "18 min ago" },
-  { id: "a3", user: "Olivia Patel", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=5", action: "left a review on", target: "Pulse Watch", time: "1 hour ago" },
-  { id: "a4", user: "Noah Kim", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=13", action: "requested a refund for", target: "#ORD-7188", time: "3 hours ago" },
-  { id: "a5", user: "Ava Brooks", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=9", action: "invited a teammate to", target: "Vertex Labs", time: "5 hours ago" },
-  { id: "a6", user: "Ethan Silva", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=15", action: "completed onboarding", target: "", time: "Yesterday" },
+  { id: "a1", user: "Emma Carter", avatar: demoAvatarUrl("Emma Carter"), action: "created a new order", target: "#ORD-7241", time: "2 min ago" },
+  { id: "a2", user: "Liam Nguyen", avatar: demoAvatarUrl("Liam Nguyen"), action: "upgraded to", target: "Enterprise plan", time: "18 min ago" },
+  { id: "a3", user: "Olivia Patel", avatar: demoAvatarUrl("Olivia Patel"), action: "left a review on", target: "Pulse Watch", time: "1 hour ago" },
+  { id: "a4", user: "Noah Kim", avatar: demoAvatarUrl("Noah Kim"), action: "requested a refund for", target: "#ORD-7188", time: "3 hours ago" },
+  { id: "a5", user: "Ava Brooks", avatar: demoAvatarUrl("Ava Brooks"), action: "invited a teammate to", target: "Vertex Labs", time: "5 hours ago" },
+  { id: "a6", user: "Ethan Silva", avatar: demoAvatarUrl("Ethan Silva"), action: "completed onboarding", target: "", time: "Yesterday" },
 ];
 
 export const currentUser = {
   name: "Alex Morgan",
   email: "alex.morgan@orbynadmin.com",
   role: "Administrator",
-  avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=8",
+  avatar: demoAvatarUrl("Alex Morgan"),
 };
 
 // ---------------------------------------------------------------------------
@@ -330,16 +330,16 @@ export type TeamMember = {
 };
 
 export const team: TeamMember[] = [
-  { id: "TM-01", name: "Alex Morgan", role: "Head of Product", department: "Product", email: "alex.morgan@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=8", status: "Active", location: "San Francisco, US" },
-  { id: "TM-02", name: "Sofia Rossi", role: "Head of Growth", department: "Marketing", email: "sofia.rossi@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=32", status: "Active", location: "Milan, IT" },
-  { id: "TM-03", name: "Marcus Chen", role: "Staff Engineer", department: "Engineering", email: "marcus.chen@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=33", status: "Away", location: "Singapore, SG" },
-  { id: "TM-04", name: "Priya Nair", role: "Product Designer", department: "Design", email: "priya.nair@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=45", status: "Active", location: "Bangalore, IN" },
-  { id: "TM-05", name: "Daniel Weber", role: "Backend Engineer", department: "Engineering", email: "daniel.weber@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=52", status: "Offline", location: "Berlin, DE" },
-  { id: "TM-06", name: "Hannah Kim", role: "Customer Success Lead", department: "Success", email: "hannah.kim@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=47", status: "Active", location: "Seoul, KR" },
-  { id: "TM-07", name: "Lucas Silva", role: "Data Analyst", department: "Data", email: "lucas.silva@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=59", status: "Active", location: "São Paulo, BR" },
-  { id: "TM-08", name: "Emma Novak", role: "Frontend Engineer", department: "Engineering", email: "emma.novak@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=41", status: "Away", location: "Toronto, CA" },
-  { id: "TM-09", name: "Omar Haddad", role: "DevOps Engineer", department: "Engineering", email: "omar.haddad@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=60", status: "Active", location: "Dubai, AE" },
-  { id: "TM-10", name: "Chloe Dubois", role: "Content Strategist", department: "Marketing", email: "chloe.dubois@orbynadmin.com", avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=44", status: "Offline", location: "Paris, FR" },
+  { id: "TM-01", name: "Alex Morgan", role: "Head of Product", department: "Product", email: "alex.morgan@orbynadmin.com", avatar: demoAvatarUrl("Alex Morgan"), status: "Active", location: "San Francisco, US" },
+  { id: "TM-02", name: "Sofia Rossi", role: "Head of Growth", department: "Marketing", email: "sofia.rossi@orbynadmin.com", avatar: demoAvatarUrl("Sofia Rossi"), status: "Active", location: "Milan, IT" },
+  { id: "TM-03", name: "Marcus Chen", role: "Staff Engineer", department: "Engineering", email: "marcus.chen@orbynadmin.com", avatar: demoAvatarUrl("Marcus Chen"), status: "Away", location: "Singapore, SG" },
+  { id: "TM-04", name: "Priya Nair", role: "Product Designer", department: "Design", email: "priya.nair@orbynadmin.com", avatar: demoAvatarUrl("Priya Nair"), status: "Active", location: "Bangalore, IN" },
+  { id: "TM-05", name: "Daniel Weber", role: "Backend Engineer", department: "Engineering", email: "daniel.weber@orbynadmin.com", avatar: demoAvatarUrl("Daniel Weber"), status: "Offline", location: "Berlin, DE" },
+  { id: "TM-06", name: "Hannah Kim", role: "Customer Success Lead", department: "Success", email: "hannah.kim@orbynadmin.com", avatar: demoAvatarUrl("Hannah Kim"), status: "Active", location: "Seoul, KR" },
+  { id: "TM-07", name: "Lucas Silva", role: "Data Analyst", department: "Data", email: "lucas.silva@orbynadmin.com", avatar: demoAvatarUrl("Lucas Silva"), status: "Active", location: "São Paulo, BR" },
+  { id: "TM-08", name: "Emma Novak", role: "Frontend Engineer", department: "Engineering", email: "emma.novak@orbynadmin.com", avatar: demoAvatarUrl("Emma Novak"), status: "Away", location: "Toronto, CA" },
+  { id: "TM-09", name: "Omar Haddad", role: "DevOps Engineer", department: "Engineering", email: "omar.haddad@orbynadmin.com", avatar: demoAvatarUrl("Omar Haddad"), status: "Active", location: "Dubai, AE" },
+  { id: "TM-10", name: "Chloe Dubois", role: "Content Strategist", department: "Marketing", email: "chloe.dubois@orbynadmin.com", avatar: demoAvatarUrl("Chloe Dubois"), status: "Offline", location: "Paris, FR" },
 ];
 
 export const getTeamMember = (i: number) => team[i % team.length];
@@ -529,27 +529,25 @@ export const integrations: Integration[] = [
 // Notifications
 // ---------------------------------------------------------------------------
 
-export type NotificationKind = "mention" | "comment" | "assign" | "system" | "billing" | "deploy";
-
-export type Notification = {
+export type NotificationCategory = "mention" | "activity" | "system";
+export type NotificationItem = {
   id: string;
-  kind: NotificationKind;
+  category: NotificationCategory;
+  group: string;
   title: string;
   description: string;
-  actor?: TeamMember;
+  actor?: Pick<TeamMember, "name" | "avatar">;
   time: string;
-  read: boolean;
+  unread: boolean;
+  status?: "neutral" | "information" | "success" | "error";
+  actions: string[];
 };
 
-export const notifications: Notification[] = [
-  { id: "N-01", kind: "mention", title: "Priya Nair mentioned you", description: "“@alex can you review the new onboarding checklist?” in Mobile App Revamp", actor: getTeamMember(3), time: "2 min ago", read: false },
-  { id: "N-02", kind: "assign", title: "New task assigned", description: "You were assigned “Implement metered usage events” in Billing Platform v2", actor: getTeamMember(2), time: "25 min ago", read: false },
-  { id: "N-03", kind: "comment", title: "Marcus Chen commented", description: "Left a comment on “Add SSO / SAML provisioning”", actor: getTeamMember(2), time: "1 hour ago", read: false },
-  { id: "N-04", kind: "deploy", title: "Deployment succeeded", description: "web-app v2.14.0 deployed to production in 3m 12s", time: "2 hours ago", read: true },
-  { id: "N-05", kind: "billing", title: "Payment received", description: "Invoice INV-2043 was paid by Northwind — $1,296.00", time: "4 hours ago", read: true },
-  { id: "N-06", kind: "system", title: "New sign-in detected", description: "A new sign-in from Chrome on macOS in San Francisco", time: "6 hours ago", read: true },
-  { id: "N-07", kind: "comment", title: "Sofia Rossi commented", description: "“Looks great — shipping the localized pages next week.”", actor: getTeamMember(1), time: "Yesterday", read: true },
-  { id: "N-08", kind: "mention", title: "Hannah Kim mentioned you", description: "“@alex a customer asked about the Q3 roadmap.”", actor: getTeamMember(5), time: "Yesterday", read: true },
-  { id: "N-09", kind: "assign", title: "Milestone due soon", description: "“Beta release” for Mobile App Revamp is due in 3 days", time: "2 days ago", read: true },
-  { id: "N-10", kind: "system", title: "Storage at 82%", description: "Your workspace is approaching its storage limit", time: "3 days ago", read: true },
+export const notifications: NotificationItem[] = [
+  { id: "N-01", category: "mention", group: "today", title: "Livia mentioned you", description: "Can you review the new empty state before we ship the dashboard?", actor: { name: "Livia Saris", avatar: demoAvatarUrl("Livia Saris") }, time: "2 min ago", unread: true, actions: ["reply", "viewThread"] },
+  { id: "N-02", category: "system", group: "today", title: "Workspace backup is ready", description: "The July 23 backup finished successfully and is ready to download.", time: "18 min ago", unread: true, status: "success", actions: ["download"] },
+  { id: "N-03", category: "activity", group: "today", title: "You joined Project Sea", description: "Maria added you as an editor. You now have access to all project files.", actor: { name: "Maria Lubin", avatar: demoAvatarUrl("Maria Lubin") }, time: "1h ago", unread: true, actions: [] },
+  { id: "N-04", category: "mention", group: "today", title: "Jaydon requested your review", description: "Pull request #284 updates the notification preferences flow.", actor: { name: "Jaydon Aminoff", avatar: demoAvatarUrl("Jaydon Aminoff") }, time: "Mon", unread: true, actions: ["review"] },
+  { id: "N-05", category: "system", group: "earlier", title: "Security check completed", description: "No exposed credentials or vulnerable dependencies were found.", time: "Sun", unread: true, status: "success", actions: [] },
+  { id: "N-06", category: "system", group: "earlier", title: "Preview deployment failed", description: "The build stopped while validating the application routes.", time: "Sat", unread: false, status: "error", actions: ["retry", "viewLogs"] },
 ];

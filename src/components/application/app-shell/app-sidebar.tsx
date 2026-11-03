@@ -11,6 +11,7 @@ import { navGroups, type NavChild, type NavItem } from "@/components/application
 import { TeamSwitcher } from "@/components/application/app-shell/team-switcher";
 import { NavUser } from "@/components/application/app-shell/nav-user";
 import { useThemeConfig } from "@/components/application/theme/theme-customizer";
+import { useNotificationStore } from "@/data/notification-store";
 import {
   Collapsible,
   CollapsibleContent,
@@ -41,6 +42,7 @@ export function AppSidebar({ appearance = "default", expandIndicator = "chevron"
   const t = useTranslations("Navigation");
   const { config } = useThemeConfig();
   const { isMobile, setOpen, state } = useSidebar();
+  const unreadCount = useNotificationStore((store) => store.items.filter((notification) => notification.unread).length);
   const translate = (value: string) => t.has(value) ? t(value) : value;
 
   const handleMouseEnter = () => {
@@ -90,7 +92,7 @@ export function AppSidebar({ appearance = "default", expandIndicator = "chevron"
             <SidebarGroupLabel className={appearance === "tailadmin" ? "h-8 px-3 text-[11px] font-semibold uppercase tracking-wide text-sidebar-foreground/60" : undefined}>{translate(group.label)}</SidebarGroupLabel>
             <SidebarMenu>
               {group.items.map((item) => (
-                <NavEntry key={item.title} item={item} pathname={pathname} translate={translate} appearance={appearance} expandIndicator={expandIndicator} />
+                <NavEntry key={item.title} item={item} pathname={pathname} translate={translate} appearance={appearance} expandIndicator={expandIndicator} unreadCount={unreadCount} />
               ))}
             </SidebarMenu>
           </SidebarGroup>
@@ -141,10 +143,11 @@ function ExpandIndicator({ style, nested = false }: { style: "chevron" | "plus-m
     : <IconChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />;
 }
 
-function NavEntry({ item, pathname, translate, appearance, expandIndicator }: { item: NavItem; pathname: string; translate: (value: string) => string; appearance: "default" | "tailadmin"; expandIndicator: "chevron" | "plus-minus" }) {
+function NavEntry({ item, pathname, translate, appearance, expandIndicator, unreadCount }: { item: NavItem; pathname: string; translate: (value: string) => string; appearance: "default" | "tailadmin"; expandIndicator: "chevron" | "plus-minus"; unreadCount: number }) {
   const { setOpenMobile, state } = useSidebar();
   const closeMobile = () => setOpenMobile(false);
   const iconOnly = appearance === "tailadmin" && state === "collapsed";
+  const badge = item.title === "Notifications" ? (unreadCount > 0 ? String(unreadCount) : undefined) : item.badge;
 
   // Collapsible parent with children.
   if (item.items?.length) {
@@ -161,14 +164,14 @@ function NavEntry({ item, pathname, translate, appearance, expandIndicator }: { 
             <SidebarMenuButton className={appearance === "tailadmin" ? tailadminMenuButton : undefined} tooltip={translate(item.title)} isActive={childActive}>
               {item.icon && <item.icon className={appearance === "tailadmin" ? "size-[18px]" : "size-4"} />}
               {!iconOnly && <span>{translate(item.title)}</span>}
-              {!iconOnly && item.badge && (
+              {!iconOnly && badge && (
                 <SidebarMenuBadge
                   className={cn(
                     "group-data-[state=open]/collapsible:hidden",
-                    badgeClass(item.badge)
+                    badgeClass(badge)
                   )}
                 >
-                  {translate(item.badge)}
+                  {translate(badge)}
                 </SidebarMenuBadge>
               )}
               {!iconOnly && <ExpandIndicator style={expandIndicator} />}
@@ -198,9 +201,9 @@ function NavEntry({ item, pathname, translate, appearance, expandIndicator }: { 
           {!iconOnly && <span>{translate(item.title)}</span>}
         </Link>
       </SidebarMenuButton>
-      {item.badge && (
-        <SidebarMenuBadge className={badgeClass(item.badge)}>
-          {translate(item.badge)}
+      {badge && (
+        <SidebarMenuBadge className={badgeClass(badge)}>
+          {translate(badge)}
         </SidebarMenuBadge>
       )}
     </SidebarMenuItem>

@@ -2,7 +2,7 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
 import { IconKey as KeyRound } from "@tabler/icons-react";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { SocialButton, type SocialProvider } from "@/components/base/social-button/social-button";
 import { SOCIAL_PROVIDERS } from "@/components/base/social-button/social-providers";
 
@@ -12,7 +12,7 @@ export default function SocialButtonPage() {
     (typeof SOCIAL_PROVIDERS)[SocialProvider],
   ]>;
 
-  return <ConsoleLayout>{<Showcase title="Social Button">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Social Button" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <ComponentPreview title="Common providers">
         <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2">
           <SocialButton brand="google" appearance="white" size="small" fullWidth />
@@ -37,7 +37,7 @@ export default function SocialButtonPage() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Sizes">
+      <ComponentPreview title="Button Sizes">
         <div className="mx-auto flex w-full max-w-[300px] flex-col items-start gap-2">
           <SocialButton brand="slack" size="medium" />
           <SocialButton brand="slack" size="small" />
@@ -74,5 +74,5 @@ export default function SocialButtonPage() {
           <SocialButton brand="github">Continue with GitHub</SocialButton>
         </div>
       </ComponentPreview>
-    </Showcase>}</ConsoleLayout>;
+    </div></div>}</ConsoleLayout>;
 }

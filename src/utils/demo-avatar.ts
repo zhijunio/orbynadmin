@@ -1,4 +1,7 @@
-/** Return a deterministic DiceBear avatar URL for demo people. */
+/** Return a stable RandomUser portrait URL for demo people. */
 export function demoAvatarUrl(seed: string | number) {
-  return `https://api.dicebear.com/10.x/avataaars/svg?seed=${encodeURIComponent(seed)}`;
+  const hash = String(seed).split("").reduce((value, char) => (value * 31 + char.charCodeAt(0)) | 0, 0);
+  const index = Math.abs(hash % 100);
+  const gender = hash % 2 === 0 ? "women" : "men";
+  return `https://randomuser.me/api/portraits/${gender}/${index}.jpg`;
 }

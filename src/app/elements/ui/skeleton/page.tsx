@@ -5,7 +5,7 @@ export const metadata = { title: "Skeletons" };
 
 
 
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
 import { Skeleton } from "@/components/base/skeleton/skeleton";
@@ -16,10 +16,11 @@ function SkeletonExamples() {
     <ComponentPreview title="Loading Into Content" className="xl:col-span-2">
       <SkeletonLoadingExample />
     </ComponentPreview>
-    <ComponentPreview title="Profile Loading">
-      <div className="flex w-full items-center gap-4">
-        <Skeleton className="size-12 rounded-full" />
-        <div className="flex-1 space-y-2"><Skeleton className="h-4 w-36" /><Skeleton className="h-3 w-52 max-w-full" /></div>
+    <ComponentPreview title="Settings Form Loading">
+      <div className="grid w-full max-w-lg gap-5">
+        <div className="grid gap-2"><Skeleton className="h-3 w-28" /><Skeleton className="h-10 w-full rounded-md" /></div>
+        <div className="grid gap-2"><Skeleton className="h-3 w-20" /><Skeleton className="h-24 w-full rounded-md" /></div>
+        <Skeleton className="h-9 w-28 rounded-md" />
       </div>
     </ComponentPreview>
     <ComponentPreview title="Metric Cards">
@@ -38,5 +39,5 @@ function SkeletonExamples() {
 
 
 export default function SkeletonsPage() {
-  return <ConsoleLayout>{<Showcase title="Skeletons"><SkeletonExamples /></Showcase>}</ConsoleLayout>;
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Skeletons" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><SkeletonExamples /></div></div>}</ConsoleLayout>;
 }

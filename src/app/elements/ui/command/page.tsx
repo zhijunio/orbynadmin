@@ -12,7 +12,7 @@ import {
   IconUsers as Users,
 } from "@tabler/icons-react";
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
 import { Button } from "@/components/base/buttons/button";
 import { Kbd, KbdGroup } from "@/components/base/kbd/kbd";
@@ -44,7 +44,7 @@ export default function CommandPage() {
 
   return (
     <ConsoleLayout>
-      <Showcase title="Command">
+      <div className="min-w-0 space-y-5"><PageHeader title="Command" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
         <ComponentPreview title="Command Palette" className="xl:col-span-2">
           <div className="flex w-full justify-center">
             <Button
@@ -95,7 +95,7 @@ export default function CommandPage() {
             </CommandDialog>
           </div>
         </ComponentPreview>
-      </Showcase>
+      </div></div>
     </ConsoleLayout>
   );
 }

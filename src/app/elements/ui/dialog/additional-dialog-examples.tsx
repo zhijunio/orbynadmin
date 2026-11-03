@@ -60,7 +60,7 @@ export function UniqueModalExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Fullscreen Modal">
+      <ComponentPreview title="Full Screen Modal">
         <div className="flex w-full justify-center">
           <Dialog>
             <DialogTrigger asChild><Button variant="secondary">Open workspace details</Button></DialogTrigger>
@@ -85,7 +85,7 @@ export function UniqueModalExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Modal Alerts">
+      <ComponentPreview title="Modal Based Alerts">
         <div className="flex w-full flex-wrap justify-center gap-2">
           <Button variant="secondary" onClick={() => setAlert("success")}>Success</Button>
           <Button variant="secondary" onClick={() => setAlert("info")}>Information</Button>

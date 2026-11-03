@@ -52,7 +52,7 @@ export default function MostActiveDaysCard() {
 
   return (
     <div className="space-y-5">
-      <div className="mx-auto grid w-full max-w-[768px] gap-4 md:grid-cols-2">
+      <div className="grid w-full gap-4 md:grid-cols-2">
             <section className="flex h-[330px] min-w-0 flex-col gap-4 rounded-[20px] bg-muted/45 p-[10px]" aria-label={`${months[selected.month]} activity calendar`}>
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -119,7 +119,7 @@ function MiniRings({ value }: { value: ReturnType<typeof activity> }) {
 
 function ActivityRings({ value }: { value: ReturnType<typeof activity> }) {
   return (
-    <svg viewBox="0 0 240 240" className="size-[220px] max-h-full max-w-full" role="img" aria-label={`Move ${value.move}%, Exercise ${value.exercise}%, Running ${value.run}%`}>
+    <svg viewBox="0 0 240 240" className="size-[190px] max-h-full max-w-full" role="img" aria-label={`Move ${value.move}%, Exercise ${value.exercise}%, Running ${value.run}%`}>
       {rings.map((ring) => {
         const circumference = 2 * Math.PI * ring.radius;
         const progress = value[ring.key];

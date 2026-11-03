@@ -5,14 +5,15 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { useState } from "react";
 import { Combobox } from "@/components/base/combobox/combobox";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 const options = [{ value: "design", label: "Design", group: "Product" }, { value: "engineering", label: "Engineering", group: "Product" }, { value: "finance", label: "Finance", group: "Operations" }, { value: "operations", label: "Operations", group: "Operations", disabled: true }];
 export default function ComboboxPage() {
   const [team, setTeam] = useState("engineering");
-  return <ConsoleLayout>{<Showcase title="Combobox">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Combobox" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
     <ComponentPreview title="Controlled selection"><div className="grid gap-3"><Combobox aria-label="Choose a team" options={options} value={team} onValueChange={setTeam} placeholder="Choose a team" /><p className="text-xs text-muted-foreground" aria-live="polite">Selected team: {options.find((item) => item.value === team)?.label}</p></div></ComponentPreview>
-    <ComponentPreview title="Custom values and disabled"><div className="grid gap-3"><Combobox aria-label="Add a label" options={[]} allowCustomValue searchPlaceholder="Type a label" emptyMessage="No saved label found." /><Combobox aria-label="Locked team" options={options} value="finance" disabled /></div></ComponentPreview>
-    <ComponentPreview title="Invalid state"><div className="grid gap-3"><Combobox aria-label="Choose a reviewer" options={options} isInvalid emptyMessage="No reviewer found." /></div></ComponentPreview>
-    <ComponentPreview title="Empty and disabled states"><div className="grid gap-3"><Combobox aria-label="Search reviewers" options={options} searchPlaceholder="Search reviewers" emptyMessage="No reviewer matches that search." /><Combobox aria-label="Locked team" options={options} value="finance" disabled /></div></ComponentPreview>
-  </Showcase>}</ConsoleLayout>;
+    <ComponentPreview title="Custom Values"><Combobox aria-label="Add a label" options={[]} allowCustomValue searchPlaceholder="Type a label" emptyMessage="No saved label found." /></ComponentPreview>
+    <ComponentPreview title="Search Results and Empty State"><Combobox aria-label="Search reviewers" options={options} searchPlaceholder="Search reviewers" emptyMessage="No reviewer matches that search." /></ComponentPreview>
+    <ComponentPreview title="Invalid State"><Combobox aria-label="Choose a reviewer" options={options} isInvalid emptyMessage="No reviewer found." /></ComponentPreview>
+    <ComponentPreview title="Disabled State"><Combobox aria-label="Locked team" options={options} value="finance" disabled /></ComponentPreview>
+  </div></div>}</ConsoleLayout>;
 }

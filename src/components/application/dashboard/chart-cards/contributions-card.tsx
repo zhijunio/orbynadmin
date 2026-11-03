@@ -40,7 +40,7 @@ export default function ContributionsCard() {
             return <Tooltip key={`${week}-${day}`}><TooltipTrigger asChild><span tabIndex={0} aria-label={`${day}, week ${week + 1}: ${value} contributions`} className="aspect-square w-full rounded-[3px] bg-muted outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-1" style={value ? { backgroundColor: accent, opacity } : undefined} /></TooltipTrigger><TooltipContent>{day}, week {week + 1}: {value} contributions</TooltipContent></Tooltip>;
           }))}
         </div>
-        <div className="relative mt-2 h-4">{monthStarts.map((week, index) => <span key={months[index]} className="absolute text-[10px] text-muted-foreground" style={{ left: `${week / 53 * 100}%` }}>{months[index]}</span>)}</div>
+        <div className="relative mt-2 h-4">{monthStarts.map((week, index) => <span key={months[index]} className="absolute text-[11px] text-muted-foreground" style={{ left: `${week / 53 * 100}%` }}>{months[index]}</span>)}</div>
       </div></div>
     </CardContent>
   </Card></div>;

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { Label } from "@/components/base/input/label";
 import { Textarea } from "@/components/base/textarea/textarea";
 
@@ -13,8 +13,8 @@ export default function TextareaPage() {
 
   return (
     <ConsoleLayout>
-      <Showcase title="Textarea" columns={1}>
-        <ComponentPreview title="Sizes">
+      <div className="min-w-0 space-y-5"><PageHeader title="Textarea" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
+        <ComponentPreview title="Textarea Sizes">
           <div className="grid w-full max-w-3xl gap-5 sm:grid-cols-2">
             <div className="grid gap-2">
               <Label htmlFor="notes">Description</Label>
@@ -60,30 +60,44 @@ export default function TextareaPage() {
           </div>
         </ComponentPreview>
 
-        <ComponentPreview title="States">
-          <div className="grid w-full gap-5 sm:grid-cols-2">
-            <div className="grid gap-2">
-              <Label htmlFor="cover-letter-empty">Cover letter <span aria-hidden="true" className="text-destructive">*</span></Label>
-              <Textarea id="cover-letter-empty" rows={3} required placeholder="Why are you a good fit?" />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="cover-letter-filled">Cover letter <span aria-hidden="true" className="text-destructive">*</span></Label>
-              <Textarea id="cover-letter-filled" rows={3} required defaultValue="I have shipped design systems for six years." aria-describedby="cover-letter-filled-hint" />
-              <p id="cover-letter-filled-hint" className="text-xs text-muted-foreground">This is a hint about this field.</p>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="disabled-textarea">Cover letter <span aria-hidden="true" className="text-destructive">*</span></Label>
-              <Textarea id="disabled-textarea" rows={3} required disabled placeholder="Why are you a good fit?" aria-describedby="disabled-textarea-hint" />
-              <p id="disabled-textarea-hint" className="text-xs text-muted-foreground">This is a hint about this field.</p>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="invalid-textarea">Cover letter <span aria-hidden="true" className="text-destructive">*</span></Label>
-              <Textarea id="invalid-textarea" rows={3} required aria-invalid defaultValue="Too short." aria-describedby="invalid-textarea-hint" />
-              <p id="invalid-textarea-hint" className="text-xs text-destructive">Please write at least 200 characters.</p>
-            </div>
+        <ComponentPreview title="Required Empty Field">
+          <div className="grid w-full max-w-md gap-2">
+            <Label htmlFor="cover-letter-empty">Cover letter <span aria-hidden="true" className="text-destructive">*</span></Label>
+            <Textarea id="cover-letter-empty" rows={3} required placeholder="Why are you a good fit?" />
           </div>
         </ComponentPreview>
-      </Showcase>
+
+        <ComponentPreview title="Filled Field with Hint">
+          <div className="grid w-full max-w-md gap-2">
+            <Label htmlFor="cover-letter-filled">Cover letter <span aria-hidden="true" className="text-destructive">*</span></Label>
+            <Textarea id="cover-letter-filled" rows={3} required defaultValue="I have shipped design systems for six years." aria-describedby="cover-letter-filled-hint" />
+            <p id="cover-letter-filled-hint" className="text-xs text-muted-foreground">This is a hint about this field.</p>
+          </div>
+        </ComponentPreview>
+
+        <ComponentPreview title="Disabled Textarea">
+          <div className="grid w-full max-w-md gap-2">
+            <Label htmlFor="disabled-textarea">Cover letter <span aria-hidden="true" className="text-destructive">*</span></Label>
+            <Textarea id="disabled-textarea" rows={3} required disabled placeholder="Why are you a good fit?" aria-describedby="disabled-textarea-hint" />
+            <p id="disabled-textarea-hint" className="text-xs text-muted-foreground">This is a hint about this field.</p>
+          </div>
+        </ComponentPreview>
+
+        <ComponentPreview title="Invalid Textarea">
+          <div className="grid w-full max-w-md gap-2">
+            <Label htmlFor="invalid-textarea">Cover letter <span aria-hidden="true" className="text-destructive">*</span></Label>
+            <Textarea id="invalid-textarea" rows={3} required aria-invalid defaultValue="Too short." aria-describedby="invalid-textarea-hint" />
+            <p id="invalid-textarea-hint" className="text-xs text-destructive">Please write at least 200 characters.</p>
+          </div>
+        </ComponentPreview>
+
+        <ComponentPreview title="Read-only Textarea">
+          <div className="grid w-full max-w-md gap-2">
+            <Label htmlFor="published-summary">Published summary</Label>
+            <Textarea id="published-summary" rows={3} readOnly defaultValue="This summary has been published and can no longer be edited." />
+          </div>
+        </ComponentPreview>
+      </div></div>
     </ConsoleLayout>
   );
 }

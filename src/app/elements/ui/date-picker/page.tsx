@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback } from "@/components/base/avatar/avatar";
 import { Button } from "@/components/base/buttons/button";
 import { Card, CardContent } from "@/components/base/card/card";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { DatePicker } from "@/components/base/date-picker/date-picker";
 import { DateRangePicker, type DateRangeValue } from "@/components/base/date-picker/date-range-picker";
 import { MonthPanel } from "@/components/base/date-picker/calendar-shared";
@@ -21,8 +21,8 @@ export default function DatePickerPage() {
   const [range, setRange] = useState<DateRangeValue | null>(null);
   const selectedDay = today(getLocalTimeZone());
 
-  return <ConsoleLayout>{<Showcase title="Date Picker">
-      <ComponentPreview title="Date range" className="xl:col-span-2">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Date Picker" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+      <ComponentPreview title="Controlled Date Range" className="xl:col-span-2">
         <div className="w-full max-w-sm space-y-3">
           <DateRangePicker aria-label={t("reportPeriod")} value={range} onChange={setRange} />
           <p className="min-h-5 text-xs text-muted-foreground" aria-live="polite">
@@ -31,40 +31,41 @@ export default function DatePickerPage() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Quick select">
+      <ComponentPreview title="Date Range with Quick Select">
         <div className="w-full max-w-sm">
           <DateRangePicker aria-label={t("chooseReportingPeriod")} />
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Single date">
+      <ComponentPreview title="Controlled Single Date">
         <div className="w-full max-w-sm space-y-2">
           <DatePicker aria-label={t("dueDate")} value={date} onChange={setDate} />
           <p className="min-h-5 text-xs text-muted-foreground" aria-live="polite">{date ? date.toString() : t("noDateSelected")}</p>
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Calendar">
+      <ComponentPreview title="Inline Calendar">
         <MonthPanel date={date ?? today(getLocalTimeZone())} selected={date} onSelect={setDate} aria-label={t("selectDate")} showPrev showNext />
       </ComponentPreview>
 
-      <ComponentPreview title="Meeting scheduler" className="xl:col-span-2">
+      <ComponentPreview title="Meeting Scheduler" className="xl:col-span-2">
         <MeetingSchedulerExample />
       </ComponentPreview>
 
-      <ComponentPreview title="Uncontrolled">
+      <ComponentPreview title="Default Date">
         <div className="w-full max-w-sm">
           <DatePicker defaultValue={selectedDay.add({ days: 14 })} aria-label="Project deadline" />
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Disabled">
-        <div className="grid w-full max-w-sm gap-2">
-          <DatePicker isDisabled aria-label="Locked due date" />
-          <DateRangePicker isDisabled aria-label="Locked reporting period" />
-        </div>
+      <ComponentPreview title="Disabled Date Picker">
+        <DatePicker isDisabled aria-label="Locked due date" />
       </ComponentPreview>
-    </Showcase>}</ConsoleLayout>;
+
+      <ComponentPreview title="Disabled Date Range Picker">
+        <DateRangePicker isDisabled aria-label="Locked reporting period" />
+      </ComponentPreview>
+    </div></div>}</ConsoleLayout>;
 }
 
 function MeetingSchedulerExample() {

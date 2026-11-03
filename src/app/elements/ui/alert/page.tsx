@@ -2,7 +2,7 @@
 
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -14,9 +14,9 @@ import { Button } from "@/components/base/buttons/button";
 const alertTypes = [
   { title: "Default", description: "This is a default alert. It provides general information to the user.", icon: IconInfoCircle, className: "border-border bg-muted/40 text-muted-foreground", titleClassName: "text-foreground" },
   { title: "Success", description: "Your changes have been saved successfully.", icon: IconCheck, className: "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/30 dark:text-green-400", iconClassName: "bg-green-600 text-white" },
-  { title: "Information", description: "A new software update is available. See what's new.", icon: IconInfoCircle, className: "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-900 dark:bg-sky-950/30 dark:text-sky-400", iconClassName: "bg-sky-500 text-white" },
   { title: "Warning", description: "Your subscription will expire in 3 days. Please renew to continue.", icon: IconAlertTriangle, className: "border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-400", iconClassName: "bg-amber-500 text-white" },
   { title: "Error", description: "There was a problem processing your request. Please try again.", icon: IconX, className: "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-400", iconClassName: "bg-red-600 text-white" },
+  { title: "Information", description: "A new software update is available. See what's new.", icon: IconInfoCircle, className: "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-900 dark:bg-sky-950/30 dark:text-sky-400", iconClassName: "bg-sky-500 text-white" },
 ];
 
 const alertVariants = [
@@ -35,29 +35,21 @@ function AlertsExample() {
   const [dismissedSolid, setDismissedSolid] = useState<string[]>([]);
 
   return <>
-      <ComponentPreview title="Alert Types">
-        <div className="w-full space-y-6">
-          {alertTypes.map(({ title, description, icon: Icon, className, titleClassName, iconClassName }) => (
-            <Alert key={title} className={`min-h-[74px] grid-cols-[auto_1fr] gap-x-3 rounded-lg px-5 py-5 ${className}`}>
-              <span className={`row-span-2 flex size-7 items-center justify-center rounded-lg ${iconClassName ?? "bg-muted-foreground text-white"}`}><Icon aria-hidden="true" className="size-4" /></span>
-              <AlertTitle className={`text-sm font-semibold ${titleClassName ?? ""}`}>{title}</AlertTitle>
-              <AlertDescription className="text-sm leading-5">{description}</AlertDescription>
-            </Alert>
-          ))}
-        </div>
+      <ComponentPreview title="Default Alert">
+        <div className="w-full"><Alert className="min-h-[74px] grid-cols-[auto_1fr] gap-x-3 rounded-lg border-border bg-muted/40 px-5 py-5 text-muted-foreground"><IconInfoCircle aria-hidden="true" className="row-span-2 size-5" /><AlertTitle className="text-sm font-semibold text-foreground">Default Message</AlertTitle><AlertDescription className="text-sm leading-5">{alertTypes[0].description}</AlertDescription></Alert></div>
       </ComponentPreview>
-      <ComponentPreview title="Alerts with Learn More">
-        <div className="w-full space-y-4">
-          {alertTypes.filter(({ title }) => title !== "Default").map(({ title, description, icon: Icon, className }) => (
-            <Alert key={title} className={`grid-cols-[auto_1fr] gap-x-3 rounded-xl p-4 ${className}`}>
-              <Icon aria-hidden="true" className="row-span-3 mt-0.5 size-5" />
-              <AlertTitle className="text-sm font-semibold text-foreground">{title} Message</AlertTitle>
-              <AlertDescription>{description}</AlertDescription>
+      {alertTypes.filter(({ title }) => title !== "Default").map(({ title, description, icon: Icon, className, titleClassName, iconClassName }) => (
+        <ComponentPreview key={title} title={`${title === "Information" ? "Info" : title} Alert`}>
+          <div className="w-full">
+            <Alert className={`min-h-[74px] grid-cols-[auto_1fr] gap-x-3 rounded-lg px-5 py-5 ${className}`}>
+              <span className={`row-span-2 flex size-7 items-center justify-center rounded-lg ${iconClassName ?? "bg-muted-foreground text-white"}`}><Icon aria-hidden="true" className="size-4" /></span>
+              <AlertTitle className={`text-sm font-semibold ${titleClassName ?? ""}`}>{title} Message</AlertTitle>
+              <AlertDescription className="text-sm leading-5">{description}</AlertDescription>
               <Link href="/elements/ui/alert" className="col-start-2 mt-2 inline-block text-sm font-medium underline underline-offset-4">Learn more</Link>
             </Alert>
-          ))}
-        </div>
-      </ComponentPreview>
+          </div>
+        </ComponentPreview>
+      ))}
       <ComponentPreview title="Alert Variants">
         <div className="w-full space-y-6">
           {showAccountUpdated && <Alert className="rounded-lg border-border bg-muted/40 px-3 py-3">
@@ -100,16 +92,9 @@ function AlertsExample() {
           ))}
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Additional Alert Styles" className="xl:col-span-2">
-        <div className="w-full space-y-4">
-          <Alert className="w-full border-amber-500/30 bg-amber-500/5"><IconAlertTriangle className="text-amber-600" /><AlertTitle>Attention Needed</AlertTitle><AlertDescription>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</AlertDescription></Alert>
-          <Alert className="w-full border-emerald-500/30 bg-emerald-500/5"><IconCheck className="text-emerald-600" /><AlertTitle>Message Sent Successfully</AlertTitle><AlertDescription>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</AlertDescription></Alert>
-          <Alert variant="destructive" className="w-full"><IconX /><AlertTitle>There were 1 errors with your submission</AlertTitle><AlertDescription>Lorem Ipsum is simply dummy text of the printing</AlertDescription></Alert>
-        </div>
-      </ComponentPreview>
     </>;
 }
 
 export default function AlertsPage() {
-  return <ConsoleLayout>{<Showcase title="Alerts"><AlertsExample /></Showcase>}</ConsoleLayout>;
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Alerts" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><AlertsExample /></div></div>}</ConsoleLayout>;
 }

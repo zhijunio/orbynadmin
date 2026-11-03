@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useEffect,
   useRef,
   useState,
   type ComponentProps,
@@ -77,6 +78,10 @@ export function TreeView({
   );
   const anchorIdRef = useRef(defaultSelectedIds[0] ?? null);
   const itemRefs = useRef(new Map<string, HTMLDivElement>());
+  const typeaheadRef = useRef<{ query: string; timeout: number | null }>({
+    query: "",
+    timeout: null,
+  });
   const expanded = expandedIds ?? internalExpandedIds;
   const selected = selectedIds ?? internalSelectedIds;
   const selectedSet = new Set(selected);
@@ -86,6 +91,15 @@ export function TreeView({
   const currentFocusId = focusableNodes.some(({ node }) => node.id === focusedId)
     ? focusedId
     : (focusableNodes[0]?.node.id ?? "");
+
+  useEffect(
+    () => () => {
+      if (typeaheadRef.current.timeout !== null) {
+        window.clearTimeout(typeaheadRef.current.timeout);
+      }
+    },
+    [],
+  );
 
   function updateExpanded(next: string[]) {
     if (expandedIds === undefined) setInternalExpandedIds(next);
@@ -218,6 +232,50 @@ export function TreeView({
         event.preventDefault();
         updateSelected(id, event.shiftKey);
         break;
+      default: {
+        if (
+          event.key.length !== 1 ||
+          event.ctrlKey ||
+          event.metaKey ||
+          event.altKey ||
+          event.nativeEvent.isComposing
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+        const character = event.key.toLocaleLowerCase();
+        const previous = typeaheadRef.current;
+        const withinWindow = previous.timeout !== null;
+        const repeatedCharacter =
+          withinWindow &&
+          previous.query.length > 0 &&
+          [...previous.query].every((part) => part === character);
+        const query = !withinWindow
+          ? character
+          : repeatedCharacter
+            ? character
+            : previous.query + character;
+        if (previous.timeout !== null) window.clearTimeout(previous.timeout);
+        const timeout = window.setTimeout(() => {
+          typeaheadRef.current = { query: "", timeout: null };
+        }, 700);
+        typeaheadRef.current = { query, timeout };
+
+        const currentIndex = focusableNodes.findIndex(
+          ({ node: visibleNode }) => visibleNode.id === id,
+        );
+        const startIndex = currentIndex < 0 ? -1 : currentIndex;
+
+        for (let offset = 1; offset <= focusableNodes.length; offset += 1) {
+          const index = (startIndex + offset) % focusableNodes.length;
+          const candidate = focusableNodes[index]?.node;
+          if (candidate?.label.toLocaleLowerCase().startsWith(query)) {
+            focusNode(candidate.id);
+            break;
+          }
+        }
+      }
     }
   }
 

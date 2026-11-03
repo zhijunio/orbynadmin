@@ -213,8 +213,10 @@ export default function DataTableExamplePage() {
           <DataTable
             columns={columns}
             data={data}
+            getRowId={(row) => row.id}
             searchKey="name"
             searchPlaceholder="Search customers…"
+            columnFilters
             bulkActions={(rows, clearSelection) => (
               <>
                 <Button

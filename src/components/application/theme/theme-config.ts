@@ -36,7 +36,7 @@ export type Accent = {
 
 export const accents: Accent[] = [
   { key: "neutral", label: "Neutral", swatch: "oklch(0.205 0 0)", primary: "oklch(0.205 0 0)", fg: "oklch(0.985 0 0)", darkPrimary: "oklch(0.92 0 0)", darkFg: "oklch(0.205 0 0)" },
-  { key: "blue", label: "Blue", swatch: "oklch(0.6 0.2 264)", primary: "oklch(0.58 0.22 264)", fg: "oklch(0.985 0 0)" },
+  { key: "blue", label: "Blue", swatch: "oklch(0.6 0.2 264)", primary: "oklch(0.54 0.22 264)", fg: "oklch(0.985 0 0)" },
   { key: "violet", label: "Violet", swatch: "oklch(0.61 0.22 292)", primary: "oklch(0.61 0.22 292)", fg: "oklch(0.985 0 0)" },
   { key: "green", label: "Green", swatch: "oklch(0.62 0.17 152)", primary: "oklch(0.58 0.16 152)", fg: "oklch(0.985 0 0)" },
   { key: "teal", label: "Teal", swatch: "oklch(0.64 0.12 195)", primary: "oklch(0.58 0.11 195)", fg: "oklch(0.985 0 0)" },

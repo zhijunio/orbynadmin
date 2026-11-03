@@ -19,7 +19,7 @@ export function EcommerceTopProductsCard() {
             <span className="w-4 shrink-0 text-center text-sm font-medium text-muted-foreground tabular-nums">{index + 1}</span>
             <Image src={product.image} unoptimized alt={product.name} width={40} height={40} className="size-10 shrink-0 rounded-md border bg-muted object-cover" />
             <div className="min-w-0 flex-1"><p className="truncate text-sm font-medium">{product.name}</p><p className="truncate text-xs text-muted-foreground">{product.category} · {product.sold.toLocaleString()} sold</p></div>
-            <div className="shrink-0 text-right"><p className="text-sm font-medium tabular-nums">${product.revenue.toLocaleString()}</p><p className="text-xs font-medium text-emerald-600 tabular-nums dark:text-emerald-400">+{trends[index] ?? 3}%</p></div>
+            <div className="shrink-0 text-right"><p className="text-sm font-medium tabular-nums">${product.revenue.toLocaleString()}</p><p className="text-xs font-medium text-emerald-700 tabular-nums dark:text-emerald-400">+{trends[index] ?? 3}%</p></div>
           </div>
         ))}
       </CardContent>

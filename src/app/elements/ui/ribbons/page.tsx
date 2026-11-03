@@ -6,9 +6,9 @@ export const metadata = { title: "Ribbons" };
 
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
-const description = "Lorem ipsum dolor sit amet consectetur. Eget nulla suscipit arcu rutrum amet vel nec fringilla vulputate. Sed aliquam fringilla vulputate imperdiet arcu natoque purus ac nec ultricies nulla ultrices.";
+const description = "Explore the new analytics dashboard to spot customer trends and share reports with your team.";
 
 function LightningIcon() {
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="size-4"><path d="M13.2 2.8 5.9 13h5.3l-.5 8.2L18.1 11h-5.3l.4-8.2Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>;
@@ -27,10 +27,10 @@ function RibbonCard({ variant }: { variant: "rounded" | "hover" | "filled" | "ho
 
 
 export default function RibbonsPage() {
-  return <ConsoleLayout>{<Showcase title="Ribbons">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Ribbons" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
     <ComponentPreview title="Rounded Ribbon"><RibbonCard variant="rounded" /></ComponentPreview>
     <ComponentPreview title="Ribbon in Hover"><RibbonCard variant="hover" /></ComponentPreview>
     <ComponentPreview title="Filled Ribbon"><RibbonCard variant="filled" /></ComponentPreview>
-    <ComponentPreview title="Ribbon in Hover"><RibbonCard variant="hover-icon" /></ComponentPreview>
-  </Showcase>}</ConsoleLayout>;
+    <ComponentPreview title="Ribbon in Hover with Icon"><RibbonCard variant="hover-icon" /></ComponentPreview>
+  </div></div>}</ConsoleLayout>;
 }

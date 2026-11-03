@@ -4,19 +4,26 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
 import { useState } from "react";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { TagGroup } from "@/components/base/badges/tag-group";
 
 export default function TagGroupPage() {
   const [filters, setFilters] = useState(["Active", "Enterprise", "US West"]);
   const [priority, setPriority] = useState(["Standard"]);
-  return <ConsoleLayout>{<Showcase title="Tag Group">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Tag Group" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
     <ComponentPreview title="Removable Filters"><div className="w-full space-y-3"><TagGroup aria-label="Active filters" values={filters} onValuesChange={setFilters} />{filters.length === 0 && <p className="text-sm text-muted-foreground">No filters selected.</p>}</div></ComponentPreview>
     <ComponentPreview title="Read-only Tags"><TagGroup aria-label="Customer segments" values={["Healthcare", "Priority", "Renewal"]} /></ComponentPreview>
-    <ComponentPreview title="Colors and Sizes">
+    <ComponentPreview title="Color Variants">
       <div className="grid w-full gap-4">
-        <TagGroup aria-label="Small lime tags" values={["Active", "Verified", "Healthy"]} color="lime" size="sm" />
-        <TagGroup aria-label="Medium rose tags" values={["Past due", "Blocked", "Review"]} color="rose" size="md" />
+        <TagGroup aria-label="Lime tags" values={["Active", "Verified", "Healthy"]} color="lime" />
+        <TagGroup aria-label="Rose tags" values={["Past due", "Blocked", "Review"]} color="rose" />
+        <TagGroup aria-label="Neutral tags" values={["Draft", "Pending", "Archived"]} color="gray" />
+      </div>
+    </ComponentPreview>
+    <ComponentPreview title="Tag Sizes">
+      <div className="grid w-full gap-4">
+        <TagGroup aria-label="Small cyan tags" values={["New", "Review"]} color="cyan" size="sm" />
+        <TagGroup aria-label="Medium cyan tags" values={["New", "Review"]} color="cyan" size="md" />
       </div>
     </ComponentPreview>
     <ComponentPreview title="Single Selection">
@@ -33,5 +40,5 @@ export default function TagGroupPage() {
         <p className="text-xs text-muted-foreground" aria-live="polite">Selected: {priority[0] ?? "None"}</p>
       </div>
     </ComponentPreview>
-  </Showcase>}</ConsoleLayout>;
+  </div></div>}</ConsoleLayout>;
 }

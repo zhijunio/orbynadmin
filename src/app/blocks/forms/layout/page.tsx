@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/base/buttons/button";
 import Link from "next/link";
 import { Checkbox } from "@/components/base/checkbox/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/base/radio/radio-group";
 
 function AccountBillingExamples() {
   return <div className="grid gap-5 xl:grid-cols-2">
@@ -136,7 +137,32 @@ function FormLayoutExamples() {
         </form>
       </LayoutExampleCard>
     </div>
-  </div><AccountBillingExamples /><FilterFormExample /></div>;
+  </div><FeedbackFormExample /><AccountBillingExamples /><FilterFormExample /></div>;
+}
+
+function FeedbackFormExample() {
+  return <LayoutExampleCard title="Feedback Form">
+    <form className="space-y-5" onSubmit={(event) => submitDemo(event, "Feedback submitted", "Thanks for sharing your feedback.")}>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <LayoutField label="Your name" htmlFor="feedback-name"><Input id="feedback-name" required /></LayoutField>
+        <LayoutField label="Email" htmlFor="feedback-email"><Input id="feedback-email" type="email" required /></LayoutField>
+        <LayoutField label="Category" htmlFor="feedback-category"><Select defaultValue="product"><SelectTrigger id="feedback-category" className="w-full"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="product">Product</SelectItem><SelectItem value="support">Support</SelectItem><SelectItem value="billing">Billing</SelectItem></SelectContent></Select></LayoutField>
+        <LayoutField label="Priority" htmlFor="feedback-priority"><Select defaultValue="normal"><SelectTrigger id="feedback-priority" className="w-full"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="low">Low</SelectItem><SelectItem value="normal">Normal</SelectItem><SelectItem value="high">High</SelectItem></SelectContent></Select></LayoutField>
+        <fieldset className="space-y-2 sm:col-span-2">
+          <legend className="text-sm font-medium">Overall rating</legend>
+          <RadioGroup aria-label="Overall rating" defaultValue="4" className="flex flex-wrap gap-4">
+            {[1, 2, 3, 4, 5].map((rating) => <div key={rating} className="flex items-center gap-2"><RadioGroupItem id={`feedback-rating-${rating}`} value={`${rating}`} /><Label htmlFor={`feedback-rating-${rating}`} className="font-normal">{rating}</Label></div>)}
+          </RadioGroup>
+        </fieldset>
+        <LayoutField label="Subject" htmlFor="feedback-subject" className="sm:col-span-2"><Input id="feedback-subject" required /></LayoutField>
+        <LayoutField label="Detailed feedback" htmlFor="feedback-detail" className="sm:col-span-2"><Textarea id="feedback-detail" rows={4} required /></LayoutField>
+      </div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2"><Checkbox id="feedback-notify" /><Label htmlFor="feedback-notify" className="font-normal">Notify me when this is reviewed</Label></div>
+        <div className="flex justify-end gap-2"><Button type="reset" variant="outline">Clear form</Button><Button type="submit">Submit feedback</Button></div>
+      </div>
+    </form>
+  </LayoutExampleCard>;
 }
 
 function submitDemo(event: React.FormEvent<HTMLFormElement>, title: string, description: string) {

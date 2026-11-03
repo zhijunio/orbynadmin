@@ -5,7 +5,8 @@ import { CountUp } from "@/components/application/charts/chart-card-extras";
 import { useState } from "react";
 import { Bar, BarChart, BarShapeProps, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 
-import { Card } from "@/components/base/card/card";
+import { CardHeader, CardTitle } from "@/components/base/card/card";
+import { ChartCard } from "@/components/application/charts/chart-card";
 
 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const fullDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -60,19 +61,26 @@ export default function StepsCard() {
   const weekRange = formatWeekRange(weekIndex);
 
   return <div className="space-y-5"><div className="max-w-[576px]">
-    <Card className="flex h-[330px] w-full min-w-0 flex-col gap-4 rounded-[20px] border-0 bg-muted/45 p-2.5 ring-0">
-      <div className="flex w-full items-start justify-between gap-2 px-1.5 pt-1.5">
-        <div className="flex min-w-0 flex-1 flex-col gap-0.5"><p className="text-sm font-medium text-muted-foreground">{activeIndex === null ? "Steps" : fullDays[activeIndex]}</p><div className="flex items-baseline gap-1"><p className="whitespace-nowrap text-2xl font-semibold tracking-tight tabular-nums"><CountUp value={activeValue ?? total} format={format.format} /></p><span className="whitespace-nowrap text-sm text-muted-foreground">{activeIndex === null ? "total steps" : "steps"}</span></div></div>
+    <ChartCard title="Daily steps" className="flex h-[330px] w-full min-w-0 flex-col gap-4 rounded-[20px] p-2.5">
+      <CardHeader className="flex w-full flex-row items-start justify-between gap-2 p-1.5">
+        <div className="min-w-0 flex-1">
+          <CardTitle className="text-sm font-medium">Daily steps</CardTitle>
+          <div className="mt-1 flex items-baseline gap-1">
+            <span className="text-sm text-muted-foreground">{activeIndex === null ? "Weekly total" : fullDays[activeIndex]}</span>
+            <span className="whitespace-nowrap text-2xl font-semibold tracking-tight tabular-nums"><CountUp value={activeValue ?? total} format={format.format} /></span>
+            <span className="whitespace-nowrap text-sm text-muted-foreground">steps</span>
+          </div>
+        </div>
         <div className="flex h-8 min-w-[151px] shrink-0 items-center justify-between gap-1 rounded-lg border bg-background px-1 py-1 shadow-xs" role="group" aria-label="Week range">
           <button type="button" aria-label="Previous week" onClick={() => { setWeekIndex((index) => index - 1); setActiveIndex(null); }} className="grid size-5 shrink-0 place-items-center rounded-sm text-muted-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9 4 5.7 7.3a1 1 0 0 0 0 1.4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></button>
           <span className="flex-1 overflow-hidden whitespace-nowrap text-center text-sm text-foreground">{weekRange}</span>
           <button type="button" aria-label="Next week" onClick={() => { setWeekIndex((index) => index + 1); setActiveIndex(null); }} className="grid size-5 shrink-0 place-items-center rounded-sm text-muted-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m7 4 3.3 3.3a1 1 0 0 1 0 1.4L7 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></button>
         </div>
-      </div>
+      </CardHeader>
       <div className="-mx-[5.5px] min-h-0 flex-1"><ResponsiveContainer width="100%" height="100%"><BarChart data={data} margin={{ top: 4, right: 0, bottom: 0, left: 0 }} barCategoryGap={4.5} onMouseMove={(event) => { const index = Number(event?.activeTooltipIndex); setActiveIndex(event?.isTooltipActive && Number.isFinite(index) ? index : null); }} onMouseLeave={() => setActiveIndex(null)}>
         <XAxis dataKey="day" tickLine={false} axisLine={false} tickMargin={12} tick={{ fontSize: 12, fill: "var(--muted-foreground)" }} /><Tooltip content={() => null} cursor={false} />
         <Bar dataKey="steps" name="Steps" shape={(props) => <StepsBar {...props} selectedIndex={activeIndex} />} maxBarSize={50} activeBar={false} isAnimationActive />
       </BarChart></ResponsiveContainer></div>
-    </Card>
+    </ChartCard>
   </div></div>;
 }

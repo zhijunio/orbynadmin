@@ -5,7 +5,7 @@ export const metadata = { title: "Scroll Areas" };
 
 
 
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
 import { ScrollArea } from "@/components/base/scroll-area/scroll-area";
@@ -22,6 +22,18 @@ function ScrollAreaExamples() {
     <ComponentPreview title="Scrollable Directory">
       <ScrollArea className="h-64 w-full rounded-lg border">
         <div className="p-2">{[..."ABCDEFGH"].map((letter) => <section key={letter} className="mb-2"><h3 className="sticky top-0 bg-background px-2 py-1 text-xs font-semibold text-muted-foreground">{letter}</h3><div className="space-y-1">{[1, 2].map((index) => <div key={index} className="rounded-md px-2 py-2 text-sm hover:bg-muted">{letter}lex Morgan {index === 2 && "· Product Design"}</div>)}</div></section>)}</div>
+      </ScrollArea>
+    </ComponentPreview>
+    <ComponentPreview title="Horizontal Project Strip" className="xl:col-span-2">
+      <ScrollArea orientation="horizontal" className="h-36 w-full rounded-lg border">
+        <div className="flex h-full w-max items-center gap-3 p-3">
+          {["Website refresh", "Mobile app", "Design system", "Q4 planning", "Customer portal", "Analytics"].map((project, index) => (
+            <div key={project} className="flex h-24 w-48 flex-col justify-between rounded-lg border bg-card p-3">
+              <span className="text-sm font-medium">{project}</span>
+              <span className="text-xs text-muted-foreground">{index + 2} open tasks</span>
+            </div>
+          ))}
+        </div>
       </ScrollArea>
     </ComponentPreview>
   </>;
@@ -41,5 +53,5 @@ const activity = [
 
 
 export default function ScrollAreasPage() {
-  return <ConsoleLayout>{<Showcase title="Scroll Areas"><ScrollAreaExamples /></Showcase>}</ConsoleLayout>;
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Scroll Areas" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><ScrollAreaExamples /></div></div>}</ConsoleLayout>;
 }

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { Slider } from "@/components/base/slider/slider";
 import { Meter, type MeterTone } from "@/components/base/meter/meter";
 
@@ -19,7 +19,7 @@ function MeterExamples() {
 
   return (
     <>
-      <ComponentPreview title="Preview">
+      <ComponentPreview title="Usage and Quota Meters">
         <div className="grid w-full max-w-md gap-5">
           <Meter label="Storage" value={7.2} maxValue={10} valueLabel="7.2 of 10 GB" />
           <Meter
@@ -34,14 +34,7 @@ function MeterExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Anatomy">
-        <div className="grid gap-3 text-sm leading-6 text-muted-foreground">
-          <p>A meter describes a level within a known range, such as storage, seats, or a quota.</p>
-          <p>Set the range with minValue and maxValue. Use valueLabel for the displayed reading and description for supporting guidance.</p>
-        </div>
-      </ComponentPreview>
-
-      <ComponentPreview title="Tones">
+      <ComponentPreview title="Status Tones">
         <div className="grid w-full max-w-md gap-5">
           <Meter label="Accent" value={40} valueLabel="40%" />
           <Meter label="Success" value={55} valueLabel="55%" tone="success" />
@@ -50,7 +43,7 @@ function MeterExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Thresholds">
+      <ComponentPreview title="Interactive Thresholds">
         <div className="grid w-full max-w-md gap-4">
           <Meter label="Storage" value={used} valueLabel={`${used}%`} tone={toneFor(used)} />
           <div className="grid gap-2">
@@ -71,11 +64,6 @@ function MeterExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Accessibility">
-        <p className="text-sm leading-6 text-muted-foreground">
-          Each meter exposes its label, range, current value, and optional value text to assistive technology. Keep the reading visible so color is never the only signal.
-        </p>
-      </ComponentPreview>
     </>
   );
 }
@@ -83,9 +71,9 @@ function MeterExamples() {
 export default function MeterPage() {
   return (
     <ConsoleLayout>
-      <Showcase title="Meter">
+      <div className="min-w-0 space-y-5"><PageHeader title="Meter" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
         <MeterExamples />
-      </Showcase>
+      </div></div>
     </ConsoleLayout>
   );
 }

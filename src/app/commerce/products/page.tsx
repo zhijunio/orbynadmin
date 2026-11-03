@@ -197,6 +197,7 @@ export default function ProductsPage() {
       <DataTable
         columns={columns}
         data={items}
+        getRowId={(row) => row.id}
         searchKey="name"
         searchPlaceholder="Search products…"
       />

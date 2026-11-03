@@ -14,11 +14,11 @@ type LinkProps = { isActive?: boolean; size?: React.ComponentProps<typeof Button
 function PaginationLink({ className, isActive, size = "icon", ...props }: LinkProps) {
   return <Button asChild variant={isActive ? "outline" : "ghost"} size={size} className={className}><a aria-current={isActive ? "page" : undefined} {...props} /></Button>;
 }
-function PaginationPrevious({ className, text = "Previous", ...props }: LinkProps & { text?: string }) {
-  return <PaginationLink aria-label="Go to previous page" size="default" className={cn("pl-1.5", className)} {...props}><ChevronLeft aria-hidden="true" /><span className="hidden sm:block">{text}</span></PaginationLink>;
+function PaginationPrevious({ className, text = "Previous", showIcon = true, ...props }: LinkProps & { text?: string; showIcon?: boolean }) {
+  return <PaginationLink aria-label="Go to previous page" size="default" className={cn("pl-1.5", className)} {...props}>{showIcon && <ChevronLeft aria-hidden="true" />}{text && <span className={showIcon ? "hidden sm:block" : undefined}>{text}</span>}</PaginationLink>;
 }
-function PaginationNext({ className, text = "Next", ...props }: LinkProps & { text?: string }) {
-  return <PaginationLink aria-label="Go to next page" size="default" className={cn("pr-1.5", className)} {...props}><span className="hidden sm:block">{text}</span><ChevronRight aria-hidden="true" /></PaginationLink>;
+function PaginationNext({ className, text = "Next", showIcon = true, ...props }: LinkProps & { text?: string; showIcon?: boolean }) {
+  return <PaginationLink aria-label="Go to next page" size="default" className={cn("pr-1.5", className)} {...props}>{text && <span className={showIcon ? "hidden sm:block" : undefined}>{text}</span>}{showIcon && <ChevronRight aria-hidden="true" />}</PaginationLink>;
 }
 function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span">) {
   return <span aria-hidden="true" className={cn("flex size-9 items-center justify-center", className)} {...props}><MoreHorizontal className="size-4" /><span className="sr-only">More pages</span></span>;

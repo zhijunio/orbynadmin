@@ -4,7 +4,7 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { toast } from "sonner";
 import { Button } from "@/components/base/buttons/button";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 const positions = [
   { y: "top", x: "start", label: "Top left" },
@@ -37,8 +37,8 @@ export default function ToastPage() {
 
   return (
     <ConsoleLayout>
-      <Showcase title="Toast" columns={1}>
-        <ComponentPreview title="Anatomy">
+      <div className="min-w-0 space-y-5"><PageHeader title="Toast" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
+        <ComponentPreview title="Success, Information, and Undo Toasts">
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={() => toast.success("Changes saved", { description: "Your workspace settings are up to date." })}>Save changes</Button>
             <Button variant="outline" onClick={() => toast("Project archived", { description: "Acme Dashboard moved to the archive.", action: { label: "Undo", onClick: () => toast.success("Project restored") } })}>Archive project</Button>
@@ -53,7 +53,7 @@ export default function ToastPage() {
           </div>
         </ComponentPreview>
 
-        <ComponentPreview title="Position">
+        <ComponentPreview title="Toast Positions">
           <div className="flex flex-wrap gap-2">
             {positions.map(({ y, x, label }) => (
               <Button key={label} variant="outline" onClick={() => showPosition(y, x)}>{label}</Button>
@@ -61,24 +61,34 @@ export default function ToastPage() {
           </div>
         </ComponentPreview>
 
-        <ComponentPreview title="Duration and limit">
+        <ComponentPreview title="Toast Duration">
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={() => toast("Quick confirmation", { duration: 2000, className: "cn-toast-short" })}>Two seconds</Button>
             <Button variant="outline" onClick={() => toast("This stays until dismissed", { duration: Number.POSITIVE_INFINITY, className: "cn-toast-persistent" })}>Until dismissed</Button>
-            <Button variant="outline" onClick={() => toast("Draft saved", { id: "toast-draft" })}>Reuse ID</Button>
-            <Button variant="outline" onClick={() => toast.success("Draft updated", { id: "toast-draft" })}>Update ID</Button>
-            <Button variant="outline" onClick={() => toast.dismiss("toast-draft")}>Dismiss ID</Button>
-            <Button variant="outline" onClick={() => { toast.success("Changes saved"); toast("Project archived"); toast.info("Export started"); toast.error("Connection interrupted"); }}>Show four</Button>
           </div>
         </ComponentPreview>
 
-        <ComponentPreview title="Accessibility">
+        <ComponentPreview title="Toast IDs">
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => toast("Draft saved", { id: "toast-draft" })}>Reuse ID</Button>
+            <Button variant="outline" onClick={() => toast.success("Draft updated", { id: "toast-draft" })}>Update ID</Button>
+            <Button variant="outline" onClick={() => toast.dismiss("toast-draft")}>Dismiss ID</Button>
+          </div>
+        </ComponentPreview>
+
+        <ComponentPreview title="Visible Toast Limit">
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => { toast.success("Changes saved"); toast("Project archived"); toast.info("Export started"); toast.error("Connection interrupted"); }}>Show four notifications</Button>
+          </div>
+        </ComponentPreview>
+
+        <ComponentPreview title="Success and Error Feedback">
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={() => toast.success("Changes saved", { description: "Your workspace settings are up to date." })}>Announce status</Button>
             <Button variant="outline" onClick={() => toast.error("Could not save changes", { description: "Check your connection and try again." })}>Announce error</Button>
           </div>
         </ComponentPreview>
-      </Showcase>
+      </div></div>
     </ConsoleLayout>
   );
 }

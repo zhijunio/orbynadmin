@@ -56,6 +56,7 @@
     "Mail": "邮件",
     "Calendar": "日历",
     "Kanban": "看板",
+    "Board": "看板",
     "Tasks": "任务",
     "Notes": "笔记",
     "File Manager": "文件管理",
@@ -112,6 +113,7 @@
     "Coming Soon": "即将推出",
     "Components": "组件",
     "Blocks": "模块示例",
+    "Notification Center": "通知中心",
     "Auth": "身份验证",
     "Stat Cards": "统计卡片",
     "Pricing Tables": "价格表",
@@ -711,10 +713,11 @@
       "signIn": "登录",
       "signInTitle": "欢迎回来",
       "signInDescription": "登录后继续使用你的工作区。",
-      "providerLayout": "第三方登录布局",
-      "layoutStacked": "纵向",
-      "layoutInline": "横向",
-      "layoutGrid": "网格",
+      "layoutStandard": "标准布局",
+      "layoutLogo": "带 Logo",
+      "layoutSplit": "插画分栏",
+      "layoutVerticalSocial": "社交按钮纵向排列",
+      "layoutLogoVerticalSocial": "带 Logo 的纵向社交按钮",
       "createAccount": "创建账户",
       "signUpDescription": "创建账户并开始使用。",
       "inviteSignupTitle": "创建受邀账户",
@@ -762,7 +765,6 @@
       "mfaEmailDescription": "输入发送至 alex@company.com 的六位验证码。",
       "mfaSmsDescription": "输入发送至 +1 (•••) •••-0142 的六位验证码。",
       "mfaDemoNotice": "此页面仅为界面示例，不会发送或验证凭据。",
-      "mfaFlowTabs": "多因素验证流程阶段",
       "bindingTab": "绑定",
       "challengeTab": "挑战验证",
       "bindEmailTitle": "绑定邮箱地址",
@@ -835,70 +837,64 @@
     "page": {
       "tabs": {
         "all": "全部",
-        "unread": "未读",
         "mentions": "提及",
         "system": "系统"
       },
+      "groups": {
+        "today": "今天",
+        "earlier": "本周较早"
+      },
+      "times": {
+        "2m": "2 分钟",
+        "18m": "18 分钟",
+        "1h": "1 小时",
+        "mon": "周一",
+        "sun": "周日",
+        "sat": "周六"
+      },
+      "actionLabels": {
+        "reply": "回复",
+        "viewThread": "查看讨论",
+        "download": "下载",
+        "review": "查看更改",
+        "retry": "重试",
+        "viewLogs": "查看日志"
+      },
       "markAllRead": "全部标为已读",
-      "settings": "通知设置",
+      "unreadCount": "{count} 条未读",
       "empty": "已查看所有通知。",
       "actions": "通知操作",
       "markUnread": "标为未读",
       "markRead": "标为已读",
       "remove": "删除",
+      "unread": "未读",
       "markedAllRead": "已将所有通知标为已读",
       "removed": "已删除通知",
-      "times": {
-        "2 min ago": "2 分钟前",
-        "25 min ago": "25 分钟前",
-        "1 hour ago": "1 小时前",
-        "2 hours ago": "2 小时前",
-        "4 hours ago": "4 小时前",
-        "6 hours ago": "6 小时前",
-        "Yesterday": "昨天",
-        "2 days ago": "2 天前",
-        "3 days ago": "3 天前"
-      },
+      "actionCompleted": "已打开：{action}",
       "entries": {
         "N-01": {
-          "title": "Priya Nair 提及了你",
-          "description": "在 Mobile App Revamp 中留言：“@alex 能帮忙审查新的入职清单吗？”"
+          "title": "Livia 提及了你",
+          "description": "能否在我们发布前帮忙检查新的空状态？"
         },
         "N-02": {
-          "title": "分配了新任务",
-          "description": "你在 Billing Platform v2 中接到了任务“实现按用量计费事件”"
+          "title": "工作区备份已就绪",
+          "description": "7 月 23 日的备份已完成，可以下载。"
         },
         "N-03": {
-          "title": "Marcus Chen 发表了评论",
-          "description": "评论了“添加 SSO / SAML 配置”"
+          "title": "你已加入 Project Sea",
+          "description": "Maria 将你添加为编辑者，你现在可以访问项目中的所有文件。"
         },
         "N-04": {
-          "title": "部署成功",
-          "description": "web-app v2.14.0 已部署到生产环境，用时 3 分 12 秒"
+          "title": "Jaydon 请求你审查",
+          "description": "拉取请求 #284 更新了通知偏好设置流程。"
         },
         "N-05": {
-          "title": "收到付款",
-          "description": "Northwind 已支付发票 INV-2043，金额 $1,296.00"
+          "title": "安全检查已完成",
+          "description": "未发现泄露的凭据或存在漏洞的依赖项。"
         },
         "N-06": {
-          "title": "检测到新的登录",
-          "description": "检测到来自旧金山 macOS Chrome 浏览器的新登录"
-        },
-        "N-07": {
-          "title": "Sofia Rossi 发表了评论",
-          "description": "“看起来很棒——下周发布本地化页面。”"
-        },
-        "N-08": {
-          "title": "Hannah Kim 提及了你",
-          "description": "“@alex 有客户询问第三季度路线图。”"
-        },
-        "N-09": {
-          "title": "里程碑即将到期",
-          "description": "Mobile App Revamp 的“Beta 发布”将在 3 天后到期"
-        },
-        "N-10": {
-          "title": "存储空间已使用 82%",
-          "description": "工作区即将达到存储空间上限"
+          "title": "预览部署失败",
+          "description": "构建在验证应用路由时停止。"
         }
       }
     }

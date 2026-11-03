@@ -60,6 +60,22 @@ const formatX = (value: number) => value >= 1000 ? `${Math.round(value / 100) / 
 
 type ActivePoint = { series: number; index: number } | null;
 
+export function PortfolioScatterChartCard() {
+  const [metric, setMetric] = useState<"Return" | "Risk score">("Return");
+  const [period, setPeriod] = useState("Year to date");
+  const points = metric === "Return"
+    ? [{ x: 38, y: 8, z: 450, label: "Stocks" }, { x: 22, y: 3, z: 260, label: "Funds" }, { x: 67, y: 12, z: 190, label: "Crypto" }]
+    : [{ x: 38, y: 38, z: 450, label: "Stocks" }, { x: 22, y: 22, z: 260, label: "Funds" }, { x: 67, y: 67, z: 190, label: "Crypto" }];
+  const scale = period === "Last 12 months" ? 0.92 : period === "Last 3 years" ? 1.18 : 1;
+  const shown = points.map((point) => ({ ...point, y: Math.round(point.y * scale * 10) / 10 }));
+  return <ChartCard title="Portfolio" className="flex h-[329px] flex-col gap-2 p-4">
+    <div className="flex shrink-0 items-start justify-between gap-2"><div><p className="text-xs text-muted-foreground">Portfolio return</p><p className="mt-1 text-2xl font-semibold tabular-nums">7% <DeltaChip positive>+6.2%</DeltaChip></p></div><DropdownMenu><DropdownMenuTrigger asChild><button type="button" aria-label="Change portfolio period" className="inline-flex h-8 items-center gap-1.5 rounded-[10px] border bg-background px-2 text-sm font-medium text-foreground shadow-xs transition-colors hover:bg-accent"><IconCalendar aria-hidden="true" className="size-4 text-muted-foreground" /><span>{period}</span><IconChevronDown aria-hidden="true" className="size-4 text-muted-foreground" /></button></DropdownMenuTrigger><DropdownMenuContent align="end">{["Year to date", "Last 12 months", "Last 3 years"].map((item) => <DropdownMenuItem key={item} onSelect={() => setPeriod(item)}>{item}{period === item && <IconCheck aria-hidden="true" className="ml-auto size-4" />}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu></div>
+    <div className="flex h-7 shrink-0 items-center gap-1" role="group" aria-label="Portfolio metric">{(["Return", "Risk score"] as const).map((item) => <button key={item} type="button" aria-pressed={metric === item} onClick={() => setMetric(item)} className={`rounded-md px-2 py-1 text-xs ${metric === item ? "bg-background font-medium shadow-xs" : "text-muted-foreground"}`}>{item}</button>)}</div>
+    <div className="min-h-0 flex-1"><ResponsiveContainer width="100%" height="100%"><ScatterChart margin={{ top: 4, right: 8, bottom: 0, left: 0 }}><CartesianGrid stroke="var(--border)" strokeDasharray="3 3" /><XAxis type="number" dataKey="x" domain={[0, 80]} tickCount={5} tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} /><YAxis type="number" dataKey="y" domain={metric === "Return" ? [0, 15] : [0, 80]} tickCount={4} tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} tickFormatter={(value) => metric === "Return" ? `${value}%` : value} /><ZAxis type="number" dataKey="z" range={[90, 400]} /><Tooltip cursor={false} formatter={(value) => [metric === "Return" ? `${value}%` : value, metric]} />{shown.map((point, index) => <Scatter key={point.label} name={point.label} data={[point]} fill={`var(--chart-${index + 1})`} fillOpacity={0.8} stroke={`var(--chart-${index + 1})`} isAnimationActive animationDuration={450} />)}</ScatterChart></ResponsiveContainer></div>
+    <div className="grid shrink-0 grid-cols-3 gap-2 border-t pt-2">{shown.map((point) => <div key={point.label} className="text-center text-xs"><p className="text-muted-foreground">{point.label}</p><p className="mt-0.5 font-semibold tabular-nums">{metric === "Return" ? `${point.y}%` : point.y}</p></div>)}</div>
+  </ChartCard>;
+}
+
 export default function ScatterChartCard() {
   const [active, setActive] = useState<ActivePoint>(null);
   const [rangeId, setRangeId] = useState<RangeId>(ranges[0].id);

@@ -5,7 +5,7 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { useId, useState } from "react";
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { Checkbox } from "@/components/base/checkbox/checkbox";
 import { CheckboxCard } from "@/components/base/checkbox/checkbox-card";
 import { HintText } from "@/components/base/input/hint-text";
@@ -33,7 +33,7 @@ function CheckboxExamples() {
   }
 
   return <>
-      <ComponentPreview title="Default">
+      <ComponentPreview title="Checked and Unchecked">
         <div className="grid gap-4">
           <label className="flex cursor-pointer items-center gap-3 text-sm">
             <Checkbox aria-label="Remember this device" />
@@ -93,26 +93,27 @@ function CheckboxExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Disabled and Invalid">
-        <div className="grid w-full max-w-sm gap-4">
-          <label className="flex cursor-not-allowed items-center gap-3 text-sm opacity-60">
-            <Checkbox disabled checked aria-label="Required policy accepted" />
-            <span>Required policy accepted</span>
-          </label>
-          <div className="grid gap-2">
+      <ComponentPreview title="Disabled Checkbox">
+        <label className="flex cursor-not-allowed items-center gap-3 text-sm opacity-60">
+          <Checkbox disabled checked aria-label="Required policy accepted" />
+          <span>Required policy accepted</span>
+        </label>
+      </ComponentPreview>
+
+      <ComponentPreview title="Invalid Checkbox">
+        <div className="grid w-full max-w-sm gap-2">
             <div className="flex items-center gap-3">
               <Checkbox id={`${id}-terms`} aria-invalid="true" />
               <Label htmlFor={`${id}-terms`}>Accept the terms</Label>
             </div>
             <HintText variant="error">You must accept the terms to continue.</HintText>
-          </div>
         </div>
       </ComponentPreview>
     </>;
 }
 
 export default function CheckboxPage() {
-  return <ConsoleLayout>{<Showcase title="Checkbox">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Checkbox" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <CheckboxExamples />
-    </Showcase>}</ConsoleLayout>;
+    </div></div>}</ConsoleLayout>;
 }

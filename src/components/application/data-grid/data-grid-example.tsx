@@ -1,13 +1,21 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { IconDownload, IconSearch, IconTableOptions } from "@tabler/icons-react";
+import {
+  IconArrowDown,
+  IconArrowUp,
+  IconArrowsUpDown,
+  IconDownload,
+  IconSearch,
+  IconTableOptions,
+} from "@tabler/icons-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/base/badges/badge";
 import { Button } from "@/components/base/buttons/button";
 import { Checkbox } from "@/components/base/checkbox/checkbox";
 import { Input } from "@/components/base/input/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/base/select/select";
+import { escapeCsvCell } from "@/utils/csv";
 
 type Account = { id: string; account: string; owner: string; region: string; stage: string; seats: number; arr: number; health: number };
 type ColumnKey = Exclude<keyof Account, "id">;
@@ -96,30 +104,45 @@ export function DataGridExample() {
   const summary = summarized.reduce((result, row) => ({ seats: result.seats + row.seats, arr: result.arr + row.arr, health: result.health + row.health }), { seats: 0, arr: 0, health: 0 });
 
   function updateCell(id: string, key: ColumnKey, rawValue: string) {
-    setData((current) => current.map((row) => {
-      if (row.id !== id) return row;
-      if (key === "seats" || key === "health") {
-        const value = Number(rawValue);
-        if (!Number.isFinite(value) || value < 0 || (key === "health" && value > 100)) {
-          toast.error(key === "health" ? "Health must be between 0 and 100." : "Seats must be zero or greater.");
-          return row;
-        }
-        return { ...row, [key]: value };
+    if (key === "seats" || key === "health") {
+      const value = Number(rawValue);
+      if (
+        !rawValue.trim() ||
+        !Number.isFinite(value) ||
+        value < 0 ||
+        (key === "health" && value > 100)
+      ) {
+        toast.error(
+          key === "health"
+            ? "Health must be between 0 and 100."
+            : "Seats must be zero or greater.",
+        );
+        return;
       }
-      if (!rawValue.trim()) {
-        toast.error(`${columns.find((column) => column.key === key)?.label ?? "Value"} cannot be empty.`);
-        return row;
-      }
-      return { ...row, [key]: rawValue };
-    }));
+
+      setData((current) =>
+        current.map((row) => (row.id === id ? { ...row, [key]: value } : row)),
+      );
+      return;
+    }
+
+    if (!rawValue.trim()) {
+      toast.error(
+        `${columns.find((column) => column.key === key)?.label ?? "Value"} cannot be empty.`,
+      );
+      return;
+    }
+
+    setData((current) =>
+      current.map((row) => (row.id === id ? { ...row, [key]: rawValue } : row)),
+    );
   }
 
   function exportCsv() {
     const exportRows = selectedRows.length ? selectedRows : rows;
-    const escape = (value: string | number) => `"${String(value).replaceAll('"', '""')}"`;
     const csv = [
-      shownColumns.map((column) => escape(column.label)).join(","),
-      ...exportRows.map((row) => shownColumns.map((column) => escape(row[column.key])).join(",")),
+      shownColumns.map((column) => escapeCsvCell(column.label)).join(","),
+      ...exportRows.map((row) => shownColumns.map((column) => escapeCsvCell(row[column.key])).join(",")),
     ].join("\r\n");
     const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
     const link = document.createElement("a");
@@ -184,39 +207,136 @@ export function DataGridExample() {
 
       <div className="overflow-hidden rounded-lg border bg-card">
         <div ref={viewport} role="region" aria-label="Accounts data grid" tabIndex={0} className="max-h-[440px] overflow-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" onScroll={(event) => setScrollTop(event.currentTarget.scrollTop)}>
-          <table className="w-full min-w-[950px] border-separate border-spacing-0 text-sm">
+          <table
+            aria-rowcount={rows.length + 2}
+            aria-colcount={shownColumns.length + 2}
+            className="w-full min-w-[950px] border-separate border-spacing-0 text-sm"
+          >
             <thead className="sticky top-0 z-10 bg-muted/95 backdrop-blur">
-              <tr className="h-10">
+              <tr aria-rowindex={1} className="h-10">
                 <th className="sticky left-0 z-20 w-12 border-b bg-muted px-3 text-left"><Checkbox aria-label="Select all filtered accounts" checked={allVisibleSelected ? true : selectedVisibleCount > 0 ? "indeterminate" : false} onCheckedChange={(value) => toggleAll(Boolean(value))} /></th>
                 <th className="sticky left-12 z-20 w-12 border-b bg-muted text-center text-xs text-muted-foreground">#</th>
-                {shownColumns.map((column, index) => <th key={column.key} className={`border-b px-3 text-xs font-medium text-muted-foreground ${column.align === "right" ? "text-right" : "text-left"} ${index === 0 ? "sticky left-[96px] z-20 bg-muted" : ""}`} style={{ width: column.width, minWidth: column.width }}><button type="button" className="inline-flex items-center gap-1 hover:text-foreground" onClick={() => setSort((current) => current?.key === column.key ? { key: column.key, descending: !current.descending } : { key: column.key, descending: false })}>{column.label}<span aria-hidden>{sort?.key === column.key ? sort.descending ? "↓" : "↑" : "↕"}</span></button></th>)}
+                {shownColumns.map((column, index) => {
+                  const sortDirection =
+                    sort?.key === column.key
+                      ? sort.descending
+                        ? "descending"
+                        : "ascending"
+                      : null;
+                  const SortIcon =
+                    sortDirection === "descending"
+                      ? IconArrowDown
+                      : sortDirection === "ascending"
+                        ? IconArrowUp
+                        : IconArrowsUpDown;
+                  return (
+                    <th
+                      key={column.key}
+                      aria-sort={sortDirection ?? "none"}
+                      className={`border-b px-3 text-xs font-medium text-muted-foreground ${column.align === "right" ? "text-right" : "text-left"} ${index === 0 ? "sticky left-[96px] z-20 bg-muted" : ""}`}
+                      style={{ width: column.width, minWidth: column.width }}
+                    >
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-1 hover:text-foreground"
+                        onClick={() =>
+                          setSort((current) =>
+                            current?.key === column.key
+                              ? { key: column.key, descending: !current.descending }
+                              : { key: column.key, descending: false },
+                          )
+                        }
+                      >
+                        {column.label}
+                        <SortIcon className="size-3.5" aria-hidden="true" />
+                      </button>
+                    </th>
+                  );
+                })}
               </tr>
             </thead>
             <tbody>
               {first > 0 && <tr aria-hidden="true"><td colSpan={shownColumns.length + 2} style={{ height: first * height }} /></tr>}
-              {visibleRows.map((row, offset) => <tr key={row.id} className={`group ${selected.has(row.id) ? "bg-primary/5" : "hover:bg-muted/40"}`} style={{ height }}>
+              {visibleRows.map((row, offset) => <tr key={row.id} aria-rowindex={first + offset + 2} className={`group ${selected.has(row.id) ? "bg-primary/5" : "hover:bg-muted/40"}`} style={{ height }}>
                 <td className="sticky left-0 z-[1] border-b bg-card px-3 group-hover:bg-muted/40"><Checkbox aria-label={`Select ${row.account}`} checked={selected.has(row.id)} onCheckedChange={(checked) => setSelected((current) => { const next = new Set(current); if (checked) next.add(row.id); else next.delete(row.id); return next; })} /></td>
                 <td className="sticky left-12 z-[1] border-b bg-card text-center text-xs tabular-nums text-muted-foreground group-hover:bg-muted/40">{first + offset + 1}</td>
                 {shownColumns.map((column, index) => {
                   const value = row[column.key];
                   const cellEditing = editing?.id === row.id && editing.key === column.key;
-                  return <td key={column.key} className={`border-b px-3 tabular-nums ${column.align === "right" ? "text-right" : "text-left"} ${index === 0 ? "sticky left-[96px] z-[1] bg-card group-hover:bg-muted/40" : ""}`} onDoubleClick={() => { if (column.editable) { setEditing({ id: row.id, key: column.key }); setEditValue(String(value)); } }} title={column.editable ? "Double-click to edit" : undefined}>
-                    {cellEditing ? <input autoFocus value={editValue} onChange={(event) => setEditValue(event.currentTarget.value)} onBlur={() => finishEdit(true)} onKeyDown={(event) => { if (event.key === "Enter") finishEdit(true); if (event.key === "Escape") finishEdit(false); }} className="w-full rounded border bg-background px-1.5 py-1 text-inherit outline-none focus:ring-2 focus:ring-ring" aria-label={`Edit ${column.label}`} /> : column.key === "stage" ? <Badge variant="secondary" className="font-normal">{value}</Badge> : column.key === "arr" ? money(value as number) : column.key === "health" ? `${value}%` : value}
-                  </td>;
+                  return (
+                    <td
+                      key={column.key}
+                      className={`border-b px-3 tabular-nums ${column.align === "right" ? "text-right" : "text-left"} ${index === 0 ? "sticky left-[96px] z-[1] bg-card group-hover:bg-muted/40" : ""}`}
+                      onDoubleClick={() => {
+                        if (column.editable) {
+                          setEditing({ id: row.id, key: column.key });
+                          setEditValue(String(value));
+                        }
+                      }}
+                      title={column.editable ? "Double-click to edit" : undefined}
+                    >
+                      {cellEditing ? column.key === "stage" ? (
+                        <Select
+                          value={editValue}
+                          onValueChange={(nextValue) => {
+                            updateCell(row.id, "stage", nextValue);
+                            setEditing(null);
+                          }}
+                        >
+                          <SelectTrigger
+                            autoFocus
+                            aria-label={`Edit stage for ${row.account}`}
+                            className="h-8 w-full"
+                          >
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {stages.map((stage) => (
+                              <SelectItem key={stage} value={stage}>{stage}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      ) : (
+                        <input
+                          autoFocus
+                          type={column.key === "seats" || column.key === "health" ? "number" : "text"}
+                          min={column.key === "seats" || column.key === "health" ? 0 : undefined}
+                          max={column.key === "health" ? 100 : undefined}
+                          value={editValue}
+                          onChange={(event) => setEditValue(event.currentTarget.value)}
+                          onBlur={() => finishEdit(true)}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter") finishEdit(true);
+                            if (event.key === "Escape") finishEdit(false);
+                          }}
+                          className="w-full rounded border bg-background px-1.5 py-1 text-inherit outline-none focus:ring-2 focus:ring-ring"
+                          aria-label={`Edit ${column.label} for ${row.account}`}
+                        />
+                      ) : column.key === "stage" ? (
+                        <Badge variant="secondary" className="font-normal">{value}</Badge>
+                      ) : column.key === "arr" ? (
+                        money(value as number)
+                      ) : column.key === "health" ? (
+                        `${value}%`
+                      ) : (
+                        value
+                      )}
+                    </td>
+                  );
                 })}
               </tr>)}
               {last < rows.length && <tr aria-hidden="true"><td colSpan={shownColumns.length + 2} style={{ height: (rows.length - last) * height }} /></tr>}
               {!rows.length && <tr><td colSpan={shownColumns.length + 2} className="h-24 text-center text-muted-foreground">No matching accounts.</td></tr>}
             </tbody>
             <tfoot className="sticky bottom-0 z-10 bg-muted font-medium">
-              <tr className="h-10"><td colSpan={2} className="border-t px-3 text-xs text-muted-foreground">{selectedRows.length ? "Selected total" : "Filtered total"}</td>{shownColumns.map((column) => <td key={column.key} className={`border-t px-3 ${column.align === "right" ? "text-right" : "text-left"}`}>{column.key === "seats" ? summary.seats.toLocaleString() : column.key === "arr" ? money(summary.arr) : column.key === "health" ? `${summarized.length ? (summary.health / summarized.length).toFixed(1) : "0.0"}% avg` : null}</td>)}</tr>
+              <tr aria-rowindex={rows.length + 2} className="h-10"><td colSpan={2} className="border-t px-3 text-xs text-muted-foreground">{selectedRows.length ? "Selected total" : "Filtered total"}</td>{shownColumns.map((column) => <td key={column.key} className={`border-t px-3 ${column.align === "right" ? "text-right" : "text-left"}`}>{column.key === "seats" ? summary.seats.toLocaleString() : column.key === "arr" ? money(summary.arr) : column.key === "health" ? `${summarized.length ? (summary.health / summarized.length).toFixed(1) : "0.0"}% avg` : null}</td>)}</tr>
             </tfoot>
           </table>
         </div>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-muted-foreground">
         <span>{rows.length.toLocaleString()} rows · {data.length.toLocaleString()} total</span>
-        <span>{selected.size ? `${selected.size} selected` : "Double-click editable cells to change values · summaries follow filters"}</span>
+        <span>{selectedVisibleCount ? `${selectedVisibleCount} selected` : "Double-click editable cells to change values · summaries follow filters"}</span>
       </div>
     </div>
   );

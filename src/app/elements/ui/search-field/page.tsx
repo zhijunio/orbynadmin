@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { Button } from "@/components/base/buttons/button";
 import { Kbd, KbdGroup } from "@/components/base/kbd/kbd";
 import { Label } from "@/components/base/input/label";
@@ -22,13 +22,15 @@ const teammates = [
 function SearchFieldExamples() {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [keyboardQuery, setKeyboardQuery] = useState("");
+  const [submittedQuery, setSubmittedQuery] = useState("");
   const filteredTeammates = teammates.filter((teammate) =>
     `${teammate.name} ${teammate.team}`.toLowerCase().includes(query.toLowerCase()),
   );
 
   return (
     <>
-      <ComponentPreview title="Preview">
+      <ComponentPreview title="Search Results">
         <div className="w-full max-w-sm space-y-2">
           <SearchField aria-label="Search teammates" placeholder="Search teammates" value={query} onChange={setQuery} />
           <ul aria-label="Teammates" className="divide-y divide-border">
@@ -68,7 +70,7 @@ function SearchFieldExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Loading">
+      <ComponentPreview title="Loading State">
         <div className="grid w-full max-w-sm gap-3">
           <div className="grid gap-2">
             <Label htmlFor="search-help-center">Help center</Label>
@@ -86,13 +88,22 @@ function SearchFieldExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Keyboard and Accessibility">
-        <div className="grid gap-3 text-sm leading-6 text-muted-foreground">
-          <p>Escape clears the search. Enter submits the current query.</p>
-          <p className="flex flex-wrap items-center gap-2">
-            Give the field a visible label or an accessible name. The clear button is removed from the tab order; Escape clears the query from the input.
+      <ComponentPreview title="Keyboard Shortcuts">
+        <div className="grid w-full max-w-sm gap-3">
+          <Label htmlFor="keyboard-search">Search help articles</Label>
+          <SearchField
+            id="keyboard-search"
+            placeholder="Try “team” or “plan”"
+            value={keyboardQuery}
+            onChange={setKeyboardQuery}
+            onSubmit={setSubmittedQuery}
+          />
+          <p className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
             <KbdGroup><Kbd>Esc</Kbd><span>clear</span></KbdGroup>
             <KbdGroup><Kbd>Enter</Kbd><span>submit</span></KbdGroup>
+          </p>
+          <p aria-live="polite" className="text-sm text-muted-foreground">
+            {submittedQuery ? `Submitted search: ${submittedQuery}` : "Press Enter to submit your search."}
           </p>
         </div>
       </ComponentPreview>
@@ -103,9 +114,9 @@ function SearchFieldExamples() {
 export default function SearchFieldPage() {
   return (
     <ConsoleLayout>
-      <Showcase title="Search Field">
+      <div className="min-w-0 space-y-5"><PageHeader title="Search Field" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
         <SearchFieldExamples />
-      </Showcase>
+      </div></div>
     </ConsoleLayout>
   );
 }

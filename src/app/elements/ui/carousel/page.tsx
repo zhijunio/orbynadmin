@@ -1,6 +1,6 @@
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
-export const metadata = { title: "Carousels" };
+export const metadata = { title: "Carousel" };
 
 
 
@@ -8,7 +8,7 @@ export const metadata = { title: "Carousels" };
 import Image from "next/image";
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { Carousel } from "@/components/base/carousel/carousel";
 
 const slides = [
@@ -56,7 +56,7 @@ function Gallery({
 
 
 export default function CarouselPage() {
-  return <ConsoleLayout>{<Showcase title="Carousels">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Carousel" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <ComponentPreview title="Slides Only">
         <Gallery controls={false} indicators={false} />
       </ComponentPreview>
@@ -66,11 +66,11 @@ export default function CarouselPage() {
       <ComponentPreview title="With Indicators">
         <Gallery controls={false} />
       </ComponentPreview>
-      <ComponentPreview title="Controls and Indicators">
+      <ComponentPreview title="With Controls and Indicators">
         <Gallery />
       </ComponentPreview>
       <ComponentPreview title="Card Widths and Alignment">
         <Gallery align="center" itemClassName="w-[78%] sm:w-[58%]" autoPlay={false} />
       </ComponentPreview>
-    </Showcase>}</ConsoleLayout>;
+    </div></div>}</ConsoleLayout>;
 }

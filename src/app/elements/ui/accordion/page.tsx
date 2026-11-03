@@ -7,7 +7,7 @@ export const metadata = { title: "Accordion" };
 
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { ControlledAccordionExample } from "@/app/elements/ui/accordion/controlled-accordion-example";
 import { cn } from "@/utils/cn";
 import {
@@ -68,17 +68,16 @@ function SeparatedIconAccordionExample() {
   const groups = [
     { value: "notifications", title: "Notifications", description: "Email, push, and Slack", icon: IconBell },
     { value: "security", title: "Security", description: "Two-factor sign-in and sessions", icon: IconShieldCheck },
-    { value: "billing", title: "Billing", description: "Managed by your workspace owner", icon: IconCreditCard, disabled: true },
+    { value: "billing", title: "Billing", description: "Managed by your workspace owner", icon: IconCreditCard },
   ];
 
   return (
     <Accordion type="multiple" defaultValue={["notifications"]} className="gap-3">
-      {groups.map(({ value, title, description, icon: Icon, disabled }) => (
+      {groups.map(({ value, title, description, icon: Icon }) => (
         <AccordionItem
           key={value}
           value={value}
-          disabled={disabled}
-          className="overflow-hidden rounded-xl border border-border bg-card px-4 data-disabled:opacity-50"
+          className="overflow-hidden rounded-xl border border-border bg-card px-4"
         >
           <AccordionTrigger className="items-center gap-3 py-4 hover:no-underline">
             <Icon aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
@@ -96,6 +95,17 @@ function SeparatedIconAccordionExample() {
       ))}
     </Accordion>
   );
+}
+
+function DisabledAccordionExample() {
+  return <Accordion type="single" className="w-full max-w-lg">
+    <AccordionItem value="billing" disabled className="rounded-lg border px-4 opacity-60">
+      <AccordionTrigger>Billing settings</AccordionTrigger>
+      <AccordionContent className="text-sm text-muted-foreground">
+        Only workspace administrators can change billing settings.
+      </AccordionContent>
+    </AccordionItem>
+  </Accordion>;
 }
 
 const accordionData = [
@@ -130,13 +140,13 @@ const accordionData = [
 
 
 export default function AccordionPage() {
-  return <ConsoleLayout>{<Showcase title="Accordion">
-      <ComponentPreview title="Style One"><AccordionExample variant="style_one" /></ComponentPreview>
-      <ComponentPreview title="Style Two"><AccordionExample variant="style_two" /></ComponentPreview>
-      <ComponentPreview title="Style Three"><AccordionExample variant="style_three" /></ComponentPreview>
-      <ComponentPreview title="Separated, with Icons"><SeparatedIconAccordionExample /></ComponentPreview>
-      <ComponentPreview title="Muted Rows"><AccordionExample variant="style_three" /></ComponentPreview>
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Accordion" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+      <ComponentPreview title="Bordered Accordion"><AccordionExample variant="style_one" /></ComponentPreview>
+      <ComponentPreview title="Divided Rows"><AccordionExample variant="style_two" /></ComponentPreview>
+      <ComponentPreview title="Muted Accordion"><AccordionExample variant="style_three" /></ComponentPreview>
+      <ComponentPreview title="Items with Icons and Descriptions"><SeparatedIconAccordionExample /></ComponentPreview>
       <ComponentPreview title="Multiple Items Open" className="xl:col-span-2"><AccordionExample variant="style_one" multiple /></ComponentPreview>
-      <ComponentPreview title="Controlled and Disabled Items" className="xl:col-span-2"><ControlledAccordionExample /></ComponentPreview>
-    </Showcase>}</ConsoleLayout>;
+      <ComponentPreview title="Controlled Accordion" className="xl:col-span-2"><ControlledAccordionExample /></ComponentPreview>
+      <ComponentPreview title="Disabled Item"><DisabledAccordionExample /></ComponentPreview>
+    </div></div>}</ConsoleLayout>;
 }

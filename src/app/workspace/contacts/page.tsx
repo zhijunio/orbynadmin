@@ -1,5 +1,7 @@
 "use client";
 
+import { demoAvatarUrl } from "@/utils/demo-avatar";
+
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
 import { useMemo, useState } from "react";
@@ -223,7 +225,7 @@ export default function ContactsPage() {
         id,
         name,
         email,
-        avatar: `https://api.dicebear.com/9.x/avataaars/svg?seed=contact${seq}`,
+        avatar: demoAvatarUrl(name),
         role,
         company: companyName,
         phone: synthPhone(id + name),

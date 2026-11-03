@@ -1,3 +1,4 @@
+import { demoAvatarUrl } from "@/utils/demo-avatar";
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
 export const metadata = { title: "Product" };
@@ -136,7 +137,7 @@ export default async function ProductDetailPage({
   const reviews = [
     {
       name: "Emma Carter",
-      avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=1",
+      avatar: demoAvatarUrl("Emma Carter"),
       rating: 5,
       date: "2 weeks ago",
       title: "Exceeded my expectations",
@@ -144,7 +145,7 @@ export default async function ProductDetailPage({
     },
     {
       name: "Liam Nguyen",
-      avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=12",
+      avatar: demoAvatarUrl("Liam Nguyen"),
       rating: 4,
       date: "1 month ago",
       title: "Great value, minor nitpicks",
@@ -152,7 +153,7 @@ export default async function ProductDetailPage({
     },
     {
       name: "Olivia Patel",
-      avatar: "https://api.dicebear.com/9.x/avataaars/svg?seed=5",
+      avatar: demoAvatarUrl("Olivia Patel"),
       rating: 5,
       date: "1 month ago",
       title: "My new favorite",

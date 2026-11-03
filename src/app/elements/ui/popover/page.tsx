@@ -5,9 +5,10 @@ export const metadata = { title: "Popovers" };
 
 
 
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import { IconTrash as IconTrash } from "@tabler/icons-react";
+import Link from "next/link";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
@@ -88,21 +89,31 @@ function FormPopover() {
     </Popover>;
 }
 
+function LinkPopover() {
+  return <Popover>
+    <PopoverTrigger asChild><Button variant="outline">What is a popover?</Button></PopoverTrigger>
+    <PopoverContent className="w-72 border border-border bg-card p-4">
+      <PopoverHeader className="gap-1">
+        <PopoverTitle className="text-sm font-semibold">Helpful context</PopoverTitle>
+        <PopoverDescription className="text-sm leading-5 text-muted-foreground">Show related information without leaving this page.</PopoverDescription>
+      </PopoverHeader>
+      <Link href="/elements/ui/popover" className="mt-3 inline-flex text-sm font-medium text-primary underline underline-offset-4">Learn more</Link>
+    </PopoverContent>
+  </Popover>;
+}
+
 function PopoversExample() {
   return <>
-      <ComponentPreview title="Popover Positions">
+      <ComponentPreview title="Default Popover">
         <DirectionalPopovers />
-      </ComponentPreview>
-      <ComponentPreview title="Without Arrow">
-        <DirectionalPopovers showArrow={false} />
-      </ComponentPreview>
-      <ComponentPreview title="With Actions">
-        <ActionsPopover />
       </ComponentPreview>
       <ComponentPreview title="Popover With Button">
         <ButtonPopoverSupplement />
       </ComponentPreview>
-      <ComponentPreview title="Popover With Form" className="xl:col-span-2">
+      <ComponentPreview title="Popover With Link"><LinkPopover /></ComponentPreview>
+      <ComponentPreview title="Without Arrow"><DirectionalPopovers showArrow={false} /></ComponentPreview>
+      <ComponentPreview title="With Actions"><ActionsPopover /></ComponentPreview>
+      <ComponentPreview title="Popover With Form">
         <FormPopover />
       </ComponentPreview>
     </>;
@@ -111,5 +122,5 @@ function PopoversExample() {
 
 
 export default function PopoversPage() {
-  return <ConsoleLayout>{<Showcase title="Popovers"><PopoversExample /></Showcase>}</ConsoleLayout>;
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Popovers" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><PopoversExample /></div></div>}</ConsoleLayout>;
 }

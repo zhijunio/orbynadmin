@@ -6,13 +6,14 @@ import { toast } from "sonner";
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { UniqueModalExamples } from "@/app/elements/ui/dialog/additional-dialog-examples";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/base/dialog/alert-dialog";
-import { Dialog, DialogClose, DialogTrigger, Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/base/dialog/dialog";
+import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/base/dialog/dialog";
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
 import { Label } from "@/components/base/input/label";
 import { Spinner } from "@/components/base/spinner/spinner";
+import { IconCircleCheck } from "@tabler/icons-react";
 
 type ModalSize = "sm" | "md" | "lg" | "xl";
 
@@ -77,7 +78,36 @@ function ModalExamples() {
 
   return (
     <>
-      <ComponentPreview title="Preview">
+      <ComponentPreview title="Default Modal">
+        <div className="flex w-full justify-center">
+          <Dialog>
+            <DialogTrigger asChild><Button variant="secondary">Open modal</Button></DialogTrigger>
+            <Modal>
+              <ModalHeader title="Project details" description="Review the current project before continuing." />
+              <ModalBody><p className="text-sm text-muted-foreground">Acme Dashboard has 24 files and 12 active collaborators.</p></ModalBody>
+              <ModalFooter><DialogClose asChild><Button>Done</Button></DialogClose></ModalFooter>
+            </Modal>
+          </Dialog>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Vertically Centered Modal">
+        <div className="flex w-full justify-center">
+          <Dialog>
+            <DialogTrigger asChild><Button variant="secondary">Show confirmation</Button></DialogTrigger>
+            <Modal>
+              <DialogHeader className="items-center text-center">
+                <IconCircleCheck aria-hidden="true" className="size-10 text-emerald-600" />
+                <DialogTitle>Changes saved</DialogTitle>
+                <DialogDescription>Your project settings are up to date.</DialogDescription>
+              </DialogHeader>
+              <ModalFooter className="justify-center"><DialogClose asChild><Button>Continue</Button></DialogClose></ModalFooter>
+            </Modal>
+          </Dialog>
+        </div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Form In Modal">
         <div className="flex w-full justify-center">
           <Dialog>
             <DialogTrigger asChild>
@@ -203,7 +233,7 @@ function ModalExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Controlled">
+      <ComponentPreview title="Controlled Dialog">
         <div className="grid w-full max-w-md gap-3">
           <p className="text-sm text-muted-foreground">Project: {projectName}</p>
           <Button
@@ -245,7 +275,7 @@ function ModalExamples() {
         </div>
       </ComponentPreview>
 
-      <ComponentPreview title="Sizes">
+      <ComponentPreview title="Dialog Sizes">
         <div className="flex w-full flex-wrap gap-2">
           {sizeOptions.map((option) => (
             <Button
@@ -294,11 +324,11 @@ function ModalAccessibilityExample() {
 export default function DialogsPage() {
   return (
     <ConsoleLayout>
-      <Showcase title="Modal">
+      <div className="min-w-0 space-y-5"><PageHeader title="Modal" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
         <ModalExamples />
         <UniqueModalExamples />
         <ModalAccessibilityExample />
-      </Showcase>
+      </div></div>
     </ConsoleLayout>
   );
 }

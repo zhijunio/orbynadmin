@@ -5,7 +5,7 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { useState } from "react";
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { RangeSlider, Slider } from "@/components/base/slider/slider";
 
 function SliderExamples() {
@@ -80,7 +80,7 @@ function SliderExamples() {
 }
 
 export default function SliderPage() {
-  return <ConsoleLayout>{<Showcase title="Slider">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Slider" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <SliderExamples />
-    </Showcase>}</ConsoleLayout>;
+    </div></div>}</ConsoleLayout>;
 }

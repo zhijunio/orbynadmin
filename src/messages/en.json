@@ -56,6 +56,7 @@
     "Mail": "Mail",
     "Calendar": "Calendar",
     "Kanban": "Kanban",
+    "Board": "Board",
     "Tasks": "Tasks",
     "Notes": "Notes",
     "File Manager": "File Manager",
@@ -112,6 +113,7 @@
     "Coming Soon": "Coming Soon",
     "Components": "Components",
     "Blocks": "Blocks",
+    "Notification Center": "Notification Center",
     "Auth": "Auth",
     "Stat Cards": "Stat Cards",
     "Pricing Tables": "Pricing Tables",
@@ -710,10 +712,11 @@
       "signIn": "Sign in",
       "signInTitle": "Welcome back",
       "signInDescription": "Sign in to pick up where you left off.",
-      "providerLayout": "Provider layout",
-      "layoutStacked": "Stacked",
-      "layoutInline": "Inline",
-      "layoutGrid": "Grid",
+      "layoutStandard": "Standard",
+      "layoutLogo": "With a logo",
+      "layoutSplit": "Split with artwork",
+      "layoutVerticalSocial": "Vertical social buttons",
+      "layoutLogoVerticalSocial": "Logo with vertical social buttons",
       "createAccount": "Create your account",
       "signUpDescription": "Create an account to get started.",
       "inviteSignupTitle": "Create your invited account",
@@ -761,7 +764,6 @@
       "mfaEmailDescription": "Enter the six-digit code sent to alex@company.com.",
       "mfaSmsDescription": "Enter the six-digit code sent to +1 (•••) •••-0142.",
       "mfaDemoNotice": "This is a UI sample. It does not send or verify credentials.",
-      "mfaFlowTabs": "MFA flow stages",
       "bindingTab": "Binding",
       "challengeTab": "Challenge",
       "bindEmailTitle": "Bind an email address",
@@ -834,70 +836,64 @@
     "page": {
       "tabs": {
         "all": "All",
-        "unread": "Unread",
         "mentions": "Mentions",
         "system": "System"
       },
-      "markAllRead": "Mark all as read",
-      "settings": "Notification settings",
+      "groups": {
+        "today": "Today",
+        "earlier": "Earlier this week"
+      },
+      "times": {
+        "2m": "2m",
+        "18m": "18m",
+        "1h": "1h",
+        "mon": "Mon",
+        "sun": "Sun",
+        "sat": "Sat"
+      },
+      "actionLabels": {
+        "reply": "Reply",
+        "viewThread": "View thread",
+        "download": "Download",
+        "review": "Review changes",
+        "retry": "Retry",
+        "viewLogs": "View logs"
+      },
+      "markAllRead": "Mark all read",
+      "unreadCount": "{count} unread",
       "empty": "You're all caught up.",
       "actions": "Notification actions",
       "markUnread": "Mark as unread",
       "markRead": "Mark as read",
       "remove": "Remove",
+      "unread": "Unread",
       "markedAllRead": "All notifications marked as read",
       "removed": "Notification removed",
-      "times": {
-        "2 min ago": "2 min ago",
-        "25 min ago": "25 min ago",
-        "1 hour ago": "1 hour ago",
-        "2 hours ago": "2 hours ago",
-        "4 hours ago": "4 hours ago",
-        "6 hours ago": "6 hours ago",
-        "Yesterday": "Yesterday",
-        "2 days ago": "2 days ago",
-        "3 days ago": "3 days ago"
-      },
+      "actionCompleted": "Opened {action}",
       "entries": {
         "N-01": {
-          "title": "Priya Nair mentioned you",
-          "description": "“@alex can you review the new onboarding checklist?” in Mobile App Revamp"
+          "title": "Livia mentioned you",
+          "description": "Can you review the new empty state before we ship the dashboard?"
         },
         "N-02": {
-          "title": "New task assigned",
-          "description": "You were assigned “Implement metered usage events” in Billing Platform v2"
+          "title": "Workspace backup is ready",
+          "description": "The July 23 backup finished successfully and is ready to download."
         },
         "N-03": {
-          "title": "Marcus Chen commented",
-          "description": "Left a comment on “Add SSO / SAML provisioning”"
+          "title": "You joined Project Sea",
+          "description": "Maria added you as an editor. You now have access to all project files."
         },
         "N-04": {
-          "title": "Deployment succeeded",
-          "description": "web-app v2.14.0 deployed to production in 3m 12s"
+          "title": "Jaydon requested your review",
+          "description": "Pull request #284 updates the notification preferences flow."
         },
         "N-05": {
-          "title": "Payment received",
-          "description": "Invoice INV-2043 was paid by Northwind — $1,296.00"
+          "title": "Security check completed",
+          "description": "No exposed credentials or vulnerable dependencies were found."
         },
         "N-06": {
-          "title": "New sign-in detected",
-          "description": "A new sign-in from Chrome on macOS in San Francisco"
-        },
-        "N-07": {
-          "title": "Sofia Rossi commented",
-          "description": "“Looks great — shipping the localized pages next week.”"
-        },
-        "N-08": {
-          "title": "Hannah Kim mentioned you",
-          "description": "“@alex a customer asked about the Q3 roadmap.”"
-        },
-        "N-09": {
-          "title": "Milestone due soon",
-          "description": "“Beta release” for Mobile App Revamp is due in 3 days"
-        },
-        "N-10": {
-          "title": "Storage at 82%",
-          "description": "Your workspace is approaching its storage limit"
+          "title": "Preview deployment failed",
+          "description": "The build stopped while validating the application routes."
         }
       }
     }

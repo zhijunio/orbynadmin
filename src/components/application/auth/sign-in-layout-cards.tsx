@@ -7,10 +7,9 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { SignInCard as ReusableSignInCard } from "@/components/application/auth/sign-in-card";
-import { SegmentedControl, SegmentedControlItem } from "@/components/base/segmented-control/segmented-control";
-import { Label } from "@/components/base/input/label";
-import type { SocialProvider } from "@/components/base/social-button/social-button";
+import { ComponentPreview } from "@/components/application/docs/component-preview";
 import type { AuthLayout } from "@/components/application/auth/auth-panel";
+import type { SocialProvider } from "@/components/base/social-button/social-button";
 
 const providers: SocialProvider[] = ["google", "apple", "github", "x"];
 const authArtwork = [
@@ -19,11 +18,9 @@ const authArtwork = [
   "/images/models/building-model-3.jpg",
 ];
 
-function SignInCardView({ variant, standalone = false }: { variant: "standard" | "logo" | "split"; standalone?: boolean }) {
+function SignInCardView({ variant, standalone = false, socialLayout = "inline" }: { variant: "standard" | "logo" | "split"; standalone?: boolean; socialLayout?: AuthLayout }) {
   const t = useTranslations("Blocks.auth");
   const router = useRouter();
-  const [layout, setLayout] = useState<AuthLayout>("inline");
-  const prefix = `auth-${variant}`;
   const brand = variant === "logo" ? (
     <div className="mb-5 inline-flex items-center gap-2.5">
       <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground"><IconSparkles aria-hidden="true" className="size-5" /></span>
@@ -33,16 +30,6 @@ function SignInCardView({ variant, standalone = false }: { variant: "standard" |
 
   return (
     <>
-      {!standalone && (
-        <div className="mb-4 flex flex-wrap items-center justify-center gap-3">
-          <Label id={`${prefix}-layout-label`} className="text-sm text-muted-foreground">{t("providerLayout")}</Label>
-          <SegmentedControl aria-labelledby={`${prefix}-layout-label`} value={layout} onValueChange={(value) => value && setLayout(value as AuthLayout)}>
-            <SegmentedControlItem value="stacked">{t("layoutStacked")}</SegmentedControlItem>
-            <SegmentedControlItem value="inline">{t("layoutInline")}</SegmentedControlItem>
-            <SegmentedControlItem value="grid">{t("layoutGrid")}</SegmentedControlItem>
-          </SegmentedControl>
-        </div>
-      )}
       <ReusableSignInCard
         copy={{
           title: t("signInTitle"),
@@ -59,7 +46,7 @@ function SignInCardView({ variant, standalone = false }: { variant: "standard" |
           signUpLabel: t("createAccountLink"),
         }}
         providers={providers}
-        socialLayout={layout}
+        socialLayout={socialLayout}
         onSubmit={() => {
           if (standalone) router.push("/dashboard");
         }}
@@ -99,10 +86,32 @@ export function SignInCard({ standalone = false }: { standalone?: boolean }) {
   return <SignInCardView standalone={standalone} variant="standard" />;
 }
 
-export function SignInWithLogoCard() {
-  return <SignInCardView variant="logo" />;
-}
+export function SignInLayoutPreviews() {
+  const t = useTranslations("Blocks.auth");
+  const variants: { value: "standard" | "logo" | "split"; label: string }[] = [
+    { value: "standard", label: t("layoutStandard") },
+    { value: "logo", label: t("layoutLogo") },
+    { value: "split", label: t("layoutSplit") },
+  ];
+  const verticalSocial = t("layoutVerticalSocial");
 
-export function SignInWithArtworkCard() {
-  return <SignInCardView variant="split" />;
+  return (
+    <div className="grid gap-5 xl:grid-cols-2">
+      <ComponentPreview title={variants[0].label}>
+        <div className="w-full"><SignInCardView variant="standard" /></div>
+      </ComponentPreview>
+      <ComponentPreview title={verticalSocial}>
+        <div className="w-full"><SignInCardView variant="standard" socialLayout="stacked" /></div>
+      </ComponentPreview>
+      <ComponentPreview title={variants[1].label}>
+        <div className="w-full"><SignInCardView variant="logo" /></div>
+      </ComponentPreview>
+      <ComponentPreview title={t("layoutLogoVerticalSocial")}>
+        <div className="w-full"><SignInCardView variant="logo" socialLayout="stacked" /></div>
+      </ComponentPreview>
+      <ComponentPreview title={variants[2].label} className="xl:col-span-2">
+        <div className="w-full"><SignInCardView variant="split" /></div>
+      </ComponentPreview>
+    </div>
+  );
 }

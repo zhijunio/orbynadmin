@@ -86,5 +86,5 @@ export function BarListExpandableExample() {
 }
 
 export default function BarListCard() {
-  return <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-5 md:grid-cols-2"><BarListChartExample /><BarListMonoExample /><BarListExpandableExample /></div>;
+  return <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-5 md:grid-cols-2"><BarListChartExample /><BarListMonoExample /><BarListExpandableExample /></div>;
 }

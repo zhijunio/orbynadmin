@@ -8,7 +8,7 @@ import { demoAvatarUrl } from "@/utils/demo-avatar";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { toast } from "sonner";
-import { IconArrowLeft as IconArrowLeft, IconSearch as IconSearch, IconSend as IconSend, IconPhone as IconPhone, IconVideo as IconVideo, IconDotsVertical as IconDotsVertical, IconPaperclip as IconPaperclip, IconMoodSmile as IconMoodSmile, IconUser as IconUser, IconBellOff as IconBellOff, IconEraser as IconEraser, IconBan as IconBan, IconArchive as IconArchive, IconUsers as IconUsers } from "@tabler/icons-react";
+import { IconArrowLeft as IconArrowLeft, IconSearch as IconSearch, IconSend as IconSend, IconPhone as IconPhone, IconVideo as IconVideo, IconDotsVertical as IconDotsVertical, IconPaperclip as IconPaperclip, IconMoodSmile as IconMoodSmile, IconUser as IconUser, IconBell as IconBell, IconBellOff as IconBellOff, IconEraser as IconEraser, IconBan as IconBan, IconArchive as IconArchive, IconUsers as IconUsers } from "@tabler/icons-react";
 
 import { Card } from "@/components/base/card/card";
 import { Input } from "@/components/base/input/input";
@@ -25,6 +25,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/base/dropdown/dropdown-menu";
 import { cn } from "@/utils/cn";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/base/dialog/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/base/dialog/dialog";
 
 type Message = {
   id: string;
@@ -72,11 +90,13 @@ const conversations = chatNames.map((name, i) => {
     online: !group && i % 3 === 0,
     group,
     archived: i === 8,
+    muted: false,
+    blocked: false,
   };
 });
 
-type ChatFilter = "All" | "Unread" | "Group" | "Archive";
-const chatFilters: ChatFilter[] = ["All", "Unread", "Group", "Archive"];
+type ChatFilter = "All" | "Unread" | "Group" | "Archive" | "Blocked";
+const chatFilters: ChatFilter[] = ["All", "Unread", "Group", "Archive", "Blocked"];
 
 const seedThreads: Record<string, Message[]> = {};
 conversations.forEach((c, i) => {
@@ -104,6 +124,10 @@ export default function ChatPage() {
   const [draft, setDraft] = useState("");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<ChatFilter>("All");
+  const [pendingAction, setPendingAction] = useState<
+    { type: "block" | "clear"; conversationId: string } | null
+  >(null);
+  const [profileOpen, setProfileOpen] = useState(false);
   // Mobile master-detail: show the list first, the thread after tapping one.
   const [mobileThreadOpen, setMobileThreadOpen] = useState(false);
 
@@ -112,6 +136,8 @@ export default function ChatPage() {
 
   const filtered = convos.filter((c) => {
     if (!c.name.toLowerCase().includes(query.toLowerCase())) return false;
+    if (filter === "Blocked") return c.blocked;
+    if (c.blocked) return false;
     if (filter === "Unread") return c.unread > 0 && !c.archived;
     if (filter === "Group") return c.group && !c.archived;
     if (filter === "Archive") return c.archived;
@@ -129,7 +155,7 @@ export default function ChatPage() {
 
   function send() {
     const text = draft.trim();
-    if (!text) return;
+    if (!text || active.blocked) return;
     setThreads((prev) => ({
       ...prev,
       [activeId]: [
@@ -140,15 +166,38 @@ export default function ChatPage() {
     setDraft("");
   }
 
-  function clearChat() {
-    setThreads((prev) => ({ ...prev, [activeId]: [] }));
-    toast.success("Conversation cleared");
-  }
-
   function archiveChat() {
     setConvos((prev) => prev.map((c) => c.id === activeId ? { ...c, archived: true } : c));
     setFilter("Archive");
     toast.success("Conversation archived");
+  }
+
+  function toggleMute() {
+    const muted = !active.muted;
+    setConvos((prev) => prev.map((c) => c.id === activeId ? { ...c, muted } : c));
+    toast.success(muted ? "Notifications muted" : "Notifications unmuted");
+  }
+
+  function confirmPendingAction() {
+    if (!pendingAction) return;
+    const target = convos.find((c) => c.id === pendingAction.conversationId);
+    if (!target) return;
+
+    if (pendingAction.type === "block") {
+      setConvos((prev) => prev.map((c) => c.id === target.id ? { ...c, blocked: true, unread: 0 } : c));
+      setFilter("Blocked");
+      toast.success(`${target.name} blocked`);
+    } else {
+      setThreads((prev) => ({ ...prev, [target.id]: [] }));
+      toast.success("Conversation cleared");
+    }
+    setPendingAction(null);
+  }
+
+  function unblockActive() {
+    setConvos((prev) => prev.map((c) => c.id === activeId ? { ...c, blocked: false } : c));
+    setFilter("All");
+    toast.success(`${active.name} unblocked`);
   }
 
   return <ConsoleLayout>{<div className="space-y-4">
@@ -165,7 +214,7 @@ export default function ChatPage() {
           <div className="space-y-3 p-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold">Chats</p>
-              <Badge variant="secondary">{convos.filter((c) => !c.archived).length}</Badge>
+              <Badge variant="secondary">{convos.filter((c) => !c.archived && !c.blocked).length}</Badge>
             </div>
             <div className="relative">
               <IconSearch className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -265,7 +314,15 @@ export default function ChatPage() {
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{active.name}</p>
               <p className="text-xs text-muted-foreground">
-                {active.group ? "Group conversation" : active.online ? "Online" : "Last seen recently"}
+                {active.blocked
+                  ? "Blocked"
+                  : active.muted
+                    ? "Notifications muted"
+                    : active.group
+                      ? "Group conversation"
+                      : active.online
+                        ? "Online"
+                        : "Last seen recently"}
               </p>
             </div>
             <Button
@@ -273,6 +330,7 @@ export default function ChatPage() {
               size="icon"
               onClick={() => toast(`Calling ${active.name}…`, { description: "Voice calls aren't available in the demo." })}
               aria-label="Voice call"
+              disabled={active.blocked}
             >
               <IconPhone className="size-4" />
             </Button>
@@ -281,6 +339,7 @@ export default function ChatPage() {
               size="icon"
               onClick={() => toast(`Starting video call with ${active.name}…`, { description: "Video calls aren't available in the demo." })}
               aria-label="Video call"
+              disabled={active.blocked}
             >
               <IconVideo className="size-4" />
             </Button>
@@ -291,25 +350,29 @@ export default function ChatPage() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={() => toast(`${active.name}'s profile`)}>
+                <DropdownMenuItem onClick={() => setProfileOpen(true)}>
                   <IconUser className="size-4" /> View profile
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.success("Notifications muted")}>
-                  <IconBellOff className="size-4" /> Mute notifications
+                <DropdownMenuItem onClick={toggleMute}>
+                  {active.muted ? <IconBell className="size-4" /> : <IconBellOff className="size-4" />}
+                  {active.muted ? "Unmute notifications" : "Mute notifications"}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={clearChat}>
+                <DropdownMenuItem variant="destructive" onClick={() => setPendingAction({ type: "clear", conversationId: activeId })}>
                   <IconEraser className="size-4" /> Clear messages
                 </DropdownMenuItem>
-                {!active.archived && <DropdownMenuItem onClick={archiveChat}>
+                {!active.archived && !active.blocked && <DropdownMenuItem onClick={archiveChat}>
                   <IconArchive className="size-4" /> Archive conversation
                 </DropdownMenuItem>}
                 <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  variant="destructive"
-                  onClick={() => toast.success(`${active.name} blocked`)}
-                >
-                  <IconBan className="size-4" /> Block user
-                </DropdownMenuItem>
+                {!active.group && (active.blocked ? (
+                  <DropdownMenuItem onClick={unblockActive}>
+                    <IconBan className="size-4" /> Unblock user
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem variant="destructive" onClick={() => setPendingAction({ type: "block", conversationId: activeId })}>
+                    <IconBan className="size-4" /> Block user
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -368,6 +431,7 @@ export default function ChatPage() {
               className="size-10 shrink-0 rounded-xl"
               onClick={() => toast("Attach a file", { description: "File sharing isn't available in the demo." })}
               aria-label="Attach file"
+              disabled={active.blocked}
             >
               <IconPaperclip className="size-4" />
             </Button>
@@ -377,8 +441,9 @@ export default function ChatPage() {
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.nativeEvent.isComposing) send();
               }}
-              placeholder="Type a message…"
+              placeholder={active.blocked ? "Unblock this user to reply" : "Type a message…"}
               className="h-11 rounded-xl px-4"
+              disabled={active.blocked}
             />
             <Button
               variant="ghost"
@@ -386,14 +451,64 @@ export default function ChatPage() {
               className="size-10 shrink-0 rounded-xl"
               onClick={() => setDraft((d) => d + " 🙂")}
               aria-label="Add emoji"
+              disabled={active.blocked}
             >
               <IconMoodSmile className="size-4" />
             </Button>
-            <Button size="icon" className="size-11 shrink-0 rounded-xl" onClick={send} aria-label="Send message">
+            <Button size="icon" className="size-11 shrink-0 rounded-xl" onClick={send} aria-label="Send message" disabled={active.blocked}>
               <IconSend className="size-5" />
             </Button>
           </div>
         </div>
       </Card>
+      <Dialog open={profileOpen} onOpenChange={setProfileOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <Avatar className="size-11">
+                <AvatarImage src={active.avatar} alt={active.name} />
+                <AvatarFallback>{getInitials(active.name)}</AvatarFallback>
+              </Avatar>
+              <div className="min-w-0">
+                <DialogTitle>{active.name}</DialogTitle>
+                <DialogDescription>
+                  {active.group ? "Group conversation" : active.online ? "Online" : "Last seen recently"}
+                </DialogDescription>
+              </div>
+            </div>
+          </DialogHeader>
+          <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
+            <dt className="text-muted-foreground">Type</dt>
+            <dd>{active.group ? "Group" : "Direct message"}</dd>
+            <dt className="text-muted-foreground">Notifications</dt>
+            <dd>{active.muted ? "Muted" : "On"}</dd>
+            <dt className="text-muted-foreground">Conversation</dt>
+            <dd>{active.blocked ? "Blocked" : active.archived ? "Archived" : "Active"}</dd>
+          </dl>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setProfileOpen(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <AlertDialog open={pendingAction !== null} onOpenChange={(open) => !open && setPendingAction(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {pendingAction?.type === "clear" ? "Clear messages" : "Block user"}?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {pendingAction?.type === "clear"
+                ? `This removes messages with ${convos.find((c) => c.id === pendingAction.conversationId)?.name ?? "this contact"} for this session.`
+                : `This conversation with ${convos.find((c) => c.id === pendingAction?.conversationId)?.name ?? "this user"} will be read-only until you unblock them.`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction variant="destructive" onClick={confirmPendingAction}>
+              {pendingAction?.type === "clear" ? "Clear messages" : "Block user"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>}</ConsoleLayout>;
 }

@@ -2,10 +2,10 @@
 
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import { useEffect, useId, useState } from "react";
-import { IconCheck as IconCheck, IconSearch as IconSearch, IconEye as IconEye, IconEyeOff as IconEyeOff, IconMail as IconMail, IconSend as IconSend } from "@tabler/icons-react";
+import { IconCheck as IconCheck, IconEye as IconEye, IconEyeOff as IconEyeOff, IconMail as IconMail, IconSend as IconSend } from "@tabler/icons-react";
 import { toast } from "sonner";
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
@@ -14,10 +14,6 @@ import { HintText } from "@/components/base/input/hint-text";
 import { InputOtp } from "@/components/base/input-otp/input-otp";
 import { ComponentPreview } from "@/components/application/docs/component-preview";
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/base/input/input-group";
-import { NumberField } from "@/components/base/number-field/number-field";
-import { SearchField } from "@/components/base/search-field/search-field";
-import { ColorPicker } from "@/components/base/color-picker/color-picker";
-import { Combobox } from "@/components/base/combobox/combobox";
 
 function EmailVerificationInput() {
   const id = useId();
@@ -110,33 +106,31 @@ function EmailVerificationInput() {
 }
 
 function InputExamples() {
-  const [query, setQuery] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return <>
-      <ComponentPreview title="Default">
+      <ComponentPreview title="Text Input">
         <Input placeholder="Enter a value" className="max-w-sm" />
       </ComponentPreview>
-      <ComponentPreview title="With label">
+      <ComponentPreview title="Labeled Input">
         <div className="grid w-full max-w-sm gap-2">
           <Label htmlFor="input-name">Full name</Label>
           <Input id="input-name" placeholder="Jane Smith" />
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Search">
-        <div className="relative w-full max-w-sm">
-          <IconSearch className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search records..." className="pl-9" />
+      <ComponentPreview title="Email and Website Inputs">
+        <div className="grid w-full max-w-xl gap-4 sm:grid-cols-2">
+          <div className="grid gap-2"><Label htmlFor="input-email">Email address</Label><Input id="input-email" type="email" placeholder="you@company.com" /></div>
+          <div className="grid gap-2"><Label htmlFor="input-website">Website</Label><Input id="input-website" type="url" placeholder="https://example.com" /></div>
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Search Field"><SearchField aria-label="Search users" placeholder="Search users..." className="max-w-sm" /></ComponentPreview>
-      <ComponentPreview title="Number Field"><NumberField aria-label="Team size" min={1} max={20} defaultValue={4} /></ComponentPreview>
-      <ComponentPreview title="Color Picker"><ColorPicker aria-label="Choose accent color" /></ComponentPreview>
-      <ComponentPreview title="Searchable Combobox"><Combobox aria-label="Choose a team" placeholder="Choose a team" options={[{ value: "design", label: "Design" }, { value: "engineering", label: "Engineering" }, { value: "finance", label: "Finance" }]} /></ComponentPreview>
-      <ComponentPreview title="Disabled">
-        <Input disabled value="This field is disabled" className="max-w-sm" readOnly />
+      <ComponentPreview title="Disabled Input">
+        <Input disabled value="This field is disabled" className="max-w-sm" />
       </ComponentPreview>
-      <ComponentPreview title="Password">
+      <ComponentPreview title="Read-only Input">
+        <Input value="This value cannot be edited" className="max-w-sm" readOnly />
+      </ComponentPreview>
+      <ComponentPreview title="Password with Visibility Toggle">
         <div className="relative w-full max-w-sm">
           <Input type={passwordVisible ? "text" : "password"} defaultValue="AdminPass123!" className="pr-10" aria-label="Password" />
           <Button type="button" variant="ghost" size="icon" aria-label={passwordVisible ? "Hide password" : "Show password"} onClick={() => setPasswordVisible((visible) => !visible)} className="absolute right-1 top-1/2 size-7 -translate-y-1/2 text-muted-foreground">
@@ -144,7 +138,7 @@ function InputExamples() {
           </Button>
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Input with prefix and suffix">
+      <ComponentPreview title="Prefix and Suffix">
         <div className="grid w-full max-w-xl gap-4 sm:grid-cols-2">
           <InputGroup>
             <InputGroupAddon><InputGroupText>https://</InputGroupText></InputGroupAddon>
@@ -157,7 +151,7 @@ function InputExamples() {
           </InputGroup>
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Validation states">
+      <ComponentPreview title="Validation States">
         <div className="grid w-full max-w-xl gap-4 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="invalid-email">Email address</Label>
@@ -171,21 +165,21 @@ function InputExamples() {
           </div>
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Hint Text">
+      <ComponentPreview title="Hint Text Variants">
         <div className="grid w-full max-w-xl gap-2">
           <HintText>Use at least 12 characters.</HintText>
           <HintText variant="error">Enter a valid work email address.</HintText>
           <HintText variant="success">This workspace name is available.</HintText>
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Email verification" className="xl:col-span-2">
+      <ComponentPreview title="Email Verification Form" className="xl:col-span-2">
         <EmailVerificationInput />
       </ComponentPreview>
     </>;
 }
 
 export default function InputsPage() {
-  return <ConsoleLayout>{<Showcase title="Inputs">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Inputs" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <InputExamples />
-    </Showcase>}</ConsoleLayout>;
+    </div></div>}</ConsoleLayout>;
 }

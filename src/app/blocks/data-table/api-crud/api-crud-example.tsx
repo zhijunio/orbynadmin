@@ -226,12 +226,15 @@ export function ApiCrudExample() {
           <Button variant="outline" size="sm" onClick={reloadContacts}>Retry</Button>
         </CardContent></Card>
       ) : (
-        <DataTable
-          columns={columns}
-          data={contacts}
-          searchKey="name"
-          searchPlaceholder="Search contacts…"
-        />
+        <Card><CardContent>
+          <DataTable
+            columns={columns}
+            data={contacts}
+            getRowId={(row) => row.id}
+            searchKey="name"
+            searchPlaceholder="Search contacts…"
+          />
+        </CardContent></Card>
       )}
 
       <ContactEditorDialog

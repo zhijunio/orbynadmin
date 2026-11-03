@@ -5,7 +5,7 @@ import ConsoleLayout from "@/components/application/app-shell/console-layout";
 import { useState } from "react";
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 import { Button } from "@/components/base/buttons/button";
 import {
   TreeView,
@@ -106,30 +106,31 @@ function TreeViewExamples() {
       </div>
     </ComponentPreview>
 
-    <ComponentPreview title="Compact and Empty States">
-      <div className="grid w-full gap-4 sm:grid-cols-2">
-        <TreeView
-          aria-label="Compact project files"
-          items={workspaceFiles}
-          defaultExpandedIds={["public"]}
-          defaultSelectedIds={["readme"]}
-          size="sm"
-          showGuides={false}
-          className="rounded-lg border p-2"
-        />
-        <TreeView
-          aria-label="Empty file search results"
-          items={[]}
-          emptyState="No matching files."
-          className="rounded-lg border p-2"
-        />
-      </div>
+    <ComponentPreview title="Compact Tree">
+      <TreeView
+        aria-label="Compact project files"
+        items={workspaceFiles}
+        defaultExpandedIds={["public"]}
+        defaultSelectedIds={["readme"]}
+        size="sm"
+        showGuides={false}
+        className="w-full max-w-sm rounded-lg border p-2"
+      />
+    </ComponentPreview>
+
+    <ComponentPreview title="Empty Search Results">
+      <TreeView
+        aria-label="Empty file search results"
+        items={[]}
+        emptyState="No matching files."
+        className="w-full max-w-sm rounded-lg border p-2"
+      />
     </ComponentPreview>
     </>;
 }
 
 export default function TreeViewPage() {
-  return <ConsoleLayout>{<Showcase title="Tree View">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Tree View" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <TreeViewExamples />
-    </Showcase>}</ConsoleLayout>;
+    </div></div>}</ConsoleLayout>;
 }

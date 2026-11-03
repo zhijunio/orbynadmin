@@ -215,14 +215,14 @@ export default function ActivityPage() {
                       <Separator className="flex-1" />
                     </div>
 
-                    <ol className="relative space-y-6 border-l pl-8">
+                    <ol className="relative space-y-6 border-l pl-12">
                       {items.map((e) => {
                         const meta = categoryMeta[e.category];
                         const Icon = e.icon;
                         return (
                           <li key={e.id} className="relative">
                             {/* Node */}
-                            <span className="absolute -left-12 top-0">
+                            <span className="absolute -left-16 top-0">
                               {e.actor ? (
                                 <span className="relative inline-flex">
                                   <Avatar className="size-8 ring-4 ring-card">

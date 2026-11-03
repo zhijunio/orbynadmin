@@ -1,11 +1,5 @@
-import ConsoleLayout from "@/components/application/app-shell/console-layout";
-
-import { CompactPageHeader as PageHeader } from "@/components/application/app-shell/page-header";
-import { SignInWithLogoCard } from "@/components/application/auth/sign-in-layout-cards";
+import { redirect } from "next/navigation";
 
 export default function SignInLogoExamplePage() {
-  return <ConsoleLayout>{<div className="mx-auto w-full max-w-[1040px] space-y-8">
-      <PageHeader title="With a logo" />
-      <SignInWithLogoCard />
-    </div>}</ConsoleLayout>;
+  redirect("/blocks/auth/sign-in");
 }

@@ -9,10 +9,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { orders } from "@/data";
 
 const statusStyles: Record<string, string> = {
-  Paid: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-  Pending: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  Paid: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+  Pending: "bg-amber-500/10 text-amber-700 dark:text-amber-400",
   Refunded: "bg-slate-500/10 text-slate-600 dark:text-slate-400",
-  Failed: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+  Failed: "bg-rose-500/10 text-rose-700 dark:text-rose-400",
 };
 
 function StatusBadge({ status }: { status: string }) {

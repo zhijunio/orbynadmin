@@ -6,7 +6,7 @@ export const metadata = { title: "Tooltips" };
 
 
 import { ComponentPreview } from "@/components/application/docs/component-preview";
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/base/tooltip/tooltip";
 
@@ -39,11 +39,26 @@ const tooltipPositionsData = [
   { id: 4, position: "right", title: "Right Tooltip" },
 ] as const;
 
+function DefaultTooltip() {
+  return <TooltipProvider delayDuration={0}><Tooltip><TooltipTrigger className="rounded-lg border px-4 py-2 text-sm">Hover for details</TooltipTrigger><TooltipContent side="top">This is a tooltip</TooltipContent></Tooltip></TooltipProvider>;
+}
+
+function WhiteAndDarkTooltips() {
+  return <TooltipProvider delayDuration={0}>
+    <div className="flex flex-wrap items-center gap-5">
+      <Tooltip><TooltipTrigger className="rounded-lg border px-4 py-2 text-sm">White tooltip</TooltipTrigger><TooltipContent className="border border-zinc-200 bg-white text-zinc-700 [&>svg]:fill-white">White tooltip</TooltipContent></Tooltip>
+      <Tooltip><TooltipTrigger className="rounded-lg border px-4 py-2 text-sm">Dark tooltip</TooltipTrigger><TooltipContent className="border border-zinc-800 bg-zinc-900 text-white [&>svg]:fill-zinc-900">Dark tooltip</TooltipContent></Tooltip>
+    </div>
+  </TooltipProvider>;
+}
+
 
 
 export default function TooltipsPage() {
-  return <ConsoleLayout>{<Showcase title="Tooltips">
-    <ComponentPreview title="Tooltip Positions" className="xl:col-span-2"><TooltipsPositions /></ComponentPreview>
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Tooltips" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
+    <ComponentPreview title="Default Tooltip"><DefaultTooltip /></ComponentPreview>
+    <ComponentPreview title="White and Dark Tooltip"><WhiteAndDarkTooltips /></ComponentPreview>
+    <ComponentPreview title="Tooltip Placement"><TooltipsPositions /></ComponentPreview>
     <ComponentPreview title="Sizes and Arrow">
       <TooltipProvider delayDuration={0}>
         <div className="flex flex-wrap items-center gap-5">
@@ -73,5 +88,5 @@ export default function TooltipsPage() {
         </div>
       </TooltipProvider>
     </ComponentPreview>
-  </Showcase>}</ConsoleLayout>;
+  </div></div>}</ConsoleLayout>;
 }

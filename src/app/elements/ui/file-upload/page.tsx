@@ -2,7 +2,7 @@
 
 import ConsoleLayout from "@/components/application/app-shell/console-layout";
 
-import { Showcase } from "@/components/application/docs/showcase";
+import { PageHeader } from "@/components/application/app-shell/page-header";
 
 import { useEffect, useRef, useState } from "react";
 import { FileUpload } from "@/components/base/file-upload/file-upload";
@@ -21,29 +21,25 @@ const documentAccept = {
 };
 
 function FileUploadExamples() {
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [documents, setDocuments] = useState<File[]>([]);
   const [singleFile, setSingleFile] = useState<File[]>([]);
   const [previewFiles, setPreviewFiles] = useState<File[]>([]);
   const [validatedFiles, setValidatedFiles] = useState<File[]>([]);
 
   return <>
-      <ComponentPreview title="Single image">
-        <FileUpload files={imageFiles} onFilesChange={setImageFiles} accept={imageAccept} maxSize={5 * 1024 * 1024} />
-      </ComponentPreview>
-      <ComponentPreview title="Multiple documents">
+      <ComponentPreview title="Multiple Documents">
         <FileUpload files={documents} onFilesChange={setDocuments} accept={documentAccept} multiple maxSize={10 * 1024 * 1024} />
       </ComponentPreview>
-      <ComponentPreview title="File size validation">
+      <ComponentPreview title="File Size Validation">
         <div className="w-full space-y-2">
           <p className="text-xs text-muted-foreground">PNG or JPEG, up to 1 MB. Try a larger file to see the rejection message.</p>
           <FileUpload files={validatedFiles} onFilesChange={setValidatedFiles} accept={imageAccept} maxSize={1 * 1024 * 1024} />
         </div>
       </ComponentPreview>
-      <ComponentPreview title="Single file">
+      <ComponentPreview title="Single Document Upload">
         <FileUpload files={singleFile} onFilesChange={setSingleFile} accept={documentAccept} maxSize={2 * 1024 * 1024} />
       </ComponentPreview>
-      <ComponentPreview title="Image upload with preview" className="xl:col-span-2">
+      <ComponentPreview title="Image Upload with Preview">
         <div className="grid w-full gap-5 md:grid-cols-[minmax(0,1fr)_220px]">
           <FileUpload files={previewFiles} onFilesChange={setPreviewFiles} accept={imageAccept} maxSize={5 * 1024 * 1024} />
           <div className="flex min-h-44 items-center justify-center overflow-hidden rounded-lg border border-dashed bg-muted/20 p-3">
@@ -78,7 +74,7 @@ function ImagePreview({ file }: { file: File }) {
 }
 
 export default function FileUploadPage() {
-  return <ConsoleLayout>{<Showcase title="File Upload">
+  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="File Upload" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
       <FileUploadExamples />
-    </Showcase>}</ConsoleLayout>;
+    </div></div>}</ConsoleLayout>;
 }

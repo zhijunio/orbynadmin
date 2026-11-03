@@ -27,10 +27,6 @@ export function ControlledAccordionExample() {
             <AccordionContent>{item.content}</AccordionContent>
           </AccordionItem>
         ))}
-        <AccordionItem value="restricted" disabled className="rounded-lg border px-3 opacity-60">
-          <AccordionTrigger>Billing settings (admin only)</AccordionTrigger>
-          <AccordionContent>Only workspace administrators can change billing settings.</AccordionContent>
-        </AccordionItem>
       </Accordion>
     </div>
   );
