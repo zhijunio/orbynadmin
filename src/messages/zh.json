@@ -157,6 +157,7 @@
     "Radio": "单选框",
     "Ribbons": "角标",
     "Scroll Area": "滚动区域",
+    "Signature Pad": "签名板",
     "Select": "选择器",
     "Sheet": "侧边面板",
     "Skeleton": "骨架屏",
@@ -239,6 +240,7 @@
     "Toast": "轻提示"
   },
   "PageTitles": {
+    "Signature Pad": "签名板",
     "Auth": "身份验证",
     "Sign In": "登录",
     "With a logo": "带 Logo",

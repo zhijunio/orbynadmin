@@ -157,6 +157,7 @@
     "Radio": "Radio",
     "Ribbons": "Ribbons",
     "Scroll Area": "Scroll Area",
+    "Signature Pad": "Signature Pad",
     "Select": "Select",
     "Sheet": "Sheet",
     "Skeleton": "Skeleton",
@@ -239,6 +240,7 @@
     "Toast": "Toast"
   },
   "PageTitles": {
+    "Signature Pad": "Signature Pad",
     "Auth": "Auth",
     "Sign In": "Sign In",
     "With a logo": "With a logo",

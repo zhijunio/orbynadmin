@@ -363,6 +363,7 @@ export const navGroups: NavGroup[] = [
           { title: "Radio", url: "/elements/ui/radio", badge: "New" },
           { title: "Ribbons", url: "/elements/ui/ribbons" },
           { title: "Scroll Area", url: "/elements/ui/scroll-area" },
+          { title: "Signature Pad", url: "/elements/ui/signature-pad", badge: "New" },
           { title: "Search Field", url: "/elements/ui/search-field", badge: "New" },
           { title: "Segmented Control", url: "/elements/ui/segmented-control", badge: "New" },
           { title: "Select", url: "/elements/ui/select", badge: "New" },
