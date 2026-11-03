@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { IconDownload, IconPlayerPlay } from "@tabler/icons-react";
 import Image from "next/image";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { Badge } from "@/components/ui/badges/badge";
@@ -332,7 +332,7 @@ function ApiRefUploadExample() {
 
 export default function SignaturePadPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5">
         <PageHeader title="Signature Pad" />
         <div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
@@ -350,6 +350,6 @@ export default function SignaturePadPage() {
           <ComponentPreview title="Export through apiRef"><ApiRefUploadExample /></ComponentPreview>
         </div>
       </div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

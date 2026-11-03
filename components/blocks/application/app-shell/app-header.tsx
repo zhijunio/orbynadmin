@@ -12,7 +12,7 @@ import {
   IconWorld,
 } from "@tabler/icons-react";
 
-import { componentNavItems, currentUser } from "@/components/custom/app-shell/config";
+import { appNavItems, blockNavItems, componentNavItems, currentUser } from "@/components/custom/app-shell/config";
 import { CustomizerButton, useThemeConfig } from "@/components/theme-customizer";
 import { useIsMac } from "@/hooks/use-platform";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar/avatar";
@@ -25,14 +25,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb/breadcrumb";
 import {
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command/command";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -40,26 +32,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown/dropdown-menu";
-import { Kbd, KbdGroup } from "@/components/ui/kbd/kbd";
 import { SidebarTrigger } from "@/components/ui/sidebar/sidebar";
+import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command/command";
+import { Kbd, KbdGroup } from "@/components/ui/kbd/kbd";
 
-function useBreadcrumb() {
+function useBreadcrumb(preview: boolean) {
   const pathname = usePathname();
   const t = useTranslations("Navigation");
-  return pathname.split("/").filter(Boolean).map((segment, index, segments) => {
+  if (preview) return ["Dashboard", "Overview"];
+  const segments = pathname.split("/").filter(Boolean);
+  return segments.map((segment, index) => {
     const path = `/${segments.slice(0, index + 1).join("/")}`;
-    const label = componentNavItems.find((item) => item.url === path)?.title
+    const label = appNavItems.find((item) => item.url === path)?.title
       ?? segment.replace(/-/g, " ").replace(/\b\w/g, (character) => character.toUpperCase());
     return t.has(label) ? t(label) : label;
   });
 }
 
-export function AppHeader() {
-  const crumbs = useBreadcrumb();
+export function AppHeader({ preview = false }: { preview?: boolean }) {
+  const crumbs = useBreadcrumb(preview);
   return (
-    <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <SidebarTrigger className="-ml-1" />
-      <div className="mr-1 h-5 w-px shrink-0 self-center bg-border" />
+    <header className={`sticky top-0 z-30 flex shrink-0 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${preview ? "h-12" : "h-16"}`}>
+      {preview ? (
+        <SidebarTrigger className="-ml-1 md:hidden" />
+      ) : (
+        <SidebarTrigger className="-ml-1" />
+      )}
+      {!preview && <div className="mr-1 h-5 w-px shrink-0 self-center bg-border" />}
       <Breadcrumb className="hidden sm:block">
         <BreadcrumbList>
           {crumbs.map((crumb, index) => (
@@ -75,22 +74,80 @@ export function AppHeader() {
         </BreadcrumbList>
       </Breadcrumb>
       <div className="ml-auto flex items-center gap-1.5">
-        <CommandPalette />
-        <HeaderActions />
+        {!preview && <CommandPalette />}
+        {!preview && <HeaderActions preview={preview} />}
       </div>
     </header>
   );
 }
 
-function HeaderActions() {
+function HeaderActions({ preview }: { preview: boolean }) {
   return (
     <div className="flex items-center gap-1.5">
-      <LanguageMenu />
+      {!preview && <LanguageMenu />}
       <ThemeToggle />
-      <CustomizerButton />
+      {!preview && <CustomizerButton />}
       <div className="mx-1 h-6 w-px shrink-0 self-center bg-border" />
-      <UserMenu />
+      <UserMenu preview={preview} />
     </div>
+  );
+}
+
+function CommandPalette() {
+  const navTranslations = useTranslations("Navigation");
+  const t = useTranslations("Header");
+  const router = useRouter();
+  const isMac = useIsMac();
+  const [open, setOpen] = useState(false);
+  const go = useCallback((url: string) => {
+    setOpen(false);
+    router.push(url);
+  }, [router]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        setOpen((current) => !current);
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  return (
+    <>
+      <Button variant="outline" className="hidden h-9 w-56 justify-start gap-2 px-3 text-muted-foreground lg:flex" onClick={() => setOpen(true)}>
+        <IconSearch className="size-4" />
+        <span className="text-sm">{t("search")}</span>
+        <KbdGroup className="ml-auto">
+          <Kbd>{isMac ? "⌘" : "Ctrl"}</Kbd>
+          <span className="text-[11px] font-medium text-muted-foreground">+</span>
+          <Kbd>K</Kbd>
+        </KbdGroup>
+      </Button>
+      <Button variant="ghost" size="icon" className="rounded-full lg:hidden" aria-label={t("search")} onClick={() => setOpen(true)}>
+        <IconSearch className="size-5" />
+      </Button>
+      <CommandDialog open={open} onOpenChange={setOpen} title={t("commandTitle")} description={t("commandDescription")}>
+        <CommandInput placeholder={t("commandPlaceholder")} />
+        <CommandList aria-label={t("commands")}>
+          <CommandEmpty>{t("noResults")}</CommandEmpty>
+          <CommandGroup heading={navTranslations("Components")}>
+            {componentNavItems.map((item) => {
+              const label = item.title;
+              return <CommandItem key={item.url} value={label} onSelect={() => go(item.url)}>{label}</CommandItem>;
+            })}
+          </CommandGroup>
+          <CommandGroup heading={navTranslations("Blocks")}>
+            {blockNavItems.map((item) => {
+              const label = navTranslations.has(item.title) ? navTranslations(item.title) : item.title;
+              return <CommandItem key={item.url} value={label} onSelect={() => go(item.url)}>{label}</CommandItem>;
+            })}
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
+    </>
   );
 }
 
@@ -145,7 +202,7 @@ function ThemeToggle() {
   );
 }
 
-function UserMenu() {
+function UserMenu({ preview = false }: { preview?: boolean }) {
   const t = useTranslations("UserMenu");
   const { setOpen } = useThemeConfig();
   return (
@@ -171,62 +228,8 @@ function UserMenu() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => setOpen(true)}>
-          <IconAdjustmentsHorizontal className="size-4" /> {t("settings")}
-        </DropdownMenuItem>
+        {!preview && <DropdownMenuItem onSelect={() => setOpen(true)}><IconAdjustmentsHorizontal className="size-4" /> {t("settings")}</DropdownMenuItem>}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-}
-
-function CommandPalette() {
-  const navTranslations = useTranslations("Navigation");
-  const t = useTranslations("Header");
-  const router = useRouter();
-  const isMac = useIsMac();
-  const [open, setOpen] = useState(false);
-  const go = useCallback((url: string) => {
-    setOpen(false);
-    router.push(url);
-  }, [router]);
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault();
-        setOpen((current) => !current);
-      }
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, []);
-
-  return (
-    <>
-      <Button variant="outline" className="hidden h-9 w-56 justify-start gap-2 px-3 text-muted-foreground lg:flex" onClick={() => setOpen(true)}>
-        <IconSearch className="size-4" />
-        <span className="text-sm">{t("search")}</span>
-        <KbdGroup className="ml-auto">
-          <Kbd>{isMac ? "⌘" : "Ctrl"}</Kbd>
-          <span className="text-[11px] font-medium text-muted-foreground">+</span>
-          <Kbd>K</Kbd>
-        </KbdGroup>
-      </Button>
-      <Button variant="ghost" size="icon" className="rounded-full lg:hidden" aria-label={t("search")} onClick={() => setOpen(true)}>
-        <IconSearch className="size-5" />
-      </Button>
-      <CommandDialog open={open} onOpenChange={setOpen} title={t("commandTitle")} description={t("commandDescription")}>
-        <CommandInput placeholder={t("commandPlaceholder")} />
-        <CommandList aria-label={t("commands")}>
-          <CommandEmpty>{t("noResults")}</CommandEmpty>
-          <CommandGroup heading={navTranslations("Components")}>
-            {componentNavItems.map((item) => {
-              const label = navTranslations.has(item.title) ? navTranslations(item.title) : item.title;
-              return <CommandItem key={item.url} value={label} onSelect={() => go(item.url)}>{label}</CommandItem>;
-            })}
-          </CommandGroup>
-        </CommandList>
-      </CommandDialog>
-    </>
   );
 }

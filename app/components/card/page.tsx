@@ -1,4 +1,5 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
+import { CardInteractiveExamples } from "@/app/components/card/card-interactive-examples";
 
 export const metadata = { title: "Cards" };
 
@@ -92,5 +93,5 @@ const styleFour = [
 
 
 export default function CardsPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Cards" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><CardsExample /></div></div>}</ConsoleLayout>;
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Cards" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><CardsExample /><CardInteractiveExamples /></div></div>}</AppShell>;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { useState } from "react";
 import { NumberField } from "@/components/ui/number-field/number-field";
@@ -12,7 +12,7 @@ export default function NumberFieldPage() {
   const [budget, setBudget] = useState(1250);
   const [conversionRate, setConversionRate] = useState(0.25);
   const [weight, setWeight] = useState(4.5);
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Number Field" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Number Field" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
     <ComponentPreview title="Controlled Value and Limits"><div className="grid gap-2"><NumberField aria-label="Seats" min={1} max={25} value={seats} onValueChange={setSeats} /><p className="text-xs text-muted-foreground" aria-live="polite">{seats} seats selected</p></div></ComponentPreview>
     <ComponentPreview title="Custom Step Size"><NumberField aria-label="Discount percentage" min={0} max={100} step={5} defaultValue={15} /></ComponentPreview>
     <ComponentPreview title="Disabled State"><NumberField aria-label="Locked value" value={12} disabled /></ComponentPreview>
@@ -54,5 +54,5 @@ export default function NumberFieldPage() {
         </div>
       </div>
     </ComponentPreview>
-  </div></div>}</ConsoleLayout>;
+  </div></div>}</AppShell>;
 }

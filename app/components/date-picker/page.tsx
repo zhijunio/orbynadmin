@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { useState } from "react";
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
@@ -14,14 +14,22 @@ import { PageHeader } from "@/components/custom/docs/page-header";
 import { DatePicker } from "@/components/ui/date-picker/date-picker";
 import { DateRangePicker, type DateRangeValue } from "@/components/ui/date-picker/date-range-picker";
 import { MonthPanel } from "@/components/ui/date-picker/calendar-shared";
+import { DateSelector, type DateSelectorValue, formatDateSelectorValue } from "@/components/ui/date-picker/date-selector";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover/popover";
 
 export default function DatePickerPage() {
   const t = useTranslations("DateControls");
   const [date, setDate] = useState<CalendarDate | null>(null);
   const [range, setRange] = useState<DateRangeValue | null>(null);
+  const [selectorValue, setSelectorValue] = useState<DateSelectorValue>();
+  const [selectorDraft, setSelectorDraft] = useState<DateSelectorValue>();
+  const [selectorPopoverOpen, setSelectorPopoverOpen] = useState(false);
+  const [selectorDialogOpen, setSelectorDialogOpen] = useState(false);
+  const [selectorLocale, setSelectorLocale] = useState("en-US");
   const selectedDay = today(getLocalTimeZone());
 
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Date Picker" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Date Picker" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <ComponentPreview title="Controlled Date Range" className="xl:col-span-2">
         <div className="w-full max-w-sm space-y-3">
           <DateRangePicker aria-label={t("reportPeriod")} value={range} onChange={setRange} />
@@ -65,7 +73,23 @@ export default function DatePickerPage() {
       <ComponentPreview title="Disabled Date Range Picker">
         <DateRangePicker isDisabled aria-label="Locked reporting period" />
       </ComponentPreview>
-    </div></div>}</ConsoleLayout>;
+
+      <ComponentPreview title="Period-Based Date Selector">
+        <DateSelector value={selectorValue} onChange={setSelectorValue} label="Due date" inputHint="Try: 2025, Q4, 05/10/2025" />
+      </ComponentPreview>
+
+      <ComponentPreview title="Date Selector in a Popover">
+        <div className="grid w-full max-w-lg gap-3"><Popover open={selectorPopoverOpen} onOpenChange={(open) => { setSelectorPopoverOpen(open); if (open) setSelectorDraft(selectorValue); }}><PopoverTrigger asChild><Button type="button" variant="outline" className="w-full justify-start">{selectorValue ? formatDateSelectorValue(selectorValue) : "Select a reporting period"}</Button></PopoverTrigger><PopoverContent align="start" className="w-[min(28rem,calc(100vw-2rem))] p-3"><DateSelector value={selectorDraft} onChange={setSelectorDraft} allowRange label="Reporting period" /><div className="mt-3 flex justify-end gap-2 border-t pt-3"><Button type="button" variant="outline" size="sm" onClick={() => { setSelectorDraft(selectorValue); setSelectorPopoverOpen(false); }}>Cancel</Button><Button type="button" size="sm" onClick={() => { setSelectorValue(selectorDraft); setSelectorPopoverOpen(false); }}>Apply</Button></div></PopoverContent></Popover><p className="text-xs text-muted-foreground">Changes stay in draft until Apply; Cancel discards them.</p></div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Date Selector in a Dialog">
+        <div className="grid gap-3"><Button type="button" variant="outline" className="w-fit" onClick={() => { setSelectorDraft(selectorValue); setSelectorDialogOpen(true); }}>Choose due date</Button><Dialog open={selectorDialogOpen} onOpenChange={setSelectorDialogOpen}><DialogContent size="md"><DialogHeader><DialogTitle>Select due date</DialogTitle></DialogHeader><DateSelector value={selectorDraft} onChange={setSelectorDraft} showInput /><div className="flex justify-end gap-2"><Button type="button" variant="outline" onClick={() => { setSelectorDraft(selectorValue); setSelectorDialogOpen(false); }}>Cancel</Button><Button type="button" onClick={() => { setSelectorValue(selectorDraft); setSelectorDialogOpen(false); }}>Apply</Button></div></DialogContent></Dialog><p className="text-xs text-muted-foreground" aria-live="polite">{selectorValue ? formatDateSelectorValue(selectorValue) : "No due date selected."}</p></div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Localized Date Selector">
+        <div className="grid gap-3"><label className="grid max-w-xs gap-1 text-sm font-medium">Language and date format<select value={selectorLocale} onChange={(event) => setSelectorLocale(event.currentTarget.value)} className="h-9 rounded-lg border border-input bg-background px-3 text-sm"><option value="en-US">English</option><option value="es-ES">Español</option><option value="fr-FR">Français</option><option value="de-DE">Deutsch</option><option value="zh-CN">简体中文</option></select></label><DateSelector value={selectorValue} onChange={setSelectorValue} locale={selectorLocale} label="Reporting date" /><p className="text-xs text-muted-foreground">The selected date preview follows the chosen locale.</p></div>
+      </ComponentPreview>
+    </div></div>}</AppShell>;
 }
 
 function MeetingSchedulerExample() {

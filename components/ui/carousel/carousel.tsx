@@ -19,24 +19,32 @@ export type CarouselProps = Omit<ComponentProps<"div">, "children"> & {
   children: ReactNode;
   "aria-label": string;
   align?: "start" | "center";
+  orientation?: "horizontal" | "vertical";
   gap?: number;
+  loop?: boolean;
   showArrows?: boolean;
   showDots?: boolean;
   autoPlay?: boolean;
   autoPlayInterval?: number;
   itemClassName?: string;
+  thumbnails?: ReactNode[];
+  thumbnailPosition?: "below" | "overlay";
 };
 
 export function Carousel({
   children,
   "aria-label": ariaLabel,
   align = "start",
+  orientation = "horizontal",
   gap = 16,
+  loop = false,
   showArrows = true,
   showDots = true,
   autoPlay = true,
   autoPlayInterval = 5000,
   itemClassName,
+  thumbnails,
+  thumbnailPosition = "below",
   className,
 }: CarouselProps) {
   const slides = Children.toArray(children);
@@ -48,11 +56,12 @@ export function Carousel({
     const track = trackRef.current;
     if (!track) return;
     const itemNodes = Array.from(track.querySelectorAll<HTMLElement>("[data-carousel-item]"));
-    const center = track.scrollLeft + track.clientWidth / 2;
+    const vertical = orientation === "vertical";
+    const center = vertical ? track.scrollTop + track.clientHeight / 2 : track.scrollLeft + track.clientWidth / 2;
     const nextIndex = itemNodes.reduce((closest, item, index) => {
-      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+      const itemCenter = vertical ? item.offsetTop + item.offsetHeight / 2 : item.offsetLeft + item.offsetWidth / 2;
       const closestItem = itemNodes[closest];
-      const closestCenter = closestItem.offsetLeft + closestItem.offsetWidth / 2;
+      const closestCenter = vertical ? closestItem.offsetTop + closestItem.offsetHeight / 2 : closestItem.offsetLeft + closestItem.offsetWidth / 2;
       return Math.abs(itemCenter - center) < Math.abs(closestCenter - center)
         ? index
         : closest;
@@ -62,7 +71,7 @@ export function Carousel({
       if (current === nextIndex) return current;
       return nextIndex;
     });
-  }, []);
+  }, [orientation]);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -87,14 +96,18 @@ export function Carousel({
       const track = trackRef.current;
       const item = track?.querySelectorAll<HTMLElement>("[data-carousel-item]")[index];
       if (!track || !item) return;
-      const centerOffset =
-        align === "center" ? (track.clientWidth - item.clientWidth) / 2 : 0;
+      const vertical = orientation === "vertical";
+      const centerOffset = align === "center"
+        ? (vertical ? (track.clientHeight - item.clientHeight) / 2 : (track.clientWidth - item.clientWidth) / 2)
+        : 0;
       const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
         ? "auto"
         : "smooth";
-      track.scrollTo({ left: item.offsetLeft - centerOffset, behavior });
+      track.scrollTo(vertical
+        ? { top: item.offsetTop - centerOffset, behavior }
+        : { left: item.offsetLeft - centerOffset, behavior });
     },
-    [align],
+    [align, orientation],
   );
 
   useEffect(() => {
@@ -107,17 +120,20 @@ export function Carousel({
     }
     const timeout = window.setTimeout(() => {
       if (activeIndex < slides.length - 1) scrollToIndex(activeIndex + 1);
+      else if (loop) scrollToIndex(0);
     }, autoPlayInterval);
     return () => window.clearTimeout(timeout);
-  }, [activeIndex, autoPlay, autoPlayInterval, scrollToIndex, slides.length]);
+  }, [activeIndex, autoPlay, autoPlayInterval, loop, scrollToIndex, slides.length]);
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key === "ArrowRight") {
+    const nextKey = orientation === "vertical" ? "ArrowDown" : "ArrowRight";
+    const previousKey = orientation === "vertical" ? "ArrowUp" : "ArrowLeft";
+    if (event.key === nextKey) {
       event.preventDefault();
-      scrollToIndex(Math.min(activeIndex + 1, slides.length - 1));
-    } else if (event.key === "ArrowLeft") {
+      scrollToIndex(activeIndex === slides.length - 1 && loop ? 0 : Math.min(activeIndex + 1, slides.length - 1));
+    } else if (event.key === previousKey) {
       event.preventDefault();
-      scrollToIndex(Math.max(activeIndex - 1, 0));
+      scrollToIndex(activeIndex === 0 && loop ? slides.length - 1 : Math.max(activeIndex - 1, 0));
     } else if (event.key === "Home") {
       event.preventDefault();
       scrollToIndex(0);
@@ -126,6 +142,10 @@ export function Carousel({
       scrollToIndex(slides.length - 1);
     }
   }
+
+  const vertical = orientation === "vertical";
+  const previousIndex = activeIndex === 0 && loop ? slides.length - 1 : activeIndex - 1;
+  const nextIndex = activeIndex === slides.length - 1 && loop ? 0 : activeIndex + 1;
 
   return (
     <div className={cn("relative w-full min-w-0 rounded-lg border border-border", className)}>
@@ -136,7 +156,7 @@ export function Carousel({
         aria-label={ariaLabel}
         tabIndex={0}
         onKeyDown={handleKeyDown}
-        className="relative flex w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth rounded-lg outline-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:scroll-auto"
+        className={cn("relative flex w-full snap-mandatory gap-4 overflow-auto overscroll-contain scroll-smooth rounded-lg outline-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:ring-2 focus-visible:ring-ring/50 motion-reduce:scroll-auto", vertical ? "h-[22rem] snap-y flex-col" : "snap-x")}
         style={{ gap }}
       >
         {slides.map((slide, index) => (
@@ -151,7 +171,7 @@ export function Carousel({
               align === "center" && "snap-center",
               itemClassName,
             )}
-            style={{ width: itemClassName ? undefined : "100%" }}
+            style={vertical ? undefined : { width: itemClassName ? undefined : "100%" }}
           >
             {slide}
           </div>
@@ -165,9 +185,9 @@ export function Carousel({
             variant="secondary"
             size="icon-lg"
             aria-label="Previous slide"
-            disabled={activeIndex === 0}
-            onClick={() => scrollToIndex(activeIndex - 1)}
-            className="!size-10 absolute top-1/2 left-3 z-10 -translate-y-1/2 rounded-full border border-white/10 bg-white/90 text-gray-700 shadow-lg backdrop-blur-[10px] hover:bg-white disabled:bg-white/60 sm:left-4"
+            disabled={!loop && activeIndex === 0}
+            onClick={() => scrollToIndex(previousIndex)}
+            className={cn("!size-10 absolute z-10 rounded-full border border-white/10 bg-white/90 text-gray-700 shadow-lg backdrop-blur-[10px] hover:bg-white disabled:bg-white/60", vertical ? "top-3 left-1/2 -translate-x-1/2 rotate-90" : "top-1/2 left-3 -translate-y-1/2 sm:left-4")}
           >
             <ChevronLeft aria-hidden="true" />
           </Button>
@@ -176,9 +196,9 @@ export function Carousel({
             variant="secondary"
             size="icon-lg"
             aria-label="Next slide"
-            disabled={activeIndex === slides.length - 1}
-            onClick={() => scrollToIndex(activeIndex + 1)}
-            className="!size-10 absolute top-1/2 right-3 z-10 -translate-y-1/2 rounded-full border border-white/10 bg-white/90 text-gray-700 shadow-lg backdrop-blur-[10px] hover:bg-white disabled:bg-white/60 sm:right-4"
+            disabled={!loop && activeIndex === slides.length - 1}
+            onClick={() => scrollToIndex(nextIndex)}
+            className={cn("!size-10 absolute z-10 rounded-full border border-white/10 bg-white/90 text-gray-700 shadow-lg backdrop-blur-[10px] hover:bg-white disabled:bg-white/60", vertical ? "bottom-3 left-1/2 -translate-x-1/2 rotate-90" : "top-1/2 right-3 -translate-y-1/2 sm:right-4")}
           >
             <ChevronRight aria-hidden="true" />
           </Button>
@@ -202,6 +222,12 @@ export function Carousel({
               )}
             />
           ))}
+        </div>
+      )}
+
+      {thumbnails && thumbnails.length === slides.length && (
+        <div role="group" aria-label="Slide thumbnails" className={cn("flex gap-2 p-2", thumbnailPosition === "overlay" && "absolute right-2 bottom-2 left-2 z-10 justify-center rounded-lg bg-background/75 backdrop-blur", vertical ? "flex-col" : "flex-row")}>
+          {thumbnails.map((thumbnail, index) => <button key={index} type="button" aria-label={`Show slide ${index + 1}`} aria-current={activeIndex === index ? "true" : undefined} onClick={() => scrollToIndex(index)} className={cn("overflow-hidden rounded-md border-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", activeIndex === index ? "border-primary" : "border-transparent opacity-70 hover:opacity-100")}>{thumbnail}</button>)}
         </div>
       )}
     </div>

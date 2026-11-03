@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { useState } from "react";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
@@ -10,7 +10,7 @@ import { TagGroup } from "@/components/ui/badges/tag-group";
 export default function TagGroupPage() {
   const [filters, setFilters] = useState(["Active", "Enterprise", "US West"]);
   const [priority, setPriority] = useState(["Standard"]);
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Tag Group" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Tag Group" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
     <ComponentPreview title="Removable Filters"><div className="w-full space-y-3"><TagGroup aria-label="Active filters" values={filters} onValuesChange={setFilters} />{filters.length === 0 && <p className="text-sm text-muted-foreground">No filters selected.</p>}</div></ComponentPreview>
     <ComponentPreview title="Read-only Tags"><TagGroup aria-label="Customer segments" values={["Healthcare", "Priority", "Renewal"]} /></ComponentPreview>
     <ComponentPreview title="Color Variants">
@@ -40,5 +40,5 @@ export default function TagGroupPage() {
         <p className="text-xs text-muted-foreground" aria-live="polite">Selected: {priority[0] ?? "None"}</p>
       </div>
     </ComponentPreview>
-  </div></div>}</ConsoleLayout>;
+  </div></div>}</AppShell>;
 }

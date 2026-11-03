@@ -1,22 +1,18 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { Button } from "@/components/ui/buttons/button";
-import { ButtonGroup, ButtonGroupItem } from "@/components/ui/buttons/button-group";
 import { CloseButton } from "@/components/ui/buttons/close-button";
 import { LinkButton } from "@/components/ui/buttons/link-button";
-import { ActionGroup, ButtonGroupIconExamples, IconButtonStates, LinkButtonActions, SegmentedSelection, ViewSwitcher } from "@/app/components/button-interactive-examples";
+import { IconButtonStates, LinkButtonActions } from "@/app/components/button-interactive-examples";
 import {
   IconArrowRight,
   IconBell,
-  IconChevronLeft,
-  IconChevronRight,
   IconDownload,
   IconExternalLink,
   IconFilter,
   IconHeart,
   IconLoader2,
-  IconLayoutGrid,
   IconPencil,
   IconPlus,
   IconSearch,
@@ -28,7 +24,7 @@ export const metadata = { title: "Buttons" };
 
 export default function ButtonsPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5"><PageHeader title="Buttons" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
         <ComponentPreview title="Button Variants">
           <Button>Primary</Button>
@@ -51,55 +47,6 @@ export default function ButtonsPage() {
           <Button>Primary with right icon<IconArrowRight data-icon="inline-end" /></Button>
           <Button variant="outline"><IconDownload data-icon="inline-start" />Outline with left icon</Button>
           <Button variant="outline">Outline with right icon<IconArrowRight data-icon="inline-end" /></Button>
-        </ComponentPreview>
-
-        <ComponentPreview title="Button Group with Variants">
-          <ButtonGroup aria-label="Primary actions">
-            <ButtonGroupItem>Overview</ButtonGroupItem>
-            <ButtonGroupItem selected>Activity</ButtonGroupItem>
-            <ButtonGroupItem>Settings</ButtonGroupItem>
-          </ButtonGroup>
-          <ButtonGroup aria-label="Secondary actions">
-            <ButtonGroupItem variant="secondary">Draft</ButtonGroupItem>
-            <ButtonGroupItem variant="secondary">Review</ButtonGroupItem>
-            <ButtonGroupItem variant="secondary">Published</ButtonGroupItem>
-          </ButtonGroup>
-        </ComponentPreview>
-
-        <ComponentPreview title="Button Group with Icons">
-          <ButtonGroup aria-label="Primary actions with icons">
-            <ButtonGroupItem><IconChevronLeft />Back</ButtonGroupItem>
-            <ButtonGroupItem><IconLayoutGrid />Projects</ButtonGroupItem>
-            <ButtonGroupItem><IconChevronRight />Continue</ButtonGroupItem>
-          </ButtonGroup>
-          <ButtonGroupIconExamples />
-        </ComponentPreview>
-
-        <ComponentPreview title="Button Group with Segmented Selection">
-          <SegmentedSelection />
-        </ComponentPreview>
-
-        <ComponentPreview title="Button Group with Pagination Controls">
-          <ButtonGroup aria-label="Pagination">
-            <ButtonGroupItem variant="outline">Previous</ButtonGroupItem>
-            <ButtonGroupItem variant="outline" aria-current="page" selected>1</ButtonGroupItem>
-            <ButtonGroupItem variant="outline">2</ButtonGroupItem>
-            <ButtonGroupItem variant="outline">3</ButtonGroupItem>
-            <ButtonGroupItem variant="outline">Next</ButtonGroupItem>
-          </ButtonGroup>
-          <ButtonGroup aria-label="Compact pagination">
-            <ButtonGroupItem variant="outline" size="icon" aria-label="Previous"><IconChevronLeft /></ButtonGroupItem>
-            <ButtonGroupItem variant="outline" className="px-4">Page 2 of 8</ButtonGroupItem>
-            <ButtonGroupItem variant="outline" size="icon" aria-label="Next"><IconChevronRight /></ButtonGroupItem>
-          </ButtonGroup>
-        </ComponentPreview>
-
-        <ComponentPreview title="Button Group with View Switcher">
-          <ViewSwitcher />
-        </ComponentPreview>
-
-        <ComponentPreview title="Button Group with Actions">
-          <ActionGroup />
         </ComponentPreview>
 
         <ComponentPreview title="Close Button">
@@ -143,6 +90,6 @@ export default function ButtonsPage() {
           <Button disabled><IconLoader2 className="animate-spin" />Saving</Button>
         </ComponentPreview>
       </div></div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

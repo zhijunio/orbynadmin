@@ -1,0 +1,13 @@
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
+
+export function AppShell1Page() {
+  return (
+    <AppShell>
+      <div className="h-[calc(100svh-6rem)] min-h-[24rem] min-w-0 overflow-hidden">
+        <AppShell preview>
+          <div className="h-full min-h-0 w-full" aria-hidden="true" />
+        </AppShell>
+      </div>
+    </AppShell>
+  );
+}

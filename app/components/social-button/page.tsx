@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { IconKey as KeyRound } from "@tabler/icons-react";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
@@ -12,7 +12,7 @@ export default function SocialButtonPage() {
     (typeof SOCIAL_PROVIDERS)[SocialProvider],
   ]>;
 
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Social Button" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Social Button" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <ComponentPreview title="Common providers">
         <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2">
           <SocialButton brand="google" appearance="white" size="small" fullWidth />
@@ -74,5 +74,5 @@ export default function SocialButtonPage() {
           <SocialButton brand="github">Continue with GitHub</SocialButton>
         </div>
       </ComponentPreview>
-    </div></div>}</ConsoleLayout>;
+    </div></div>}</AppShell>;
 }

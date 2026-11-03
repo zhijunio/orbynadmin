@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { PageHeader } from "@/components/custom/docs/page-header";
 
@@ -179,5 +179,5 @@ function DropdownsExample() {
 }
 
 export default function DropdownsPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Dropdowns" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><DropdownsExample /></div></div>}</ConsoleLayout>;
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Dropdowns" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><DropdownsExample /></div></div>}</AppShell>;
 }

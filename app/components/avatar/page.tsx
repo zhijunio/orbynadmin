@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import {
@@ -132,7 +132,7 @@ function AvatarIndicatorPreview({
 
 export default function AvatarsPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5"><PageHeader title="Avatars" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
         <ComponentPreview title="Default Avatar">
           <DefaultAvatarsPreview />
@@ -153,6 +153,6 @@ export default function AvatarsPage() {
           <AvatarFallbacksPreview />
         </ComponentPreview>
       </div></div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

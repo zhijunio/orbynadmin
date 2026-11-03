@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence } from "motion/react";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { Button } from "@/components/ui/buttons/button";
@@ -68,5 +68,5 @@ function NotificationsExample() {
 }
 
 export default function NotificationsPage() {
-  return <ConsoleLayout><div className="min-w-0 space-y-5"><PageHeader title="Notifications" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><NotificationsExample /></div></div></ConsoleLayout>;
+  return <AppShell><div className="min-w-0 space-y-5"><PageHeader title="Notifications" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><NotificationsExample /></div></div></AppShell>;
 }

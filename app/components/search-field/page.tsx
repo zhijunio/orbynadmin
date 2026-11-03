@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { Button } from "@/components/ui/buttons/button";
@@ -113,10 +113,10 @@ function SearchFieldExamples() {
 
 export default function SearchFieldPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5"><PageHeader title="Search Field" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
         <SearchFieldExamples />
       </div></div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { Label } from "@/components/ui/input/label";
@@ -12,7 +12,7 @@ export default function TextareaPage() {
   const [bio, setBio] = useState("Design engineer. I build dashboards for a living.");
 
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5"><PageHeader title="Textarea" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
         <ComponentPreview title="Textarea Sizes">
           <div className="grid w-full max-w-3xl gap-5 sm:grid-cols-2">
@@ -98,6 +98,6 @@ export default function TextareaPage() {
           </div>
         </ComponentPreview>
       </div></div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

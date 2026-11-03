@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { Button } from "@/components/ui/buttons/button";
@@ -93,7 +93,7 @@ function HorizontalNavigationExample() {
 
 export default function ScrollspyPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5">
         <PageHeader title="Scrollspy" />
         <div className="grid min-w-0 gap-5 [&>*]:min-w-0">
@@ -105,6 +105,6 @@ export default function ScrollspyPage() {
           </ComponentPreview>
         </div>
       </div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

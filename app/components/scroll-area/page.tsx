@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 export const metadata = { title: "Scroll Areas" };
 
@@ -53,5 +53,5 @@ const activity = [
 
 
 export default function ScrollAreasPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Scroll Areas" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><ScrollAreaExamples /></div></div>}</ConsoleLayout>;
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Scroll Areas" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><ScrollAreaExamples /></div></div>}</AppShell>;
 }

@@ -8,7 +8,7 @@ import {
   IconUserPlus,
 } from "@tabler/icons-react";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { Button } from "@/components/ui/buttons/button";
@@ -28,7 +28,7 @@ const tones = [
 
 export default function IconStackPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5">
         <PageHeader title="Icon Stack" />
         <div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
@@ -63,6 +63,6 @@ export default function IconStackPage() {
           </ComponentPreview>
         </div>
       </div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

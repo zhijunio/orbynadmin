@@ -3,16 +3,14 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { UniqueModalExamples } from "@/app/components/dialog/additional-dialog-examples";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { PageHeader } from "@/components/custom/docs/page-header";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/dialog/alert-dialog";
 import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/ui/dialog/dialog";
 import { Button } from "@/components/ui/buttons/button";
 import { Input } from "@/components/ui/input/input";
 import { Label } from "@/components/ui/input/label";
-import { Spinner } from "@/components/ui/spinner/spinner";
 import { IconCircleCheck } from "@tabler/icons-react";
 
 type ModalSize = "sm" | "md" | "lg" | "xl";
@@ -49,32 +47,12 @@ const terms = [
 ];
 
 function ModalExamples() {
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [deleting, setDeleting] = useState(false);
-  const [confirmOpen, setConfirmOpen] = useState(false);
-  const [confirmation, setConfirmation] = useState("");
   const [renameOpen, setRenameOpen] = useState(false);
   const [projectName, setProjectName] = useState("Acme Dashboard");
   const [draftName, setDraftName] = useState(projectName);
   const [sizeOpen, setSizeOpen] = useState(false);
   const [size, setSize] = useState<ModalSize>("md");
 
-  function confirmDelete(event: React.MouseEvent<HTMLButtonElement>) {
-    event.preventDefault();
-    setDeleting(true);
-    window.setTimeout(() => {
-      setDeleting(false);
-      setDeleteOpen(false);
-      toast.success("Project deleted");
-    }, 700);
-  }
-
-  function confirmTransfer(event: React.MouseEvent<HTMLButtonElement>) {
-    event.preventDefault();
-    setConfirmOpen(false);
-    setConfirmation("");
-    toast.success("Workspace ownership transferred");
-  }
 
   return (
     <>
@@ -136,75 +114,6 @@ function ModalExamples() {
               </ModalFooter>
             </Modal>
           </Dialog>
-        </div>
-      </ComponentPreview>
-
-      <ComponentPreview title="Alert Dialog">
-        <div className="flex w-full justify-center">
-          <AlertDialog
-            open={deleteOpen}
-            onOpenChange={(open) => {
-              if (!deleting) setDeleteOpen(open);
-            }}
-          >
-            <AlertDialogTrigger asChild>
-              <Button variant="destructive">Delete project</Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete project?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Acme Dashboard and its 24 files will be deleted for everyone. You can&apos;t undo this.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel disabled={deleting}>Cancel</AlertDialogCancel>
-                <AlertDialogAction variant="destructive" disabled={deleting} onClick={confirmDelete}>
-                  {deleting ? <><Spinner size="sm" className="size-4" />Deleting…</> : "Delete project"}
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
-      </ComponentPreview>
-
-      <ComponentPreview title="Confirm by Typing">
-        <div className="flex w-full justify-center">
-          <AlertDialog
-            open={confirmOpen}
-            onOpenChange={(open) => {
-              setConfirmOpen(open);
-              if (!open) setConfirmation("");
-            }}
-          >
-            <AlertDialogTrigger asChild>
-              <Button variant="secondary">Transfer ownership</Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Transfer workspace ownership?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Maya Chen becomes the owner and you become an admin. Type Acme below to confirm.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <Input
-                aria-label="Workspace name"
-                placeholder="Acme"
-                value={confirmation}
-                onChange={(event) => setConfirmation(event.currentTarget.value)}
-                autoComplete="off"
-              />
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  disabled={confirmation.trim().toLowerCase() !== "acme"}
-                  onClick={confirmTransfer}
-                >
-                  Transfer ownership
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
         </div>
       </ComponentPreview>
 
@@ -323,12 +232,12 @@ function ModalAccessibilityExample() {
 
 export default function DialogsPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5"><PageHeader title="Modal" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
         <ModalExamples />
         <UniqueModalExamples />
         <ModalAccessibilityExample />
       </div></div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

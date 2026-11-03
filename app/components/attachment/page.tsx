@@ -17,7 +17,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import {
@@ -232,7 +232,7 @@ function FilePickerExample() {
 
 export default function AttachmentPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5">
         <PageHeader title="Attachment" />
         <div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
@@ -244,6 +244,6 @@ export default function AttachmentPage() {
           <ComponentPreview title="File picker that fills an attachment tray"><FilePickerExample /></ComponentPreview>
         </div>
       </div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

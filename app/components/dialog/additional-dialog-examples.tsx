@@ -1,16 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { IconAlertTriangle, IconCircleCheck, IconCircleX, IconInfoCircle } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
+import { Kbd } from "@/components/ui/kbd/kbd";
+import { Switch } from "@/components/ui/switch/switch";
 
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { Button } from "@/components/ui/buttons/button";
-import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Modal, ModalBody, ModalFooter } from "@/components/ui/dialog/dialog";
+import { Dialog, DialogClose, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/ui/dialog/dialog";
 import { Input } from "@/components/ui/input/input";
 import { Label } from "@/components/ui/input/label";
 
 export function UniqueModalExamples() {
   const [alert, setAlert] = useState<null | "success" | "info" | "warning" | "danger">(null);
+  const [analyticsCookies, setAnalyticsCookies] = useState(false);
   const alertContent = {
     success: { title: "Changes saved", description: "Your workspace settings have been updated.", icon: IconCircleCheck },
     info: { title: "New update available", description: "A new version is ready to install.", icon: IconInfoCircle },
@@ -106,6 +111,26 @@ export function UniqueModalExamples() {
             </Modal>
           </Dialog>
         </div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Custom Close Button">
+        <div className="flex w-full justify-center"><Dialog><DialogTrigger asChild><Button variant="secondary">Open details</Button></DialogTrigger><Modal showCloseButton={false}><DialogHeader><DialogTitle>Release details</DialogTitle><DialogDescription>Version 2.4.1 is ready for your workspace.</DialogDescription></DialogHeader><ModalBody><p className="text-sm text-muted-foreground">The release includes improved project filters and keyboard navigation.</p></ModalBody><DialogClose asChild><Button type="button" variant="ghost" size="icon-sm" aria-label="Close release details" className="absolute right-3 top-3"><IconX className="size-4" /></Button></DialogClose><ModalFooter><DialogClose asChild><Button>Done</Button></DialogClose></ModalFooter></Modal></Dialog></div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Destructive Confirmation">
+        <div className="flex w-full justify-center"><Dialog><DialogTrigger asChild><Button variant="destructive">Delete workspace</Button></DialogTrigger><Modal><DialogHeader><DialogTitle>Delete this workspace?</DialogTitle><DialogDescription>This removes its projects and member access. This action cannot be undone.</DialogDescription></DialogHeader><ModalFooter><DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose><DialogClose asChild><Button variant="destructive" onClick={() => toast.error("Workspace deleted")}>Delete workspace</Button></DialogClose></ModalFooter></Modal></Dialog></div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Cookie Preferences">
+        <div className="flex w-full justify-center"><Dialog><DialogTrigger asChild><Button variant="outline">Cookie preferences</Button></DialogTrigger><Modal><ModalHeader title="Cookie preferences" description="Choose which optional cookies this workspace can use." /><ModalBody className="grid gap-4"><div className="flex items-center justify-between gap-4"><div><Label htmlFor="essential-cookies">Essential cookies</Label><p className="text-xs text-muted-foreground">Required for sign-in and security.</p></div><Switch id="essential-cookies" checked disabled /></div><div className="flex items-center justify-between gap-4"><div><Label htmlFor="analytics-cookies">Analytics cookies</Label><p className="text-xs text-muted-foreground">Help improve workspace features.</p></div><Switch id="analytics-cookies" checked={analyticsCookies} onCheckedChange={setAnalyticsCookies} /></div></ModalBody><ModalFooter><DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose><DialogClose asChild><Button onClick={() => toast.success("Cookie preferences saved")}>Save preferences</Button></DialogClose></ModalFooter></Modal></Dialog></div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Keyboard Shortcut Reference">
+        <div className="flex w-full justify-center"><Dialog><DialogTrigger asChild><Button variant="outline">Keyboard shortcuts</Button></DialogTrigger><Modal size="lg"><ModalHeader title="Keyboard shortcuts" description="Quick reference for common workspace actions." /><ModalBody className="grid gap-x-8 gap-y-3 sm:grid-cols-2">{[["Search", "⌘", "K"], ["Save", "⌘", "S"], ["New project", "⌘", "N"], ["Undo", "⌘", "Z"], ["Quick open", "⌘", "P"], ["Toggle comment", "⌘", "/"]].map(([action, ...keys]) => <div key={action} className="flex items-center justify-between gap-3"><span className="text-sm text-muted-foreground">{action}</span><span className="flex gap-1">{keys.map((key, index) => <Kbd key={`${action}-${index}`}>{key}</Kbd>)}</span></div>)}</ModalBody><ModalFooter><DialogClose asChild><Button variant="outline">Close</Button></DialogClose></ModalFooter></Modal></Dialog></div>
+      </ComponentPreview>
+
+      <ComponentPreview title="Full-Width Dialog Action">
+        <div className="flex w-full justify-center"><Dialog><DialogTrigger asChild><Button variant="outline">Re-authenticate</Button></DialogTrigger><Modal size="sm"><ModalHeader title="Session expired" description="Sign in again to continue working in this workspace." /><ModalFooter className="w-full"><DialogClose asChild><Button className="w-full" onClick={() => toast.success("Sign-in flow started")}>Sign in again</Button></DialogClose></ModalFooter></Modal></Dialog></div>
       </ComponentPreview>
     </>
   );

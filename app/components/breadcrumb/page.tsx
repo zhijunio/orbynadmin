@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { PageHeader } from "@/components/custom/docs/page-header";
 
@@ -107,7 +107,7 @@ function BreadcrumbWithEllipsis() {
 export const metadata = { title: "Breadcrumbs" };
 
 export default function BreadcrumbsPage() {
-  return <ConsoleLayout>{(
+  return <AppShell>{(
     <div className="min-w-0 space-y-5"><PageHeader title="Breadcrumbs" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <ComponentPreview title="Default Breadcrumb"><BreadcrumbArrow /></ComponentPreview>
       <ComponentPreview title="Breadcrumb With Icon"><BreadcrumbSlashIcon /></ComponentPreview>
@@ -115,5 +115,5 @@ export default function BreadcrumbsPage() {
       <ComponentPreview title="Breadcrumb With Ellipsis"><BreadcrumbWithEllipsis /></ComponentPreview>
       <ComponentPreview title="Breadcrumb with Avatars"><BreadcrumbWithAvatars /></ComponentPreview>
     </div></div>
-  )}</ConsoleLayout>;
+  )}</AppShell>;
 }

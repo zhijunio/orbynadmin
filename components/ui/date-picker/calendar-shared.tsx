@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState, type ReactNode } from "react";
 import { CalendarDate, getLocalTimeZone, startOfWeek } from "@internationalized/date";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -20,6 +20,8 @@ type MonthPanelProps = {
   date?: CalendarDate;
   onMonthChange?: (date: CalendarDate) => void;
   selected?: CalendarDate | null;
+  selectedDates?: CalendarDate[];
+  dayClassName?: (date: CalendarDate) => string | undefined;
   rangeEnd?: CalendarDate | null;
   onSelect?: (date: CalendarDate) => void;
   showPrev?: boolean;
@@ -27,9 +29,14 @@ type MonthPanelProps = {
   minValue?: CalendarDate;
   maxValue?: CalendarDate;
   isDateUnavailable?: (date: CalendarDate) => boolean;
+  showWeekNumbers?: boolean;
+  locale?: string;
+  dir?: "ltr" | "rtl";
+  navigationPosition?: "inline" | "right";
+  dayContent?: (date: CalendarDate) => ReactNode;
 };
-export function MonthPanel({ date, onMonthChange, selected, rangeEnd, onSelect, showPrev = true, showNext = true, minValue, maxValue, isDateUnavailable, "aria-label": ariaLabel }: MonthPanelProps) {
-  const locale = useLocale(); const t = useTranslations("DateControls");
+export function MonthPanel({ date, onMonthChange, selected, selectedDates, dayClassName, rangeEnd, onSelect, showPrev = true, showNext = true, minValue, maxValue, isDateUnavailable, showWeekNumbers = false, locale: localeOverride, dir, navigationPosition = "inline", dayContent, "aria-label": ariaLabel }: MonthPanelProps) {
+  const currentLocale = useLocale(); const locale = localeOverride ?? currentLocale; const t = useTranslations("DateControls");
   const [internalDate, setInternalDate] = useState(() => new CalendarDate(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate()));
   const [focusedDate, setFocusedDate] = useState(selected ?? date ?? internalDate);
   const month = date ?? internalDate;
@@ -62,10 +69,23 @@ export function MonthPanel({ date, onMonthChange, selected, rangeEnd, onSelect, 
     if (event.key === "End") next = new CalendarDate(day.year, day.month, day.calendar.getDaysInMonth(day));
     if (next && !unavailable(next)) { event.preventDefault(); focusDate(next); }
   };
-  return <section className="w-[296px] max-w-full rounded-xl border border-border bg-card p-3 shadow-sm" aria-label={ariaLabel ?? new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(month.toDate(getLocalTimeZone()))}>
-    <div className="mb-3 flex items-center justify-between">{showPrev ? <button type="button" aria-label={t("previousMonth")} onClick={() => move(-1)} className="inline-flex size-8 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><IconChevronLeft className="size-4" /></button> : <span className="size-8" aria-hidden="true" />}<span className="text-sm font-semibold">{new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(month.toDate(getLocalTimeZone()))}</span>{showNext ? <button type="button" aria-label={t("nextMonth")} onClick={() => move(1)} className="inline-flex size-8 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><IconChevronRight className="size-4" /></button> : <span className="size-8" aria-hidden="true" />}</div>
-    <div role="grid" className="grid grid-cols-7 gap-y-1 text-center">{weekdays.map((day, i) => <div role="columnheader" key={i} className="pb-1 text-xs font-medium text-muted-foreground">{day}</div>)}{cells.map(day => { const isCurrent = day.month === month.month; const isStart = selected && day.compare(selected) === 0; const isEnd = rangeEnd && day.compare(rangeEnd) === 0; const isSelected = isStart || isEnd || (selected && !rangeEnd && day.compare(selected) === 0); const disabled = unavailable(day); return <div role="gridcell" aria-selected={Boolean(isSelected || withinRange(day))} key={day.toString()} className="flex justify-center"><button type="button" data-calendar-date={day.toString()} disabled={disabled} onClick={() => { setFocusedDate(day); onSelect?.(day); }} onKeyDown={(event) => handleDayKeyDown(event, day)} tabIndex={day.compare(visibleFocus) === 0 ? 0 : -1} aria-label={formatTriggerDate(day, locale)} className={cn("size-8 rounded-md text-sm transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", !isCurrent && "text-muted-foreground/50", withinRange(day) && "bg-primary/10", isSelected && "bg-primary text-primary-foreground hover:bg-primary/90", disabled && "cursor-not-allowed opacity-40 hover:bg-transparent")}>{day.day}</button></div>})}</div>
+  const monthLabel = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(month.toDate(getLocalTimeZone()));
+  const previousButton = showPrev ? <button type="button" aria-label={t("previousMonth")} onClick={() => move(-1)} className="inline-flex size-8 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><IconChevronLeft className="size-4" /></button> : <span className="size-8" aria-hidden="true" />;
+  const nextButton = showNext ? <button type="button" aria-label={t("nextMonth")} onClick={() => move(1)} className="inline-flex size-8 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><IconChevronRight className="size-4" /></button> : <span className="size-8" aria-hidden="true" />;
+  return <section dir={dir} className="w-[296px] max-w-full rounded-xl border border-border bg-card p-3 shadow-sm" aria-label={ariaLabel ?? new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(month.toDate(getLocalTimeZone()))}>
+    <div dir={dir} className="mb-3 flex items-center justify-between">{navigationPosition === "right" ? <><span className="text-sm font-semibold">{monthLabel}</span><div className="flex items-center">{previousButton}{nextButton}</div></> : <>{previousButton}<span className="text-sm font-semibold">{monthLabel}</span>{nextButton}</>}</div>
+    <div role="grid" className={cn("grid gap-y-1 text-center", showWeekNumbers ? "grid-cols-8" : "grid-cols-7")}>
+      {showWeekNumbers && <div role="columnheader" className="pb-1 text-[10px] font-medium text-muted-foreground">Wk</div>}
+      {weekdays.map((day, i) => <div role="columnheader" key={i} className="pb-1 text-xs font-medium text-muted-foreground">{day}</div>)}
+      {cells.map((day, i) => { const isCurrent = day.month === month.month; const isStart = selected && day.compare(selected) === 0; const isEnd = rangeEnd && day.compare(rangeEnd) === 0; const isMultipleSelected = selectedDates?.some((selectedDate) => selectedDate.compare(day) === 0) ?? false; const isSelected = isMultipleSelected || isStart || isEnd || (selected && !rangeEnd && day.compare(selected) === 0); const disabled = unavailable(day); return <Fragment key={day.toString()}>{showWeekNumbers && i % 7 === 0 && <div role="rowheader" className="flex items-center justify-center text-[10px] tabular-nums text-muted-foreground">{getISOWeekNumber(day)}</div>}<div role="gridcell" aria-selected={Boolean(isSelected || withinRange(day))} className="flex justify-center"><button type="button" data-calendar-date={day.toString()} disabled={disabled} onClick={() => { setFocusedDate(day); onSelect?.(day); }} onKeyDown={(event) => handleDayKeyDown(event, day)} tabIndex={day.compare(visibleFocus) === 0 ? 0 : -1} aria-label={formatTriggerDate(day, locale)} className={cn("size-8 rounded-md text-sm transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", dayContent && "flex h-12 w-10 flex-col items-center justify-center gap-0.5", !isCurrent && "text-muted-foreground/50", withinRange(day) && "bg-primary/10", isSelected && "bg-primary text-primary-foreground hover:bg-primary/90", dayClassName?.(day), disabled && "cursor-not-allowed opacity-40 hover:bg-transparent")}>{dayContent ? dayContent(day) : day.day}</button></div></Fragment>})}
+    </div>
   </section>;
+}
+function getISOWeekNumber(date: CalendarDate) {
+  const day = date.toDate("UTC");
+  day.setUTCDate(day.getUTCDate() + 4 - (day.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(day.getUTCFullYear(), 0, 1));
+  return String(Math.ceil((((day.getTime() - yearStart.getTime()) / 86400000) + 1) / 7)).padStart(2, "0");
 }
 export function DateChipInput({ date, label, onCommit }: { date: CalendarDate; label: string; onCommit: (date: CalendarDate) => void }) {
   const formatted = formatChipDate(date); const [draft, setDraft] = useState({ source: formatted, text: formatted }); const text = draft.source === formatted ? draft.text : formatted;

@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { Button } from "@/components/ui/buttons/button";
@@ -132,7 +132,7 @@ function ReviewFormExample() {
 
 export default function RatingPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5">
         <PageHeader title="Rating" />
         <div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
@@ -147,6 +147,6 @@ export default function RatingPage() {
           <ComponentPreview title="Rating with review form" className="xl:col-span-2"><ReviewFormExample /></ComponentPreview>
         </div>
       </div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

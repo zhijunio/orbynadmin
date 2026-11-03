@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { Chip, type ChipColor, type ChipVariant } from "@/components/ui/badges/chip";
@@ -20,7 +20,7 @@ const statuses: { color: StatusDotColor; label: string }[] = [
 
 export default function ChipPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5"><PageHeader title="Chip" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
         <ComponentPreview title="Chip Variants and Colors">
           <div className="grid w-full gap-3">
@@ -48,6 +48,6 @@ export default function ChipPage() {
           </div>
         </ComponentPreview>
       </div></div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 export const metadata = { title: "Ribbons" };
 
@@ -27,10 +27,10 @@ function RibbonCard({ variant }: { variant: "rounded" | "hover" | "filled" | "ho
 
 
 export default function RibbonsPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Ribbons" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Ribbons" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
     <ComponentPreview title="Rounded Ribbon"><RibbonCard variant="rounded" /></ComponentPreview>
     <ComponentPreview title="Ribbon in Hover"><RibbonCard variant="hover" /></ComponentPreview>
     <ComponentPreview title="Filled Ribbon"><RibbonCard variant="filled" /></ComponentPreview>
     <ComponentPreview title="Ribbon in Hover with Icon"><RibbonCard variant="hover-icon" /></ComponentPreview>
-  </div></div>}</ConsoleLayout>;
+  </div></div>}</AppShell>;
 }

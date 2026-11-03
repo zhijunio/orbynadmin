@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { PageHeader } from "@/components/custom/docs/page-header";
 
@@ -133,5 +133,5 @@ function PaginationExample() {
 }
 
 export default function PaginationPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Pagination" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><PaginationExample /></div></div>}</ConsoleLayout>;
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Pagination" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><PaginationExample /></div></div>}</AppShell>;
 }

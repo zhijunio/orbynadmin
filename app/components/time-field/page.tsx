@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { useState } from "react";
 import { Time } from "@internationalized/date";
@@ -12,7 +12,7 @@ export default function TimeFieldPage() {
   const [time, setTime] = useState<Time | null>(new Time(9, 0));
   const [departure, setDeparture] = useState<Time | null>(new Time(14, 15, 30));
 
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Time Field" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Time Field" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <ComponentPreview title="Basic Time Input">
         <TimeField label="Meeting time" defaultValue={new Time(9, 30)} />
       </ComponentPreview>
@@ -45,5 +45,5 @@ export default function TimeFieldPage() {
       <ComponentPreview title="Read-only Time Field">
         <TimeField label="Published schedule" value={new Time(16, 45)} isReadOnly />
       </ComponentPreview>
-    </div></div>}</ConsoleLayout>;
+    </div></div>}</AppShell>;
 }

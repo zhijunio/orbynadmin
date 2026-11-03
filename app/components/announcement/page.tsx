@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { Announcement } from "@/components/ui/announcement/announcement";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 export default function AnnouncementPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5"><PageHeader title="Announcement" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
         <ComponentPreview title="Announcement with Action">
           <div className="flex w-full justify-center">
@@ -53,6 +53,6 @@ export default function AnnouncementPage() {
           </div>
         </ComponentPreview>
       </div></div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

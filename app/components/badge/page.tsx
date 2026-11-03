@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { Badge } from "@/components/ui/badges/badge";
@@ -106,10 +106,10 @@ function BadgeExamples() {
 
 export default function BadgePage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5"><PageHeader title="Badges" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
         <BadgeExamples />
       </div></div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

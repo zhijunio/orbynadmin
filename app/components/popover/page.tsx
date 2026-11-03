@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 export const metadata = { title: "Popovers" };
 
@@ -122,5 +122,5 @@ function PopoversExample() {
 
 
 export default function PopoversPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Popovers" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><PopoversExample /></div></div>}</ConsoleLayout>;
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Popovers" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><PopoversExample /></div></div>}</AppShell>;
 }

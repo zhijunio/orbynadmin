@@ -32,7 +32,7 @@ These rules apply to code, UI, docs, and repository operations in this project.
 - Keep parsing, validation, and data transformations in focused feature-local pure helpers when they can be separated from rendering. Components should work with structured values and send user changes through explicit callbacks so the owning page or feature can decide how to persist them.
 - Group custom components by framework feature and keep shared showcase presentation under `custom/docs`.
 - Do not add barrel `index.ts` files under `components`; import components from the file that defines them.
-- `app` owns the component catalog under `/components/*` and the root shell. The root route redirects to `/components/button`. Shared shell navigation and demo workspace/user data belong in `components/custom/app-shell/config.ts`. Keep only the root `layout.tsx`; pages compose the shared `ConsoleLayout` directly. Do not add nested layouts or duplicate the shell. When adding or removing a route, update navigation and example links.
+- `app` owns the component catalog under `/components/*` and the root shell. The root route redirects to `/components/button`. Shared shell navigation and demo workspace/user data belong in `components/custom/app-shell/config.ts`. Keep only the root `layout.tsx`; pages compose the shared `AppShell` block directly from `components/blocks/application/app-shell`. Do not add nested layouts or duplicate the shell. When adding or removing a route, update navigation and example links.
 - Keep the existing icon system (`@tabler/icons-react`), Tailwind CSS v4, and Radix UI conventions. Check the local component API before adding a parallel implementation. Do not introduce another icon, styling, or primitive system.
 
 ## UI and behavior

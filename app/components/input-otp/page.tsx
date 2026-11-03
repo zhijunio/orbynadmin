@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { useState } from "react";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
@@ -52,7 +52,7 @@ function InputOtpExamples() {
 }
 
 export default function InputOtpPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Input OTP" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Input OTP" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
       <InputOtpExamples />
-    </div></div>}</ConsoleLayout>;
+    </div></div>}</AppShell>;
 }

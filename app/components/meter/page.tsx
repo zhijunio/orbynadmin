@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
 import { PageHeader } from "@/components/custom/docs/page-header";
 import { Slider } from "@/components/ui/slider/slider";
@@ -70,10 +70,10 @@ function MeterExamples() {
 
 export default function MeterPage() {
   return (
-    <ConsoleLayout>
+    <AppShell>
       <div className="min-w-0 space-y-5"><PageHeader title="Meter" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
         <MeterExamples />
       </div></div>
-    </ConsoleLayout>
+    </AppShell>
   );
 }

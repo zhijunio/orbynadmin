@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { useState } from "react";
 import { ComponentPreview } from "@/components/custom/docs/component-preview";
@@ -28,5 +28,5 @@ function ListExamples() {
 }
 
 export default function ListExamplePage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="List" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><ListExamples /></div></div>}</ConsoleLayout>;
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="List" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2"><ListExamples /></div></div>}</AppShell>;
 }

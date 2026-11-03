@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 import { PageHeader } from "@/components/custom/docs/page-header";
 
@@ -96,5 +96,5 @@ function AlertsExample() {
 }
 
 export default function AlertsPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Alerts" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><AlertsExample /></div></div>}</ConsoleLayout>;
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Alerts" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0"><AlertsExample /></div></div>}</AppShell>;
 }

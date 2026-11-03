@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 export const metadata = { title: "Tooltips" };
 
@@ -55,7 +55,7 @@ function WhiteAndDarkTooltips() {
 
 
 export default function TooltipsPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Tooltips" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Tooltips" /><div className="grid min-w-0 grid-cols-1 gap-5 [&>*]:min-w-0">
     <ComponentPreview title="Default Tooltip"><DefaultTooltip /></ComponentPreview>
     <ComponentPreview title="White and Dark Tooltip"><WhiteAndDarkTooltips /></ComponentPreview>
     <ComponentPreview title="Tooltip Placement"><TooltipsPositions /></ComponentPreview>
@@ -88,5 +88,5 @@ export default function TooltipsPage() {
         </div>
       </TooltipProvider>
     </ComponentPreview>
-  </div></div>}</ConsoleLayout>;
+  </div></div>}</AppShell>;
 }

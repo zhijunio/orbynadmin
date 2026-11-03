@@ -1,4 +1,4 @@
-import ConsoleLayout from "@/components/custom/app-shell/console-layout";
+import AppShell from "@/components/blocks/application/app-shell/app-shell";
 
 export const metadata = { title: "Progressbar" };
 
@@ -43,11 +43,11 @@ function StatusProgress() {
 
 
 export default function ProgressPage() {
-  return <ConsoleLayout>{<div className="min-w-0 space-y-5"><PageHeader title="Progressbar" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
+  return <AppShell>{<div className="min-w-0 space-y-5"><PageHeader title="Progressbar" /><div className="grid min-w-0 gap-5 [&>*]:min-w-0 xl:grid-cols-2">
     <ComponentPreview title="Default Progress Bar"><div className="w-full space-y-5">{examples.map((item) => <Progress key={item.value} value={item.value} aria-label={`${item.value}% complete`} className={`h-2 bg-muted ${item.color}`} />)}</div></ComponentPreview>
     <ComponentPreview title="Progress Bar In Multiple Sizes"><MultipleSizes /></ComponentPreview>
     <ComponentPreview title="Progress Bar with Outside Label"><OutsideLabels /></ComponentPreview>
     <ComponentPreview title="Progress Bar with Inside Label"><InsideLabels /></ComponentPreview>
     <ComponentPreview title="Progress with Status Labels" className="xl:col-span-2"><StatusProgress /></ComponentPreview>
-  </div></div>}</ConsoleLayout>;
+  </div></div>}</AppShell>;
 }
