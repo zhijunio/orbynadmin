@@ -21,32 +21,32 @@ These rules apply to code, UI, docs, and repository operations in this project.
 
 ## Component boundaries
 
-- `src/components/ui` contains low-level controls and primitives that can be reused across features, following ReUI's `components/ui` organization.
-- `src/components/custom` contains OrbynAdmin-specific feature components and reusable presentation helpers, organized by feature with kebab-case filenames.
-- `src/components/blocks` contains complete showcase compositions. Organize them by ReUI block group/category and use the `-block.tsx` suffix for block modules. A block module may also be reused by product pages.
-- Keep cross-app providers such as `theme-provider.tsx` and `app-motion-provider.tsx` directly under `src/components`; do not create a providers directory.
+- `components/ui` contains low-level controls and primitives that can be reused across features, following ReUI's `components/ui` organization.
+- `components/custom` contains NextRose-specific feature components and reusable presentation helpers, organized by feature with kebab-case filenames.
+- The current catalog focuses on base UI controls and their `/components/*` examples. Add future ReUI Blocks and Templates only when those pages are intentionally migrated.
+- Compose app-wide providers in `app/layout.tsx`. Keep theme configuration, persistence, and customizer code directly under `components`; do not add theme or providers directories.
 - Before creating a new component, look for an existing UI control, custom feature component, or block module that already fits. Split complex interactive UI into focused components with typed props, separating state/behavior from presentation where that makes ownership clearer. Keep state with the page or composition that owns the behavior; do not split simple examples just to create more files.
 - Avoid passing the same props through multiple intermediate components. Prefer composing children, placing state closer to its consumers, or using an existing context/composition pattern when it clarifies ownership; do not add a new context or compound-component API for a one-off case.
 - Do not keep repeated or substantial section JSX in inline `renderX()` helper functions. Extract repeated or independently meaningful sections into focused components; leave short, one-off markup inline.
 - For reusable controls, expose meaningful visual and behavioral variants through typed props and keep their styles in the component. Prefer the existing variant API over repeated call-site class overrides; do not add a new variant for a one-off appearance.
 - Keep parsing, validation, and data transformations in focused feature-local pure helpers when they can be separated from rendering. Components should work with structured values and send user changes through explicit callbacks so the owning page or feature can decide how to persist them.
-- Group custom components by product feature. Group block modules by their Blocks category (for example, chart-card modules under `blocks/charts-card`) and keep shared showcase presentation under `custom/docs`.
-- Do not add barrel `index.ts` files under `src/components`; import components from the file that defines them.
-- `src/app` owns route definitions: Components examples live under `/components/*`, Blocks under `/blocks/*` grouped by ReUI product group/category, and complete templates under `/templates/*`. Shared shell navigation entries belong in `src/components/custom/app-shell/nav-config.ts`. Keep only the root `layout.tsx`. Non-public pages compose the shared `ConsoleLayout` directly; public pages stay outside that shell. Do not add nested layout files or duplicate the shell. Export route-only contracts such as metadata and `generateStaticParams` from `page.tsx`; pages may compose a full application example screen when appropriate. Keep relative imports inside custom components as `@/app/...` imports when the dependency is intentionally route-owned. When adding, moving, or removing a route, update navigation, links, and other route references; do not keep compatibility redirects for renamed example routes.
+- Group custom components by framework feature and keep shared showcase presentation under `custom/docs`.
+- Do not add barrel `index.ts` files under `components`; import components from the file that defines them.
+- `app` owns the component catalog under `/components/*` and the root shell. The root route redirects to `/components/button`. Shared shell navigation and demo workspace/user data belong in `components/custom/app-shell/config.ts`. Keep only the root `layout.tsx`; pages compose the shared `ConsoleLayout` directly. Do not add nested layouts or duplicate the shell. When adding or removing a route, update navigation and example links.
 - Keep the existing icon system (`@tabler/icons-react`), Tailwind CSS v4, and Radix UI conventions. Check the local component API before adding a parallel implementation. Do not introduce another icon, styling, or primitive system.
 
 ## UI and behavior
 
-- Follow existing semantic theme tokens and responsive patterns in `src/styles` and nearby components. Keep accessible names, labels, hints, and confirmation copy when they convey needed information; avoid redundant card descriptions and repeated copy.
+- Follow existing semantic theme tokens and responsive patterns in `styles` and nearby components. Keep accessible names, labels, hints, and confirmation copy when they convey needed information; avoid redundant card descriptions and repeated copy.
 - Prefer existing semantic theme tokens for colors and other themeable values; check the shared theme definitions before introducing literal values or page-specific overrides. Extend the shared theme only when no existing token expresses the needed role.
 - Do not add custom CSS utility classes. Compose existing Tailwind utilities and shared components; add styles through the established theme or component mechanisms when the design needs a reusable style.
 - Respect the user's reduced-motion preference for nonessential transitions and animations, using the existing motion and styling conventions.
 - When state is shown in multiple places, such as an unread badge and its notification panel, keep it with a shared owner or expose callbacks so every view stays synchronized.
-- Keep user-facing copy synchronized across every supported locale. The current locales are defined in `src/i18n/routing.ts`; update the corresponding message files together and avoid hardcoded copy in localized UI.
-- On base-control example pages under `src/app/components`, group examples within the page by the control's visible variant or behavior, not by broad product categories. Order the default/common example first, then visual variants, compositions such as icons or badges, layout variants, and interaction states such as disabled or loading.
+- Keep user-facing copy synchronized across every supported locale. The current locales are defined in `i18n/routing.ts`; update the corresponding message files together and avoid hardcoded copy in localized UI.
+- On base-control example pages under `app/components`, group examples within the page by the control's visible variant or behavior, not by broad product categories. Order the default/common example first, then visual variants, compositions such as icons or badges, layout variants, and interaction states such as disabled or loading.
 - Give each example section a concise heading that names its difference, such as `Default Tabs`, `Tabs with Icon`, or `Loading State`. Show related sizes together; do not create separate sections for trivial differences or mix unrelated controls in one example page. Keep descriptions only when they add necessary usage context.
-- When aligning example organization to a reference such as TailAdmin, follow its component-specific section structure while keeping OrbynAdmin's existing routes, components, tokens, and copy conventions.
-- Treat external products as references only. Do not put their names, branding, or copied product content in OrbynAdmin UI text, filenames, or sample data unless the user explicitly asks for it.
+- When aligning example organization to a reference such as TailAdmin, follow its component-specific section structure while keeping NextRose's existing routes, components, tokens, and copy conventions.
+- Treat external products as references only. Do not put their names, branding, or copied product content in NextRose UI text, filenames, or sample data unless the user explicitly asks for it.
 - Keep user-visible behavior at the boundary: reusable components receive data and callbacks; pages own example data, navigation, localization, and operation-specific success or error feedback.
 - For shared-component changes, search all call sites and verify that their behavior remains coherent.
 
