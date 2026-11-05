@@ -1,0 +1,24 @@
+"use client";
+
+import { useState } from "react"
+import { IconBold, IconChevronDown, IconCopy, IconFile, IconItalic, IconPlus, IconScissors, IconShare2, IconUnderline } from "@tabler/icons-react"
+
+import { CatalogGridItems } from "@/components/custom/docs/catalog-page-grid";
+import { ComponentPreview } from "@/components/custom/docs/component-preview"
+import { Button } from "@/components/ui/button/button"
+import { Menubar, MenubarCheckboxItem, MenubarContent, MenubarItem, MenubarLabel, MenubarMenu, MenubarRadioGroup, MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from "@/components/ui/menubar/menubar"
+
+export function MenubarCatalogExamples() {
+  const [showToolbar, setShowToolbar] = useState(true)
+  const [showStatus, setShowStatus] = useState(false)
+  const [density, setDensity] = useState("comfortable")
+    return (
+    <CatalogGridItems>
+      <ComponentPreview title="Basic Menubar"><Menubar><MenubarMenu><MenubarTrigger>Workspace</MenubarTrigger><MenubarContent><MenubarItem>Open overview</MenubarItem><MenubarItem>Open settings</MenubarItem><MenubarSeparator /><MenubarItem>Sign out</MenubarItem></MenubarContent></MenubarMenu><MenubarMenu><MenubarTrigger>Resources</MenubarTrigger><MenubarContent><MenubarItem>Documentation</MenubarItem><MenubarItem>Support center</MenubarItem></MenubarContent></MenubarMenu><MenubarMenu><MenubarTrigger>Help</MenubarTrigger><MenubarContent><MenubarItem>Keyboard shortcuts <MenubarShortcut>⌘ /</MenubarShortcut></MenubarItem><MenubarItem>Contact support</MenubarItem></MenubarContent></MenubarMenu></Menubar></ComponentPreview>
+          <ComponentPreview title="Nested Submenus"><Menubar><MenubarMenu><MenubarTrigger>Project</MenubarTrigger><MenubarContent><MenubarItem>New project</MenubarItem><MenubarSub><MenubarSubTrigger>Import</MenubarSubTrigger><MenubarSubContent><MenubarItem>From Git provider</MenubarItem><MenubarItem>From archive</MenubarItem><MenubarSub><MenubarSubTrigger>More sources</MenubarSubTrigger><MenubarSubContent><MenubarItem>Cloud storage</MenubarItem><MenubarItem>Template gallery</MenubarItem></MenubarSubContent></MenubarSub></MenubarSubContent></MenubarSub><MenubarSeparator /><MenubarItem>Project settings</MenubarItem></MenubarContent></MenubarMenu></Menubar></ComponentPreview>
+          <ComponentPreview title="Checkbox and Radio Items"><Menubar><MenubarMenu><MenubarTrigger>View</MenubarTrigger><MenubarContent><MenubarLabel>Panels</MenubarLabel><MenubarCheckboxItem checked={showToolbar} onCheckedChange={setShowToolbar}>Toolbar</MenubarCheckboxItem><MenubarCheckboxItem checked={showStatus} onCheckedChange={setShowStatus}>Status bar</MenubarCheckboxItem><MenubarSeparator /><MenubarLabel>Density</MenubarLabel><MenubarRadioGroup value={density} onValueChange={setDensity}><MenubarRadioItem value="comfortable">Comfortable</MenubarRadioItem><MenubarRadioItem value="compact">Compact</MenubarRadioItem></MenubarRadioGroup></MenubarContent></MenubarMenu></Menubar><p className="ml-3 text-xs text-muted-foreground">Toolbar {showToolbar ? "shown" : "hidden"} · {density} density</p></ComponentPreview>
+          <ComponentPreview title="Menubar With Icons"><Menubar><MenubarMenu><MenubarTrigger><IconFile className="mr-1 size-4" />File</MenubarTrigger><MenubarContent><MenubarItem><IconPlus />New report <MenubarShortcut>⌘ N</MenubarShortcut></MenubarItem><MenubarItem><IconCopy />Duplicate</MenubarItem><MenubarSeparator /><MenubarItem><IconShare2 />Share report</MenubarItem></MenubarContent></MenubarMenu><MenubarMenu><MenubarTrigger>Actions</MenubarTrigger><MenubarContent><MenubarItem><IconScissors />Archive</MenubarItem><MenubarItem>Delete report</MenubarItem></MenubarContent></MenubarMenu></Menubar></ComponentPreview>
+          <ComponentPreview title="Formatting and Media Toolbar"><div className="flex flex-wrap items-center gap-2 rounded-lg border p-2"><Menubar><MenubarMenu><MenubarTrigger>Insert <IconChevronDown className="ml-1 size-3.5" /></MenubarTrigger><MenubarContent><MenubarItem>Image</MenubarItem><MenubarItem>Link</MenubarItem><MenubarItem>Data table</MenubarItem></MenubarContent></MenubarMenu><MenubarMenu><MenubarTrigger>Format</MenubarTrigger><MenubarContent><MenubarItem><IconBold />Bold <MenubarShortcut>⌘ B</MenubarShortcut></MenubarItem><MenubarItem><IconItalic />Italic <MenubarShortcut>⌘ I</MenubarShortcut></MenubarItem><MenubarItem><IconUnderline />Underline <MenubarShortcut>⌘ U</MenubarShortcut></MenubarItem></MenubarContent></MenubarMenu></Menubar><div className="ml-auto flex gap-1"><Button variant="ghost" size="icon" aria-label="Bold"><IconBold /></Button><Button variant="ghost" size="icon" aria-label="Italic"><IconItalic /></Button><Button variant="ghost" size="icon" aria-label="Underline"><IconUnderline /></Button></div></div></ComponentPreview>
+    </CatalogGridItems>
+  );
+}

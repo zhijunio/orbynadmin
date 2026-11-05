@@ -1,0 +1,44 @@
+import { Slot } from "radix-ui";
+
+import { cn } from "@/utils/cn";
+
+export type MarkerVariant = "default" | "separator" | "border";
+export type MarkerProps = React.ComponentProps<"div"> & {
+  variant?: MarkerVariant
+  asChild?: boolean
+}
+export type MarkerIconProps = React.ComponentProps<"span">
+export type MarkerContentProps = React.ComponentProps<"span">
+
+function Marker({
+  className,
+  variant = "default",
+  asChild = false,
+  ...props
+}: MarkerProps) {
+  const Component = asChild ? Slot.Root : "div";
+
+  return (
+    <Component
+      data-slot="marker"
+      data-variant={variant}
+      className={cn(
+        "group/marker relative flex min-h-4 w-full items-center gap-2 text-left text-sm text-muted-foreground [&_svg:not([class*=size-])]:size-4",
+        variant === "separator" && "before:mr-1 before:h-px before:min-w-0 before:flex-1 before:bg-border after:ml-1 after:h-px after:min-w-0 after:flex-1 after:bg-border",
+        variant === "border" && "border-b border-border pb-2",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function MarkerIcon({ className, ...props }: MarkerIconProps) {
+  return <span data-slot="marker-icon" aria-hidden="true" className={cn("inline-flex size-4 shrink-0 items-center justify-center [&_svg:not([class*=size-])]:size-4", className)} {...props} />;
+}
+
+function MarkerContent({ className, ...props }: MarkerContentProps) {
+  return <span data-slot="marker-content" className={cn("min-w-0 wrap-break-word group-data-[variant=separator]/marker:flex-none group-data-[variant=separator]/marker:text-center", className)} {...props} />;
+}
+
+export { Marker, MarkerContent, MarkerIcon };

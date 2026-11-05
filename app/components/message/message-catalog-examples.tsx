@@ -1,0 +1,64 @@
+"use client";
+import * as React from "react"
+import { IconCheck, IconCopy, IconDownload, IconFileTypeCsv, IconPhoto, IconRefresh, IconThumbDown, IconThumbUp } from "@tabler/icons-react"
+import { ComponentPreview } from "@/components/custom/docs/component-preview"
+import { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from "@/components/ui/attachment/attachment"
+import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from "@/components/ui/avatar/avatar"
+import { Bubble, BubbleContent, bubbleVariantClass } from "@/components/ui/bubble/bubble"
+import { Button } from "@/components/ui/button/button"
+import { Message, MessageAvatar, MessageContent, MessageFooter, MessageGroup, MessageHeader } from "@/components/ui/message/message"
+import { Spinner } from "@/components/ui/spinner/spinner"
+import { demoAvatarUrl } from "@/utils/demo-avatar"
+
+const examples = ["Two-sided conversation", "Avatars on both sides", "Sender name and delivery status", "Reply actions in the footer", "Files shared in a thread", "Consecutive messages from one sender", "Streaming reply with a pending state"]
+const drafts = ["Version 4.2 adds EU VAT to invoices, receipts, and CSV exports. Billing filters now persist between visits, and failed payments retry twice before becoming overdue.", "The 4.2 release adds per-order VAT for EU customers across every billing document. It also preserves billing filters and retries a failed payment twice before marking it overdue."]
+
+function Portrait({ name, initials, online = false }: { name: string; initials: string; online?: boolean }) {
+  return <Avatar size="sm"><AvatarImage src={demoAvatarUrl(name)} alt={name} /><AvatarFallback>{initials}</AvatarFallback>{online && <AvatarBadge className="bg-primary"><span className="sr-only">Online</span></AvatarBadge>}</Avatar>
+}
+
+function MessageDemo({ index }: { index: number }) {
+  const [draftIndex, setDraftIndex] = React.useState(0)
+  const [vote, setVote] = React.useState<"up" | "down" | null>(null)
+  const [copied, setCopied] = React.useState(false)
+  const [streaming, setStreaming] = React.useState(true)
+  const [revealed, setRevealed] = React.useState(0)
+  const [reducedMotion, setReducedMotion] = React.useState(false)
+
+  React.useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const update = () => setReducedMotion(query.matches)
+    update()
+    query.addEventListener("change", update)
+    return () => query.removeEventListener("change", update)
+  }, [])
+  React.useEffect(() => {
+    if (index !== 6 || !streaming) return
+    if (reducedMotion) {
+      const timer = window.setTimeout(() => { setRevealed(drafts[1].length); setStreaming(false) }, 0)
+      return () => window.clearTimeout(timer)
+    }
+    const timer = window.setTimeout(() => {
+      const next = Math.min(revealed + 4, drafts[1].length)
+      setRevealed(next)
+      if (next >= drafts[1].length) setStreaming(false)
+    }, revealed === 0 ? 900 : 28)
+    return () => window.clearTimeout(timer)
+  }, [index, streaming, reducedMotion, revealed])
+
+  if (index === 0) return <MessageGroup className="w-full max-w-sm gap-4"><Message><MessageContent><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>Staging is green on 4.2. Want me to promote it?</BubbleContent></Bubble></MessageContent></Message><Message align="end"><MessageContent><Bubble><BubbleContent className={bubbleVariantClass("default")}>Hold it. The billing migration has to ship in the same release.</BubbleContent></Bubble></MessageContent></Message><Message><MessageContent><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>Understood. The migration lands after the 2pm review.</BubbleContent></Bubble></MessageContent></Message><Message align="end"><MessageContent><Bubble><BubbleContent className={bubbleVariantClass("default")}>I will cut the release tag straight after.</BubbleContent></Bubble></MessageContent></Message></MessageGroup>
+  if (index === 1) return <MessageGroup aria-label="Incident conversation" className="w-full max-w-md gap-4"><Message><MessageAvatar className="overflow-visible"><Portrait name="Jordan Lee" initials="JL" online /></MessageAvatar><MessageContent><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>Checkout requests in eu-west have slowed down since 14:05.</BubbleContent></Bubble></MessageContent></Message><Message align="end"><MessageAvatar><Portrait name="Morgan Blake" initials="MB" /></MessageAvatar><MessageContent><Bubble><BubbleContent className={bubbleVariantClass("default")}>Checking the trace now. Is it affecting every request or only one route?</BubbleContent></Bubble></MessageContent></Message><Message><MessageAvatar className="overflow-visible"><Portrait name="Jordan Lee" initials="JL" online /></MessageAvatar><MessageContent><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>Only the confirmation endpoint. The p95 is over three seconds and errors are above four percent. Other routes are healthy.</BubbleContent></Bubble></MessageContent></Message><Message align="end"><MessageAvatar><Portrait name="Morgan Blake" initials="MB" /></MessageAvatar><MessageContent><Bubble><BubbleContent className={bubbleVariantClass("default")}>I found the database wait. I am preparing a mitigation.</BubbleContent></Bubble></MessageContent></Message></MessageGroup>
+  if (index === 2) return <MessageGroup className="w-full max-w-md gap-5"><Message><MessageContent><MessageHeader className="gap-2 px-3 pb-1 text-xs text-muted-foreground">Jordan Lee<span aria-hidden="true" className="size-1 rounded-full bg-muted-foreground/40" /><time className="tabular-nums">09:38</time></MessageHeader><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>The invoice export is missing the VAT line for EU orders.</BubbleContent></Bubble></MessageContent></Message><Message align="end"><MessageContent><Bubble><BubbleContent className={bubbleVariantClass("default")}>Fixed on the 4.2 branch. It ships with tonight&apos;s release.</BubbleContent></Bubble><MessageFooter className="px-3 pt-1 text-xs text-muted-foreground">Read 09:41</MessageFooter></MessageContent></Message><Message><MessageContent><MessageHeader className="gap-2 px-3 pb-1 text-xs text-muted-foreground">Jordan Lee<span aria-hidden="true" className="size-1 rounded-full bg-muted-foreground/40" /><time className="tabular-nums">09:42</time></MessageHeader><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>Great. I will rerun the January batch after the release.</BubbleContent></Bubble><MessageFooter className="gap-2 px-3 pt-1 text-xs text-muted-foreground">Edited<span aria-hidden="true" className="size-1 rounded-full bg-muted-foreground/40" /><time className="tabular-nums">09:44</time></MessageFooter></MessageContent></Message></MessageGroup>
+  if (index === 3) return <MessageGroup className="w-full max-w-2xl gap-4"><Message align="end"><MessageContent><Bubble><BubbleContent className={bubbleVariantClass("default")}>Summarize what changed in the latest billing release.</BubbleContent></Bubble></MessageContent></Message><Message><MessageContent><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>{drafts[draftIndex]}</BubbleContent></Bubble><MessageFooter className="gap-1 px-2 pt-2"><Button size="icon-xs" variant="ghost" aria-label="Regenerate response" onClick={() => { setDraftIndex((value) => (value + 1) % drafts.length); setVote(null); setCopied(false) }}><IconRefresh /></Button><Button size="icon-xs" variant="ghost" aria-label={copied ? "Copied response" : "Copy response"} onClick={() => { void navigator.clipboard?.writeText(drafts[draftIndex]).catch(() => undefined); setCopied(true); window.setTimeout(() => setCopied(false), 1500) }}>{copied ? <IconCheck /> : <IconCopy />}</Button><span className="mx-1 h-4 w-px bg-border" /><Button size="icon-xs" variant={vote === "up" ? "secondary" : "ghost"} aria-label="Helpful response" aria-pressed={vote === "up"} onClick={() => setVote(vote === "up" ? null : "up")}><IconThumbUp /></Button><Button size="icon-xs" variant={vote === "down" ? "secondary" : "ghost"} aria-label="Unhelpful response" aria-pressed={vote === "down"} onClick={() => setVote(vote === "down" ? null : "down")}><IconThumbDown /></Button></MessageFooter></MessageContent></Message></MessageGroup>
+  if (index === 4) return <MessageGroup className="w-full max-w-md gap-4"><Message align="end"><MessageContent><Attachment orientation="vertical" className="w-32"><AttachmentMedia variant="image"><div className="grid size-full place-items-center bg-muted text-muted-foreground"><IconPhoto className="size-8" /></div></AttachmentMedia><AttachmentContent><AttachmentTitle>release-preview.png</AttachmentTitle><AttachmentDescription>PNG · 2.1 MB</AttachmentDescription></AttachmentContent></Attachment><Bubble><BubbleContent className={bubbleVariantClass("default")}>Here is the updated release preview.</BubbleContent></Bubble></MessageContent></Message><Message><MessageContent><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>Thanks. I have attached the revised rollout data.</BubbleContent></Bubble><Attachment className="w-full max-w-xs"><AttachmentMedia><IconFileTypeCsv /></AttachmentMedia><AttachmentContent><AttachmentTitle>rollout-metrics.csv</AttachmentTitle><AttachmentDescription>CSV · 48 KB</AttachmentDescription></AttachmentContent><AttachmentActions><AttachmentAction aria-label="Download rollout-metrics.csv" title="Download" type="button" variant="secondary" size="icon-sm"><IconDownload /></AttachmentAction></AttachmentActions></Attachment></MessageContent></Message></MessageGroup>
+  if (index === 5) return <MessageGroup aria-label="Incident triage conversation" className="w-full max-w-md gap-3"><Message><MessageAvatar><span className="size-9" aria-hidden="true" /></MessageAvatar><MessageContent><MessageHeader className="px-3 pb-1 text-xs text-muted-foreground">Jordan Lee</MessageHeader><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>The delayed jobs started at 14:05.</BubbleContent></Bubble></MessageContent></Message><Message><MessageAvatar><span className="size-9" aria-hidden="true" /></MessageAvatar><MessageContent><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>Only EU workspaces are affected so far.</BubbleContent></Bubble></MessageContent></Message><Message><MessageAvatar><Portrait name="Jordan Lee" initials="JL" /></MessageAvatar><MessageContent><Bubble variant="muted"><BubbleContent className={bubbleVariantClass("muted")}>I have linked the trace and opened an incident for the on-call team.</BubbleContent></Bubble></MessageContent></Message></MessageGroup>
+  return <div className="w-full max-w-md space-y-4"><Message align="end"><MessageContent><Bubble><BubbleContent className={bubbleVariantClass("default")}>What changed in the billing release?</BubbleContent></Bubble></MessageContent></Message><Message><MessageContent><Bubble variant="muted" aria-busy={streaming}><BubbleContent className={bubbleVariantClass("muted")}><span role="status" aria-live="polite">{streaming && revealed === 0 ? <span className="flex items-center gap-2 text-muted-foreground"><Spinner size="sm" label="Preparing response" />Preparing response…</span> : <>{drafts[1].slice(0, revealed)}{streaming && <span className="ml-0.5 inline-block h-4 w-px animate-pulse bg-current motion-reduce:animate-none" aria-hidden="true" />}</>}</span></BubbleContent></Bubble></MessageContent></Message><div className="flex justify-end"><Button size="sm" variant="outline" onClick={() => { setRevealed(0); setStreaming(true) }}>Replay stream</Button></div></div>
+}
+
+export function MessageCatalogExamples() {
+  return (
+    <>
+      {examples.map((title, index) => <ComponentPreview key={title} title={title} layout="anchor"><MessageDemo index={index} /></ComponentPreview>)}
+    </>
+  );
+}

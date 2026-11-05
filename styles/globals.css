@@ -1,0 +1,379 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./theme.css";
+@import "./typography.css";
+
+/* The selected appearance already identifies active controls; avoid a second focus ring around them. */
+:where(button[aria-selected="true"], button[aria-pressed="true"], button[data-state="active"]):focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@custom-variant data-open {
+  &:where([data-state="open"], [data-open]:not([data-open="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-closed {
+  &:where([data-state="closed"], [data-closed]:not([data-closed="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-checked {
+  &:where([data-state="checked"], [data-checked]:not([data-checked="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-unchecked {
+  &:where([data-state="unchecked"], [data-unchecked]:not([data-unchecked="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-selected {
+  &:where([data-selected="true"]) {
+    @slot;
+  }
+}
+
+@custom-variant data-disabled {
+  &:where([data-disabled="true"], [data-disabled]:not([data-disabled="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-active {
+  &:where([data-state="active"], [data-active]:not([data-active="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-horizontal {
+  &:where([data-orientation="horizontal"]) {
+    @slot;
+  }
+}
+
+@custom-variant data-vertical {
+  &:where([data-orientation="vertical"]) {
+    @slot;
+  }
+}
+
+@theme inline {
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height, var(--accordion-panel-height, auto)); }
+  }
+
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height, var(--accordion-panel-height, auto)); }
+    to { height: 0; }
+  }
+}
+
+@keyframes avatar-halo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .avatar-catalog-halo-ring {
+    animation: avatar-halo-spin 1.2s linear infinite;
+    transform-origin: center;
+  }
+}
+
+/* Theme customizer: centered content layout */
+:root[data-content="centered"] .app-main > * {
+  margin-inline: auto;
+  max-width: 80rem;
+}
+
+/* Subtle, theme-aware scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: color-mix(in oklch, var(--muted-foreground) 30%, transparent);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in oklch, var(--muted-foreground) 50%, transparent);
+}
+
+.cn-toast[data-styled="true"] {
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: min(var(--width), calc(100vw - 1.5rem));
+  padding: 1rem 2.75rem 1rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 0.04), 0 4px 4px 0 rgb(0 0 0 / 0.02);
+  background-color: var(--normal-bg) !important;
+  background-image: none !important;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease, height 260ms cubic-bezier(0.22, 1, 0.36, 1), filter 220ms ease-out, box-shadow 200ms;
+}
+
+.cn-toast[data-styled="true"]::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 0 0 1rem 1rem;
+  background: var(--cn-toast-progress, var(--primary));
+  transform: scaleX(1);
+  transform-origin: left;
+  animation: cn-toast-countdown 5s linear forwards;
+  pointer-events: none;
+}
+
+.cn-toast[data-styled="true"][data-expanded="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  width: 100%;
+  height: calc(var(--gap) + 1px);
+  border-radius: 0;
+  background: transparent;
+  transform: none;
+  animation: none;
+}
+
+.cn-toast[data-mounted="false"] {
+  --y: translateY(12px) scale(0.97);
+  filter: blur(4px);
+  opacity: 0;
+}
+
+.cn-toast[data-mounted="true"] {
+  filter: blur(0);
+  opacity: 1;
+}
+
+.cn-toast[data-removed="true"] {
+  filter: blur(3px);
+}
+
+.cn-toast[data-removed="true"][data-front="true"] {
+  --y: translateY(8px) scale(0.96) !important;
+}
+
+.cn-toast:hover,
+.cn-toast:focus-within {
+  animation-play-state: paused;
+}
+
+.cn-toast:hover::before,
+.cn-toast:focus-within::before {
+  animation-play-state: paused;
+}
+
+.cn-toast[data-swiping="true"]::before,
+.cn-toast[data-removed="true"]::before {
+  display: none;
+}
+
+.cn-toast-success {
+  --cn-toast-progress: oklch(0.58 0.2 135);
+}
+
+.cn-toast-warning {
+  --cn-toast-progress: var(--chart-3);
+}
+
+.cn-toast-error {
+  --cn-toast-progress: var(--destructive);
+}
+
+.cn-toast[data-styled="true"].cn-toast-loading {
+  background-image: none !important;
+}
+
+.cn-toast[data-styled="true"].cn-toast-persistent::before,
+.cn-toast[data-styled="true"].cn-toast-loading::before {
+  display: none;
+}
+
+.cn-toast[data-styled="true"].cn-toast-short::before {
+  animation-duration: 2s;
+}
+
+@keyframes cn-toast-countdown {
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.cn-toast[data-styled="true"] [data-icon] {
+  display: flex !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  min-width: 2.5rem !important;
+  flex: 0 0 2.5rem !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}
+
+.cn-toast[data-styled="true"] [data-icon] svg {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  margin: 0 !important;
+}
+
+.cn-toast[data-styled="true"].cn-toast-info [data-icon] {
+  color: var(--primary) !important;
+  background: color-mix(in oklch, var(--primary) 12%, var(--popover)) !important;
+}
+
+.cn-toast[data-styled="true"].cn-toast-success [data-icon] {
+  color: #65a30d !important;
+  background: #ecfccb !important;
+}
+
+.cn-toast[data-styled="true"].cn-toast-warning [data-icon] {
+  color: var(--chart-3) !important;
+  background: color-mix(in oklch, var(--chart-3) 14%, var(--popover)) !important;
+}
+
+.cn-toast[data-styled="true"].cn-toast-error [data-icon] {
+  color: var(--destructive) !important;
+  background: color-mix(in oklch, var(--destructive) 12%, var(--popover)) !important;
+}
+
+.cn-toast[data-styled="true"].cn-toast-loading [data-icon] {
+  color: var(--muted-foreground) !important;
+  background: var(--muted) !important;
+}
+
+.cn-toast [data-content] {
+  gap: 0.25rem;
+  padding-top: 0.125rem;
+}
+
+.cn-toast [data-title] {
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+.cn-toast [data-description] {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.cn-toast[data-styled="true"] [data-button] {
+  height: 2rem !important;
+  margin: 0 !important;
+  padding: 0 0.75rem !important;
+  border-radius: calc(var(--radius) - 0.25rem) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--foreground) !important;
+  background: var(--background) !important;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08) !important;
+  font-size: 0.875rem !important;
+}
+
+.cn-toast[data-styled="true"]:has([data-action]),
+.cn-toast[data-styled="true"]:has([data-cancel]) {
+  padding-bottom: 3.5rem;
+}
+
+.cn-toast[data-styled="true"] [data-action],
+.cn-toast[data-styled="true"] [data-cancel] {
+  position: absolute;
+  bottom: 1rem;
+  inset-inline-start: 4.25rem;
+}
+
+.cn-toast[data-styled="true"] [data-close-button] {
+  position: absolute !important;
+  top: 0.75rem !important;
+  right: 0.75rem !important;
+  left: auto !important;
+  bottom: auto !important;
+  width: 1.25rem;
+  height: 1.25rem;
+  transform: none !important;
+  margin: 0 !important;
+  color: var(--muted-foreground) !important;
+  background: var(--muted) !important;
+  border: 0 !important;
+}
+
+.cn-toast[data-styled="true"] [data-close-button]:hover {
+  color: var(--foreground);
+  background: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cn-toast[data-styled="true"] {
+    transition-duration: 120ms;
+  }
+
+  .cn-toast[data-styled="true"]::before {
+    display: none;
+  }
+}
+
+.dark .cn-toast[data-styled="true"] {
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 0.16), 0 4px 4px 0 rgb(0 0 0 / 0.12);
+}
+
+/* Horizontal scrollers (tab bars, filter rows) with no visible scrollbar */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* iOS Safari (and other touch browsers) auto-zoom the page whenever a form
+   field with font-size < 16px receives focus. Pin every text-entry control to
+   16px on touch devices so tapping an input never zooms. Desktop (fine pointer)
+   keeps the design's smaller md: sizes. This never disables pinch-zoom, so
+   accessibility is preserved. */
+@media (hover: none) and (pointer: coarse) {
+  button[data-slot="button"][data-size="icon-xs"],
+  button[data-slot="button"][data-size="icon-sm"] {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]),
+  textarea,
+  select,
+  [contenteditable]:not([contenteditable="false"]) {
+    font-size: 16px !important;
+  }
+}

@@ -1,0 +1,43 @@
+"use client"
+
+import * as React from "react"
+import { HoverCard as HoverCardPrimitive } from "radix-ui"
+
+import { cn } from "@/utils/cn"
+
+export type HoverCardTriggerProps = React.ComponentProps<typeof HoverCardPrimitive.Trigger>
+
+
+export type HoverCardProps = React.ComponentProps<typeof HoverCardPrimitive.Root>
+export type HoverCardContentProps = React.ComponentProps<typeof HoverCardPrimitive.Content>
+
+function HoverCard(props: HoverCardProps) {
+  return <HoverCardPrimitive.Root data-slot="hover-card" openDelay={250} closeDelay={150} {...props} />
+}
+
+function HoverCardTrigger(props: HoverCardTriggerProps) {
+  return <HoverCardPrimitive.Trigger data-slot="hover-card-trigger" {...props} />
+}
+
+function HoverCardContent({
+  className,
+  side = "bottom",
+  sideOffset = 6,
+  align = "center",
+  ...props
+}: HoverCardContentProps) {
+  return (
+    <HoverCardPrimitive.Portal>
+      <HoverCardPrimitive.Content
+        data-slot="hover-card-content"
+        side={side}
+        sideOffset={sideOffset}
+        align={align}
+        className={cn("z-50 w-64 rounded-lg border border-border bg-popover p-3 text-sm text-popover-foreground shadow-lg outline-none data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0", className)}
+        {...props}
+      />
+    </HoverCardPrimitive.Portal>
+  )
+}
+
+export { HoverCard, HoverCardContent, HoverCardTrigger }
