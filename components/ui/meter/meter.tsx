@@ -18,8 +18,8 @@ export type MeterProps = {
 
 const toneClasses: Record<MeterTone, string> = {
   accent: "bg-primary",
-  success: "bg-emerald-500",
-  warning: "bg-amber-500",
+  success: "bg-success",
+  warning: "bg-warning",
   error: "bg-destructive",
 };
 
@@ -35,9 +35,12 @@ export function Meter({
   trackClassName,
 }: MeterProps) {
   const id = useId();
-  const range = maxValue - minValue;
-  const clampedValue = Math.min(maxValue, Math.max(minValue, value));
-  const percentage = range > 0 ? ((clampedValue - minValue) / range) * 100 : 0;
+  const minimum = Number.isFinite(minValue) ? minValue : 0;
+  const maximum = Number.isFinite(maxValue) && maxValue > minimum ? maxValue : minimum + 100;
+  const currentValue = Number.isFinite(value) ? value : minimum;
+  const range = maximum - minimum;
+  const clampedValue = Math.min(maximum, Math.max(minimum, currentValue));
+  const percentage = ((clampedValue - minimum) / range) * 100;
   const displayValue = valueLabel ?? `${Math.round(percentage)}%`;
 
   return (
@@ -45,8 +48,8 @@ export function Meter({
       role="meter"
       aria-labelledby={`${id}-label`}
       aria-describedby={description ? `${id}-description` : undefined}
-      aria-valuemin={minValue}
-      aria-valuemax={maxValue}
+      aria-valuemin={minimum}
+      aria-valuemax={maximum}
       aria-valuenow={clampedValue}
       aria-valuetext={valueLabel}
       className={cn("grid w-full gap-2", className)}
@@ -64,7 +67,7 @@ export function Meter({
         className={cn("flex h-1.5 w-full overflow-hidden rounded-full bg-muted", trackClassName)}
       >
         <div
-          className={cn("h-full shrink-0 rounded-full transition-[width] duration-300 ease-out", toneClasses[tone])}
+          className={cn("h-full shrink-0 rounded-full transition-[width] duration-300 ease-out motion-reduce:transition-none", toneClasses[tone])}
           style={{ width: `${percentage}%`, marginInlineEnd: "auto" }}
         />
       </div>

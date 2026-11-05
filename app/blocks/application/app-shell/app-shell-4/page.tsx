@@ -1,5 +1,5 @@
-import { AppShell4Page } from "@/components/blocks/application/app-shell/app-shell-4-page";
+import { DualSidebarMail } from "@/components/blocks/application/app-shell/dual-sidebar-mail";
 
-export default function AppShell4Route() {
-  return <AppShell4Page />;
+export default function Page() {
+  return <DualSidebarMail />;
 }

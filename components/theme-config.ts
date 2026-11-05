@@ -74,10 +74,10 @@ export const fonts: FontOption[] = [
     stack:
       "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
   },
-  { key: "inter", label: "Inter", stack: '"Inter Variable", "Geist Variable", ui-sans-serif, system-ui, sans-serif' },
-  { key: "roboto", label: "Roboto", stack: '"Roboto Variable", "Geist Variable", ui-sans-serif, system-ui, sans-serif' },
-  { key: "figtree", label: "Figtree", stack: '"Figtree Variable", "Geist Variable", ui-sans-serif, system-ui, sans-serif' },
-  { key: "source-sans-3", label: "Source Sans 3", stack: '"Source Sans 3 Variable", "Geist Variable", ui-sans-serif, system-ui, sans-serif' },
+  { key: "inter", label: "Inter", stack: '"Inter Variable", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif' },
+  { key: "roboto", label: "Roboto", stack: '"Roboto Variable", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif' },
+  { key: "figtree", label: "Figtree", stack: '"Figtree Variable", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif' },
+  { key: "source-sans-3", label: "Source Sans 3", stack: '"Source Sans 3 Variable", var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif' },
   {
     key: "serif",
     label: "Serif",
@@ -87,7 +87,7 @@ export const fonts: FontOption[] = [
     key: "mono",
     label: "Mono",
     stack:
-      '"Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace',
+      "var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace",
   },
 ];
 

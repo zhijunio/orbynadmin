@@ -6,16 +6,17 @@ import { cn } from "@/utils/cn"
 
 export type ToggleVariant = "default" | "outline"
 export type ToggleSize = "sm" | "default" | "lg"
+export type ToggleProps = React.ComponentProps<typeof TogglePrimitive.Root> & {
+  variant?: ToggleVariant
+  size?: ToggleSize
+}
 
 export function Toggle({
   className,
   variant = "default",
   size = "default",
   ...props
-}: React.ComponentProps<typeof TogglePrimitive.Root> & {
-  variant?: ToggleVariant
-  size?: ToggleSize
-}) {
+}: ToggleProps) {
   return <TogglePrimitive.Root
     data-slot="toggle"
     data-variant={variant}

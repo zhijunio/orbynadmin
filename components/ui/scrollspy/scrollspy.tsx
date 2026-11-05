@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, type MouseEvent, type ReactNode, type R
 
 import { cn } from "@/utils/cn";
 
-type ScrollspyProps = {
+export type ScrollspyProps = {
   children: ReactNode;
   targetRef?: RefObject<HTMLElement | null>;
   onUpdate?: (id: string) => void;
@@ -42,6 +42,7 @@ function Scrollspy({
   const rootRef = useRef<HTMLDivElement>(null);
   const anchorsRef = useRef<HTMLElement[]>([]);
   const activeIdRef = useRef<string | null>(null);
+  const hashApplied = useRef(false);
 
   const setActiveSection = useCallback((sectionId: string | null, force = false) => {
     if (!sectionId || (!force && activeIdRef.current === sectionId)) return;
@@ -133,9 +134,12 @@ function Scrollspy({
     window.addEventListener("resize", handleScroll);
 
     const frame = window.requestAnimationFrame(() => {
-      const hash = window.location.hash.slice(1);
-      const anchor = anchorsRef.current.find((item) => item.getAttribute(`data-${dataAttribute}-anchor`) === hash);
-      if (anchor) scrollToAnchor(anchor);
+      if (!hashApplied.current) {
+        hashApplied.current = true;
+        const hash = window.location.hash.slice(1);
+        const anchor = anchorsRef.current.find((item) => item.getAttribute(`data-${dataAttribute}-anchor`) === hash);
+        if (anchor) scrollToAnchor(anchor);
+      }
       handleScroll();
     });
 
@@ -149,4 +153,4 @@ function Scrollspy({
   return <div ref={rootRef} data-slot="scrollspy" className={cn(className)} onClickCapture={handleClick}>{children}</div>;
 }
 
-export { Scrollspy, type ScrollspyProps };
+export { Scrollspy };

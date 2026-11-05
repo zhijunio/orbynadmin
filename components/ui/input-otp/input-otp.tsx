@@ -16,14 +16,16 @@ export type InputOtpProps = Omit<
   onChange?: (value: string) => void;
   onComplete?: (value: string) => void;
   disabled?: boolean;
-  isInvalid?: boolean;
+  invalid?: boolean;
   groupEvery?: number;
+  allowAlphanumeric?: boolean;
   inputClassName?: string;
   digitAriaLabel?: (digit: number, total: number) => string;
 };
 
-function digitsOnly(value: string, length: number) {
-  return value.replace(NON_DIGIT, "").slice(0, length);
+function normalizeCode(value: string, length: number, allowAlphanumeric: boolean) {
+  const normalized = allowAlphanumeric ? value.replace(/[^a-z0-9]/gi, "") : value.replace(NON_DIGIT, "");
+  return normalized.slice(0, length);
 }
 
 export function InputOtp({
@@ -33,8 +35,9 @@ export function InputOtp({
   onChange,
   onComplete,
   disabled = false,
-  isInvalid = false,
+  invalid = false,
   groupEvery,
+  allowAlphanumeric = false,
   inputClassName,
   digitAriaLabel = (digit, total) => `Digit ${digit} of ${total}`,
   className,
@@ -44,7 +47,7 @@ export function InputOtp({
 }: InputOtpProps) {
   const digitCount = Number.isInteger(length) && length > 0 ? length : 6;
   const [internalValue, setInternalValue] = useState(() =>
-    digitsOnly(defaultValue, digitCount),
+    normalizeCode(defaultValue, digitCount, allowAlphanumeric),
   );
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const safeGroupEvery =
@@ -52,10 +55,10 @@ export function InputOtp({
       ? groupEvery
       : 0;
   const controlled = value !== undefined;
-  const code = digitsOnly(controlled ? value : internalValue, digitCount);
+  const code = normalizeCode(controlled ? value : internalValue, digitCount, allowAlphanumeric);
 
   function commit(nextValue: string) {
-    const next = digitsOnly(nextValue, digitCount);
+    const next = normalizeCode(nextValue, digitCount, allowAlphanumeric);
     if (next === code) return;
 
     if (!controlled) setInternalValue(next);
@@ -71,7 +74,7 @@ export function InputOtp({
   }
 
   function writeFrom(index: number, rawValue: string) {
-    const incoming = digitsOnly(rawValue, digitCount);
+    const incoming = normalizeCode(rawValue, digitCount, allowAlphanumeric);
     if (!incoming) return;
 
     if (incoming.length === digitCount) {
@@ -134,12 +137,12 @@ export function InputOtp({
               inputsRef.current[index] = node;
             }}
             type="text"
-            inputMode="numeric"
-            autoComplete="one-time-code"
+            inputMode={allowAlphanumeric ? "text" : "numeric"}
+            autoComplete={index === 0 ? "one-time-code" : "off"}
             maxLength={digitCount}
             disabled={disabled}
             aria-label={digitAriaLabel(index + 1, digitCount)}
-            aria-invalid={isInvalid || undefined}
+            aria-invalid={invalid || undefined}
             value={code[index] ?? ""}
             onChange={(event) => {
               if (!event.target.value) {
@@ -163,7 +166,7 @@ export function InputOtp({
             className={cn(
               "size-9 shrink-0 rounded-md border bg-background text-center text-base font-semibold tabular-nums shadow-sm outline-none transition-colors sm:size-10 sm:text-lg",
               "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40",
-              isInvalid && "border-destructive focus-visible:ring-destructive/30",
+              invalid && "border-destructive focus-visible:ring-destructive/30",
               disabled && "cursor-not-allowed opacity-50",
               gapBefore && "ms-1 sm:ms-2",
               inputClassName,

@@ -4,11 +4,29 @@ import * as React from "react"
 import { Dialog as SheetPrimitive } from "radix-ui"
 
 import { cn } from "@/utils/cn"
-import { CloseButton } from "@/components/ui/buttons/close-button"
+import { CloseButton } from "@/components/ui/button/close-button"
+
+export type SheetTriggerProps = React.ComponentProps<typeof SheetPrimitive.Trigger>
+export type SheetCloseProps = React.ComponentProps<typeof SheetPrimitive.Close>
+export type SheetHeaderProps = React.ComponentProps<"div">
+export type SheetFooterProps = React.ComponentProps<"div">
+export type SheetTitleProps = React.ComponentProps<typeof SheetPrimitive.Title>
+export type SheetDescriptionProps = React.ComponentProps<typeof SheetPrimitive.Description>
+
 
 const SheetContext = React.createContext<{ close: () => void } | null>(null)
 
-function Sheet({ open, defaultOpen, onOpenChange, ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
+export type SheetProps = React.ComponentProps<typeof SheetPrimitive.Root>
+export type SheetContentProps = React.ComponentProps<typeof SheetPrimitive.Content> & {
+  side?: "top" | "right" | "bottom" | "left"
+  showCloseButton?: boolean
+  showOverlay?: boolean
+  swipeDirection?: "up" | "right" | "down" | "left"
+  swipeThreshold?: number
+  overlayClassName?: string
+}
+
+function Sheet({ open, defaultOpen, onOpenChange, ...props }: SheetProps) {
   const [internalOpen, setInternalOpen] = React.useState(defaultOpen ?? false)
   const isControlled = open !== undefined
   const currentOpen = isControlled ? open : internalOpen
@@ -21,13 +39,13 @@ function Sheet({ open, defaultOpen, onOpenChange, ...props }: React.ComponentPro
 
 function SheetTrigger({
   ...props
-}: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
+}: SheetTriggerProps) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />
 }
 
 function SheetClose({
   ...props
-}: React.ComponentProps<typeof SheetPrimitive.Close>) {
+}: SheetCloseProps) {
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />
 }
 
@@ -66,14 +84,7 @@ function SheetContent({
   onPointerUp,
   onPointerCancel,
   ...props
-}: React.ComponentProps<typeof SheetPrimitive.Content> & {
-  side?: "top" | "right" | "bottom" | "left"
-  showCloseButton?: boolean
-  showOverlay?: boolean
-  swipeDirection?: "up" | "right" | "down" | "left"
-  swipeThreshold?: number
-  overlayClassName?: string
-}) {
+}: SheetContentProps) {
   const sheet = React.useContext(SheetContext)
   const pointerStart = React.useRef<{ x: number; y: number } | null>(null)
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -124,7 +135,7 @@ function SheetContent({
   )
 }
 
-function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
+function SheetHeader({ className, ...props }: SheetHeaderProps) {
   return (
     <div
       data-slot="sheet-header"
@@ -134,7 +145,7 @@ function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
+function SheetFooter({ className, ...props }: SheetFooterProps) {
   return (
     <div
       data-slot="sheet-footer"
@@ -147,7 +158,7 @@ function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
 function SheetTitle({
   className,
   ...props
-}: React.ComponentProps<typeof SheetPrimitive.Title>) {
+}: SheetTitleProps) {
   return (
     <SheetPrimitive.Title
       data-slot="sheet-title"
@@ -163,7 +174,7 @@ function SheetTitle({
 function SheetDescription({
   className,
   ...props
-}: React.ComponentProps<typeof SheetPrimitive.Description>) {
+}: SheetDescriptionProps) {
   return (
     <SheetPrimitive.Description
       data-slot="sheet-description"

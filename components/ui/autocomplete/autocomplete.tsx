@@ -60,6 +60,7 @@ export function Autocomplete({
   const [open, setOpen] = useState(false);
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [moved, setMoved] = useState(false);
   const currentValue = value ?? uncontrolledValue;
   const filteredItems = useMemo(() => {
     const query = currentValue.trim().toLocaleLowerCase();
@@ -75,12 +76,15 @@ export function Autocomplete({
   }, [filteredItems]);
 
   function updateValue(next: string) {
+    if (disabled) return;
     if (value === undefined) setUncontrolledValue(next);
     onValueChange?.(next);
     setActiveIndex(0);
+    setMoved(false);
   }
 
   function choose(item: AutocompleteItem) {
+    if (disabled || item.disabled) return;
     updateValue(item.value);
     onSelect?.(item);
     setOpen(false);
@@ -91,10 +95,12 @@ export function Autocomplete({
     if (event.key === "ArrowDown" && available.length) {
       event.preventDefault();
       setOpen(true);
+      setMoved(true);
       setActiveIndex((index) => (index + 1) % available.length);
     } else if (event.key === "ArrowUp" && available.length) {
       event.preventDefault();
       setOpen(true);
+      setMoved(true);
       setActiveIndex((index) => (index - 1 + available.length) % available.length);
     } else if (event.key === "Enter" && open && available.length) {
       event.preventDefault();
@@ -127,11 +133,11 @@ export function Autocomplete({
           onKeyDown={handleKeyDown}
         />
         <div className="absolute inset-y-0 right-1 flex items-center gap-0.5">
-          {clearable && currentValue && <button type="button" aria-label="Clear input" className="rounded p-1 text-muted-foreground hover:text-foreground" onClick={() => updateValue("")}><IconX className="size-4" /></button>}
-          {showTrigger && <button type="button" aria-label="Show suggestions" aria-expanded={open} className="rounded p-1 text-muted-foreground hover:text-foreground" onClick={() => setOpen((state) => !state)}><IconChevronDown className="size-4" /></button>}
+          {clearable && currentValue && <button type="button" aria-label="Clear input" disabled={disabled} className="rounded p-1 text-muted-foreground hover:text-foreground disabled:pointer-events-none disabled:opacity-50" onClick={() => updateValue("")}><IconX className="size-4" /></button>}
+          {showTrigger && <button type="button" aria-label="Show suggestions" aria-expanded={open} disabled={disabled} className="rounded p-1 text-muted-foreground hover:text-foreground disabled:pointer-events-none disabled:opacity-50" onClick={() => setOpen((state) => !state)}><IconChevronDown className="size-4" /></button>}
         </div>
         <PopoverContent id={`${id}-listbox`} role="listbox" aria-label={`${ariaLabel} suggestions`} align="start" className="max-h-64 w-(--radix-popover-trigger-width) overflow-auto p-1" onOpenAutoFocus={(event) => event.preventDefault()}>
-          {loading ? <div role="status" className="flex items-center gap-2 px-3 py-4 text-sm text-muted-foreground"><IconLoader2 className="size-4 animate-spin" />Searching…</div> : error ? <p role="alert" className="px-3 py-3 text-sm text-destructive">{error}</p> : filteredItems.length === 0 ? <p className="px-3 py-3 text-sm text-muted-foreground">{emptyText}</p> : [...groups].map(([group, groupItems]) => <div key={group || "ungrouped"} role="group" aria-label={group || undefined}>{group && <div className="sticky top-0 bg-popover px-2 py-1.5 text-xs font-medium text-muted-foreground">{group}</div>}{groupItems.map((item) => { optionIndex += 1; const index = optionIndex; const highlighted = (autoHighlight && currentValue.length > 0 && index === 0) || index === activeIndex; return <button key={`${group}:${item.value}`} type="button" role="option" aria-selected={highlighted} disabled={item.disabled} className={cn("flex w-full flex-col rounded-md px-2 py-1.5 text-left text-sm outline-none hover:bg-accent focus:bg-accent disabled:pointer-events-none disabled:opacity-50", highlighted && "bg-accent")} onMouseEnter={() => setActiveIndex(index)} onMouseDown={(event) => event.preventDefault()} onClick={() => choose(item)}><span>{item.label ?? item.value}</span>{item.description && <span className="text-xs text-muted-foreground">{item.description}</span>}</button>; })}</div>)}
+          {loading ? <div role="status" className="flex items-center gap-2 px-3 py-4 text-sm text-muted-foreground"><IconLoader2 className="size-4 motion-safe:animate-spin" />Searching…</div> : error ? <p role="alert" className="px-3 py-3 text-sm text-destructive">{error}</p> : filteredItems.length === 0 ? <p className="px-3 py-3 text-sm text-muted-foreground">{emptyText}</p> : [...groups].map(([group, groupItems]) => <div key={group || "ungrouped"} role="group" aria-label={group || undefined}>{group && <div className="sticky top-0 bg-popover px-2 py-1.5 text-xs font-medium text-muted-foreground">{group}</div>}{groupItems.map((item) => { optionIndex += 1; const index = optionIndex; const highlighted = index === (autoHighlight && !moved && currentValue.length > 0 ? 0 : activeIndex); return <button key={`${group}:${item.value}`} type="button" role="option" aria-selected={highlighted} disabled={item.disabled} className={cn("flex w-full flex-col rounded-md px-2 py-1.5 text-left text-sm outline-none hover:bg-accent focus:bg-accent disabled:pointer-events-none disabled:opacity-50", highlighted && "bg-accent")} onMouseEnter={() => { setMoved(true); setActiveIndex(index); }} onMouseDown={(event) => event.preventDefault()} onClick={() => choose(item)}><span>{item.label ?? item.value}</span>{item.description && <span className="text-xs text-muted-foreground">{item.description}</span>}</button>; })}</div>)}
         </PopoverContent>
       </div></PopoverAnchor>
     </Popover>

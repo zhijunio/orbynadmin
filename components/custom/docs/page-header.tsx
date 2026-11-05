@@ -1,6 +1,3 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import { cn } from "@/utils/cn";
 
 type PageHeaderProps = {
@@ -16,9 +13,6 @@ export function PageHeader({
   className,
   size = "default",
 }: PageHeaderProps) {
-  const titles = useTranslations("PageTitles");
-  const localizedTitle = titles.has(title) ? titles(title) : title;
-
   return (
     <div
       className={cn(
@@ -26,7 +20,14 @@ export function PageHeader({
         className
       )}
     >
-      <h1 className={cn(size === "compact" ? "text-xl" : "text-2xl", "font-semibold tracking-tight")}>{localizedTitle}</h1>
+      <h1
+        className={cn(
+          size === "compact" ? "text-xl" : "text-2xl",
+          "font-semibold tracking-tight"
+        )}
+      >
+        {title}
+      </h1>
       {children && (
         <div className="flex items-center gap-2 [&_[data-slot=button]]:h-9">
           {children}

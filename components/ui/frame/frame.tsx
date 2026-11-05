@@ -2,7 +2,7 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/utils/cn";
 
-type FrameProps = ComponentProps<"div"> & {
+export type FrameProps = ComponentProps<"div"> & {
   variant?: "default" | "inverse" | "ghost";
   spacing?: "xs" | "sm" | "default" | "lg";
   stacked?: boolean;
@@ -42,11 +42,17 @@ function Frame({
   );
 }
 
+export type FramePanelProps = ComponentProps<"div"> & { fit?: boolean }
+export type FrameHeaderProps = ComponentProps<"header">
+export type FrameTitleProps = ComponentProps<"div">
+export type FrameDescriptionProps = ComponentProps<"div">
+export type FrameFooterProps = ComponentProps<"footer">
+
 function FramePanel({
   className,
   fit = false,
   ...props
-}: ComponentProps<"div"> & { fit?: boolean }) {
+}: FramePanelProps) {
   return (
     <div
       className={cn(
@@ -62,7 +68,7 @@ function FramePanel({
   );
 }
 
-function FrameHeader({ className, ...props }: ComponentProps<"header">) {
+function FrameHeader({ className, ...props }: FrameHeaderProps) {
   return (
     <header
       className={cn("flex flex-col gap-0 px-(--frame-panel-px) py-(--frame-panel-header-py)", className)}
@@ -72,15 +78,15 @@ function FrameHeader({ className, ...props }: ComponentProps<"header">) {
   );
 }
 
-function FrameTitle({ className, ...props }: ComponentProps<"div">) {
+function FrameTitle({ className, ...props }: FrameTitleProps) {
   return <div className={cn("text-sm font-semibold", className)} data-slot="frame-panel-title" {...props} />;
 }
 
-function FrameDescription({ className, ...props }: ComponentProps<"div">) {
+function FrameDescription({ className, ...props }: FrameDescriptionProps) {
   return <div className={cn("text-sm text-muted-foreground", className)} data-slot="frame-panel-description" {...props} />;
 }
 
-function FrameFooter({ className, ...props }: ComponentProps<"footer">) {
+function FrameFooter({ className, ...props }: FrameFooterProps) {
   return (
     <footer
       className={cn("flex flex-col gap-4 px-(--frame-panel-px) py-(--frame-panel-footer-py)", className)}

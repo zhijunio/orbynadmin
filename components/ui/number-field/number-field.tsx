@@ -4,11 +4,11 @@ import { useMemo, useState } from "react";
 import type { FocusEvent, KeyboardEvent } from "react";
 import { IconMinus as Minus, IconPlus as Plus } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/button/button";
 import { Input } from "@/components/ui/input/input";
 import { cn } from "@/utils/cn";
 
-export type NumberFieldProps = Omit<React.ComponentProps<"input">, "type" | "value" | "defaultValue" | "onChange"> & {
+export type NumberFieldProps = Omit<React.ComponentProps<"input">, "type" | "size" | "value" | "defaultValue" | "onChange"> & {
   value?: number;
   defaultValue?: number;
   onValueChange?: (value: number) => void;
@@ -18,6 +18,8 @@ export type NumberFieldProps = Omit<React.ComponentProps<"input">, "type" | "val
   formatOptions?: Intl.NumberFormatOptions;
   /** Defaults to en-US so server and browser formatting are consistent. */
   locale?: string;
+  size?: "sm" | "default" | "lg";
+  layout?: "inline" | "right";
 };
 
 function parseFormattedNumber(value: string, options: Intl.NumberFormatOptions, locale: string): number | null {
@@ -71,8 +73,11 @@ export function NumberField({
   max,
   formatOptions,
   locale = "en-US",
+  size = "default",
+  layout = "inline",
   className,
   disabled,
+  readOnly,
   onFocus,
   onBlur,
   onKeyDown,
@@ -106,7 +111,7 @@ export function NumberField({
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     onKeyDown?.(event);
-    if (event.defaultPrevented || !formatOptions) return;
+    if (event.defaultPrevented || readOnly || !formatOptions) return;
     if (event.key === "ArrowUp") {
       event.preventDefault();
       update(current + step);
@@ -119,8 +124,8 @@ export function NumberField({
   }
 
   return (
-    <div className={cn("flex h-9 w-fit items-center rounded-lg border bg-background focus-within:ring-2 focus-within:ring-ring/40", disabled && "opacity-50", className)}>
-      <Button type="button" variant="ghost" size="icon-sm" aria-label="Decrease value" disabled={disabled || (min !== undefined && current <= min)} onClick={() => update(current - step)}><Minus /></Button>
+    <div className={cn("flex w-fit items-center rounded-lg border bg-background focus-within:ring-2 focus-within:ring-ring/40",  size === "sm" && "h-7", size === "default" && "h-9", size === "lg" && "h-11", disabled && "opacity-50", className)}>
+      {layout === "inline" && <Button type="button" variant="ghost" size={size === "lg" ? "icon" : "icon-sm"} aria-label="Decrease value" disabled={disabled || readOnly || (min !== undefined && current <= min)} onClick={() => update(current - step)}><Minus /></Button>}
       {formatter ? (
         <Input
           {...props}
@@ -128,6 +133,7 @@ export function NumberField({
           lang={locale}
           inputMode="decimal"
           role="spinbutton"
+          readOnly={readOnly}
           value={editing ? draft : formatter.format(current)}
           aria-valuenow={current}
           aria-valuemin={min}
@@ -143,12 +149,13 @@ export function NumberField({
             const nextValue = parseFormattedNumber(nextDraft, formatOptions!, locale);
             if (nextValue !== null) update(nextValue);
           }}
-          className="h-full w-36 rounded-none border-0 px-1 text-center shadow-none focus-visible:ring-0"
+          className={cn("h-full rounded-none border-0 px-1 text-center shadow-none focus-visible:ring-0",size === "sm" ? "w-28 text-sm" : size === "lg" ? "w-44" : "w-36")}
         />
       ) : (
         <Input
           {...props}
           type="number"
+          readOnly={readOnly}
           value={current}
           min={min}
           max={max}
@@ -161,10 +168,10 @@ export function NumberField({
             const next = event.currentTarget.valueAsNumber;
             if (Number.isFinite(next)) update(next);
           }}
-          className="h-full w-16 rounded-none border-0 px-1 text-center shadow-none focus-visible:ring-0"
+          className={cn("h-full rounded-none border-0 px-1 text-center shadow-none focus-visible:ring-0",size === "sm" ? "w-12 text-sm" : size === "lg" ? "w-24" : "w-16")}
         />
       )}
-      <Button type="button" variant="ghost" size="icon-sm" aria-label="Increase value" disabled={disabled || (max !== undefined && current >= max)} onClick={() => update(current + step)}><Plus /></Button>
+      {layout === "inline" ? <Button type="button" variant="ghost" size={size === "lg" ? "icon" : "icon-sm"} aria-label="Increase value" disabled={disabled || readOnly || (max !== undefined && current >= max)} onClick={() => update(current + step)}><Plus /></Button> : <div className="flex h-full flex-col border-l"><Button type="button" variant="ghost" size="icon-xs" aria-label="Increase value" disabled={disabled || readOnly || (max !== undefined && current >= max)} onClick={() => update(current + step)}><Plus /></Button><Button type="button" variant="ghost" size="icon-xs" aria-label="Decrease value" disabled={disabled || readOnly || (min !== undefined && current <= min)} onClick={() => update(current - step)}><Minus /></Button></div>}
     </div>
   );
 }

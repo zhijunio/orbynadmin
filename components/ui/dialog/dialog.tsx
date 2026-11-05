@@ -4,37 +4,67 @@ import * as React from "react"
 import { Dialog as DialogPrimitive } from "radix-ui"
 
 import { cn } from "@/utils/cn"
-import { Button } from "@/components/ui/buttons/button"
-import { CloseButton } from "@/components/ui/buttons/close-button"
+import { Button } from "@/components/ui/button/button"
+import { CloseButton } from "@/components/ui/button/close-button"
+
+export type DialogTriggerProps = React.ComponentProps<typeof DialogPrimitive.Trigger>
+export type DialogPortalProps = React.ComponentProps<typeof DialogPrimitive.Portal>
+export type DialogCloseProps = React.ComponentProps<typeof DialogPrimitive.Close>
+export type DialogOverlayProps = React.ComponentProps<typeof DialogPrimitive.Overlay>
+export type DialogBodyProps = React.ComponentProps<"div">
+export type ModalProps = React.ComponentProps<typeof DialogContent>
+export type ModalTriggerProps = DialogTriggerProps
+export type ModalBodyProps = DialogBodyProps
+export type ModalFooterProps = React.ComponentProps<"div">
+export type DialogHeaderProps = React.ComponentProps<"div">
+export type DialogTitleProps = React.ComponentProps<typeof DialogPrimitive.Title>
+export type DialogDescriptionProps = React.ComponentProps<typeof DialogPrimitive.Description>
+
+
+export type DialogProps = React.ComponentProps<typeof DialogPrimitive.Root>
+export type DialogContentProps = React.ComponentProps<typeof DialogPrimitive.Content> & {
+  showCloseButton?: boolean
+  showOverlay?: boolean
+  size?: "sm" | "md" | "lg" | "xl"
+  closeLabel?: string
+  overlayClassName?: string
+}
+export type DialogFooterProps = React.ComponentProps<"div"> & {
+  showCloseButton?: boolean
+}
+export type ModalHeaderProps = React.ComponentProps<"div"> & {
+  title?: React.ReactNode
+  description?: React.ReactNode
+}
 
 function Dialog({
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Root>) {
+}: DialogProps) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
 }
 
 function DialogTrigger({
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
+}: DialogTriggerProps) {
   return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
 }
 
 function DialogPortal({
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Portal>) {
+}: DialogPortalProps) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
 }
 
 function DialogClose({
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Close>) {
+}: DialogCloseProps) {
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
 }
 
 function DialogOverlay({
   className,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
+}: DialogOverlayProps) {
   return (
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
@@ -56,13 +86,7 @@ function DialogContent({
   closeLabel = "Close dialog",
   overlayClassName,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content> & {
-  showCloseButton?: boolean
-  showOverlay?: boolean
-  size?: "sm" | "md" | "lg" | "xl"
-  closeLabel?: string
-  overlayClassName?: string
-}) {
+}: DialogContentProps) {
   return (
     <DialogPortal>
       {showOverlay && <DialogOverlay className={overlayClassName} />}
@@ -86,7 +110,7 @@ function DialogContent({
   )
 }
 
-function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
+function DialogBody({ className, ...props }: DialogBodyProps) {
   return (
     <div
       data-slot="dialog-body"
@@ -96,7 +120,7 @@ function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function Modal({ size = "md", ...props }: React.ComponentProps<typeof DialogContent>) {
+function Modal({ size = "md", ...props }: ModalProps) {
   return <DialogContent size={size} {...props} />
 }
 
@@ -106,10 +130,7 @@ function ModalHeader({
   children,
   className,
   ...props
-}: React.ComponentProps<"div"> & {
-  title?: React.ReactNode
-  description?: React.ReactNode
-}) {
+}: ModalHeaderProps) {
   return (
     <DialogHeader className={className} {...props}>
       {title && <DialogTitle>{title}</DialogTitle>}
@@ -119,7 +140,7 @@ function ModalHeader({
   )
 }
 
-function ModalFooter({ className, ...props }: React.ComponentProps<"div">) {
+function ModalFooter({ className, ...props }: ModalFooterProps) {
   return (
     <div
       data-slot="modal-footer"
@@ -132,7 +153,7 @@ function ModalFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
+function DialogHeader({ className, ...props }: DialogHeaderProps) {
   return (
     <div
       data-slot="dialog-header"
@@ -147,9 +168,7 @@ function DialogFooter({
   showCloseButton = false,
   children,
   ...props
-}: React.ComponentProps<"div"> & {
-  showCloseButton?: boolean
-}) {
+}: DialogFooterProps) {
   return (
     <div
       data-slot="dialog-footer"
@@ -172,7 +191,7 @@ function DialogFooter({
 function DialogTitle({
   className,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Title>) {
+}: DialogTitleProps) {
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
@@ -188,7 +207,7 @@ function DialogTitle({
 function DialogDescription({
   className,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Description>) {
+}: DialogDescriptionProps) {
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"

@@ -17,6 +17,28 @@ type CommandContextValue = {
 const CommandContext = React.createContext<CommandContextValue | null>(null);
 const useCommand = () => React.useContext(CommandContext);
 
+export type CommandProps = { className?: string; children?: React.ReactNode }
+export type CommandDialogProps = React.ComponentProps<typeof Dialog> & {
+  title?: string
+  description?: string
+  className?: string
+  showCloseButton?: boolean
+}
+export type CommandInputProps = Omit<React.ComponentProps<"input">, "className"> & {
+  className?: string
+}
+export type CommandEmptyProps = { children: React.ReactNode }
+export type CommandListProps = React.ComponentProps<"div">
+export type CommandGroupProps = React.ComponentProps<"div"> & {
+  heading?: React.ReactNode
+}
+export type CommandItemProps = React.ComponentProps<"button"> & {
+  value?: string
+  textValue?: string
+  onSelect?: () => void
+}
+export type CommandShortcutProps = React.ComponentProps<"span">
+
 function normalize(value: string) {
   return value.trim().toLocaleLowerCase();
 }
@@ -41,7 +63,7 @@ function countMatches(children: React.ReactNode, query: string): number {
   }, 0);
 }
 
-function Command({ className, children }: { className?: string; children?: React.ReactNode }) {
+function Command({ className, children }: CommandProps) {
   const [query, setQuery] = React.useState("");
   const [activeValue, setActiveValue] = React.useState<string | null>(null);
   const empty = countMatches(children, query) === 0;
@@ -62,12 +84,7 @@ function CommandDialog({
   className,
   showCloseButton = false,
   ...props
-}: React.ComponentProps<typeof Dialog> & {
-  title?: string;
-  description?: string;
-  className?: string;
-  showCloseButton?: boolean;
-}) {
+}: CommandDialogProps) {
   return (
     <Dialog {...props}>
       <DialogContent className={cn("top-[20vh] translate-y-0 overflow-hidden rounded-xl p-0 sm:max-w-xl", className)} showCloseButton={showCloseButton}>
@@ -81,7 +98,7 @@ function CommandDialog({
   );
 }
 
-function CommandInput({ className, onChange, onKeyDown, ...props }: Omit<React.ComponentProps<"input">, "className"> & { className?: string }) {
+function CommandInput({ className, onChange, onKeyDown, ...props }: CommandInputProps) {
   const context = useCommand();
 
   return (
@@ -101,6 +118,8 @@ function CommandInput({ className, onChange, onKeyDown, ...props }: Omit<React.C
             onChange?.(event);
           }}
           onKeyDown={(event) => {
+            onKeyDown?.(event);
+            if (event.defaultPrevented) return;
             const items = Array.from(
               event.currentTarget.closest("[data-slot=command]")?.querySelectorAll<HTMLButtonElement>('[role="option"]:not([disabled])') ?? [],
             );
@@ -111,7 +130,6 @@ function CommandInput({ className, onChange, onKeyDown, ...props }: Omit<React.C
               event.preventDefault();
               items[items.length - 1]?.focus();
             }
-            onKeyDown?.(event);
           }}
         />
       </InputGroup>
@@ -119,11 +137,11 @@ function CommandInput({ className, onChange, onKeyDown, ...props }: Omit<React.C
   );
 }
 
-function CommandEmpty({ children }: { children: React.ReactNode }) {
+function CommandEmpty({ children }: CommandEmptyProps) {
   return useCommand()?.empty ? <div role="status" aria-live="polite" className="px-3 py-8 text-center text-sm text-muted-foreground">{children}</div> : null;
 }
 
-function CommandList({ className, children, "aria-label": ariaLabel = "Commands", ...props }: React.ComponentProps<"div">) {
+function CommandList({ className, children, "aria-label": ariaLabel = "Commands", ...props }: CommandListProps) {
   return (
     <div
       role="listbox"
@@ -137,7 +155,7 @@ function CommandList({ className, children, "aria-label": ariaLabel = "Commands"
   );
 }
 
-function CommandGroup({ className, heading, children, ...props }: React.ComponentProps<"div"> & { heading?: React.ReactNode }) {
+function CommandGroup({ className, heading, children, ...props }: CommandGroupProps) {
   const context = useCommand();
   const visible = countMatches(children, context?.query ?? "") > 0;
   if (!visible) return null;
@@ -160,7 +178,7 @@ function CommandItem({
   onFocus,
   onKeyDown,
   ...props
-}: React.ComponentProps<"button"> & { value?: string; textValue?: string; onSelect?: () => void }) {
+}: CommandItemProps) {
   const context = useCommand();
   const itemId = React.useId();
   const text = textValue ?? value ?? textFromChildren(children);
@@ -182,10 +200,12 @@ function CommandItem({
         onFocus?.(event);
       }}
       onClick={(event) => {
-        onSelect?.();
         onClick?.(event);
+        if (!event.defaultPrevented) onSelect?.();
       }}
       onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (event.defaultPrevented) return;
         const command = event.currentTarget.closest<HTMLElement>('[data-slot="command"]');
         const options = Array.from(command?.querySelectorAll<HTMLButtonElement>('[role="option"]:not([disabled])') ?? []);
         const index = options.indexOf(event.currentTarget);
@@ -200,7 +220,6 @@ function CommandItem({
           event.preventDefault();
           options[options.length - 1]?.focus();
         }
-        onKeyDown?.(event);
       }}
     >
       {children}
@@ -209,7 +228,7 @@ function CommandItem({
   );
 }
 
-function CommandShortcut({ className, ...props }: React.ComponentProps<"span">) {
+function CommandShortcut({ className, ...props }: CommandShortcutProps) {
   return <span className={cn("ms-auto text-xs tracking-widest text-muted-foreground", className)} {...props} />;
 }
 

@@ -21,8 +21,28 @@ import type {
 } from "react"
 import { IconArrowBackUp, IconArrowForwardUp, IconDeviceFloppy, IconEraser } from "@tabler/icons-react"
 
-import { Button } from "@/components/ui/buttons/button"
+import { Button } from "@/components/ui/button/button"
 import { cn } from "@/utils/cn"
+
+export type SignaturePadGuideProps = ComponentProps<"div">
+export type SignaturePadPlaceholderProps = ComponentProps<"div">
+export type SignaturePadControlsProps = ComponentProps<"div"> & {
+  position?: keyof typeof CONTROLS_POSITION_CLASS
+}
+export type SignaturePadClearProps = SignaturePadControlProps
+export type SignaturePadUndoProps = SignaturePadControlProps
+export type SignaturePadRedoProps = SignaturePadControlProps
+export type SignaturePadSaveProps = SignaturePadControlProps & {
+  format?: SignaturePadFormat
+  options?: SignaturePadExportOptions
+  onSave?: (value: string, strokes: SignaturePadStroke[]) => void
+}
+export type SignaturePadPreviewProps = Omit<ComponentProps<"svg">, "color"> & {
+  strokes: SignaturePadStroke[]
+  padding?: number
+  color?: string
+}
+
 
 /* -------------------------------------------------------------------------- */
 /*                                    Types                                   */
@@ -544,9 +564,11 @@ function SignaturePad({
     disabled,
     readOnly,
     clear: () => {
-      if (strokes.length > 0) commit([])
+      if (disabled || readOnly || strokes.length === 0) return
+      commit([])
     },
     undo: () => {
+      if (disabled || readOnly) return
       const previous = past[past.length - 1]
       if (!previous) return
       setStrokes(previous, {
@@ -556,6 +578,7 @@ function SignaturePad({
       })
     },
     redo: () => {
+      if (disabled || readOnly) return
       const next = future[0]
       if (!next) return
       setStrokes(next, {
@@ -1044,7 +1067,7 @@ function SignaturePadGuide({
   className,
   children,
   ...props
-}: ComponentProps<"div">) {
+}: SignaturePadGuideProps) {
   return (
     <div
       data-slot="signature-pad-guide"
@@ -1076,7 +1099,7 @@ function SignaturePadPlaceholder({
   className,
   children,
   ...props
-}: ComponentProps<"div">) {
+}: SignaturePadPlaceholderProps) {
   const { isEmpty, isDrawing } = useSignaturePad()
   if (!isEmpty || isDrawing) return null
 
@@ -1111,9 +1134,7 @@ function SignaturePadControls({
   position = "top-end",
   className,
   ...props
-}: ComponentProps<"div"> & {
-  position?: keyof typeof CONTROLS_POSITION_CLASS
-}) {
+}: SignaturePadControlsProps) {
   return (
     <div
       data-slot="signature-pad-controls"
@@ -1146,7 +1167,7 @@ function SignaturePadClear({
   variant = "outline",
   size = "icon-sm",
   ...props
-}: SignaturePadControlProps) {
+}: SignaturePadClearProps) {
   const api = useSignaturePad()
 
   return (
@@ -1179,7 +1200,7 @@ function SignaturePadUndo({
   variant = "outline",
   size = "icon-sm",
   ...props
-}: SignaturePadControlProps) {
+}: SignaturePadUndoProps) {
   const api = useSignaturePad()
   const { undoDepth } = useSignaturePadConfig("SignaturePadUndo")
 
@@ -1213,7 +1234,7 @@ function SignaturePadRedo({
   variant = "outline",
   size = "icon-sm",
   ...props
-}: SignaturePadControlProps) {
+}: SignaturePadRedoProps) {
   const api = useSignaturePad()
   const { redoDepth } = useSignaturePadConfig("SignaturePadRedo")
 
@@ -1251,11 +1272,7 @@ function SignaturePadSave({
   variant = "outline",
   size = "icon-sm",
   ...props
-}: SignaturePadControlProps & {
-  format?: SignaturePadFormat
-  options?: SignaturePadExportOptions
-  onSave?: (value: string, strokes: SignaturePadStroke[]) => void
-}) {
+}: SignaturePadSaveProps) {
   const api = useSignaturePad()
 
   return (
@@ -1295,11 +1312,7 @@ function SignaturePadPreview({
   color,
   className,
   ...props
-}: Omit<ComponentProps<"svg">, "color"> & {
-  strokes: SignaturePadStroke[]
-  padding?: number
-  color?: string
-}) {
+}: SignaturePadPreviewProps) {
   if (strokes.length === 0) return null
   const { x, y, width, height } = resolveFrame(strokes, { padding })
 

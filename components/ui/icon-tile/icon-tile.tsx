@@ -18,10 +18,10 @@ const sizeClasses = {
   xl: "[--icon-tile-size:--spacing(14)] [--icon-tile-icon-size:--spacing(7)] [--icon-tile-inset:--spacing(1)]",
 } as const;
 
-type IconTileVariant = keyof typeof variantClasses;
-type IconTileSize = keyof typeof sizeClasses;
+export type IconTileVariant = keyof typeof variantClasses;
+export type IconTileSize = keyof typeof sizeClasses;
 
-type IconTileProps = React.ComponentProps<"span"> & {
+export type IconTileProps = React.ComponentProps<"span"> & {
   variant?: IconTileVariant;
   size?: IconTileSize;
   radius?: "default" | "full";
@@ -55,4 +55,4 @@ function IconTile({
   );
 }
 
-export { IconTile, type IconTileProps };
+export { IconTile };

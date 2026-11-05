@@ -34,7 +34,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           <OctagonXIcon className="size-5" />
         ),
         loading: (
-          <Loader2Icon className="size-5 animate-spin" />
+          <Loader2Icon className="size-5 motion-safe:animate-spin" />
         ),
       }}
       style={
@@ -68,3 +68,4 @@ const Toaster = ({ ...props }: ToasterProps) => {
 }
 
 export { Toaster }
+export type { ToasterProps } from "sonner"

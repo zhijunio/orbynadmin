@@ -6,7 +6,7 @@ import { SOCIAL_COLOR_LOGOS } from "@/components/ui/social-button/social-color-l
 export type { SocialProvider };
 export type SocialBrand = SocialProvider | "custom";
 export type SocialButtonAppearance = "colorful" | "black" | "white";
-export type SocialButtonSize = "medium" | "small";
+export type SocialButtonSize = "default" | "sm";
 
 export interface SocialBrandConfig {
   icon: ReactNode;
@@ -40,7 +40,7 @@ export function SocialButton(props: SocialButtonProps) {
     brand,
     config,
     appearance = "colorful",
-    size = "medium",
+    size = "default",
     iconOnly = false,
     fullWidth = false,
     children,
@@ -54,7 +54,7 @@ export function SocialButton(props: SocialButtonProps) {
   const label = custom ? (config?.label ?? "SSO") : providerConfig!.label;
   const color = custom ? (config?.color ?? "#000000") : providerConfig!.brand;
   const colorLogo = appearance === "white" && provider ? SOCIAL_COLOR_LOGOS[provider] : undefined;
-  const iconClass = size === "medium" ? "size-[18px] shrink-0" : "size-4 shrink-0";
+  const iconClass = size === "default" ? "size-[18px] shrink-0" : "size-4 shrink-0";
   const icon = custom ? (
     <span aria-hidden="true" className={cn(iconClass, "inline-flex items-center justify-center")}>{config?.icon}</span>
   ) : colorLogo ? (
@@ -65,8 +65,8 @@ export function SocialButton(props: SocialButtonProps) {
   const content = <>{icon}{iconOnly ? <span className="sr-only">Continue with {label}</span> : <span className="truncate">{children ?? `Continue with ${label}`}</span>}</>;
   const classNames = cn(
     "relative inline-flex cursor-pointer select-none items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-lg border text-sm font-medium transition-[background-color,border-color,box-shadow,color,filter] duration-150 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60",
-    size === "medium" ? "h-9 w-[300px] px-3" : "h-8 w-[250px] px-2.5",
-    iconOnly && (size === "medium" ? "size-9 w-9 px-0" : "size-8 w-8 px-0"),
+    size === "default" ? "h-9 w-[300px] px-3" : "h-8 w-[250px] px-2.5",
+    iconOnly && (size === "default" ? "size-9 w-9 px-0" : "size-8 w-8 px-0"),
     appearance === "colorful" && "border-transparent text-white hover:brightness-105 active:brightness-95",
     appearance === "black" && "border-transparent bg-neutral-950 text-white hover:bg-neutral-800 active:bg-neutral-900",
     appearance === "white" && "border-border bg-background text-foreground shadow-xs hover:bg-muted",

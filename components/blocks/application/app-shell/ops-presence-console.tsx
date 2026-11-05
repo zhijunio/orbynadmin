@@ -1,0 +1,37 @@
+"use client";
+
+import * as React from "react";
+import { IconActivity, IconAdjustmentsHorizontal, IconBell, IconBox, IconChevronDown, IconClipboardList, IconFileText, IconGridDots, IconKey, IconMapPin, IconRefresh, IconSearch, IconSettings, IconShieldCheck, IconTag, IconUsers, IconWand } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet/sheet";
+
+const sections = [
+  { label: "Fleet Overview", items: [["Overview", IconGridDots], ["Live Map", IconMapPin], ["All Robots", IconBox], ["Robot Groups", IconUsers], ["Zones", IconGridDots], ["Assignments", IconClipboardList]] as const },
+  { label: "Fleet Activity", items: [["Live Status", IconActivity], ["Access Requests", IconKey], ["Alerts", IconShieldCheck], ["Event Feed", IconRefresh]] as const },
+  { label: "Fleet Settings", items: [["Robot Profiles", IconUsers], ["Tags & Labels", IconTag], ["Access Rules", IconShieldCheck], ["Data Sync", IconRefresh], ["Fleet Preferences", IconAdjustmentsHorizontal]] as const },
+];
+const topSections = ["Fleet", "Missions", "Stations", "Maintenance", "Reports"];
+const operators = [{ name: "Jordan D", color: "bg-sky-500" }, { name: "Alex M", color: "bg-violet-500" }, { name: "Sam K", color: "bg-amber-500" }];
+
+export function OpsPresenceConsole() {
+  const [section, setSection] = React.useState("Fleet");
+  const [active, setActive] = React.useState("Overview");
+  const [activeOperator, setActiveOperator] = React.useState(operators.map(({ name }) => name));
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [feedback, setFeedback] = React.useState("");
+  const [searchOpen, setSearchOpen] = React.useState(false);
+  const toggleOperator = (name: string) => setActiveOperator((current) => current.includes(name) ? current.filter((item) => item !== name) : [...current, name]);
+
+  return <section className="flex h-svh min-h-0 flex-col overflow-hidden bg-background text-foreground">
+    <header className="flex h-[3.125rem] items-center justify-between border-b px-4 sm:px-6">
+      <div className="flex min-w-0 items-center gap-2"><a href="#" aria-label="Home" className="grid size-7 place-items-center rounded-lg border text-sm font-bold">N</a><span className="mx-1 h-5 w-px bg-border" />{topSections.map((item, index) => <button key={item} onClick={() => { setSection(item); setActive(item === "Fleet" ? "Overview" : item); }} className={`hidden items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs sm:inline-flex ${section === item ? "bg-muted font-medium text-foreground" : "text-muted-foreground hover:bg-muted"}`}>{index === 0 ? <IconBox className="size-3.5" /> : index === 1 ? <IconWand className="size-3.5" /> : index === 2 ? <IconActivity className="size-3.5" /> : index === 3 ? <IconSettings className="size-3.5" /> : <IconFileText className="size-3.5" />}{item}</button>)}<button className="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-xs sm:hidden" onClick={() => setDrawerOpen(true)}>{section}<IconChevronDown className="size-3.5" /></button></div>
+      <div className="flex shrink-0 items-center gap-1"><Button variant="ghost" size="icon" aria-label="Search" onClick={() => setSearchOpen((open) => !open)}><IconSearch className="size-4" /></Button><Button variant="ghost" size="icon" aria-label="Settings" onClick={() => setFeedback("Settings opened")}><IconSettings className="size-4" /></Button><Button variant="ghost" size="icon" aria-label="Notifications" onClick={() => setFeedback("No new notifications")}><IconBell className="size-4" /></Button><div className="mx-1 flex -space-x-2" aria-label="Operator presence">{operators.map(({ name, color }) => <button key={name} title={name} aria-label={`${name} online`} onClick={() => toggleOperator(name)} className={`grid size-6 place-items-center rounded-full border-2 border-background text-[9px] font-medium text-white ${color} ${activeOperator.includes(name) ? "opacity-100" : "opacity-35"}`}>{name.split(" ").map((part) => part[0]).join("")}</button>)}</div><Button variant="outline" size="sm" className="hidden sm:inline-flex" onClick={() => setFeedback("New mission created")}>New Mission</Button></div>
+    </header>
+    {searchOpen && <div className="flex items-center gap-2 border-b px-5 py-2"><IconSearch className="size-4 text-muted-foreground" /><input autoFocus placeholder="Search fleet…" className="h-8 min-w-0 flex-1 bg-transparent text-sm outline-none" /><Button variant="ghost" size="sm" onClick={() => setSearchOpen(false)}>Close</Button></div>}
+    <div className="grid min-h-0 flex-1 md:grid-cols-[13.25rem_minmax(0,1fr)]">
+      <aside className="hidden min-h-0 overflow-y-auto border-r px-4 py-3 md:block">{sections.map((group) => <section key={group.label} className="mb-3"><h2 className="px-2 py-1.5 text-xs text-muted-foreground">{group.label}</h2><nav className="space-y-0.5">{group.items.map(([name, Icon]) => <button key={name} onClick={() => setActive(name)} className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-xs ${active === name ? "bg-muted font-medium text-foreground" : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"}`}><Icon className="size-3.5" />{name}</button>)}</nav></section>)}<div className="mt-6 border-t pt-3"><div className="flex items-center gap-2"><span className="grid size-8 place-items-center rounded-full bg-muted text-xs font-medium">JD</span><div><p className="text-xs font-medium">Jordan Davis</p><p className="text-[10px] text-muted-foreground">Fleet administrator</p></div><Button variant="ghost" size="icon" className="ml-auto size-7" aria-label="Account options"><IconChevronDown className="size-3.5" /></Button></div><div className="mt-3 flex items-center justify-between rounded-md bg-muted/60 px-2.5 py-2"><span className="text-[11px] text-muted-foreground">On duty</span><button role="switch" aria-checked={activeOperator.includes("Jordan D")} aria-label="On duty" onClick={() => toggleOperator("Jordan D")} className={`relative h-5 w-9 rounded-full transition-colors ${activeOperator.includes("Jordan D") ? "bg-primary" : "bg-muted-foreground/30"}`}><span className={`absolute top-0.5 size-4 rounded-full bg-white transition-transform ${activeOperator.includes("Jordan D") ? "translate-x-4" : "translate-x-0.5"}`} /></button></div></div></aside>
+      <main className="min-h-0 min-w-0 overflow-y-auto bg-muted/20 p-4 sm:p-6"><div className="grid gap-5 lg:grid-cols-2">{Array.from({ length: 6 }, (_, index) => <article key={index} className="rounded-2xl border bg-card p-4 shadow-sm"><div className="space-y-2"><div className="h-4 rounded-full bg-muted" /><div className="h-4 rounded-full bg-muted" /></div><div className={`mt-6 rounded-xl bg-muted/80 ${index > 3 ? "h-48" : "h-8"}`} /></article>)}</div>{feedback && <div role="status" className="fixed bottom-5 right-5 z-20 rounded-lg border bg-card px-4 py-3 text-sm shadow-lg">{feedback}</div>}</main>
+    </div>
+    <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}><SheetContent side="bottom" className="max-h-[80vh] rounded-t-2xl"><SheetHeader><SheetTitle>Fleet sections</SheetTitle></SheetHeader><div className="grid grid-cols-2 gap-2 p-4">{topSections.map((item) => <button key={item} onClick={() => { setSection(item); setActive(item === "Fleet" ? "Overview" : item); setDrawerOpen(false); }} className={`rounded-lg border p-3 text-left text-sm ${section === item ? "bg-muted font-medium" : ""}`}>{item}</button>)}</div></SheetContent></Sheet>
+  </section>;
+}

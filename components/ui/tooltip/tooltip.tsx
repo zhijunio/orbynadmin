@@ -5,10 +5,19 @@ import { Tooltip as TooltipPrimitive } from "radix-ui"
 
 import { cn } from "@/utils/cn"
 
+export type TooltipProviderProps = React.ComponentProps<typeof TooltipPrimitive.Provider>
+export type TooltipTriggerProps = React.ComponentProps<typeof TooltipPrimitive.Trigger>
+
+
+export type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root>
+export type TooltipContentProps = React.ComponentProps<typeof TooltipPrimitive.Content> & {
+  arrowClassName?: string
+}
+
 function TooltipProvider({
   delayDuration = 0,
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
+}: TooltipProviderProps) {
   return (
     <TooltipPrimitive.Provider
       data-slot="tooltip-provider"
@@ -20,13 +29,13 @@ function TooltipProvider({
 
 function Tooltip({
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
+}: TooltipProps) {
   return <TooltipPrimitive.Root data-slot="tooltip" {...props} />
 }
 
 function TooltipTrigger({
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
+}: TooltipTriggerProps) {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
 }
 
@@ -36,7 +45,7 @@ function TooltipContent({
   arrowClassName,
   children,
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Content> & { arrowClassName?: string }) {
+}: TooltipContentProps) {
   return (
     <TooltipPrimitive.Portal>
       <TooltipPrimitive.Content

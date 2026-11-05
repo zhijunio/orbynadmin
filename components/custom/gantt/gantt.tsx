@@ -11,18 +11,21 @@ export type GanttProps = {
   start: Date;
   scale?: "day" | "week" | "month" | "quarter" | "year";
   locale?: string;
-  labels: { resources: string; timeline: string; move: string; resize: string; expand: string; collapse: string; empty: string; moveUp?: string; moveDown?: string; progress?: string; capacity?: string; schedule?: string };
+  labels: { resources: string; timeline: string; move: string; resize: string; expand: string; collapse: string; empty: string; moveUp?: string; moveDown?: string; progress?: string; capacity?: string; schedule?: string; resizeResources?: string };
   onEventChange?: (event: GanttEvent) => void;
   onEventSelect?: (event: GanttEvent) => void;
   className?: string;
   showWeekends?: boolean; showCapacity?: boolean; showDetails?: boolean; showDependencies?: boolean;
   onSlotSelect?: (resourceId: string, date: Date) => void;
   onResourceReorder?: (sourceId: string, targetId: string) => void;
+  resizableResourceColumn?: boolean;
 };
-export function Gantt({ resources, events, start, scale = "day", locale = "en", labels, onEventChange, onEventSelect, className, showWeekends = true, showCapacity, showDetails, showDependencies, onResourceReorder, onSlotSelect }: GanttProps) {
+export function Gantt({ resources, events, start, scale = "day", locale = "en", labels, onEventChange, onEventSelect, className, showWeekends = true, showCapacity, showDetails, showDependencies, onResourceReorder, onSlotSelect, resizableResourceColumn }: GanttProps) {
   const [collapsed, setCollapsed] = React.useState<Set<string>>(new Set());
+  const [customResourceWidth, setCustomResourceWidth] = React.useState<number | null>(null);
+  const resourceResize = React.useRef<{ x: number; width: number } | null>(null);
   const drag = React.useRef<{ id: string; mode: "move" | "resize"; grabOffset: number } | null>(null);
-  const days = scale === "day" ? 14 : scale === "week" ? 28 : scale === "year" ? 365 : 90;
+  const days = scale === "day" ? 14 : scale === "week" ? 28 : scale === "year" ? 365 : scale === "quarter" ? 180 : 90;
   const axisDates = Array.from({ length: days }, (_, index) => addCalendarDays(start, index)).filter((date) => showWeekends || ![0, 6].includes(date.getDay()));
   const datePosition = (date: Date) => axisDates.filter((item) => calendarDayNumber(item) < calendarDayNumber(date)).length;
   function positionFor(first: Date, last: Date) {
@@ -30,10 +33,10 @@ export function Gantt({ resources, events, start, scale = "day", locale = "en", 
     const offset = datePosition(first), end = datePosition(last);
     return end > offset ? { offset, duration: end - offset } : null;
   }
-  const resourceWidth = showDetails ? 320 : 176;
+  const resourceWidth = customResourceWidth ?? (showDetails ? 320 : resizableResourceColumn ? 240 : 176);
   const markerId = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const [dragResource, setDragResource] = React.useState<string | null>(null);
-  const width = scale === "day" ? 48 : scale === "week" ? 32 : scale === "year" ? 5 : 16;
+  const dragResource = React.useRef<string | null>(null);
+  const width = scale === "day" ? 48 : scale === "week" ? 32 : scale === "year" ? 5 : scale === "quarter" ? 10 : 16;
   const rows: { resource: GanttResource; depth: number }[] = [];
   function collect(items: readonly GanttResource[], depth: number) {
     for (const resource of items) {
@@ -48,14 +51,15 @@ export function Gantt({ resources, events, start, scale = "day", locale = "en", 
     if (calendarDayNumber(end) > calendarDayNumber(event.start)) onEventChange?.({ ...event, end });
   }
   return <div data-slot="gantt" className={cn("max-w-full overflow-auto rounded-lg border border-border", className)}>
-    <div className="relative" style={{ minWidth: resourceWidth + axisDates.length * width }}>
+      <div className="relative" style={{ minWidth: resourceWidth + axisDates.length * width }}>
       <div className="flex h-12 border-b bg-muted/50 text-xs font-medium">
         <div className="sticky left-0 z-20 flex shrink-0 items-center justify-between border-r bg-card px-3" style={{ width: resourceWidth }}>{labels.resources}{showDetails && <span>{labels.progress}</span>}</div>
-        <div aria-label={labels.timeline} className="relative flex flex-1">{axisDates.map((date, index) => <div key={index} className="shrink-0 border-r border-border/50 pt-3 text-center text-muted-foreground" style={{ width }}>{index % (scale === "year" ? 30 : scale === "month" || scale === "quarter" ? 7 : scale === "week" ? 2 : 1) === 0 ? dateFormat.format(date) : ""}</div>)}</div>
+        {resizableResourceColumn && <div role="separator" aria-label={labels.resizeResources} aria-orientation="vertical" aria-valuemin={176} aria-valuemax={420} aria-valuenow={resourceWidth} tabIndex={0} className="absolute top-0 z-30 h-12 w-2 cursor-col-resize touch-none -translate-x-1/2 bg-transparent outline-none after:absolute after:inset-y-0 after:left-1/2 after:w-px after:bg-border hover:after:bg-primary focus-visible:after:w-0.5 focus-visible:after:bg-ring" style={{ left: resourceWidth }} onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); resourceResize.current = { x: event.clientX, width: resourceWidth }; }} onPointerMove={(event) => { if (!resourceResize.current) return; setCustomResourceWidth(Math.max(176, Math.min(420, resourceResize.current.width + event.clientX - resourceResize.current.x))); }} onPointerUp={(event) => { resourceResize.current = null; event.currentTarget.releasePointerCapture(event.pointerId); }} onKeyDown={(event) => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); setCustomResourceWidth(Math.max(176, Math.min(420, resourceWidth + (event.key === "ArrowRight" ? 12 : -12)))); } }} />}
+        <div aria-label={labels.timeline} className="relative flex flex-1">{axisDates.map((date, index) => <div key={index} className="shrink-0 border-r border-border/50 pt-3 text-center text-muted-foreground" style={{ width }}>{index % (scale === "year" ? 30 : scale === "quarter" ? 14 : scale === "month" ? 7 : scale === "week" ? 2 : 1) === 0 ? dateFormat.format(date) : ""}</div>)}</div>
       </div>
       {!rows.length && <p className="p-6 text-sm text-muted-foreground">{labels.empty}</p>}
       {rows.map(({ resource, depth }, rowIndex) => <div key={resource.id} className="flex h-14 border-b last:border-b-0">
-        <div className="sticky left-0 z-10 flex shrink-0 items-center gap-1 border-r bg-card pr-2 text-sm" style={{ paddingLeft: 12 + depth * 16, width: resourceWidth }} draggable={!!onResourceReorder && depth > 0} onDragStart={(event) => { setDragResource(resource.id); event.dataTransfer.setData("text/plain", resource.id); }} onDragOver={(event) => { if (dragResource) event.preventDefault(); }} onDrop={(event) => { event.preventDefault(); if (dragResource) onResourceReorder?.(dragResource, resource.id); setDragResource(null); }} onDragEnd={() => setDragResource(null)}>
+        <div className="sticky left-0 z-10 flex shrink-0 items-center gap-1 border-r bg-card pr-2 text-sm" style={{ paddingLeft: 12 + depth * 16, width: resourceWidth }} draggable={!!onResourceReorder && depth > 0} onDragStart={(event) => { dragResource.current = resource.id; event.dataTransfer.setData("text/plain", resource.id); }} onDragOver={(event) => { if (dragResource.current) event.preventDefault(); }} onDrop={(event) => { event.preventDefault(); if (dragResource.current) onResourceReorder?.(dragResource.current, resource.id); dragResource.current = null; }} onDragEnd={() => { dragResource.current = null; }}>
           {resource.children?.length ? <button type="button" aria-label={`${collapsed.has(resource.id) ? labels.expand : labels.collapse} ${resource.title}`} aria-expanded={!collapsed.has(resource.id)} className="rounded p-1 outline-none focus-visible:ring-2 focus-visible:ring-ring" onClick={() => setCollapsed((current) => { const next = new Set(current); if (next.has(resource.id)) next.delete(resource.id); else next.add(resource.id); return next; })}>{collapsed.has(resource.id) ? <IconChevronRight className="size-3.5" /> : <IconChevronDown className="size-3.5" />}</button> : <span className="w-5 shrink-0" />}
           <span className="min-w-0 flex-1 truncate">{resource.title}{showCapacity && resource.capacity && <span className="mt-1 block text-xs tabular-nums text-muted-foreground">{Math.round(events.filter((event) => event.resourceId === resource.id).reduce((sum, event) => sum + Math.max(0, Math.min(days, calendarDayNumber(event.end) - calendarDayNumber(start)) - Math.max(0, calendarDayNumber(event.start) - calendarDayNumber(start))) * 8, 0) / resource.capacity * 100)}% {labels.capacity}</span>}</span>
           {showDetails && <span className="text-xs tabular-nums text-muted-foreground">{events.find((event) => event.resourceId === resource.id)?.progress ?? 0}%</span>}

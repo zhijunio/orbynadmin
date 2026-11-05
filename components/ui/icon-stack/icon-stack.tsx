@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn";
 
-type IconStackProps = React.ComponentProps<"div">;
+export type IconStackProps = React.ComponentProps<"div">;
 
 function IconStack({ className, children, style, ...props }: IconStackProps) {
   return (
@@ -34,4 +34,4 @@ function IconStackLayer({ active = false, opacity, x = 0, y = 0 }: { active?: bo
   );
 }
 
-export { IconStack, type IconStackProps };
+export { IconStack };

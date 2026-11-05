@@ -1,5 +1,5 @@
-import { AppShell3Page } from "@/components/blocks/application/app-shell/app-shell-3-page";
+import { ProjectTracker } from "@/components/blocks/application/app-shell/project-tracker";
 
-export default function AppShell3Route() {
-  return <AppShell3Page />;
+export default function Page() {
+  return <ProjectTracker />;
 }

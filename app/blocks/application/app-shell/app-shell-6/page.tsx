@@ -1,5 +1,5 @@
-import { AppShell6Page } from "@/components/blocks/application/app-shell/app-shell-6-page";
+import { DropdownTopNavigation } from "@/components/blocks/application/app-shell/dropdown-top-navigation";
 
-export default function AppShell6Route() {
-  return <AppShell6Page />;
+export default function Page() {
+  return <DropdownTopNavigation />;
 }

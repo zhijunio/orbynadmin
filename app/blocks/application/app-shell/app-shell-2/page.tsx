@@ -1,5 +1,5 @@
-import { AppShell2Page } from "@/components/blocks/application/app-shell/app-shell-2-page";
+import { FloatingSidebar } from "@/components/blocks/application/app-shell/floating-sidebar";
 
-export default function AppShell2Route() {
-  return <AppShell2Page />;
+export default function Page() {
+  return <FloatingSidebar />;
 }

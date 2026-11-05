@@ -8,7 +8,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
-import { IconChevronRight as ChevronRight, IconFile as File, IconFolder as Folder, IconFolderOpen as FolderOpen } from "@tabler/icons-react";
+import { IconChevronRight as ChevronRight, IconMinus, IconPlus, IconFile as File, IconFolder as Folder, IconFolderOpen as FolderOpen } from "@tabler/icons-react";
 
 import { cn } from "@/utils/cn";
 
@@ -36,6 +36,7 @@ export type TreeProps = Omit<
   onSelectionChange?: (ids: string[]) => void;
   size?: "default" | "sm";
   showGuides?: boolean;
+  expanderStyle?: "chevron" | "plus-minus";
   emptyState?: ReactNode;
 };
 
@@ -65,6 +66,7 @@ export function Tree({
   onSelectionChange,
   size = "default",
   showGuides = true,
+  expanderStyle = "chevron",
   emptyState = "No items.",
   className,
   ...props
@@ -164,6 +166,10 @@ export function Tree({
     event: KeyboardEvent<HTMLDivElement>,
   ) {
     event.stopPropagation();
+    if (node.disabled && ["ArrowRight", "ArrowLeft", " ", "Enter"].includes(event.key)) {
+      event.preventDefault();
+      return;
+    }
     const hasChildren = Boolean(node.children?.length);
     const isExpanded = expandedSet.has(id);
 
@@ -306,6 +312,7 @@ export function Tree({
           onClick={(event) => {
             event.stopPropagation();
             if (node.disabled) return;
+            if (event.target instanceof Element && event.target.closest("a, button, input, select, textarea, [role='checkbox'], [role='switch']")) return;
             updateSelected(node.id, event.shiftKey);
             if (hasChildren) toggleExpanded(node.id);
           }}
@@ -324,7 +331,7 @@ export function Tree({
             )}
           >
             {hasChildren ? (
-              <ChevronRight
+              expanderStyle === "plus-minus" ? (isExpanded ? <IconMinus aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" /> : <IconPlus aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />) : <ChevronRight
                 aria-hidden="true"
                 className={cn(
                   "size-4 shrink-0 text-muted-foreground transition-transform",

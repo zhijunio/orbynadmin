@@ -26,7 +26,7 @@ export function PhoneInput({ value, onValueChange, size = "default", invalid, cl
       {...props}
       value={value || undefined}
       onChange={(next) => onValueChange?.(next)}
-      numberInputProps={inputProps}
+      numberInputProps={{ ...inputProps, "aria-invalid": invalid || inputProps?.["aria-invalid"] || undefined }}
       className={cn("flex min-w-0", invalid && "[&_[data-slot=combobox-trigger]]:border-destructive [&_input]:border-destructive [&_input]:text-destructive", className)}
       countrySelectComponent={CountrySelect}
       flagComponent={FlagComponent}
@@ -64,7 +64,7 @@ function CountrySelect({ disabled, value: selectedCountry, options, onChange }: 
       placeholder=""
       searchPlaceholder="Search countries..."
       disabled={disabled}
-      className={cn("w-28 shrink-0", size === "sm" && "[&_[data-slot=combobox-trigger]]:h-8", size === "lg" && "[&_[data-slot=combobox-trigger]]:h-11")}
+      className={cn("w-28 shrink-0 [&_[role=combobox]]:rounded-r-none [&_[role=combobox]]:border-r-0", size === "sm" && "[&_[role=combobox]]:h-8", size === "default" && "[&_[role=combobox]]:h-10", size === "lg" && "[&_[role=combobox]]:h-11")}
       displayValue={selectedCountry ? `+${BasePhoneInput.getCountryCallingCode(selectedCountry)}` : ""}
       leadingIcon={selectedCountry ? <FlagComponent country={selectedCountry} countryName={selectedCountry} /> : <IconWorld className="size-4" />}
       triggerIcon={<IconSelector className="size-4 shrink-0 text-muted-foreground" />}

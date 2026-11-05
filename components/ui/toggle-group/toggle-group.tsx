@@ -5,7 +5,7 @@ import { ToggleGroup as ToggleGroupPrimitive } from "radix-ui"
 
 import { cn } from "@/utils/cn"
 
-type ToggleGroupProps = React.ComponentProps<typeof ToggleGroupPrimitive.Root> & {
+export type ToggleGroupProps = React.ComponentProps<typeof ToggleGroupPrimitive.Root> & {
   variant?: "default" | "outline"
   size?: "sm" | "default" | "lg"
   spacing?: number
@@ -17,7 +17,12 @@ const ToggleGroupContext = React.createContext<{ variant: "default" | "outline";
 function ToggleGroup({ className, variant = "default", size = "default", spacing = 0, orientation = "horizontal", ...props }: ToggleGroupProps) {
   return <ToggleGroupPrimitive.Root data-slot="toggle-group" data-variant={variant} data-size={size} data-spacing={spacing} orientation={orientation} style={{ "--toggle-group-gap": `${spacing * 0.25}rem` } as React.CSSProperties} className={cn("group/toggle-group flex w-fit items-center gap-[var(--toggle-group-gap)] data-[orientation=vertical]:flex-col", className)} {...props}><ToggleGroupContext.Provider value={{ variant, size, connected: spacing === 0 }}>{props.children}</ToggleGroupContext.Provider></ToggleGroupPrimitive.Root>
 }
-function ToggleGroupItem({ className, variant, size, ...props }: React.ComponentProps<typeof ToggleGroupPrimitive.Item> & { variant?: ToggleGroupProps["variant"]; size?: ToggleGroupProps["size"] }) {
+export type ToggleGroupItemProps = React.ComponentProps<typeof ToggleGroupPrimitive.Item> & {
+  variant?: ToggleGroupProps["variant"]
+  size?: ToggleGroupProps["size"]
+}
+
+function ToggleGroupItem({ className, variant, size, ...props }: ToggleGroupItemProps) {
   const context = React.useContext(ToggleGroupContext)
   const currentVariant = variant ?? context.variant
   const currentSize = size ?? context.size

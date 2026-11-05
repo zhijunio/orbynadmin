@@ -2,11 +2,16 @@
 
 import * as React from "react"
 import { cn } from "@/utils/cn"
-import { Button } from "@/components/ui/buttons/button"
+import { Button } from "@/components/ui/button/button"
 import { Input } from "@/components/ui/input/input"
 import { Textarea } from "@/components/ui/textarea/textarea"
 
-function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
+export type InputGroupProps = React.ComponentProps<"div">
+export type InputGroupTextProps = React.ComponentProps<"span">
+export type InputGroupInputProps = React.ComponentProps<"input">
+export type InputGroupTextareaProps = React.ComponentProps<"textarea">
+
+function InputGroup({ className, ...props }: InputGroupProps) {
   return (
     <div
       data-slot="input-group"
@@ -31,7 +36,10 @@ const inputGroupAddonClasses = {
         "block-end":
           "order-last w-full justify-start px-2.5 pb-2 group-has-[>input]/input-group:pb-2 [.border-t]:pt-2",
       } as const
-type InputGroupAddonAlign = keyof typeof inputGroupAddonClasses
+export type InputGroupAddonAlign = keyof typeof inputGroupAddonClasses
+export type InputGroupAddonProps = React.ComponentProps<"div"> & {
+  align?: InputGroupAddonAlign
+}
 function inputGroupAddonVariants({ align = "inline-start" }: { align?: InputGroupAddonAlign } = {}) {
   return cn(inputGroupAddonBase, inputGroupAddonClasses[align])
 }
@@ -39,21 +47,21 @@ function inputGroupAddonVariants({ align = "inline-start" }: { align?: InputGrou
 function InputGroupAddon({
   className,
   align = "inline-start",
+  onClick,
   ...props
-}: React.ComponentProps<"div"> & { align?: InputGroupAddonAlign }) {
+}: InputGroupAddonProps) {
   return (
     <div
+      {...props}
       role="group"
       data-slot="input-group-addon"
       data-align={align}
       className={cn(inputGroupAddonVariants({ align }), className)}
-      onClick={(e) => {
-        if ((e.target as HTMLElement).closest("button")) {
-          return
-        }
-        e.currentTarget.parentElement?.querySelector("input")?.focus()
+      onClick={(event) => {
+        onClick?.(event)
+        if (event.defaultPrevented || (event.target as HTMLElement).closest("button")) return
+        event.currentTarget.parentElement?.querySelector<HTMLElement>("[data-slot=input-group-control]")?.focus()
       }}
-      {...props}
     />
   )
 }
@@ -66,7 +74,10 @@ const inputGroupButtonClasses = {
           "size-6 rounded-[calc(var(--radius)-3px)] p-0 has-[>svg]:p-0",
         "icon-sm": "size-8 p-0 has-[>svg]:p-0",
       } as const
-type InputGroupButtonSize = keyof typeof inputGroupButtonClasses
+export type InputGroupButtonSize = keyof typeof inputGroupButtonClasses
+export type InputGroupButtonProps = Omit<React.ComponentProps<typeof Button>, "size"> & {
+  size?: InputGroupButtonSize
+}
 function inputGroupButtonVariants({ size = "xs" }: { size?: InputGroupButtonSize } = {}) {
   return cn(inputGroupButtonBase, inputGroupButtonClasses[size])
 }
@@ -77,8 +88,7 @@ function InputGroupButton({
   variant = "ghost",
   size = "xs",
   ...props
-}: Omit<React.ComponentProps<typeof Button>, "size"> &
-  { size?: InputGroupButtonSize }) {
+}: InputGroupButtonProps) {
   return (
     <Button
       type={type}
@@ -90,7 +100,7 @@ function InputGroupButton({
   )
 }
 
-function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
+function InputGroupText({ className, ...props }: InputGroupTextProps) {
   return (
     <span
       className={cn(
@@ -105,7 +115,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
 function InputGroupInput({
   className,
   ...props
-}: React.ComponentProps<"input">) {
+}: InputGroupInputProps) {
   return (
     <Input
       data-slot="input-group-control"
@@ -121,7 +131,7 @@ function InputGroupInput({
 function InputGroupTextarea({
   className,
   ...props
-}: React.ComponentProps<"textarea">) {
+}: InputGroupTextareaProps) {
   return (
     <Textarea
       data-slot="input-group-control"

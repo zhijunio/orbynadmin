@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { AnimatePresence, motion, type HTMLMotionProps } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion, type HTMLMotionProps } from "motion/react";
 import { IconShieldStar } from "@tabler/icons-react";
-import { Button } from "@/components/ui/buttons/button";
-import { CloseButton } from "@/components/ui/buttons/close-button";
+import { Button } from "@/components/ui/button/button";
+import { CloseButton } from "@/components/ui/button/close-button";
 import { cn } from "@/utils/cn";
 
 export type AnnouncementProps = Omit<HTMLMotionProps<"aside">, "children" | "title"> & {
@@ -31,6 +31,7 @@ export function Announcement({
   ...props
 }: AnnouncementProps) {
   const [visible, setVisible] = useState(true);
+  const reduceMotion = useReducedMotion();
 
   return (
     <AnimatePresence initial={false} onExitComplete={onDismiss}>
@@ -39,15 +40,15 @@ export function Announcement({
           {...props}
           aria-label={props["aria-label"] ?? "Announcement"}
           initial={false}
-          exit={{
+          exit={reduceMotion ? { opacity: 0, transition: { duration: 0 } } : {
             opacity: 0,
             scale: 0.85,
             filter: "blur(6px)",
             transition: { duration: 0.25, ease: "easeInOut" },
           }}
-          className="overflow-hidden"
+          className={cn("overflow-hidden", className)}
         >
-          <div className={cn("relative flex w-full flex-col items-start gap-3 rounded-xl border border-border bg-card p-3", className)}>
+          <div className="relative flex w-full flex-col items-start gap-3 rounded-xl border border-border bg-card p-3">
             <div className="flex w-full flex-col items-start gap-1">
               {icon === undefined ? (
                 <IconShieldStar aria-hidden="true" className="size-5 shrink-0 text-muted-foreground" />

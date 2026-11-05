@@ -20,7 +20,7 @@ export interface DateSelectorValue {
 
 export type DateSelectorLabels = Record<"period" | "filter" | "from" | "to" | "choose" | "quick" | "hint" | "empty" | "today" | "clear" | DateSelectorPeriodType | DateSelectorFilterType, string>;
 
-type DateSelectorProps = {
+export type DateSelectorProps = {
   labels?: DateSelectorLabels;
   value?: DateSelectorValue;
   defaultValue?: DateSelectorValue;
@@ -28,6 +28,7 @@ type DateSelectorProps = {
   defaultPeriodType?: DateSelectorPeriodType;
   defaultFilterType?: DateSelectorFilterType;
   allowRange?: boolean;
+  disabled?: boolean;
   showInput?: boolean;
   label?: string;
   inputHint?: string;
@@ -77,7 +78,7 @@ function valueFromToken(token: string, period: DateSelectorPeriodType, operator:
     return { period, operator, year: year || undefined, month: Number.isFinite(month) ? month - 1 : undefined };
   }
   if (period === "quarter" || period === "half-year") {
-    const match = /^(\d{4})-[QH]([1-4])$/.exec(token);
+    const match = (period === "quarter" ? /^(\d{4})-Q([1-4])$/i : /^(\d{4})-H([12])$/i).exec(token);
     return period === "quarter"
       ? { period, operator, year: match ? Number(match[1]) : undefined, quarter: match ? Number(match[2]) - 1 : undefined }
       : { period, operator, year: match ? Number(match[1]) : undefined, halfYear: match ? Number(match[2]) - 1 : undefined };
@@ -104,6 +105,37 @@ export function formatDateSelectorValue(value: DateSelectorValue, locale = "en-U
   return value.operator === "is" ? text : `${operatorLabels?.[value.operator] ?? value.operator} ${text}`;
 }
 
+function anchorDate(value: DateSelectorValue | undefined) {
+  if (!value) return undefined;
+  if (value.startDate) return value.startDate;
+  if (value.rangeStart) {
+    const month = value.period === "month" ? value.rangeStart.value : value.period === "quarter" ? value.rangeStart.value * 3 : value.period === "half-year" ? value.rangeStart.value * 6 : 0;
+    return new Date(value.rangeStart.year, month, 1);
+  }
+  if (value.year === undefined) return undefined;
+  if (value.period === "month" && value.month !== undefined) return new Date(value.year, value.month, 1);
+  if (value.period === "quarter" && value.quarter !== undefined) return new Date(value.year, value.quarter * 3, 1);
+  if (value.period === "half-year" && value.halfYear !== undefined) return new Date(value.year, value.halfYear * 6, 1);
+  return new Date(value.year, 0, 1);
+}
+
+function withPeriod(current: DateSelectorValue | undefined, period: DateSelectorPeriodType, operator: DateSelectorFilterType): DateSelectorValue {
+  const anchor = anchorDate(current);
+  if (!anchor) return { period, operator };
+  const year = anchor.getFullYear();
+  const month = anchor.getMonth();
+  if (period === "day") return { period, operator, startDate: anchor, ...(operator === "between" ? { endDate: current?.endDate ?? anchor } : {}) };
+  if (operator === "between") {
+    const start = { year, value: period === "month" ? month : period === "quarter" ? Math.floor(month / 3) : period === "half-year" ? (month < 6 ? 0 : 1) : year };
+    const end = current?.period === period ? current.rangeEnd ?? start : start;
+    return { period, operator, rangeStart: start, rangeEnd: end };
+  }
+  if (period === "month") return { period, operator, year, month };
+  if (period === "quarter") return { period, operator, year, quarter: Math.floor(month / 3) };
+  if (period === "half-year") return { period, operator, year, halfYear: month < 6 ? 0 : 1 };
+  return { period, operator, year };
+}
+
 function parseShortcut(text: string): DateSelectorValue | undefined {
   const value = text.trim();
   const year = /^(\d{4})$/.exec(value);
@@ -116,11 +148,11 @@ function parseShortcut(text: string): DateSelectorValue | undefined {
 }
 
 export function DateSelector(props: DateSelectorProps) {
-  const { value, defaultValue, onChange, defaultPeriodType = "day", defaultFilterType = "is", allowRange = true, showInput = true, label = "Date", inputHint = "Try: 2025, Q4, 05/10/2025", locale, className, labels } = props;
+  const { value, defaultValue, onChange, defaultPeriodType = "day", defaultFilterType = "is", allowRange = true, disabled = false, showInput = true, label = "Date", inputHint = "Try: 2025, Q4, 05/10/2025", locale, className, labels } = props;
   const [internalValue, setInternalValue] = useState<DateSelectorValue | undefined>(defaultValue);
   const [shortcut, setShortcut] = useState("");
   const shortcutId = useId();
-  const isControlled = "value" in props;
+  const isControlled = value !== undefined;
   const current = isControlled ? value : internalValue;
   const period = current?.period ?? defaultPeriodType;
   const operator = current?.operator ?? defaultFilterType;
@@ -142,15 +174,15 @@ export function DateSelector(props: DateSelectorProps) {
     if (period === "quarter" || period === "half-year") {
       const startYear = new Date().getFullYear() - 5;
       const tokens = Array.from({ length: 11 }, (_, offset) => startYear + offset).flatMap((year) => Array.from({ length: period === "quarter" ? 4 : 2 }, (_, index) => `${year}-${period === "quarter" ? "Q" : "H"}${index + 1}`));
-      return <select aria-label={fieldLabel(edge)} value={currentToken} onChange={(event) => setToken(event.currentTarget.value, edge)} className={fieldClass}><option value="">{labels?.choose ?? `Choose ${period}`}</option>{tokens.map((token) => <option key={token} value={token}>{token}</option>)}</select>;
+      return <select aria-label={fieldLabel(edge)} value={currentToken} disabled={disabled} onChange={(event) => setToken(event.currentTarget.value, edge)} className={fieldClass}><option value="">{labels?.choose ?? `Choose ${period}`}</option>{tokens.map((token) => <option key={token} value={token}>{token}</option>)}</select>;
     }
-    return <input aria-label={fieldLabel(edge)} type={inputType} min={period === "year" ? 1900 : undefined} max={period === "year" ? 2200 : undefined} value={currentToken} onChange={(event) => setToken(event.currentTarget.value, edge)} className={fieldClass} />;
+    return <input aria-label={fieldLabel(edge)} type={inputType} min={period === "year" ? 1900 : undefined} max={period === "year" ? 2200 : undefined} value={currentToken} disabled={disabled} onChange={(event) => setToken(event.currentTarget.value, edge)} className={fieldClass} />;
   };
 
   return <div className={cn("grid w-full gap-3", className)}>
-    <div className="grid gap-2 sm:grid-cols-2"><label className="grid gap-1 text-xs font-medium text-muted-foreground">{labels?.period ?? "Period"}<select aria-label={labels?.period ?? "Date period"} value={period} onChange={(event) => update({ period: event.currentTarget.value as DateSelectorPeriodType, operator })} className={fieldClass}>{periods.map((item) => <option key={item.value} value={item.value}>{labels?.[item.value] ?? item.label}</option>)}</select></label><label className="grid gap-1 text-xs font-medium text-muted-foreground">{labels?.filter ?? "Filter"}<select aria-label={labels?.filter ?? "Date filter"} value={operator} onChange={(event) => { const next = event.currentTarget.value as DateSelectorFilterType; update({ ...(current ?? { period }), operator: next === "between" && !allowRange ? "is" : next }); }} className={fieldClass}>{filters.filter((item) => allowRange || item.value !== "between").map((item) => <option key={item.value} value={item.value}>{labels?.[item.value] ?? item.label}</option>)}</select></label></div>
+    <div className="grid gap-2 sm:grid-cols-2"><label className="grid gap-1 text-xs font-medium text-muted-foreground">{labels?.period ?? "Period"}<select aria-label={labels?.period ?? "Date period"} value={period} disabled={disabled} onChange={(event) => update(withPeriod(current, event.currentTarget.value as DateSelectorPeriodType, operator))} className={fieldClass}>{periods.map((item) => <option key={item.value} value={item.value}>{labels?.[item.value] ?? item.label}</option>)}</select></label><label className="grid gap-1 text-xs font-medium text-muted-foreground">{labels?.filter ?? "Filter"}<select aria-label={labels?.filter ?? "Date filter"} value={operator} disabled={disabled} onChange={(event) => { const next = event.currentTarget.value as DateSelectorFilterType; update({ ...(current ?? { period }), operator: next === "between" && !allowRange ? "is" : next }); }} className={fieldClass}>{filters.filter((item) => allowRange || item.value !== "between").map((item) => <option key={item.value} value={item.value}>{labels?.[item.value] ?? item.label}</option>)}</select></label></div>
     <div className={cn("grid gap-2", operator === "between" && "sm:grid-cols-2")}>{periodInput(0)}{operator === "between" && periodInput(1)}</div>
-    {showInput && <div className="grid gap-1"><label htmlFor={shortcutId} className="text-xs font-medium text-muted-foreground">{labels?.quick ?? "Quick date entry"}</label><input id={shortcutId} value={shortcut} onChange={(event) => setShortcut(event.currentTarget.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); const parsed = parseShortcut(shortcut); if (parsed) { update(parsed); setShortcut(""); } } }} placeholder={inputHint} className={fieldClass} /><span className="text-xs text-muted-foreground">{labels?.hint ?? "Press Enter to apply a year, quarter, or date."}</span></div>}
-    <div className="flex flex-wrap items-center justify-between gap-2"><output aria-live="polite" className="min-h-9 flex-1 rounded-md bg-muted/40 px-3 py-2 text-sm">{current ? formatDateSelectorValue(current, locale, labels) : labels?.empty ?? "No date selected."}</output><div className="flex gap-1"><button type="button" onClick={() => update({ period: "day", operator: "is", startDate: new Date() })} className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:bg-accent">{labels?.today ?? "Today"}</button><button type="button" onClick={() => update(undefined)} className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:bg-accent">{labels?.clear ?? "Clear"}</button></div></div>
+    {showInput && <div className="grid gap-1"><label htmlFor={shortcutId} className="text-xs font-medium text-muted-foreground">{labels?.quick ?? "Quick date entry"}</label><input id={shortcutId} value={shortcut} disabled={disabled} onChange={(event) => setShortcut(event.currentTarget.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); const parsed = parseShortcut(shortcut); if (parsed) { update(parsed); setShortcut(""); } } }} placeholder={inputHint} className={fieldClass} /><span className="text-xs text-muted-foreground">{labels?.hint ?? "Press Enter to apply a year, quarter, or date."}</span></div>}
+    <div className="flex flex-wrap items-center justify-between gap-2"><output aria-live="polite" className="min-h-9 flex-1 rounded-md bg-muted/40 px-3 py-2 text-sm">{current ? formatDateSelectorValue(current, locale, labels) : labels?.empty ?? "No date selected."}</output><div className="flex gap-1"><button type="button" disabled={disabled} onClick={() => update({ period: "day", operator: "is", startDate: new Date() })} className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:bg-accent disabled:opacity-50">{labels?.today ?? "Today"}</button><button type="button" disabled={disabled} onClick={() => update(undefined)} className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:bg-accent disabled:opacity-50">{labels?.clear ?? "Clear"}</button></div></div>
   </div>;
 }

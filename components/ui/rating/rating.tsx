@@ -5,14 +5,15 @@ import { IconStar } from "@tabler/icons-react";
 
 import { cn } from "@/utils/cn";
 
-type RatingSize = "sm" | "default" | "lg";
+export type RatingSize = "sm" | "default" | "lg";
 
-type RatingProps = Omit<ComponentProps<"div">, "onChange"> & {
+export type RatingProps = Omit<ComponentProps<"div">, "onChange"> & {
   rating: number;
   maxRating?: number;
   size?: RatingSize;
   showValue?: boolean;
   editable?: boolean;
+  disabled?: boolean;
   step?: 0.5 | 1;
   onRatingChange?: (rating: number) => void;
   starClassName?: string;
@@ -30,6 +31,7 @@ function Rating({
   size = "default",
   showValue = false,
   editable = false,
+  disabled = false,
   step = 1,
   onRatingChange,
   className,
@@ -40,7 +42,7 @@ function Rating({
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const maximum = Number.isFinite(maxRating) ? Math.max(1, Math.floor(maxRating)) : 5;
   const value = Number.isFinite(rating) ? Math.min(maximum, Math.max(0, rating)) : 0;
-  const interactive = editable && onRatingChange !== undefined;
+  const interactive = editable && onRatingChange !== undefined && !disabled;
   const displayRating = interactive && hoveredRating !== null ? hoveredRating : value;
   const classes = sizeClasses[size];
   const accessibleLabel = ariaLabel ?? (interactive ? "Choose a rating" : `${value.toFixed(1)} out of ${maximum} stars`);
@@ -68,12 +70,12 @@ function Rating({
 
   return (
     <div
+      {...props}
       data-slot="rating"
       role={interactive ? "group" : "img"}
       aria-label={accessibleLabel}
       className={cn("inline-flex min-w-0 items-center", classes.gap, className)}
       onPointerLeave={() => setHoveredRating(null)}
-      {...props}
     >
       <div className={cn("inline-flex items-center", classes.gap)}>
         {Array.from({ length: maximum }, (_, index) => {
@@ -112,4 +114,4 @@ function Rating({
   );
 }
 
-export { Rating, type RatingProps };
+export { Rating };

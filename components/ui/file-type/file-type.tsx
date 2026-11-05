@@ -6,6 +6,15 @@ import { cn } from "@/utils/cn"
 
 export type FileTypeCategory = "archive" | "audio" | "code" | "design" | "document" | "empty" | "executable" | "file" | "folder" | "font" | "image" | "presentation" | "spreadsheet" | "video"
 export type FileTypeVariant = "outline" | "solid" | "light" | "mono"
+export type FileTypeProps = Omit<React.ComponentProps<"span">, "children"> & {
+  type?: string
+  variant?: FileTypeVariant
+  size?: "mini" | "xs" | "sm" | "default" | "lg" | "xl"
+  label?: React.ReactNode
+  glyph?: boolean
+  icon?: React.ReactNode
+  labelClassName?: string
+}
 export const FILE_TYPE_CATEGORIES: FileTypeCategory[] = ["archive", "audio", "code", "design", "document", "empty", "executable", "folder", "font", "image", "presentation", "spreadsheet", "video"]
 const family: Record<string, FileTypeCategory> = {
   pdf: "document",
@@ -507,7 +516,7 @@ export function getFileType(input?: string | File | { name?: string; type?: stri
   return name.lastIndexOf(".") <= 0 && !family[extension] ? "empty" : extension || "empty"
 }
 
-function FileType({ type, variant = "outline", size = "default", label, glyph = false, icon, labelClassName, className, ...props }: Omit<React.ComponentProps<"span">, "children"> & { type?: string; variant?: FileTypeVariant; size?: "mini" | "xs" | "sm" | "default" | "lg" | "xl"; label?: React.ReactNode; glyph?: boolean; icon?: React.ReactNode; labelClassName?: string }) {
+function FileType({ type, variant = "outline", size = "default", label, glyph = false, icon, labelClassName, className, ...props }: FileTypeProps) {
   const value = (type ?? "").trim().replace(/^\.+/, "").toLowerCase()
   const resolvedType = value || "empty"
   const category = getFileTypeCategory(value)

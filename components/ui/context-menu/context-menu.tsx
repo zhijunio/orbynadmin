@@ -5,6 +5,21 @@ import { ContextMenu as Primitive } from "radix-ui";
 import { IconCheck as Check, IconChevronRight as ChevronRight, IconCircle as Circle } from "@tabler/icons-react";
 import { cn } from "@/utils/cn";
 
+export type ContextMenuProps = React.ComponentProps<typeof Primitive.Root>;
+export type ContextMenuTriggerProps = React.ComponentProps<typeof Primitive.Trigger>;
+export type ContextMenuGroupProps = React.ComponentProps<typeof Primitive.Group>;
+export type ContextMenuPortalProps = React.ComponentProps<typeof Primitive.Portal>;
+export type ContextMenuSubProps = React.ComponentProps<typeof Primitive.Sub>;
+export type ContextMenuRadioGroupProps = React.ComponentProps<typeof Primitive.RadioGroup>;
+export type ContextMenuContentProps = React.ComponentPropsWithoutRef<typeof Primitive.Content>;
+export type ContextMenuItemProps = React.ComponentPropsWithoutRef<typeof Primitive.Item> & { inset?: boolean; variant?: "default" | "destructive" };
+export type ContextMenuCheckboxItemProps = React.ComponentPropsWithoutRef<typeof Primitive.CheckboxItem>;
+export type ContextMenuRadioItemProps = React.ComponentPropsWithoutRef<typeof Primitive.RadioItem>;
+export type ContextMenuSubTriggerProps = React.ComponentPropsWithoutRef<typeof Primitive.SubTrigger> & { inset?: boolean };
+export type ContextMenuSubContentProps = React.ComponentPropsWithoutRef<typeof Primitive.SubContent>;
+export type ContextMenuSeparatorProps = React.ComponentPropsWithoutRef<typeof Primitive.Separator>;
+export type ContextMenuLabelProps = React.ComponentPropsWithoutRef<typeof Primitive.Label> & { inset?: boolean };
+
 const ContextMenu = Primitive.Root;
 const ContextMenuTrigger = Primitive.Trigger;
 const ContextMenuGroup = Primitive.Group;

@@ -11,8 +11,9 @@ export type TimeFieldProps = {
   defaultValue?: Time | null;
   onChange?: (value: Time | null) => void;
   className?: string;
-  isDisabled?: boolean;
-  isReadOnly?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  invalid?: boolean;
   minValue?: Time;
   maxValue?: Time;
   hourCycle?: 12 | 24;
@@ -73,8 +74,9 @@ export function TimeField({
   defaultValue,
   onChange,
   className,
-  isDisabled,
-  isReadOnly,
+  disabled,
+  readOnly,
+  invalid = false,
   minValue,
   maxValue,
   hourCycle,
@@ -94,7 +96,7 @@ export function TimeField({
   }
 
   return (
-    <label className={cn("grid gap-1.5", isDisabled && "opacity-50", isReadOnly && "opacity-80", className)}>
+    <label className={cn("grid gap-1.5", disabled && "opacity-50", readOnly && "opacity-80", className)}>
       {label && <span className="text-sm font-medium">{label}</span>}
       {hourCycle === 12 ? (
         <input
@@ -113,11 +115,12 @@ export function TimeField({
             const nextTime = parseTwelveHourTime(nextDraft, granularity);
             if (nextTime && isWithinRange(nextTime, minValue, maxValue)) update(nextTime);
           }}
-          disabled={isDisabled}
-          readOnly={isReadOnly}
+          disabled={disabled}
+          readOnly={readOnly}
           aria-label={ariaLabel}
-          aria-invalid={invalidDraft || undefined}
-          className="h-10 min-w-32 rounded-md border border-input bg-background px-3 text-sm shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed aria-invalid:border-destructive"
+          aria-readonly={readOnly || undefined}
+          aria-invalid={invalid || invalidDraft || undefined}
+          className={cn("h-10 min-w-32 rounded-md border border-input bg-background px-3 text-sm shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed", (invalid || invalidDraft) && "border-destructive focus-visible:ring-destructive")}
         />
       ) : (
         <input
@@ -126,12 +129,14 @@ export function TimeField({
           lang={hourCycle === 24 ? "en-GB" : undefined}
           value={toValue(currentTime, granularity)}
           onChange={(event) => update(fromValue(event.currentTarget.value))}
-          disabled={isDisabled}
-          readOnly={isReadOnly}
+          disabled={disabled}
+          readOnly={readOnly}
+          aria-readonly={readOnly || undefined}
+          aria-invalid={invalid || undefined}
           min={toValue(minValue, granularity) || undefined}
           max={toValue(maxValue, granularity) || undefined}
           aria-label={ariaLabel}
-          className="h-10 min-w-28 rounded-md border border-input bg-background px-3 text-sm shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed"
+          className={cn("h-10 min-w-28 rounded-md border border-input bg-background px-3 text-sm shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed", invalid && "border-destructive focus-visible:ring-destructive")}
           style={{ colorScheme: "light dark" }}
         />
       )}

@@ -5,8 +5,24 @@ import { motion, useReducedMotion } from "motion/react";
 import { IconAlertTriangle, IconCircleCheck, IconInfoCircle, IconX } from "@tabler/icons-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar/avatar";
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/button/button";
 import { cn } from "@/utils/cn";
+
+export type NotificationProps = {
+  status?: NotificationStatus;
+  icon?: ComponentType<{ className?: string }>;
+  avatar?: NotificationAvatar;
+  title: string;
+  description?: string;
+  timestamp?: string;
+  actions?: NotificationAction[];
+  onDismiss?: () => void;
+  autoDismissDuration?: number;
+  introDelay?: number;
+  className?: string;
+}
+export type NotificationViewportProps = { children: ReactNode; position?: "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right" }
+
 
 type NotificationStatus = "information" | "success" | "warning" | "error";
 type NotificationAction = {
@@ -17,9 +33,9 @@ type NotificationAction = {
 type NotificationAvatar = { src: string; alt: string; presence?: "online" | "busy" | "offline" };
 
 const statusStyles: Record<NotificationStatus, { icon: typeof IconInfoCircle; color: string }> = {
-  information: { icon: IconInfoCircle, color: "text-primary" },
-  success: { icon: IconCircleCheck, color: "text-emerald-600 dark:text-emerald-400" },
-  warning: { icon: IconAlertTriangle, color: "text-amber-600 dark:text-amber-400" },
+  information: { icon: IconInfoCircle, color: "text-info-foreground" },
+  success: { icon: IconCircleCheck, color: "text-success-foreground" },
+  warning: { icon: IconAlertTriangle, color: "text-warning-foreground" },
   error: { icon: IconAlertTriangle, color: "text-destructive" },
 };
 
@@ -45,19 +61,7 @@ function Notification({
   autoDismissDuration,
   introDelay = 0,
   className,
-}: {
-  status?: NotificationStatus;
-  icon?: ComponentType<{ className?: string }>;
-  avatar?: NotificationAvatar;
-  title: string;
-  description?: string;
-  timestamp?: string;
-  actions?: NotificationAction[];
-  onDismiss?: () => void;
-  autoDismissDuration?: number;
-  introDelay?: number;
-  className?: string;
-}) {
+}: NotificationProps) {
   const prefersReducedMotion = useReducedMotion();
   const config = statusStyles[status];
   const StatusIcon = CustomIcon ?? config.icon;
@@ -85,7 +89,7 @@ function Notification({
               <AvatarImage src={avatar.src} alt={avatar.alt} />
               <AvatarFallback>{initials(avatar.alt)}</AvatarFallback>
             </Avatar>
-            {avatar.presence && <span aria-label={avatar.presence} className={cn("absolute -bottom-0.5 -right-0.5 size-3 rounded-full border-2 border-popover", avatar.presence === "online" ? "bg-emerald-500" : avatar.presence === "busy" ? "bg-amber-500" : "bg-muted-foreground")} />}
+            {avatar.presence && <span aria-label={avatar.presence} className={cn("absolute -bottom-0.5 -right-0.5 size-3 rounded-full border-2 border-popover", avatar.presence === "online" ? "bg-success" : avatar.presence === "busy" ? "bg-warning" : "bg-muted-foreground")} />}
           </div>
         ) : (
           <StatusIcon aria-hidden="true" className={cn("mt-0.5 size-5 shrink-0", config.color)} />
@@ -123,7 +127,7 @@ function Notification({
   );
 }
 
-function NotificationViewport({ children, position = "bottom-right" }: { children: ReactNode; position?: "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right" }) {
+function NotificationViewport({ children, position = "bottom-right" }: NotificationViewportProps) {
   const positions = {
     "top-left": "left-4 top-4 items-start",
     "top-center": "left-1/2 top-4 -translate-x-1/2 items-center",

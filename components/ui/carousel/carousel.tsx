@@ -12,7 +12,7 @@ import {
 } from "react";
 import { IconChevronLeft as ChevronLeft, IconChevronRight as ChevronRight } from "@tabler/icons-react";
 
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/button/button";
 import { cn } from "@/utils/cn";
 
 export type CarouselProps = Omit<ComponentProps<"div">, "children"> & {
@@ -46,11 +46,13 @@ export function Carousel({
   thumbnails,
   thumbnailPosition = "below",
   className,
+  ...props
 }: CarouselProps) {
   const slides = Children.toArray(children);
   const trackRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   const updateActiveIndex = useCallback(() => {
     const track = trackRef.current;
@@ -113,6 +115,7 @@ export function Carousel({
   useEffect(() => {
     if (
       !autoPlay ||
+      paused ||
       slides.length < 2 ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
@@ -123,7 +126,7 @@ export function Carousel({
       else if (loop) scrollToIndex(0);
     }, autoPlayInterval);
     return () => window.clearTimeout(timeout);
-  }, [activeIndex, autoPlay, autoPlayInterval, loop, scrollToIndex, slides.length]);
+  }, [activeIndex, autoPlay, autoPlayInterval, loop, paused, scrollToIndex, slides.length]);
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     const nextKey = orientation === "vertical" ? "ArrowDown" : "ArrowRight";
@@ -148,7 +151,26 @@ export function Carousel({
   const nextIndex = activeIndex === slides.length - 1 && loop ? 0 : activeIndex + 1;
 
   return (
-    <div className={cn("relative w-full min-w-0 rounded-lg border border-border", className)}>
+    <div
+      {...props}
+      className={cn("relative w-full min-w-0 rounded-lg border border-border", className)}
+      onMouseEnter={(event) => {
+        props.onMouseEnter?.(event);
+        setPaused(true);
+      }}
+      onMouseLeave={(event) => {
+        props.onMouseLeave?.(event);
+        setPaused(false);
+      }}
+      onFocus={(event) => {
+        props.onFocus?.(event);
+        setPaused(true);
+      }}
+      onBlur={(event) => {
+        props.onBlur?.(event);
+        if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
+      }}
+    >
       <div
         ref={trackRef}
         role="region"

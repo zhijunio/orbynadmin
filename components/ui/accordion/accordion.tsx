@@ -6,10 +6,15 @@ import { Accordion as AccordionPrimitive } from "radix-ui"
 import { cn } from "@/utils/cn"
 import { IconChevronDown as ChevronDownIcon } from "@tabler/icons-react"
 
+export type AccordionProps = React.ComponentProps<typeof AccordionPrimitive.Root>
+export type AccordionItemProps = React.ComponentProps<typeof AccordionPrimitive.Item>
+export type AccordionTriggerProps = React.ComponentProps<typeof AccordionPrimitive.Trigger>
+export type AccordionContentProps = React.ComponentProps<typeof AccordionPrimitive.Content>
+
 function Accordion({
   className,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Root>) {
+}: AccordionProps) {
   return (
     <AccordionPrimitive.Root
       data-slot="accordion"
@@ -22,7 +27,7 @@ function Accordion({
 function AccordionItem({
   className,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
+}: AccordionItemProps) {
   return (
     <AccordionPrimitive.Item
       data-slot="accordion-item"
@@ -36,7 +41,7 @@ function AccordionTrigger({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+}: AccordionTriggerProps) {
   return (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
@@ -61,7 +66,7 @@ function AccordionContent({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Content>) {
+}: AccordionContentProps) {
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"

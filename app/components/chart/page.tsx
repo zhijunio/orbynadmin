@@ -1,12 +1,19 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import AppShell from "@/components/blocks/application/app-shell/app-shell";
+import { ChartCatalogExamples } from "@/app/components/chart/chart-catalog-examples";
 import { PageHeader } from "@/components/custom/docs/page-header";
-import { ComponentPreview } from "@/components/custom/docs/component-preview";
-import { ChartExample } from "@/components/custom/chart/chart-examples";
+import { CatalogPageGrid } from "@/components/custom/docs/catalog-sections";
+
+export const metadata = { title: "Chart" };
 
 export default function ChartPage() {
-  const t = useTranslations("ComponentMigration.Chart");
-  return <AppShell><div className="min-w-0 space-y-5"><PageHeader title="Chart" /><div className="grid min-w-0 gap-5 xl:grid-cols-2">{Array.from({ length: 25 }, (_, index) => <ComponentPreview key={index} title={t(`examples.${index + 1}`)} previewClassName="block min-w-0"><ChartExample example={index + 1} /></ComponentPreview>)}</div></div></AppShell>;
+  return (
+    <AppShell>
+      <div className="min-w-0 space-y-5">
+        <PageHeader title="Chart" />
+        <CatalogPageGrid>
+        <ChartCatalogExamples />
+        </CatalogPageGrid>
+      </div>
+    </AppShell>
+  );
 }

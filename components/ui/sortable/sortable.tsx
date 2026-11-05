@@ -11,7 +11,7 @@ import {
   useSensors,
   type DragEndEvent,
 } from "@dnd-kit/core"
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy, rectSortingStrategy } from "@dnd-kit/sortable"
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, horizontalListSortingStrategy, verticalListSortingStrategy, rectSortingStrategy } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { IconGripVertical } from "@tabler/icons-react"
 import { cn } from "@/utils/cn"
@@ -53,7 +53,7 @@ export function SortableList<T>({ items, onItemsChange, getItemValue, renderItem
   </SortableRow>
 
   return <DndContext id={id} sensors={sensors} collisionDetection={closestCenter} onDragStart={(event) => setActiveId(String(event.active.id))} onDragCancel={() => setActiveId(null)} onDragEnd={onDragEnd}>
-    <SortableContext items={items.map(getItemValue)} strategy={strategy === "vertical" ? verticalListSortingStrategy : rectSortingStrategy}>
+    <SortableContext items={items.map(getItemValue)} strategy={strategy === "vertical" ? verticalListSortingStrategy : strategy === "horizontal" ? horizontalListSortingStrategy : rectSortingStrategy}>
       <div role="list" data-slot="sortable" data-strategy={strategy} className={cn("min-w-0", strategy === "vertical" && "flex flex-col gap-2", strategy === "horizontal" && "flex min-w-max gap-2", strategy === "grid" && "grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3", className)}>
         {items.map((item, index) => renderRow(item, index))}
       </div>

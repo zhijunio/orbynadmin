@@ -3,6 +3,12 @@
 @import "./theme.css";
 @import "./typography.css";
 
+/* The selected appearance already identifies active controls; avoid a second focus ring around them. */
+:where(button[aria-selected="true"], button[aria-pressed="true"], button[data-state="active"]):focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @custom-variant data-open {
@@ -71,6 +77,12 @@
   }
 }
 
+@keyframes avatar-halo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -80,6 +92,13 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .avatar-catalog-halo-ring {
+    animation: avatar-halo-spin 1.2s linear infinite;
+    transform-origin: center;
   }
 }
 

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { IconArrowLeft, IconArrowRight, IconCheck } from "@tabler/icons-react"
-import { Button } from "@/components/ui/buttons/button"
+import { Button } from "@/components/ui/button/button"
 import { cn } from "@/utils/cn"
 
 export type QuestionnaireAnswer = string | string[]
@@ -22,7 +22,7 @@ export type QuestionnaireQuestion = {
 }
 export type QuestionnaireValidation = { message: string; questionId?: string }
 
-type QuestionnaireProps = {
+export type QuestionnaireProps = {
   questions: QuestionnaireQuestion[]
   initialAnswers?: QuestionnaireAnswers
   onComplete?: (answers: QuestionnaireAnswers) => void
@@ -118,7 +118,9 @@ export function Questionnaire({
   }
 
   return <form aria-label="Questionnaire" onSubmit={(event) => { event.preventDefault(); goNext() }} onKeyDown={(event) => {
-    if (event.target instanceof HTMLElement && event.target.closest("input, textarea, select, button")) return
+    const target = event.target
+    if (target instanceof HTMLElement && target.closest("textarea, select, button")) return
+    if (target instanceof HTMLInputElement && target.type !== "radio" && target.type !== "checkbox") return
     const shortcutIndex = question.options?.findIndex((option, index) => (option.shortcut ?? String.fromCharCode(65 + index)).toLowerCase() === event.key.toLowerCase()) ?? -1
     if (shortcutIndex >= 0 && question.options?.[shortcutIndex]) { event.preventDefault(); setChoice(question.options[shortcutIndex].value) }
   }} className={cn("min-w-0", variant === "card" && "rounded-xl border border-border bg-card p-5", className)}>
@@ -126,7 +128,7 @@ export function Questionnaire({
       <div className="min-w-0"><div className="text-xs font-medium text-muted-foreground">Question {stepIndex + 1} of {visibleQuestions.length}{skipped.includes(question.id) && <span className="ml-2 rounded-full bg-muted px-2 py-0.5">Skipped</span>}</div><h3 className="mt-1 text-base font-semibold">{question.title}</h3>{question.description && <p className="mt-1 text-sm text-muted-foreground">{question.description}</p>}</div>
       {question.multiple && <span className="shrink-0 rounded-full bg-muted px-2 py-1 text-xs text-muted-foreground">{selected.length} selected</span>}
     </div>
-    {progressStyle === "bar" ? <div className="mb-5 h-1.5 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-primary transition-[width]" style={{ width: `${progress}%` }} /></div> : <div className="mb-5 flex gap-1.5" aria-label={`Progress ${Math.round(progress)}%`}>{visibleQuestions.map((item, index) => <div key={item.id} className="min-w-0 flex-1"><div className={cn("h-1.5 rounded-full", index <= stepIndex ? "bg-primary" : "bg-muted")} />{showStepLabels && <span className={cn("mt-1 block truncate text-[10px]", index === stepIndex ? "font-medium text-foreground" : "text-muted-foreground")}>{item.title}</span>}</div>)}</div>}
+    {progressStyle === "bar" ? <div className="mb-5 h-1.5 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress)} aria-label="Questionnaire progress"><div className="h-full rounded-full bg-primary transition-[width] motion-reduce:transition-none" style={{ width: `${progress}%` }} /></div> : <div className="mb-5 flex gap-1.5" aria-label={`Progress ${Math.round(progress)}%`}>{visibleQuestions.map((item, index) => <div key={item.id} className="min-w-0 flex-1"><div className={cn("h-1.5 rounded-full", index <= stepIndex ? "bg-primary" : "bg-muted")} />{showStepLabels && <span className={cn("mt-1 block truncate text-[10px]", index === stepIndex ? "font-medium text-foreground" : "text-muted-foreground")}>{item.title}</span>}</div>)}</div>}
     {question.options ? <fieldset className="grid gap-2"><legend className="sr-only">{question.title}</legend>{question.options.map((option, index) => <label key={option.value} className={cn("flex min-w-0 cursor-pointer items-start gap-3 rounded-lg border border-border p-3 transition-colors hover:bg-accent/50", selected.includes(option.value) && "border-primary bg-primary/5")}><input type={question.multiple ? "checkbox" : "radio"} name={question.id} value={option.value} checked={selected.includes(option.value)} onChange={() => setChoice(option.value)} className="mt-0.5 accent-primary"/><span className="min-w-0 flex-1"><span className="flex items-center justify-between gap-2 text-sm font-medium">{option.label}{option.shortcut && <kbd className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">{option.shortcut || String.fromCharCode(65 + index)}</kbd>}</span>{option.description && <span className="mt-0.5 block text-xs text-muted-foreground">{option.description}</span>}</span></label>)}</fieldset> : <label className="grid gap-1.5 text-sm font-medium">Your answer<input autoFocus value={typeof answer === "string" ? answer : ""} onChange={(event) => updateAnswer(question.id, event.target.value)} placeholder={question.placeholder ?? "Type your answer..."} className="h-10 rounded-md border border-input bg-background px-3 font-normal outline-none focus-visible:ring-2 focus-visible:ring-ring" /></label>}
     {question.allowOther && <label className="mt-3 grid gap-1.5 text-sm font-medium">Something else<input value={otherAnswer} onChange={(event) => { setOtherAnswer(event.target.value); if (event.target.value) updateAnswer(question.id, `custom:${event.target.value}`) }} placeholder="Write your own answer" className="h-10 rounded-md border border-input bg-background px-3 font-normal outline-none focus-visible:ring-2 focus-visible:ring-ring" /></label>}
     {error && <p role="alert" className="mt-3 text-sm text-destructive">{error}</p>}

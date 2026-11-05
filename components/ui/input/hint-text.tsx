@@ -22,7 +22,7 @@ export function HintText({
         "text-xs leading-5",
         variant === "default" && "text-muted-foreground",
         variant === "error" && "text-destructive",
-        variant === "success" && "text-emerald-600 dark:text-emerald-400",
+        variant === "success" && "text-success-foreground",
         className,
       )}
     />

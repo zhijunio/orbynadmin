@@ -1,11 +1,28 @@
 import { Slot } from "radix-ui";
 
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/button/button";
 import { cn } from "@/utils/cn";
 
-type AttachmentState = "idle" | "uploading" | "processing" | "error" | "done";
-type AttachmentSize = "default" | "sm" | "xs";
-type AttachmentOrientation = "horizontal" | "vertical";
+export type AttachmentState = "idle" | "uploading" | "processing" | "error" | "done";
+export type AttachmentSize = "default" | "sm" | "xs";
+export type AttachmentOrientation = "horizontal" | "vertical";
+export type AttachmentProps = React.ComponentProps<"div"> & {
+  state?: AttachmentState
+  size?: AttachmentSize
+  orientation?: AttachmentOrientation
+}
+export type AttachmentMediaProps = React.ComponentProps<"div"> & {
+  variant?: "icon" | "image"
+}
+export type AttachmentContentProps = React.ComponentProps<"div">
+export type AttachmentTitleProps = React.ComponentProps<"span">
+export type AttachmentDescriptionProps = React.ComponentProps<"span">
+export type AttachmentActionsProps = React.ComponentProps<"div">
+export type AttachmentActionProps = React.ComponentProps<typeof Button>
+export type AttachmentTriggerProps = React.ComponentProps<"button"> & {
+  asChild?: boolean
+}
+export type AttachmentGroupProps = React.ComponentProps<"div">
 
 function Attachment({
   className,
@@ -13,11 +30,7 @@ function Attachment({
   size = "default",
   orientation = "horizontal",
   ...props
-}: React.ComponentProps<"div"> & {
-  state?: AttachmentState;
-  size?: AttachmentSize;
-  orientation?: AttachmentOrientation;
-}) {
+}: AttachmentProps) {
   return (
     <div
       data-slot="attachment"
@@ -42,7 +55,7 @@ function AttachmentMedia({
   className,
   variant = "icon",
   ...props
-}: React.ComponentProps<"div"> & { variant?: "icon" | "image" }) {
+}: AttachmentMediaProps) {
   return (
     <div
       data-slot="attachment-media"
@@ -58,23 +71,23 @@ function AttachmentMedia({
   );
 }
 
-function AttachmentContent({ className, ...props }: React.ComponentProps<"div">) {
+function AttachmentContent({ className, ...props }: AttachmentContentProps) {
   return <div data-slot="attachment-content" className={cn("min-w-0 max-w-full flex-1 leading-tight group-data-[orientation=vertical]/attachment:px-1", className)} {...props} />;
 }
 
-function AttachmentTitle({ className, ...props }: React.ComponentProps<"span">) {
+function AttachmentTitle({ className, ...props }: AttachmentTitleProps) {
   return <span data-slot="attachment-title" className={cn("block max-w-full min-w-0 truncate font-medium group-data-[state=processing]/attachment:animate-pulse group-data-[state=uploading]/attachment:animate-pulse", className)} {...props} />;
 }
 
-function AttachmentDescription({ className, ...props }: React.ComponentProps<"span">) {
+function AttachmentDescription({ className, ...props }: AttachmentDescriptionProps) {
   return <span data-slot="attachment-description" className={cn("mt-0.5 block max-w-full min-w-0 truncate text-xs text-muted-foreground group-data-[state=error]/attachment:text-destructive/80", className)} {...props} />;
 }
 
-function AttachmentActions({ className, ...props }: React.ComponentProps<"div">) {
+function AttachmentActions({ className, ...props }: AttachmentActionsProps) {
   return <div data-slot="attachment-actions" className={cn("relative z-20 flex shrink-0 items-center group-data-[orientation=vertical]/attachment:absolute group-data-[orientation=vertical]/attachment:top-3 group-data-[orientation=vertical]/attachment:right-3 group-data-[orientation=vertical]/attachment:gap-1", className)} {...props} />;
 }
 
-function AttachmentAction({ className, size = "icon-xs", variant = "ghost", ...props }: React.ComponentProps<typeof Button>) {
+function AttachmentAction({ className, size = "icon-xs", variant = "ghost", ...props }: AttachmentActionProps) {
   return <Button data-slot="attachment-action" variant={variant} size={size} className={cn("shrink-0", className)} {...props} />;
 }
 
@@ -83,13 +96,13 @@ function AttachmentTrigger({
   asChild = false,
   type = "button",
   ...props
-}: React.ComponentProps<"button"> & { asChild?: boolean }) {
+}: AttachmentTriggerProps) {
   const Component = asChild ? Slot.Root : "button";
 
   return <Component data-slot="attachment-trigger" {...(asChild ? {} : { type })} className={cn("absolute inset-0 z-10 rounded-[inherit] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", className)} {...props} />;
 }
 
-function AttachmentGroup({ className, ...props }: React.ComponentProps<"div">) {
+function AttachmentGroup({ className, ...props }: AttachmentGroupProps) {
   return <div data-slot="attachment-group" className={cn("flex min-w-0 snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain py-1 [scrollbar-width:none] [&>*]:flex-none [&>*]:snap-start", className)} {...props} />;
 }
 
@@ -103,7 +116,4 @@ export {
   AttachmentMedia,
   AttachmentTitle,
   AttachmentTrigger,
-  type AttachmentOrientation,
-  type AttachmentSize,
-  type AttachmentState,
 };

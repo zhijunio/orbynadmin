@@ -7,7 +7,10 @@ import { cn } from "@/utils/cn";
  * e.g. `<Kbd>⌘</Kbd><Kbd>K</Kbd>`. `min-w-5` keeps single characters square
  * while longer labels (Ctrl, Esc, Enter) grow to fit.
  */
-function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {
+export type KbdProps = React.ComponentProps<"kbd">
+export type KbdGroupProps = React.ComponentProps<"span">
+
+function Kbd({ className, ...props }: KbdProps) {
   return (
     <kbd
       data-slot="kbd"
@@ -21,7 +24,7 @@ function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {
 }
 
 /** A row of keycaps with consistent spacing. */
-function KbdGroup({ className, ...props }: React.ComponentProps<"span">) {
+function KbdGroup({ className, ...props }: KbdGroupProps) {
   return (
     <span
       data-slot="kbd-group"

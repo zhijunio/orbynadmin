@@ -1,5 +1,5 @@
-import { AppShell5Page } from "@/components/blocks/application/app-shell/app-shell-5-page";
+import { TopNavigation } from "@/components/blocks/application/app-shell/top-navigation";
 
-export default function AppShell5Route() {
-  return <AppShell5Page />;
+export default function Page() {
+  return <TopNavigation />;
 }

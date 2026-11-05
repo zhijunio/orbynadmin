@@ -1,0 +1,44 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { IconArrowRight, IconCheck } from "@tabler/icons-react";
+import { Badge } from "@/components/ui/badge/badge";
+import { Button } from "@/components/ui/button/button";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card/card";
+import { Input } from "@/components/ui/input/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select/select";
+
+const plans = [
+  { id: "team", name: "Team", price: 49, description: "Workspace controls for growing product teams." },
+  { id: "business", name: "Business", price: 72, description: "SAML, audit exports, and priority support.", recommended: true },
+  { id: "enterprise", name: "Enterprise", price: 96, description: "Procurement review and account governance." },
+];
+const wizardSteps = [{ title: "Plan", description: "Select tier" }, { title: "Seats", description: "Set seats" }, { title: "Payment", description: "Choose terms" }, { title: "Review", description: "Approve" }];
+export function PlanUpgradeWizard() {
+  const [step, setStep] = useState(1);
+  const [planId, setPlanId] = useState("business");
+  const [seats, setSeats] = useState("42");
+  const [cycle, setCycle] = useState("Annual");
+  const [payment, setPayment] = useState("Visa ending 4242");
+  const [notice, setNotice] = useState("");
+  const plan = plans.find((item) => item.id === planId) ?? plans[1];
+  const values = useMemo(() => { const seatCost = plan.price * Number(seats) * (cycle === "Annual" ? 12 : 1); const discount = cycle === "Annual" ? seatCost * 0.15 : 0; const support = planId === "enterprise" || planId === "business" ? 390 : 0; return { seatCost, discount, support, due: seatCost - discount + support }; }, [plan, planId, seats, cycle]);
+
+  return <Card className="mx-auto w-full max-w-5xl gap-0 shadow-none">
+    <CardHeader className="flex flex-row items-start justify-between gap-3 border-b px-5 py-4"><div><h3 className="text-base font-semibold">Billing upgrade</h3><p className="mt-1 text-sm text-muted-foreground">Change plan, seats, and payment terms before renewal.</p></div><Badge variant="warning-light">Draft</Badge></CardHeader>
+    <CardContent className="space-y-6 px-5 py-5">
+      <nav aria-label="Upgrade progress" className="mx-auto flex max-w-3xl items-start">{wizardSteps.map((item, index) => <div key={item.title} className="relative flex flex-1 flex-col items-center text-center"><div className="flex w-full items-center"><span className={`relative z-10 flex size-6 shrink-0 items-center justify-center rounded-full border bg-background text-xs ${index + 1 === step ? "border-foreground" : index + 1 < step ? "border-primary bg-primary text-primary-foreground" : "text-muted-foreground"}`}>{index + 1 < step ? <IconCheck className="size-3.5" /> : index + 1}</span>{index < wizardSteps.length - 1 && <span className={`h-px flex-1 ${index + 1 < step ? "bg-primary" : "bg-border"}`} />}</div><span className="mt-1.5 text-xs font-medium">{item.title}</span><span className="text-xs text-muted-foreground">{item.description}</span></div>)}</nav>
+      <div className="grid gap-7 lg:grid-cols-[minmax(0,1.4fr)_minmax(16rem,0.8fr)]">
+        <section className="min-w-0 space-y-4">
+          {step === 1 && <><div><h4 className="text-sm font-semibold">Plan</h4><p className="text-sm text-muted-foreground">Choose the tier for the seat increase.</p></div><div className="space-y-2">{plans.map((item) => <label key={item.id} className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors ${planId === item.id ? "border-foreground bg-muted/40" : "hover:bg-muted/30"}`}><input className="accent-primary" type="radio" name="upgrade-plan" checked={planId === item.id} onChange={() => setPlanId(item.id)} /><span className="min-w-0 flex-1"><span className="flex items-center gap-2 text-sm font-medium">{item.name}{item.recommended && <Badge variant="success-light" size="sm">Recommended</Badge>}</span><span className="block text-sm text-muted-foreground">{item.description}</span></span><span className="whitespace-nowrap text-sm font-semibold">${item.price}<span className="font-normal text-muted-foreground">/seat/mo</span></span></label>)}</div></>}
+          {step === 2 && <><div><h4 className="text-sm font-semibold">Seats</h4><p className="text-sm text-muted-foreground">Set the number of seats for your workspace.</p></div><label className="space-y-2 text-sm font-medium">Team seats<Input type="number" min="1" max="500" value={seats} onChange={(event) => setSeats(event.target.value)} /><input aria-label="Team seats" type="range" min="1" max="100" value={Math.min(100, Number(seats))} onChange={(event) => setSeats(event.target.value)} className="w-full accent-primary" /><span className="flex justify-between text-xs text-muted-foreground"><span>1 seat</span><span>100 seats</span></span></label><div className="rounded-lg bg-muted/30 p-3 text-sm">{seats} seats at ${plan.price}/seat/month</div></>}
+          {step === 3 && <><div><h4 className="text-sm font-semibold">Payment</h4><p className="text-sm text-muted-foreground">Choose how the upgrade is billed.</p></div><label className="space-y-1.5 text-sm font-medium">Billing cycle<Select value={cycle} onValueChange={setCycle}><SelectTrigger className="w-full"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="Monthly">Monthly</SelectItem><SelectItem value="Annual">Annual · save 15%</SelectItem></SelectContent></Select></label><label className="space-y-1.5 text-sm font-medium">Payment method<Select value={payment} onValueChange={setPayment}><SelectTrigger className="w-full"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="Visa ending 4242">Visa ending 4242</SelectItem><SelectItem value="Bank transfer">Bank transfer</SelectItem></SelectContent></Select></label><p className="text-sm text-muted-foreground">Payment method is charged when the upgrade is approved.</p></>}
+          {step === 4 && <><div><h4 className="text-sm font-semibold">Review upgrade</h4><p className="text-sm text-muted-foreground">Confirm the plan and billing summary.</p></div><dl className="divide-y rounded-lg border">{[["Plan", plan.name], ["Seats", seats], ["Billing cycle", cycle], ["Payment", payment]].map(([label, value]) => <div key={label} className="grid grid-cols-2 px-3 py-2.5 text-sm"><dt className="text-muted-foreground">{label}</dt><dd className="text-right font-medium">{value}</dd></div>)}</dl>{notice && <p role="status" className="text-sm text-primary">{notice}</p>}</>}
+        </section>
+        <aside className="space-y-4 border-t pt-4 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0"><div><h4 className="flex items-center gap-2 text-sm font-semibold">Invoice preview <Badge variant="outline">{cycle}</Badge></h4><p className="mt-1 text-sm text-muted-foreground">Draft before approval.</p></div><div className="flex items-center justify-between gap-3 rounded-lg border border-dashed p-3"><span><span className="block text-sm font-medium">Due today</span><span className="text-xs text-muted-foreground">{plan.name}, {seats} seats, {cycle.toLowerCase()}</span></span><strong className="text-lg tabular-nums">${Math.round(values.due).toLocaleString()}</strong></div><div className="space-y-3 text-sm"><h5 className="font-medium">Cost breakdown</h5><AmountRow label="Seats" detail={`${seats} seats, ${cycle.toLowerCase()}`} amount={values.seatCost} /><AmountRow label="Discount" detail={cycle === "Annual" ? "15% term credit" : "Monthly billing"} amount={-values.discount} />{values.support > 0 && <AmountRow label="Support" detail="Priority support" amount={values.support} />}</div><div className="space-y-2 border-t pt-3 text-sm"><h5 className="font-medium">Invoice routing</h5><div className="flex justify-between"><span>Renewal</span><span>May 31, 2026</span></div><div className="flex justify-between"><span>PO</span><span>PO-2026-184</span></div></div></aside>
+      </div>
+    </CardContent>
+    <CardFooter className="flex justify-end gap-2 border-t bg-muted/20 px-5 py-3"><Button variant="outline" disabled={step === 1} onClick={() => setStep((current) => current - 1)}>Previous</Button><Button onClick={() => step < 4 ? setStep((current) => current + 1) : setNotice("Upgrade submitted for approval.")}>{step === 4 ? "Submit upgrade" : "Next"}<IconArrowRight /></Button></CardFooter>
+  </Card>;
+}
+function AmountRow({ label, detail, amount }: { label: string; detail: string; amount: number }) { return <div className="flex justify-between gap-2"><span><span className="block">{label}</span><span className="text-xs text-muted-foreground">{detail}</span></span><span className="shrink-0 tabular-nums">{amount < 0 ? "−" : ""}${Math.abs(Math.round(amount)).toLocaleString()}</span></div>; }

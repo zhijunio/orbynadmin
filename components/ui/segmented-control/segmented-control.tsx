@@ -3,7 +3,7 @@ import * as React from "react";
 import { ToggleGroup as ToggleGroupPrimitive } from "radix-ui";
 import { cn } from "@/utils/cn";
 
-type SegmentedControlProps = {
+export type SegmentedControlProps = {
   children?: React.ReactNode;
   className?: string;
   id?: string;
@@ -17,10 +17,13 @@ type SegmentedControlProps = {
   orientation?: "horizontal" | "vertical";
   loop?: boolean;
 };
-function SegmentedControl({ className, ...props }: SegmentedControlProps) {
-  return <ToggleGroupPrimitive.Root type="single" data-slot="segmented-control" className={cn("inline-flex h-9 items-center rounded-lg bg-muted p-1 text-muted-foreground", className)} {...props} />;
+export type SegmentedControlItemProps = React.ComponentProps<typeof ToggleGroupPrimitive.Item>;
+function SegmentedControl({ className, value, defaultValue, onValueChange, ...props }: SegmentedControlProps) {
+  const [uncontrolled, setUncontrolled] = React.useState(defaultValue ?? "");
+  const current = value ?? uncontrolled;
+  return <ToggleGroupPrimitive.Root {...props} type="single" data-slot="segmented-control" value={current} onValueChange={(next) => { if (!next) return; if (value === undefined) setUncontrolled(next); onValueChange?.(next); }} className={cn("inline-flex h-9 items-center rounded-lg bg-muted p-1 text-muted-foreground", className)} />;
 }
-function SegmentedControlItem({ className, ...props }: React.ComponentProps<typeof ToggleGroupPrimitive.Item>) {
+function SegmentedControlItem({ className, ...props }: SegmentedControlItemProps) {
   return <ToggleGroupPrimitive.Item data-slot="segmented-control-item" className={cn("inline-flex h-7 items-center justify-center rounded-md px-3 text-sm font-medium transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm disabled:pointer-events-none disabled:opacity-50", className)} {...props} />;
 }
 export { SegmentedControl, SegmentedControlItem };

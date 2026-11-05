@@ -25,24 +25,24 @@ export type SliderProps = SliderRootProps &
   SliderDisplayProps & {
     value?: number;
     defaultValue?: number;
-    onChange?: (value: number) => void;
-    onChangeEnd?: (value: number) => void;
+    onValueChange?: (value: number) => void;
+    onValueCommit?: (value: number) => void;
   };
 
 export type RangeSliderProps = SliderRootProps &
   SliderDisplayProps & {
     value?: [number, number];
     defaultValue?: [number, number];
-    onChange?: (value: [number, number]) => void;
-    onChangeEnd?: (value: [number, number]) => void;
+    onValueChange?: (value: [number, number]) => void;
+    onValueCommit?: (value: [number, number]) => void;
   };
 
 const rootClassName =
-  "relative flex w-full touch-none select-none items-center py-2 disabled:opacity-50 data-[disabled]:pointer-events-none";
+  "relative flex w-full touch-none select-none items-center py-2 disabled:opacity-50 data-[disabled]:pointer-events-none data-[orientation=vertical]:h-full data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col data-[orientation=vertical]:py-0";
 const trackClassName =
-  "relative h-1.5 w-full grow overflow-hidden rounded-full bg-muted shadow-inner";
+  "relative h-1.5 w-full grow overflow-hidden rounded-full bg-muted shadow-inner data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5";
 const rangeClassName =
-  "absolute h-full rounded-full bg-gradient-to-r from-primary/80 to-primary";
+  "absolute h-full rounded-full bg-gradient-to-r from-primary/80 to-primary data-[orientation=vertical]:h-auto data-[orientation=vertical]:w-full data-[orientation=vertical]:bg-gradient-to-b";
 const thumbClassName =
   "relative z-10 block size-4 shrink-0 rounded-full border-2 border-primary bg-background shadow-md shadow-primary/20 transition-shadow focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50";
 
@@ -80,8 +80,8 @@ function ValueThumb({
 export function Slider({
   value,
   defaultValue = 50,
-  onChange,
-  onChangeEnd,
+  onValueChange,
+  onValueCommit,
   label = "Value",
   formatValue = String,
   showTooltip = true,
@@ -96,11 +96,11 @@ export function Slider({
   function handleValueChange(values: number[]) {
     const nextValue = values[0] ?? min;
     if (value === undefined) setInternalValue(nextValue);
-    onChange?.(nextValue);
+    onValueChange?.(nextValue);
   }
 
   function handleValueCommit(values: number[]) {
-    onChangeEnd?.(values[0] ?? min);
+    onValueCommit?.(values[0] ?? min);
   }
 
   return (
@@ -130,8 +130,8 @@ export function Slider({
 export function RangeSlider({
   value,
   defaultValue = [25, 75],
-  onChange,
-  onChangeEnd,
+  onValueChange,
+  onValueCommit,
   label = "Range",
   formatValue = String,
   showTooltip = true,
@@ -146,11 +146,11 @@ export function RangeSlider({
   function handleValueChange(values: number[]) {
     const nextValue: [number, number] = [values[0] ?? min, values[1] ?? min];
     if (value === undefined) setInternalValue(nextValue);
-    onChange?.(nextValue);
+    onValueChange?.(nextValue);
   }
 
   function handleValueCommit(values: number[]) {
-    onChangeEnd?.([values[0] ?? min, values[1] ?? min]);
+    onValueCommit?.([values[0] ?? min, values[1] ?? min]);
   }
 
   return (

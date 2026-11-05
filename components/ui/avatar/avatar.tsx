@@ -13,13 +13,20 @@ const avatarSizeClasses = {
   xl: "size-14",
 } as const
 
+export type AvatarProps = React.ComponentProps<typeof AvatarPrimitive.Root> & {
+  size?: keyof typeof avatarSizeClasses
+}
+export type AvatarImageProps = React.ComponentProps<typeof AvatarPrimitive.Image>
+export type AvatarFallbackProps = React.ComponentProps<typeof AvatarPrimitive.Fallback>
+export type AvatarBadgeProps = React.ComponentProps<"span">
+export type AvatarGroupProps = React.ComponentProps<"div">
+export type AvatarGroupCountProps = React.ComponentProps<"div">
+
 function Avatar({
   className,
   size = "sm",
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Root> & {
-  size?: "xs" | "sm" | "default" | "lg" | "xl"
-}) {
+}: AvatarProps) {
   return (
     <AvatarPrimitive.Root
       data-slot="avatar"
@@ -37,7 +44,7 @@ function Avatar({
 function AvatarImage({
   className,
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Image>) {
+}: AvatarImageProps) {
   return (
     <AvatarPrimitive.Image
       data-slot="avatar-image"
@@ -53,7 +60,7 @@ function AvatarImage({
 function AvatarFallback({
   className,
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
+}: AvatarFallbackProps) {
   return (
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
@@ -66,7 +73,7 @@ function AvatarFallback({
   )
 }
 
-function AvatarBadge({ className, ...props }: React.ComponentProps<"span">) {
+function AvatarBadge({ className, ...props }: AvatarBadgeProps) {
   return (
     <span
       data-slot="avatar-badge"
@@ -84,7 +91,7 @@ function AvatarBadge({ className, ...props }: React.ComponentProps<"span">) {
   )
 }
 
-function AvatarGroup({ className, ...props }: React.ComponentProps<"div">) {
+function AvatarGroup({ className, ...props }: AvatarGroupProps) {
   return (
     <div
       data-slot="avatar-group"
@@ -100,7 +107,7 @@ function AvatarGroup({ className, ...props }: React.ComponentProps<"div">) {
 function AvatarGroupCount({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: AvatarGroupCountProps) {
   return (
     <div
       data-slot="avatar-group-count"
